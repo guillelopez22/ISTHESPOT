@@ -22,12 +22,18 @@ import { ListIngredientesComponent } from './components/ingredientes/list/list-i
 import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
 import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
 
+import { IngredienteService } from './services/ingrediente.service';
+import { ListIngredientesComponent } from './components/ingredientes/list/list-ingredientes.component';
+import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
+import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     ListBebidasComponent,
     AddBebidaComponent,
     EditBebidaComponent,
+<<<<<<< HEAD
 <<<<<<< HEAD
     ListUsuarioComponent,
     AddUsuarioComponent,
@@ -37,6 +43,11 @@ import { EditIngredienteComponent } from './components/ingredientes/edit/edit-in
     AddIngredienteComponent,
     EditIngredienteComponent
 >>>>>>> ¨aaaa¨
+=======
+    ListIngredientesComponent,
+    AddIngredienteComponent,
+    EditIngredienteComponent
+>>>>>>> 763e3d1b0b65a5aa5cc9bd96eb4ebed43feda32d
   ],
   imports: [
     BrowserModule,
@@ -45,10 +56,14 @@ import { EditIngredienteComponent } from './components/ingredientes/edit/edit-in
     ReactiveFormsModule
   ],
 <<<<<<< HEAD
+<<<<<<< HEAD
   providers: [BebidaService, UsuarioService],
 =======
   providers: [BebidaService,IngredienteService],
 >>>>>>> ¨aaaa¨
+=======
+  providers: [BebidaService,IngredienteService],
+>>>>>>> 763e3d1b0b65a5aa5cc9bd96eb4ebed43feda32d
   bootstrap: [AppComponent]
 })
 export class AppModule { }

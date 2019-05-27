@@ -6,6 +6,7 @@ import { ListBebidasComponent } from './components/bebidas/list/list-bebidas.com
 import { AddBebidaComponent } from './components/bebidas/add/add-bebida.component';
 import { EditBebidaComponent } from './components/bebidas/edit/edit-bebida.component';
 <<<<<<< HEAD
+<<<<<<< HEAD
 //users
 import { ListUsuarioComponent } from './components/usuarios/list/list-usuarios.component';
 import { AddUsuarioComponent } from './components/usuarios/add/add-usuario.component';
@@ -15,11 +16,17 @@ import { ListIngredientesComponent } from './components/ingredientes/list/list-i
 import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
 import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
 >>>>>>> ¨aaaa¨
+=======
+import { ListIngredientesComponent } from './components/ingredientes/list/list-ingredientes.component';
+import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
+import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
+>>>>>>> 763e3d1b0b65a5aa5cc9bd96eb4ebed43feda32d
 
 const routes: Routes = [
   { path: 'add-bebida', component: AddBebidaComponent },
   { path: 'edit-bebida', component: EditBebidaComponent},
   { path: 'list-bebida', component: ListBebidasComponent, pathMatch: 'full' },
+<<<<<<< HEAD
 <<<<<<< HEAD
   { path: 'add-usuario', component: AddUsuarioComponent },
   { path: 'edit-usuario', component: EditUsuarioComponent},
@@ -29,6 +36,11 @@ const routes: Routes = [
   { path: 'edit-ingrediente', component: EditIngredienteComponent},
   { path: 'list-ingrediente', component: ListIngredientesComponent, pathMatch: 'full' }
 >>>>>>> ¨aaaa¨
+=======
+  { path: 'add-ingrediente', component: AddIngredienteComponent },
+  { path: 'edit-ingrediente', component: EditIngredienteComponent},
+  { path: 'list-ingrediente', component: ListIngredientesComponent, pathMatch: 'full' }
+>>>>>>> 763e3d1b0b65a5aa5cc9bd96eb4ebed43feda32d
 ];
 
 @NgModule({
