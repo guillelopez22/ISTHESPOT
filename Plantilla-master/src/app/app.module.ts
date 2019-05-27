@@ -11,7 +11,6 @@ import { BebidaService } from './services/bebida.service';
 import { ListBebidasComponent } from './components/bebidas/list/list-bebidas.component';
 import { AddBebidaComponent } from './components/bebidas/add/add-bebida.component';
 import { EditBebidaComponent } from './components/bebidas/edit/edit-bebida.component';
-<<<<<<< HEAD
 //users
 import { UsuarioService } from './services/usuario.service';
 import { ListUsuarioComponent } from './components/usuarios/list/list-usuarios.component';
@@ -24,8 +23,6 @@ import { AddIngredienteComponent } from './components/ingredientes/add/add-ingre
 import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
 
 
-=======
->>>>>>> 9b3e3a54a9895e35622246992fc114ed96e84ed4
 import { ListProductoComponent } from './components/productos/list/list-productos.component';
 import { AddProductoComponent } from './components/productos/add/add-producto.component';
 import { EditProductoComponent } from './components/productos/edit/edit-producto.component';
