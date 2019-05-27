@@ -32,10 +32,6 @@ const routes: Routes = [
   { path: 'edit-ingrediente', component: EditIngredienteComponent},
   { path: 'list-ingrediente', component: ListIngredientesComponent, pathMatch: 'full' },
 
-  { path: 'add-ingrediente', component: AddIngredienteComponent },
-  { path: 'edit-ingrediente', component: EditIngredienteComponent},
-  { path: 'list-ingrediente', component: ListIngredientesComponent, pathMatch: 'full' }
-
 ];
 
 @NgModule({
