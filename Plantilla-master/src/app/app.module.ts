@@ -33,25 +33,11 @@ import { EditIngredienteComponent } from './components/ingredientes/edit/edit-in
     ListBebidasComponent,
     AddBebidaComponent,
     EditBebidaComponent,
-<<<<<<< HEAD
-<<<<<<< HEAD
     ListUsuarioComponent,
     AddUsuarioComponent,
     EditUsuarioComponent
-=======
+    EditIngredienteComponent,
     ListIngredientesComponent,
-    AddIngredienteComponent,
-    EditIngredienteComponent
->>>>>>> ¨aaaa¨
-=======
-    ListIngredientesComponent,
-    AddIngredienteComponent,
-    EditIngredienteComponent
-<<<<<<< HEAD
->>>>>>> ¨aaaa¨
-=======
->>>>>>> 763e3d1b0b65a5aa5cc9bd96eb4ebed43feda32d
->>>>>>> 7ba15ff972004aa7c5ad92d1f2451407b3cc2780
   ],
   imports: [
     BrowserModule,
@@ -59,19 +45,8 @@ import { EditIngredienteComponent } from './components/ingredientes/edit/edit-in
     HttpClientModule,
     ReactiveFormsModule
   ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-  providers: [BebidaService, UsuarioService],
-=======
-  providers: [BebidaService,IngredienteService],
->>>>>>> ¨aaaa¨
-=======
-  providers: [BebidaService,IngredienteService],
-<<<<<<< HEAD
->>>>>>> ¨aaaa¨
-=======
->>>>>>> 763e3d1b0b65a5aa5cc9bd96eb4ebed43feda32d
->>>>>>> 7ba15ff972004aa7c5ad92d1f2451407b3cc2780
+  providers: [BebidaService, UsuarioService, IngredienteService],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }
