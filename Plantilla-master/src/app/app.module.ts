@@ -1,8 +1,8 @@
-    
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from "@angular/forms"; 
+import { ReactiveFormsModule } from "@angular/forms";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,10 +22,11 @@ import { ListIngredientesComponent } from './components/ingredientes/list/list-i
 import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
 import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
 
-import { IngredienteService } from './services/ingrediente.service';
-import { ListIngredientesComponent } from './components/ingredientes/list/list-ingredientes.component';
-import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
-import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
+
+import { ListProductoComponent } from './components/productos/list/list-productos.component';
+import { AddProductoComponent } from './components/productos/add/add-producto.component';
+import { EditProductoComponent } from './components/productos/edit/edit-producto.component';
+import { ProductoService } from './services/producto.service';
 
 @NgModule({
   declarations: [
@@ -35,18 +36,24 @@ import { EditIngredienteComponent } from './components/ingredientes/edit/edit-in
     EditBebidaComponent,
     ListUsuarioComponent,
     AddUsuarioComponent,
-    EditUsuarioComponent
+    EditUsuarioComponent,
+    AddIngredienteComponent,
     EditIngredienteComponent,
     ListIngredientesComponent,
+    ListProductoComponent,
+    AddProductoComponent,
+    EditProductoComponent,
   ],
+
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [BebidaService, UsuarioService, IngredienteService],
   
+  providers: [BebidaService, UsuarioService, IngredienteService, ProductoService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

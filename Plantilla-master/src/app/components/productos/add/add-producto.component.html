@@ -1,0 +1,47 @@
+<div class="col-md-3">
+  <h2 class="text-center">Agregar Producto</h2>
+  <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label>id Bebida:</label>
+      <input type="text" formControlName="idBebida" placeholder="Id de la bebida" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idBebida.errors }">
+      <div *ngIf="submitted && f.idBebida.errors">
+        <div *ngIf="f.idBebida.errors.required">El id de la bebida es requerido</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>id Producto Elaborado:</label>
+      <input type="text" formControlName="idProducto_Elaborado" placeholder="Id Producto Elaborado" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idProducto_Elaborado.errors }">
+      <div *ngIf="submitted && f.idProducto_Elaborado.errors">
+        <div *ngIf="f.idProducto_Elaborado.errors.required">El id es requrido</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Nombre:</label>
+      <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+      <div *ngIf="submitted && f.nombre.errors">
+        <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
+      </div>
+    </div> 
+
+    <div class="form-group">
+      <label>Descripcion:</label>
+      <input type="text" formControlName="descripcion" placeholder="Descripcion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
+      <div *ngIf="submitted && f.descripcion.errors">
+        <div *ngIf="f.descripcion.errors.required">La descripcion es requerida</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Precio:</label>
+      <input type="text" formControlName="precio" placeholder="Precio" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.precio.errors }">
+      <div *ngIf="submitted && f.precio.errors">
+        <div *ngIf="f.precio.errors.required">El precio es requerido</div>
+      </div>
+  </div>
+
+    <button type="submit"  class="btn btn-info">Guardar</button>
+  </form>
+</div>
