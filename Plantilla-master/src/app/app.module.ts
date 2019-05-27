@@ -17,6 +17,16 @@ import { ListUsuarioComponent } from './components/usuarios/list/list-usuarios.c
 import { AddUsuarioComponent } from './components/usuarios/add/add-usuario.component';
 import { EditUsuarioComponent } from './components/usuarios/edit/edit-usuario.component';
 
+import { IngredienteService } from './services/ingrediente.service';
+import { ListIngredientesComponent } from './components/ingredientes/list/list-ingredientes.component';
+import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
+import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
+
+import { IngredienteService } from './services/ingrediente.service';
+import { ListIngredientesComponent } from './components/ingredientes/list/list-ingredientes.component';
+import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
+import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +36,8 @@ import { EditUsuarioComponent } from './components/usuarios/edit/edit-usuario.co
     ListUsuarioComponent,
     AddUsuarioComponent,
     EditUsuarioComponent
+    EditIngredienteComponent,
+    ListIngredientesComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +45,8 @@ import { EditUsuarioComponent } from './components/usuarios/edit/edit-usuario.co
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [BebidaService, UsuarioService],
+  providers: [BebidaService, UsuarioService, IngredienteService],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }
