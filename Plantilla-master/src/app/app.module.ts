@@ -10,13 +10,21 @@ import { BebidaService } from './services/bebida.service';
 import { ListBebidasComponent } from './components/bebidas/list/list-bebidas.component';
 import { AddBebidaComponent } from './components/bebidas/add/add-bebida.component';
 import { EditBebidaComponent } from './components/bebidas/edit/edit-bebida.component';
+import { ListProductoComponent } from './components/productos/list/list-productos.component';
+import { AddProductoComponent } from './components/productos/add/add-producto.component';
+import { EditProductoComponent } from './components/productos/edit/edit-producto.component';
+import { ProductoService } from './services/producto.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     ListBebidasComponent,
     AddBebidaComponent,
-    EditBebidaComponent
+    EditBebidaComponent,
+    ListProductoComponent,
+    AddProductoComponent,
+    EditProductoComponent
+
   ],
   imports: [
     BrowserModule,
@@ -24,7 +32,7 @@ import { EditBebidaComponent } from './components/bebidas/edit/edit-bebida.compo
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [BebidaService],
+  providers: [BebidaService,ProductoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
