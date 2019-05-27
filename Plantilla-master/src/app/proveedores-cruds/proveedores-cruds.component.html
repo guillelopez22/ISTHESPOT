@@ -1,0 +1,209 @@
+<div class="container">
+  <!--En esta parte se agrega al proveedor-->
+  <br>
+  <h2 class="text-center">Lista de Proveedores</h2>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Agregar Proveedor
+</button>
+<br><br>
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Agregar Proveedor</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+          <div class="container">  
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label for="name" class="control-label col-sm-2">
+                    Nombre
+                  </label>
+                  <input required type="text" class="form-control" id="name" 
+                    [(ngModel)] = "proveedor.name" name="name"
+                    placeholder="Ingrese el nombre">
+                </div>
+
+                <div class="form-group">
+                    <label for="pais" class="control-label col-sm-8">
+                      Pais
+                    </label>
+                    <input required type="text" class="form-control" id="pais" 
+                    [(ngModel)] = "proveedor.pais" name="pais"
+                      placeholder="Ingrese el pais">
+                  </div>
+
+
+                  <div class="form-group">
+                    <label for="telefono" class="control-label col-sm-2">
+                      Telefono
+                    </label>
+                    <input required type="text" class="form-control" id="telefono" 
+                    [(ngModel)] = "proveedor.telefono" name="telefono"
+                      placeholder="Ingrese el telefono">
+                  </div>
+
+                  <div class="form-group">
+                      <label for="contacto" class="control-label col-sm-2">
+                        Contacto
+                      </label>
+                      <input required type="text" class="form-control" id="contacto" 
+                      [(ngModel)] = "proveedor.contacto" name="contacto"
+                        placeholder="Ingrese un contacto">
+                    </div>
+
+                <div class="form-group">
+                      <label for="email" class="control-label col-sm-2">
+                        Email
+                      </label>
+                      <input required type="text" class="form-control" id="email" 
+                      [(ngModel)] = "proveedor.email" name="email"
+                        placeholder="Ingrese un email">
+                </div>
+                
+ 
+                <div class="form-group">
+                    <label for="direccion" class="control-label col-sm-2">
+                      Direccion
+                    </label>
+                    <input required type="text" class="form-control" id="direccion" 
+                    [(ngModel)] = "proveedor.direccion" name="direccion"
+                      placeholder="Direccion">
+                  </div>
+                
+              </form>
+            </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+            <button type="submit" (click)="onSubmit()" data-dismiss="modal" class="btn btn-success" >Save</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--En esta parte se muestra el proveedor-->
+
+  <div style="overflow-x:auto;">
+      <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Pais</th>
+              <th>Telefono</th>
+              <th>contacto</th>
+              <th>Email</th>
+              <th>Direccion</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Breads</td>
+              <td>USA</td>
+              <td>1234-1234</td>
+              <td>John</td>
+              <td>john@example.com</td>
+              <td>California</td>
+              
+              <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2">Editar</button></td>
+                <td><button class="btn btn-danger">Eliminar</button></td>
+            </tr>
+            
+          </tbody>
+        </table>
+  </div>
+
+  <!-- The Modal -->
+<div class="modal" id="myModal2">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Modificar Proveedor</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            <div class="container">  
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <label for="name" class="control-label col-sm-2">
+                      Nombre
+                    </label>
+                    <input required type="text" class="form-control" id="name" 
+                      [(ngModel)] = "proveedor.name" name="name"
+                      placeholder="Ingrese el nombre">
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="direccion" class="control-label col-sm-2">
+                        Direccion
+                      </label>
+                      <input required type="text" class="form-control" id="direccion" 
+                      [(ngModel)] = "proveedor.direccion" name="direccion"
+                        placeholder="Direccion">
+                    </div>
+
+                  <div class="form-group">
+                      <label for="contacto" class="control-label col-sm-2">
+                        Contacto
+                      </label>
+                      <input required type="text" class="form-control" id="contacto" 
+                      [(ngModel)] = "proveedor.contacto" name="contacto"
+                        placeholder="Ingrese contacto">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono" class="control-label col-sm-2">
+                          Telefono
+                        </label>
+                        <input required type="text" class="form-control" id="telefono" 
+                        [(ngModel)] = "proveedor.telefono" name="telefono"
+                          placeholder="Ingrese el telefono">
+                      </div>
+                      <div class="form-group">
+                          <label for="pais" class="control-label col-sm-8">
+                            Pais
+                          </label>
+                          <input required type="text" class="form-control" id="pais" 
+                          [(ngModel)] = "proveedor.pais" name="pais"
+                            placeholder="Ingrese el pais">
+                        </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label col-sm-2">
+                          Email
+                        </label>
+                        <input required type="text" class="form-control" id="email" 
+                        [(ngModel)] = "proveedor.email" name="email"
+                          placeholder="Ingrese un email">
+                      </div>
+                  
+                </form>
+              </div>
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+              <button type="submit" (click)="onSubmit()" data-dismiss="modal" class="btn btn-success" >Save</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+
+</div>

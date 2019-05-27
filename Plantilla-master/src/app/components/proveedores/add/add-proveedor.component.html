@@ -1,0 +1,54 @@
+<div class="col-md-3">
+    <h2 class="text-center">Agregar Proveedor</h2>
+    <form [formGroup]="addForm" (ngSubmit)="onSubmit()"> 
+      <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+        <div *ngIf="submitted && f.nombre.errors">
+          <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Pais:</label>
+        <input type="text" formControlName="pais" placeholder="Pais" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.pais.errors }">
+        <div *ngIf="submitted && f.pais.errors">
+          <div *ngIf="f.pais.errors.required">El pais del proveedor es requerido</div>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>Telefono:</label>
+        <input type="text" formControlName="telefono" placeholder="Telefono" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }">
+        <div *ngIf="submitted && f.telefono.errors">
+          <div *ngIf="f.telefono.errors.required">El telefono es requrido</div>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>Contacto:</label>
+        <input type="text" formControlName="contacto" placeholder="Contacto" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contacto.errors }">
+        <div *ngIf="submitted && f.contacto.errors">
+          <div *ngIf="f.contacto.errors.required">El contacto para proveedor es requerido</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+          <label>Email:</label>
+          <input type="text" formControlName="email" placeholder="Email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+          <div *ngIf="submitted && f.email.errors">
+            <div *ngIf="f.email.errors.required">El email es requerido</div>
+          </div>
+      </div>
+
+      <div class="form-group">
+          <label>Direccion:</label>
+          <input type="text" formControlName="direccion" placeholder="Direccion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.direccion.errors }">
+          <div *ngIf="submitted && f.direccion.errors">
+            <div *ngIf="f.direccion.errors.required">La direccion es requerida</div>
+          </div>
+      </div>
+  
+      <button type="submit"  class="btn btn-info">Guardar</button>
+    </form>
+  </div>
