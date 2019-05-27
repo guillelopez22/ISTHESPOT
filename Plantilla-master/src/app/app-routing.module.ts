@@ -5,50 +5,37 @@ import { CommonModule } from '@angular/common';
 import { ListBebidasComponent } from './components/bebidas/list/list-bebidas.component';
 import { AddBebidaComponent } from './components/bebidas/add/add-bebida.component';
 import { EditBebidaComponent } from './components/bebidas/edit/edit-bebida.component';
-<<<<<<< HEAD
-<<<<<<< HEAD
 //users
 import { ListUsuarioComponent } from './components/usuarios/list/list-usuarios.component';
 import { AddUsuarioComponent } from './components/usuarios/add/add-usuario.component';
 import { EditUsuarioComponent } from './components/usuarios/edit/edit-usuario.component';
-=======
+
 import { ListIngredientesComponent } from './components/ingredientes/list/list-ingredientes.component';
 import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
 import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
->>>>>>> ¨aaaa¨
-=======
+
 import { ListIngredientesComponent } from './components/ingredientes/list/list-ingredientes.component';
 import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
 import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
-<<<<<<< HEAD
->>>>>>> ¨aaaa¨
-=======
->>>>>>> 763e3d1b0b65a5aa5cc9bd96eb4ebed43feda32d
->>>>>>> 7ba15ff972004aa7c5ad92d1f2451407b3cc2780
+
 
 const routes: Routes = [
   { path: 'add-bebida', component: AddBebidaComponent },
   { path: 'edit-bebida', component: EditBebidaComponent},
   { path: 'list-bebida', component: ListBebidasComponent, pathMatch: 'full' },
-<<<<<<< HEAD
-<<<<<<< HEAD
+
   { path: 'add-usuario', component: AddUsuarioComponent },
   { path: 'edit-usuario', component: EditUsuarioComponent},
-  { path: 'list-usuario', component: ListUsuarioComponent, pathMatch: 'full' }
-=======
+  { path: 'list-usuario', component: ListUsuarioComponent, pathMatch: 'full' },
+
+  { path: 'add-ingrediente', component: AddIngredienteComponent },
+  { path: 'edit-ingrediente', component: EditIngredienteComponent},
+  { path: 'list-ingrediente', component: ListIngredientesComponent, pathMatch: 'full' },
+
   { path: 'add-ingrediente', component: AddIngredienteComponent },
   { path: 'edit-ingrediente', component: EditIngredienteComponent},
   { path: 'list-ingrediente', component: ListIngredientesComponent, pathMatch: 'full' }
->>>>>>> ¨aaaa¨
-=======
-  { path: 'add-ingrediente', component: AddIngredienteComponent },
-  { path: 'edit-ingrediente', component: EditIngredienteComponent},
-  { path: 'list-ingrediente', component: ListIngredientesComponent, pathMatch: 'full' }
-<<<<<<< HEAD
->>>>>>> ¨aaaa¨
-=======
->>>>>>> 763e3d1b0b65a5aa5cc9bd96eb4ebed43feda32d
->>>>>>> 7ba15ff972004aa7c5ad92d1f2451407b3cc2780
+
 ];
 
 @NgModule({
