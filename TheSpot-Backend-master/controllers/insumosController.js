@@ -2,22 +2,22 @@ var insumo = require('../schemas/insumo.js');
 var mongoose = require('mongoose');
 
 exports.getInsumos = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     var insumos = insumo.find({});
     reply(insumos);
   }
 }
 exports.getInsumoId = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler : function(request, reply){
     insumo.findOne({'_id' : request.params._id}, function(err, Insumo){
       if(!err && Insumo){
@@ -31,11 +31,11 @@ exports.getInsumoId = {
   }
 }
 exports.getInsumoName = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler : function(request, reply){
     insumo.find({'nombre' : request.params.nombre}, function(err, Insumos){
       if(!err && Insumos){
@@ -49,11 +49,11 @@ exports.getInsumoName = {
   }
 }
 exports.getInsumoProveedor = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler : function(request, reply){
     insumo.find({'idProveedor' : request.params.idProveedor}, function(err, Insumos){
       if(!err && Insumos){
@@ -67,11 +67,11 @@ exports.getInsumoProveedor = {
   }
 }
 exports.getInsumoInventario = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler : function(request, reply){
     insumo.find({'inventario' : request.params.inventario}, function(err, Insumos){
       if(!err && Insumos){
@@ -85,11 +85,11 @@ exports.getInsumoInventario = {
   }
 }
 exports.modifyInsumo = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     insumo.update(
       {'_id': request.params._id},
@@ -110,11 +110,11 @@ exports.modifyInsumo = {
   }
 }
 exports.deleteInsumo = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     insumo.findOne({'_id' : request.params._id}, function(err, Insumo){
       if(err){
@@ -129,11 +129,11 @@ exports.deleteInsumo = {
   }
 }
 exports.createInsumo = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     var newInsumo = new insumo({
       nombre : request.payload.nombre,
