@@ -2,22 +2,22 @@ var producto = require('../schemas/producto.js');
 var mongoose = require('mongoose');
 
 exports.getProductos = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler: function(request, reply){
     var productos = producto.find({});
     reply(productos);
   }
 }
 exports.getProductoId = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     producto.findOne({'_id' : request.params._id}, function(err, Producto){
       if(!err && Producto){
@@ -31,11 +31,11 @@ exports.getProductoId = {
   }
 }
 exports.getProductoIdBebida = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     producto.find({'idBebida' : request.params.idBebida}, function(err, Productos){
       if(!err && Productos){
@@ -49,11 +49,11 @@ exports.getProductoIdBebida = {
   }
 }
 exports.getProductoidProducto_Elaborado = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler : function(request, reply){
     producto.find({'idProducto_Elaborado' : request.params.idProducto_Elaborado}, function(err, Productos){
       if(!err && Productos){
@@ -67,11 +67,11 @@ exports.getProductoidProducto_Elaborado = {
   }
 }
 exports.getProductoNombre = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     producto.find({'nombre' : request.params.nombre}, function(err, Productos){
       if(!err && Productos){
@@ -85,11 +85,11 @@ exports.getProductoNombre = {
   }
 }
 exports.getProductoPrecio = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     producto.find({'precio' : request.params.precio}, function(err, Productos){
       if(!err && Productos){
@@ -103,11 +103,11 @@ exports.getProductoPrecio = {
   }
 }
 exports.modifyProducto = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     producto.update(
       {'_id': request.params._id},
@@ -130,18 +130,18 @@ exports.modifyProducto = {
   }
 }
 exports.deleteProducto = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     producto.findOne({'_id' : request.params._id}, function(err, Producto){
       if(err){
-        return reply(boom.badRequest("Could not delete bebida"));
+        return reply(boom.badRequest("Could not delete producto"));
       }else if(!err && Producto){
         Producto.remove();
-        return reply('Bebida deleted succesfully');
+        return reply('Producto deleted succesfully');
       }else if(!err){
         return reply(boom.notFound());
       }
@@ -149,11 +149,11 @@ exports.deleteProducto = {
   }
 }
 exports.createProducto = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     var newProducto = new producto({
       idBebida : request.payload.idBebida,

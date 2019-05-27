@@ -14,9 +14,9 @@ import { ListIngredientesComponent } from './components/ingredientes/list/list-i
 import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
 import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
 
-import { ListIngredientesComponent } from './components/ingredientes/list/list-ingredientes.component';
-import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
-import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
+import { ListProductoComponent } from './components/productos/list/list-productos.component';
+import { AddProductoComponent } from './components/productos/add/add-producto.component';
+import { EditProductoComponent } from './components/productos/edit/edit-producto.component';
 
 
 const routes: Routes = [
@@ -32,6 +32,9 @@ const routes: Routes = [
   { path: 'edit-ingrediente', component: EditIngredienteComponent},
   { path: 'list-ingrediente', component: ListIngredientesComponent, pathMatch: 'full' },
 
+  { path: 'add-producto', component: AddProductoComponent },
+  { path: 'edit-producto', component: EditProductoComponent},
+  { path: '', component: ListProductoComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
