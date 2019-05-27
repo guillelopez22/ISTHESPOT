@@ -1,0 +1,30 @@
+<div class="col-md-3">
+    <h2 class="text-center">Agregar Ingrediente</h2>
+    <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+        <div *ngIf="submitted && f.nombre.errors">
+          <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label>Inventario:</label>
+        <input type="text" formControlName="inventario" placeholder="Inventario" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inventario.errors }">
+        <div *ngIf="submitted && f.inventario.errors">
+          <div *ngIf="f.inventario.errors.required">El número de inventario es requerido</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>idProveedor:</label>
+        <input type="text" formControlName="idProveedor" placeholder="Id del proveedor" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idProveedor.errors }">
+        <div *ngIf="submitted && f.idProveedor.errors">
+          <div *ngIf="f.idProveedor.errors.required">El id del proveedor es requerido</div>
+        </div>
+      </div>
+  
+      <button type="submit"  class="btn btn-info">Guardar</button>
+    </form>
+  </div>

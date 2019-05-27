@@ -17,15 +17,26 @@ import { ListUsuarioComponent } from './components/usuarios/list/list-usuarios.c
 import { AddUsuarioComponent } from './components/usuarios/add/add-usuario.component';
 import { EditUsuarioComponent } from './components/usuarios/edit/edit-usuario.component';
 
+import { IngredienteService } from './services/ingrediente.service';
+import { ListIngredientesComponent } from './components/ingredientes/list/list-ingredientes.component';
+import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
+import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     ListBebidasComponent,
     AddBebidaComponent,
     EditBebidaComponent,
+<<<<<<< HEAD
     ListUsuarioComponent,
     AddUsuarioComponent,
     EditUsuarioComponent
+=======
+    ListIngredientesComponent,
+    AddIngredienteComponent,
+    EditIngredienteComponent
+>>>>>>> ¨aaaa¨
   ],
   imports: [
     BrowserModule,
@@ -33,7 +44,11 @@ import { EditUsuarioComponent } from './components/usuarios/edit/edit-usuario.co
     HttpClientModule,
     ReactiveFormsModule
   ],
+<<<<<<< HEAD
   providers: [BebidaService, UsuarioService],
+=======
+  providers: [BebidaService,IngredienteService],
+>>>>>>> ¨aaaa¨
   bootstrap: [AppComponent]
 })
 export class AppModule { }
