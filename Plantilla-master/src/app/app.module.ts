@@ -22,6 +22,11 @@ import { ListIngredientesComponent } from './components/ingredientes/list/list-i
 import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
 import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
 
+import { IngredienteService } from './services/ingrediente.service';
+import { ListIngredientesComponent } from './components/ingredientes/list/list-ingredientes.component';
+import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
+import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,9 +34,15 @@ import { EditIngredienteComponent } from './components/ingredientes/edit/edit-in
     AddBebidaComponent,
     EditBebidaComponent,
 <<<<<<< HEAD
+<<<<<<< HEAD
     ListUsuarioComponent,
     AddUsuarioComponent,
     EditUsuarioComponent
+=======
+    ListIngredientesComponent,
+    AddIngredienteComponent,
+    EditIngredienteComponent
+>>>>>>> ¨aaaa¨
 =======
     ListIngredientesComponent,
     AddIngredienteComponent,
@@ -45,7 +56,11 @@ import { EditIngredienteComponent } from './components/ingredientes/edit/edit-in
     ReactiveFormsModule
   ],
 <<<<<<< HEAD
+<<<<<<< HEAD
   providers: [BebidaService, UsuarioService],
+=======
+  providers: [BebidaService,IngredienteService],
+>>>>>>> ¨aaaa¨
 =======
   providers: [BebidaService,IngredienteService],
 >>>>>>> ¨aaaa¨
