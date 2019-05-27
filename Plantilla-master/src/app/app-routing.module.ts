@@ -20,7 +20,11 @@ import { EditIngredienteComponent } from './components/ingredientes/edit/edit-in
 import { ListIngredientesComponent } from './components/ingredientes/list/list-ingredientes.component';
 import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
 import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
+<<<<<<< HEAD
 >>>>>>> ¨aaaa¨
+=======
+>>>>>>> 763e3d1b0b65a5aa5cc9bd96eb4ebed43feda32d
+>>>>>>> 7ba15ff972004aa7c5ad92d1f2451407b3cc2780
 
 const routes: Routes = [
   { path: 'add-bebida', component: AddBebidaComponent },
@@ -40,7 +44,11 @@ const routes: Routes = [
   { path: 'add-ingrediente', component: AddIngredienteComponent },
   { path: 'edit-ingrediente', component: EditIngredienteComponent},
   { path: 'list-ingrediente', component: ListIngredientesComponent, pathMatch: 'full' }
+<<<<<<< HEAD
 >>>>>>> ¨aaaa¨
+=======
+>>>>>>> 763e3d1b0b65a5aa5cc9bd96eb4ebed43feda32d
+>>>>>>> 7ba15ff972004aa7c5ad92d1f2451407b3cc2780
 ];
 
 @NgModule({
