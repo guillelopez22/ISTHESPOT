@@ -1,8 +1,8 @@
-
+    
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from "@angular/forms"; 
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,17 +16,21 @@ import { UsuarioService } from './services/usuario.service';
 import { ListUsuarioComponent } from './components/usuarios/list/list-usuarios.component';
 import { AddUsuarioComponent } from './components/usuarios/add/add-usuario.component';
 import { EditUsuarioComponent } from './components/usuarios/edit/edit-usuario.component';
-
+//ingredientes
 import { IngredienteService } from './services/ingrediente.service';
 import { ListIngredientesComponent } from './components/ingredientes/list/list-ingredientes.component';
 import { AddIngredienteComponent } from './components/ingredientes/add/add-ingrediente.component';
 import { EditIngredienteComponent } from './components/ingredientes/edit/edit-ingrediente.component';
-
-
-import { ListProductoComponent } from './components/productos/list/list-productos.component';
+//productos
+import { ProductoService } from './services/producto.service';
+import { ListProductosComponent } from './components/productos/list/list-productos.component';
 import { AddProductoComponent } from './components/productos/add/add-producto.component';
 import { EditProductoComponent } from './components/productos/edit/edit-producto.component';
-import { ProductoService } from './services/producto.service';
+//proveedores
+import { ProveedorService } from './services/proveedor.service';
+import { ListProveedoresComponent } from './components/proveedores/list/list-proveedores.component';
+import { AddProveedorComponent } from './components/proveedores/add/add-proveedor.component';
+import { EditProveedorComponent } from './components/proveedores/edit/edit-proveedor.component';
 
 @NgModule({
   declarations: [
@@ -37,23 +41,23 @@ import { ProductoService } from './services/producto.service';
     ListUsuarioComponent,
     AddUsuarioComponent,
     EditUsuarioComponent,
+    ListIngredientesComponent,
     AddIngredienteComponent,
     EditIngredienteComponent,
-    ListIngredientesComponent,
-    ListProductoComponent,
+    ListProductosComponent,
     AddProductoComponent,
     EditProductoComponent,
+    ListProveedoresComponent,
+    AddProveedorComponent,
+    EditProveedorComponent
   ],
-
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule
   ],
-  
-  providers: [BebidaService, UsuarioService, IngredienteService, ProductoService],
-
+  providers: [BebidaService, IngredienteService, UsuarioService, ProductoService, ProveedorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

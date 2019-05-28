@@ -21,7 +21,7 @@
       <label>Tipo:</label>
       <input type="text" formControlName="tipo" placeholder="Tipo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }">
       <div *ngIf="submitted && f.tipo.errors">
-        <div *ngIf="f.tipo.errors.required">Tipo es requrido</div>
+        <div *ngIf="f.tipo.errors.required">Tipo es requerido</div>
       </div>
     </div>
 
