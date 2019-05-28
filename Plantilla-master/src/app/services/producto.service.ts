@@ -24,7 +24,7 @@ export class ProductoService {
   }
 
   deleteProducto(id: string){
-    return this.http.delete(this.baseurl + 'producto/delete/' + id, {responseType: 'text'});
+    return this.http.delete(this.baseurl + 'productos/delete/' + id, {responseType: 'text'});
   }
 
   updateProducto(producto: ProductoModel){
