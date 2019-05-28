@@ -1,0 +1,55 @@
+<div class="col-md-3">
+        <h2 class="text-center">Editar Usuario</h2>
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label>id:</label>
+                <input type="text" formControlName="_id" placeholder="id" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.id.errors }">
+                <div *ngIf="submitted && f.id.errors">
+                  <div *ngIf="f.id.errors.required">El id es requerido</div>
+                </div>
+              </div>
+        
+              <div class="form-group">
+                <label>idPersonal:</label>
+                <input type="text" formControlName="idPersonal" placeholder="idPersonal" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.id.errors }">
+                <div *ngIf="submitted && f.idPersonal.errors">
+                  <div *ngIf="f.idPersonal.errors.required">El id personal es requerido</div>
+                </div>
+              </div>
+          
+              <div class="form-group">
+                <label>Nombre de usuario:</label>
+                <input type="text" formControlName="usuario" placeholder="usuario" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.usuario.errors }">
+                <div *ngIf="submitted && f.usuario.errors">
+                  <div *ngIf="f.usuario.errors.required">Usuario es requrido</div>
+                </div>
+              </div>
+          
+              <div class="form-group">
+                <label>Constrasena:</label>
+                <input type="text" formControlName="constrasena" placeholder="Constrasena" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contrasena.errors }">
+                <div *ngIf="submitted && f.constrasena.errors">
+                  <div *ngIf="f.constrasena.errors.required">El número de inventario es requerido</div>
+                </div>
+              </div>
+        
+              <div class="form-group">
+                  <label>Nombre:</label>
+                  <input type="text" formControlName="nombre" placeholder="nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+                  <div *ngIf="submitted && f.nombre.errors">
+                    <div *ngIf="f.nombre.errors.required">El nombre es requerida</div>
+                  </div>
+              </div>
+                
+              <div class="form-group">
+                    <label>Telefono:</label>
+                    <input type="text" formControlName="telefono" placeholder="telefono" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }">
+                    <div *ngIf="submitted && f.telefono.errors">
+                      <div *ngIf="f.telefono.errors.required">El telefono es requerida</div>
+                    </div>
+                </div>
+      
+          <button type="submit"  class="btn btn-info">Actualizar</button>
+        </form>
+      </div>
+      

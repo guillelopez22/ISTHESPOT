@@ -1,0 +1,38 @@
+<div class="container col-md-12"> 
+        <div>
+            <button (click)="addUsuario()" class="btn btn-info">Agregar Usuario</button>
+          </div> 
+      <h2>Usuarios</h2>  
+      <div class="table-responsive table-container">  
+        <table class="table table-dark table-hover table-striped">  
+          <thead class="thead-light">  
+            <tr>  
+              <th>Id</th>
+              <th>IdPersonal</th>  
+              <th>Usuario</th> 
+              <th>Constrasena</th> 
+              <th>Nombre</th>
+              <th>Telefono</th> 
+              <th>Action</th>
+            </tr>  
+          </thead>  
+          <tbody>  
+            <tr *ngFor="let usuario of user"> 
+               
+              <td>{{usuario._id}}</td>
+              <td>{{usuario.idPersonal}}</td>  
+              <td>{{usuario.usuario}}</td>
+              <td>{{usuario.constrasena}}</td> 
+              <td>{{usuario.nombre}}</td> 
+              <td>{{usuario.telefono}}</td> 
+               
+              <td>  
+                <button (click)="deleteUsuario(usuario)" class="btn btn-info"> Eliminar</button>  
+                <button (click)="updateUsuario(usuario)" style="margin-left: 20px;" class="btn btn-info"> Editar</button>  
+              </td>  
+            </tr>  
+          </tbody>  
+        </table>  
+      </div> 
+       
+    </div> 

@@ -1,0 +1,32 @@
+<div class="container col-md-12"> 
+    <div>
+        <button (click)="addIngrediente()" class="btn btn-info">Agregar Ingrediente</button>
+      </div> 
+  <h2>Ingredientes</h2>  
+  <div class="table-responsive table-container">  
+    <table class="table table-dark table-hover table-striped">  
+      <thead class="thead-light">  
+        <tr>  
+          <th>Nombre</th>
+          <th>Inventario</th> 
+          <th>idProveedor</th>  
+          <th>Action</th> 
+        </tr>  
+      </thead>  
+      <tbody>  
+        <tr *ngFor="let ingrediente of ingredientes"> 
+           
+          <td>{{ingrediente.nombre}}</td>
+          <td>{{ingrediente.inventario}}</td> 
+          <td>{{ingrediente.idProveedor}}</td>  
+           
+          <td>  
+            <button (click)="deleteIngrediente(ingrediente)" class="btn btn-info"> Eliminar</button>  
+            <button (click)="updateIngrediente(ingrediente)" style="margin-left: 20px;" class="btn btn-info"> Editar</button>  
+          </td>  
+        </tr>  
+      </tbody>  
+    </table>  
+  </div> 
+   
+</div> 

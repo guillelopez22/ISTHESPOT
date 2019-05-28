@@ -1,0 +1,167 @@
+<div class="container">
+  <!--En esta parte se agrega al usuario-->
+  <br>
+  <h2 class="text-center">Lista de Ingredientes</h2>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Agregar Ingredientes
+</button>
+<br><br>
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Agregar Ingredientes</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+          <div class="container">  
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label for="name" class="control-label col-sm-2">
+                    Nombre
+                  </label>
+                  <input required type="text" class="form-control" id="name" 
+                    [(ngModel)] = "usuario.name" name="name"
+                    placeholder="Ingrese el nombre">
+                </div>
+                
+                <div class="form-group">
+                    <label for="cantidad" class="control-label col-sm-2">
+                      Cantidad
+                    </label>
+                    <input required type="text" class="form-control" id="apellido" 
+                    [(ngModel)] = "usuario.cantidad" name="cantidad"
+                      placeholder="Ingrese la cantidad">
+                  </div>
+                    
+                  <div class="form-group">
+                      <label for="rol" class="control-label col-sm-2">
+                        Unidades
+                      </label>
+                      <select class="form-control" id="unidades" name="unidades" [(ngModel)]="usuario.unidades">
+                          <option>Litros</option>
+                          <option>Mililitros</option>
+                          <option>Gramos</option>
+                          <option>Kilogramos</option>
+                        </select>
+                  </div>
+                  <div class="form-group">
+                      <label for="descripcion" class="control-label col-sm-2">
+                        Descripcion
+                      </label>
+                      <input required type="text" class="form-control" id="telefono" 
+                      [(ngModel)] = "usuario.descripcion" name="descripcion"
+                        placeholder="Descripcion">
+                    </div>
+              </form>
+            </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+            <button type="submit" (click)="onSubmit()" data-dismiss="modal" class="btn btn-success" >Save</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--En esta parte se muestra el usuario-->
+
+  <div style="overflow-x:auto;">
+      <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Cantidad</th>
+              <th>Unidades</th>
+              <th>Descripcion</th>
+              <th></th>
+              <th></th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John</td>
+              <td>Doe</td>
+              <td>john@example.com</td>
+              <td>John</td>
+              <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2">Editar </button></td>
+                <td><button class="btn btn-danger">Eliminar</button></td>
+            </tr>
+            
+          </tbody>
+        </table>
+  </div>
+  <div class="modal" id="myModal2">
+      <div class="modal-dialog">
+        <div class="modal-content">
+    
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Modificar Ingredientes</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+    
+          <!-- Modal body -->
+          <div class="modal-body">
+              <div class="container">  
+                  <form class="form-horizontal">
+                    <div class="form-group">
+                      <label for="name" class="control-label col-sm-2">
+                        Nombre
+                      </label>
+                      <input required type="text" class="form-control" id="name" 
+                        [(ngModel)] = "usuario.name" name="name"
+                        placeholder="Ingrese el nombre">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cantidad" class="control-label col-sm-2">
+                          Cantidad
+                        </label>
+                        <input required type="text" class="form-control" id="apellido" 
+                        [(ngModel)] = "usuario.cantidad" name="cantidad"
+                          placeholder="Ingrese la cantidad">
+                      </div>
+                        
+                      <div class="form-group">
+                          <label for="rol" class="control-label col-sm-2">
+                            Unidades
+                          </label>
+                          <select class="form-control" id="unidades" name="unidades" [(ngModel)]="usuario.unidades">
+                              <option>Litros</option>
+                              <option>Mililitros</option>
+                              <option>Gramos</option>
+                              <option>Kilogramos</option>
+                            </select>
+                      </div>
+                      <div class="form-group">
+                          <label for="descripcion" class="control-label col-sm-2">
+                            Descripcion
+                          </label>
+                          <input required type="text" class="form-control" id="telefono" 
+                          [(ngModel)] = "usuario.descripcion" name="descripcion"
+                            placeholder="Descripcion">
+                        </div>
+                  </form>
+                </div>
+          </div>
+    
+          <!-- Modal footer -->
+          <div class="modal-footer">
+                <button type="submit" (click)="onSubmit()" data-dismiss="modal" class="btn btn-success" >Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+    
+        </div>
+      </div>
+    </div>
+</div>
