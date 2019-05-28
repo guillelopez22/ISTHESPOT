@@ -13,7 +13,7 @@ import { AddBebidaComponent } from './components/bebidas/add/add-bebida.componen
 import { EditBebidaComponent } from './components/bebidas/edit/edit-bebida.component';
 //users
 import { UsuarioService } from './services/usuario.service';
-import { ListUsuarioComponent } from './components/usuarios/list/list-usuarios.component';
+import { ListUsuariosComponent } from './components/usuarios/list/list-usuarios.component';
 import { AddUsuarioComponent } from './components/usuarios/add/add-usuario.component';
 import { EditUsuarioComponent } from './components/usuarios/edit/edit-usuario.component';
 //ingredientes
@@ -38,7 +38,7 @@ import { EditProveedorComponent } from './components/proveedores/edit/edit-prove
     ListBebidasComponent,
     AddBebidaComponent,
     EditBebidaComponent,
-    ListUsuarioComponent,
+    ListUsuariosComponent,
     AddUsuarioComponent,
     EditUsuarioComponent,
     ListIngredientesComponent,

@@ -9,7 +9,7 @@ import { UsuarioService } from '../../../services/usuario.service';
   styleUrls: ['./list-usuarios.component.css']
 })
 
-export class ListUsuarioComponent implements OnInit {
+export class ListUsuariosComponent implements OnInit {
 
   user: UserModel[];
 
