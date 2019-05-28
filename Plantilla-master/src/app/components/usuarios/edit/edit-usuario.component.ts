@@ -28,11 +28,13 @@ export class EditUsuarioComponent implements OnInit {
 
     this.editForm = this.formBuilder.group({
       _id: [],
-      idPersonal: ['', Validators.required],
+      IdPersonal: ['', Validators.required],
+      idOrdenes: ['', Validators.required],
       usuario: ['', Validators.required],
-      constrasena: ['', Validators.required],
+      contrasena: ['', Validators.required],
       nombre: ['', Validators.required],
-      telefono: ['', Validators.required]
+      telefono: ['', Validators.required],
+      scope: ['', Validators.required]
     });
 
     this.usuarioService.getUsuarioById(usuarioId).subscribe(data=>{

@@ -19,11 +19,13 @@ export class AddUsuarioComponent implements OnInit {
   ngOnInit() {
     this.addForm = this.formBuilder.group({
       _id: [],
-      idPersonal: ['', Validators.required],
+      IdPersonal: ['', Validators.required],
+      idOrdenes: ['', Validators.required],
       usuario: ['', Validators.required],
       contrasena: ['', Validators.required],
       nombre: ['', Validators.required],
-      telefono: ['', Validators.required]
+      telefono: ['', Validators.required],
+      scope: ['', Validators.required]
     });
   }
 
