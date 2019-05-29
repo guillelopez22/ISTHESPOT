@@ -16,18 +16,18 @@ export class ProveedorService {
   }
 
   getProveedorById(id: string){
-    return this.http.get<ProveedorModel>(this.baseurl + 'proveedores/searchbyid/' + id);
+    return this.http.get<ProveedorModel>(this.baseurl + 'proveedor/searchbyid/' + id);
   }
 
   addProveedor(proveedor: ProveedorModel){
-    return this.http.post(this.baseurl + 'proveedores/create', proveedor, {responseType: 'text'});
+    return this.http.post(this.baseurl + 'proveedor/create', proveedor, {responseType: 'text'});
   }
 
   deleteProveedor(id: string){
-    return this.http.delete(this.baseurl + 'proveedores/delete/' + id, {responseType: 'text'});
+    return this.http.delete(this.baseurl + 'proveedor/delete/' + id, {responseType: 'text'});
   }
 
   updateProveedor(proveedor: ProveedorModel){
-    return this.http.put(this.baseurl + 'proveedores/update/' + proveedor._id, proveedor, {responseType: 'text'});
+    return this.http.put(this.baseurl + 'proveedor/update/' + proveedor._id, proveedor, {responseType: 'text'});
   }
 }
