@@ -8,7 +8,7 @@
               <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
             </div>
           </div>
-    
+    <!--  
           <div class="form-group">
             <label>idProveedor:</label>
             <input type="text" formControlName="idProveedor" placeholder="Id del proveedor" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idProveedor.errors }">
@@ -16,6 +16,16 @@
               <div *ngIf="f.idProveedor.errors.required">El id del proveedor es requerido</div>
             </div>
           </div>
+        -->
+        <div>
+          <label>Id Proveedor:</label>
+          <div></div>
+          <select formControlName="idProveedor">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+      </div>
       
           <div class="form-group">
             <label>Tipo:</label>

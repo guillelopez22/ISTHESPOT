@@ -2,21 +2,25 @@
   <h2 class="text-center">Agregar Producto</h2>
   <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
 
-    <div class="form-group">
-      <label>id Bebida:</label>
-      <input type="text" formControlName="idBebida" placeholder="Id de la bebida" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idBebida.errors }">
-      <div *ngIf="submitted && f.idBebida.errors">
-        <div *ngIf="f.idBebida.errors.required">El id de la bebida es requerido</div>
-      </div>
-    </div>
+    <div>
+      <label>Id Bebida:</label>
+      <div></div>
+      <select formControlName="idBebida">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+  </div>
 
-    <div class="form-group">
-      <label>id Producto Elaborado:</label>
-      <input type="text" formControlName="idProducto_Elaborado" placeholder="Id Producto Elaborado" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idProducto_Elaborado.errors }">
-      <div *ngIf="submitted && f.idProducto_Elaborado.errors">
-        <div *ngIf="f.idProducto_Elaborado.errors.required">El id es requrido</div>
-      </div>
-    </div>
+    <div>
+      <label>Id Producto Elaborado:</label>
+      <div></div>
+      <select formControlName="idProducto_Elaborado">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+  </div>
 
     <div class="form-group">
       <label>Nombre:</label>
