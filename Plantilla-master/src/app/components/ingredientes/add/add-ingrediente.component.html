@@ -22,10 +22,9 @@
     <div>
       <label>Id Proveedor:</label>
       <div></div>
-      
       <select formControlName="idProveedor" [(ngModel)]="proveedores.nombre">
         <option *ngFor="let proveedor of proveedores" 
-        [value]="proveedor.nombre" >
+        [value]="proveedor.nombre" >{{proveedor._id}}-
         {{proveedor.nombre}}
         </option>
       </select>

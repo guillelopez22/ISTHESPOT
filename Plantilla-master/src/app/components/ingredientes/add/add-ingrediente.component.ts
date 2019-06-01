@@ -18,7 +18,7 @@ export class AddIngredienteComponent implements OnInit {
   proveedores: ProveedorModel[];
   addForm: FormGroup;
   submitted = false;
-  nombreproveedores:string[];
+  
   
 
   ngOnInit() {

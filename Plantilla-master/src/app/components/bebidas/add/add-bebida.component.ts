@@ -4,6 +4,8 @@ import { BebidaService } from '../../../services/bebida.service';
 import { first } from "rxjs/operators";
 import { Router } from "@angular/router";
 
+import { ProveedorModel } from '../../../Models/ProveedorModel';
+import { ProveedorService } from '../../../services/proveedor.service';
 @Component({
   selector: 'app-add-bebida',
   templateUrl: './add-bebida.component.html',
@@ -11,12 +13,13 @@ import { Router } from "@angular/router";
 })
 export class AddBebidaComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private bebidaService: BebidaService) { }
-
+  constructor(private formBuilder: FormBuilder, private router: Router, private bebidaService: BebidaService,private proveedorService: ProveedorService) { }
+  proveedores: ProveedorModel[];
   addForm: FormGroup;
   submitted = false;
 
   ngOnInit() {
+    this.getAllProveedores();
     this.addForm = this.formBuilder.group({
       _id: [],
       nombre: ['', Validators.required],
@@ -26,7 +29,11 @@ export class AddBebidaComponent implements OnInit {
       descripcion: ['', Validators.required]
     });
   }
-
+  getAllProveedores(): void {
+    this.proveedorService.getAllProveedores().subscribe(data=>{
+      this.proveedores = data;
+    });
+  };
   onSubmit(){
     this.submitted = true;
     
