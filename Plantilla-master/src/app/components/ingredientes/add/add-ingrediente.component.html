@@ -12,7 +12,7 @@
 
     <div class="form-group">
       <label>Inventario:</label>
-      <input type="text" formControlName="inventario" placeholder="Introduzca el inventario" class="form-control"
+      <input type="text" formControlName="inventario" placeholder="Introduzca el inventario" type ="number" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && f.inventario.errors }">
       <div *ngIf="submitted && f.inventario.errors">
         <div *ngIf="f.inventario.errors.required">El número de inventario es requerido</div>

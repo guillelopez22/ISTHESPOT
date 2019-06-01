@@ -40,7 +40,7 @@
 
     <div class="form-group">
       <label>Precio:</label>
-      <input type="text" formControlName="precio" placeholder="Introduzca el precio" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.precio.errors }">
+      <input type="text" formControlName="precio" placeholder="Introduzca el precio" class="form-control" type ="number" [ngClass]="{ 'is-invalid': submitted && f.precio.errors }">
       <div *ngIf="submitted && f.precio.errors">
         <div *ngIf="f.precio.errors.required">El precio es requerido</div>
       </div>

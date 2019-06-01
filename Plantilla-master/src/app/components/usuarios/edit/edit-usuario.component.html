@@ -41,7 +41,7 @@
       
           <div class="form-group">
               <label>Telefono:</label>
-              <input type="text" formControlName="telefono" placeholder="telefono" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }">
+              <input type="text" formControlName="telefono" placeholder="telefono" class="form-control" type ="number" [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }">
               <div *ngIf="submitted && f.telefono.errors">
                 <div *ngIf="f.telefono.errors.required">El telefono es requerida</div>
               </div>
