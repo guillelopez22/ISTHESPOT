@@ -4,6 +4,9 @@ import { IngredienteService } from '../../../services/ingrediente.service';
 import { first } from "rxjs/operators";
 import { Router } from "@angular/router";
 
+import { ProveedorModel } from '../../../Models/ProveedorModel';
+import { ProveedorService } from '../../../services/proveedor.service';
+
 @Component({
   selector: 'app-add-ingrediente',
   templateUrl: './add-ingrediente.component.html',
@@ -11,12 +14,15 @@ import { Router } from "@angular/router";
 })
 export class AddIngredienteComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private ingredienteService: IngredienteService) { }
-
+  constructor(private formBuilder: FormBuilder, private router: Router, private ingredienteService: IngredienteService,private proveedorService: ProveedorService) { }
+  proveedores: ProveedorModel[];
   addForm: FormGroup;
   submitted = false;
+  nombreproveedores:string[];
+  
 
   ngOnInit() {
+    this.getAllProveedores();
     this.addForm = this.formBuilder.group({
       _id: [],
       nombre: ['', Validators.required],
@@ -24,6 +30,12 @@ export class AddIngredienteComponent implements OnInit {
       idProveedor: ['', Validators.required]
     });
   }
+  getAllProveedores(): void {
+    this.proveedorService.getAllProveedores().subscribe(data=>{
+      this.proveedores = data;
+    });
+  };
+  
 
   onSubmit(){
     this.submitted = true;
