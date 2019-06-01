@@ -3,7 +3,7 @@
     <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label>Nombre:</label>
-        <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+        <input type="text" formControlName="nombre" placeholder="Introduzca el nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
         <div *ngIf="submitted && f.nombre.errors">
           <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
         </div>
@@ -11,7 +11,7 @@
       
       <div class="form-group">
         <label>Inventario:</label>
-        <input type="text" formControlName="inventario" placeholder="Inventario" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inventario.errors }">
+        <input type="text" formControlName="inventario" placeholder="Introduzca el inventario" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inventario.errors }">
         <div *ngIf="submitted && f.inventario.errors">
           <div *ngIf="f.inventario.errors.required">El número de inventario es requerido</div>
         </div>
@@ -21,7 +21,7 @@
         <label>Id Proveedor:</label>
         <div></div>
         <select formControlName="idProveedor">
-          <option value="1">1</option>
+          <option value="{{proveedor.nombre(0)}}">{{proveedor.nombre(0)}}</option>
           <option value="2">2</option>
           <option value="3">3</option>
         </select>

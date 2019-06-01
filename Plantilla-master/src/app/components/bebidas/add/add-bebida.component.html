@@ -30,16 +30,19 @@
 </div>
 
     <div class="form-group">
-      <label>Tipo:</label>
-      <input type="text" formControlName="tipo" placeholder="Tipo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }">
-      <div *ngIf="submitted && f.tipo.errors">
-        <div *ngIf="f.tipo.errors.required">Tipo es requerido</div>
-      </div>
+      <label>Tipo:</label><div></div>
+      <input type="text" formControlName="tipo" placeholder="Introduzca el tipo" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }">
+      <select formControlName="tipo">
+        <option value="Alcoholica">Alcoholica</option>
+        <option value="Gaseosa">Gaseosa</option>
+        <option value="Naturales">Naturales</option>
+        <option value="Agua">Agua</option>
+      </select>
     </div>
 
     <div class="form-group">
       <label>Inventario:</label>
-      <input type="text" formControlName="inventario" placeholder="Inventario" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inventario.errors }">
+      <input type="text" formControlName="inventario" placeholder="Introduzca el Inventario" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.inventario.errors }">
       <div *ngIf="submitted && f.inventario.errors">
         <div *ngIf="f.inventario.errors.required">El número de inventario es requerido</div>
       </div>
@@ -47,7 +50,7 @@
 
     <div class="form-group">
         <label>Descripcion:</label>
-        <input type="text" formControlName="descripcion" placeholder="Descripcion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
+        <input type="text" formControlName="descripcion" placeholder="Introduzca la Descripcion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
         <div *ngIf="submitted && f.descripcion.errors">
           <div *ngIf="f.descripcion.errors.required">La descripción es requerida</div>
         </div>

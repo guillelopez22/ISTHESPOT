@@ -21,7 +21,7 @@
 
     <div class="form-group">
       <label>Nombre de Usuario:</label>
-      <input type="text" formControlName="usuario" placeholder="usuario" class="form-control"
+      <input type="text" formControlName="usuario" placeholder="Introduzca el usuario" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && f.usuario.errors }">
       <div *ngIf="submitted && f.usuario.errors">
         <div *ngIf="f.usuario.errors.required">El usuario es requerido</div>
@@ -30,7 +30,7 @@
 
     <div class="form-group">
       <label>Contrasena:</label>
-      <input type="text" formControlName="contrasena" placeholder="contrasena" class="form-control"
+      <input type="text" formControlName="contrasena" placeholder="Introduzca el contraseña" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && f.contrasena.errors }">
       <div *ngIf="submitted && f.contrasena.errors">
         <div *ngIf="f.contrasena.errors.required">La contrasena es requerida</div>
@@ -39,7 +39,7 @@
 
     <div class="form-group">
       <label>Nombre completo:</label>
-      <input type="text" formControlName="nombre" placeholder="nombre" class="form-control"
+      <input type="text" formControlName="nombre" placeholder="Introduzca el nombre" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
       <div *ngIf="submitted && f.nombre.errors">
         <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
@@ -48,7 +48,7 @@
 
     <div class="form-group">
       <label>Telefono:</label>
-      <input type="text" formControlName="telefono" placeholder="telefono" class="form-control"
+      <input type="text" formControlName="telefono" placeholder="Introduzca el telefono" class="form-control"
         [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }">
       <div *ngIf="submitted && f.telefono.errors">
         <div *ngIf="f.telefono.errors.required">El telefono es requerida</div>

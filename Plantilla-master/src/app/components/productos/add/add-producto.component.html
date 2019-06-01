@@ -24,7 +24,7 @@
 
     <div class="form-group">
       <label>Nombre:</label>
-      <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+      <input type="text" formControlName="nombre" placeholder="Introduzca el nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
       <div *ngIf="submitted && f.nombre.errors">
         <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
       </div>
@@ -32,7 +32,7 @@
 
     <div class="form-group">
       <label>Descripcion:</label>
-      <input type="text" formControlName="descripcion" placeholder="Descripcion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
+      <input type="text" formControlName="descripcion" placeholder="Introduzca la descripcion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
       <div *ngIf="submitted && f.descripcion.errors">
         <div *ngIf="f.descripcion.errors.required">La descripcion es requerida</div>
       </div>
@@ -40,7 +40,7 @@
 
     <div class="form-group">
       <label>Precio:</label>
-      <input type="text" formControlName="precio" placeholder="Precio" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.precio.errors }">
+      <input type="text" formControlName="precio" placeholder="Introduzca el precio" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.precio.errors }">
       <div *ngIf="submitted && f.precio.errors">
         <div *ngIf="f.precio.errors.required">El precio es requerido</div>
       </div>
