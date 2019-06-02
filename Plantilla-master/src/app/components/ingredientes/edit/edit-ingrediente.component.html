@@ -20,10 +20,11 @@
           <div>
             <label>Id Proveedor:</label>
             <div></div>
-            <select formControlName="idProveedor">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
+            <select formControlName="idProveedor" [(ngModel)]="proveedores.nombre">
+              <option *ngFor="let proveedor of proveedores" 
+              [value]="proveedor.nombre" >{{proveedor._id}}-
+              {{proveedor.nombre}}
+              </option>
             </select>
         </div>
   

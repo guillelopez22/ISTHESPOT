@@ -5,6 +5,9 @@ import { first } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { IngredienteModel } from '../../../Models/IngredienteModel';
 
+import { ProveedorModel } from '../../../Models/ProveedorModel';
+import { ProveedorService } from '../../../services/proveedor.service';
+
 @Component({
   selector: 'app-edit-ingrediente',
   templateUrl: './edit-ingrediente.component.html',
@@ -16,7 +19,9 @@ export class EditIngredienteComponent implements OnInit {
   editForm: FormGroup;
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private ingredienteService: IngredienteService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private ingredienteService: IngredienteService, private proveedorService: ProveedorService) { }
+  proveedores: ProveedorModel[];
+  modForm: ProveedorModel;
 
   ngOnInit() {
     let ingredienteId = localStorage.getItem("ingredienteId");
@@ -37,10 +42,18 @@ export class EditIngredienteComponent implements OnInit {
       console.log(data);
       this.editForm.patchValue(data); //Don't use editForm.setValue() as it will throw console error
     });
+
+    this.getAllProveedores();
   }
 
   // get the form short name to access the form fields
   get f() { return this.editForm.controls; }
+
+  getAllProveedores(): void {
+    this.proveedorService.getAllProveedores().subscribe(data=>{
+      this.proveedores = data;
+    });
+  };
 
   onSubmit(){
     this.submitted = true;
