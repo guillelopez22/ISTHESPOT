@@ -2,22 +2,22 @@ var producto_elaborado = require('../schemas/producto_elaborado.js');
 var mongoose = require('mongoose');
 
 exports.getProductos_elaborados = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     var productos_elaborados = producto_elaborado.find({});
     reply(productos_elaborados);
   }
 }
 exports.getProductos_elaboradoId = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler : function(request, reply){
     producto_elaborado.findOne({'_id' : request.params._id}, function(err, Producto_elaborado){
       if(!err && Producto_elaborado){
@@ -31,11 +31,11 @@ exports.getProductos_elaboradoId = {
   }
 }
 exports.getIdProducto_Elaborado_Detail = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler : function(request, reply){
     producto_elaborado.find({'idProducto_Elaborado_Detail' : request.params.idProducto_Elaborado_Detail}, function(err, Productos_elaborados){
       if(!err && Productos_elaborados){
@@ -49,11 +49,11 @@ exports.getIdProducto_Elaborado_Detail = {
   }
 }
 exports.getIdProducto_Elaborado_Tipo = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler : function(request, reply){
     producto_elaborado.find({'tipo' : request.params.idProveedor}, function(err, Productos_elaborados){
       if(!err && Productos_elaborados){
@@ -67,11 +67,11 @@ exports.getIdProducto_Elaborado_Tipo = {
   }
 }
 exports.modifyProductos_elaborado = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     producto_elaborado.update(
       {'_id': request.params._id},
@@ -92,11 +92,11 @@ exports.modifyProductos_elaborado = {
   }
 }
 exports.deleteProducto_elaborado = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     producto_elaborado.findOne({'_id' : request.params._id}, function(err, Producto_elaborado){
       if(err){
@@ -111,11 +111,11 @@ exports.deleteProducto_elaborado = {
   }
 }
 exports.createProducto_elaborado = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },,*/
   handler: function(request, reply){
     var newProducto_Elaborado = new producto_elaborado({
       idProducto_Elaborado_Detail : request.payload.idProducto_Elaborado_Detail,

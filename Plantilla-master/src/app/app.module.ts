@@ -31,6 +31,12 @@ import { ProveedorService } from './services/proveedor.service';
 import { ListProveedoresComponent } from './components/proveedores/list/list-proveedores.component';
 import { AddProveedorComponent } from './components/proveedores/add/add-proveedor.component';
 import { EditProveedorComponent } from './components/proveedores/edit/edit-proveedor.component';
+//productos_elaborados
+import { Producto_ElaboradoService } from './services/producto_elaborado.service';
+import { ListProductos_ElaboradosComponent } from './components/productos_elaborados/list/list-productos_elaborados.component';
+import { AddProducto_ElaboradoComponent } from './components/productos_elaborados/add/add-producto_elaborado.component';
+import { EditProducto_ElaboradoComponent } from './components/productos_elaborados/edit/edit-producto_elaborado.component';
+
 
 @NgModule({
   declarations: [
@@ -49,7 +55,10 @@ import { EditProveedorComponent } from './components/proveedores/edit/edit-prove
     EditProductoComponent,
     ListProveedoresComponent,
     AddProveedorComponent,
-    EditProveedorComponent
+    EditProveedorComponent,
+    ListProductos_ElaboradosComponent,
+    AddProducto_ElaboradoComponent,
+    EditProducto_ElaboradoComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +66,7 @@ import { EditProveedorComponent } from './components/proveedores/edit/edit-prove
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [BebidaService, IngredienteService, UsuarioService, ProductoService, ProveedorService],
+  providers: [BebidaService, IngredienteService, UsuarioService, ProductoService, ProveedorService,Producto_ElaboradoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

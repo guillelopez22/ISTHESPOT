@@ -1,11 +1,11 @@
 <div class="col-md-3">
-  <h2 class="text-center">Agregar Bebida</h2>
+  <h2 class="text-center">Agregar Producto Elaborado</h2>
   <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
-      <label>Nombre:</label>
-      <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
-      <div *ngIf="submitted && f.nombre.errors">
-        <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
+      <label>id:</label>
+      <input type="text" formControlName="idProducto_Elaborado_Detail" placeholder="idProducto_Elaborado_Detail" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idProducto_Elaborado_Detail.errors }">
+      <div *ngIf="submitted && f.idProducto_Elaborado_Detail.errors">
+        <div *ngIf="f.idProducto_Elaborado_Detail.errors.required">El id es requerido</div>
       </div>
     </div>
 <!-- 
@@ -18,34 +18,15 @@
     </div>
 
  -->
-  
- <div>
-    <label>Id Proveedor:</label>
-    <div></div>
-    <select formControlName="idProveedor" [(ngModel)]="proveedores.nombre">
-      <option *ngFor="let proveedor of proveedores" 
-      [value]="proveedor.nombre" >{{proveedor._id}}-
-      {{proveedor.nombre}}
-      </option>
-    </select>
-</div>
 
     <div class="form-group">
       <label>Tipo:</label><div></div>
       <select formControlName="tipo">
-        <option value="Alcoholica">Alcoholica</option>
+        <option value="Alcoholica">Comida</option>
         <option value="Gaseosa">Gaseosa</option>
         <option value="Naturales">Naturales</option>
         <option value="Agua">Agua</option>
       </select>
-    </div>
-
-    <div class="form-group">
-      <label>Inventario:</label>
-      <input type="text" formControlName="inventario" placeholder="Introduzca el Inventario" class="form-control" type ="number" [ngClass]="{ 'is-invalid': submitted && f.inventario.errors }">
-      <div *ngIf="submitted && f.inventario.errors">
-        <div *ngIf="f.inventario.errors.required">El número de inventario es requerido</div>
-      </div>
     </div>
 
     <div class="form-group">
