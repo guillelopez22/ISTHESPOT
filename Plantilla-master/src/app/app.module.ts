@@ -36,6 +36,11 @@ import { Producto_ElaboradoService } from './services/producto_elaborado.service
 import { ListProductos_ElaboradosComponent } from './components/productos_elaborados/list/list-productos_elaborados.component';
 import { AddProducto_ElaboradoComponent } from './components/productos_elaborados/add/add-producto_elaborado.component';
 import { EditProducto_ElaboradoComponent } from './components/productos_elaborados/edit/edit-producto_elaborado.component';
+//productos elaborados detallados
+import { Producto_Elaborado_DetailService } from './services/producto_elaborado_detail.service';
+import { ListProductos_Elaborados_DetailComponent } from './components/productos_elaborados_detail/list/list-productos_elaborados_detail.component';
+import { AddProducto_Elaborado_DetailComponent } from './components/productos_elaborados_detail/add/add-producto_elaborado_detail.component';
+import {EditProducto_Elaborado_DetailComponent} from './components/productos_elaborados_detail/edit/edit-producto_elaborado_detail.component';
 
 
 @NgModule({
@@ -59,6 +64,9 @@ import { EditProducto_ElaboradoComponent } from './components/productos_elaborad
     ListProductos_ElaboradosComponent,
     AddProducto_ElaboradoComponent,
     EditProducto_ElaboradoComponent,
+    ListProductos_Elaborados_DetailComponent,
+    AddProducto_Elaborado_DetailComponent,
+    EditProducto_Elaborado_DetailComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +74,7 @@ import { EditProducto_ElaboradoComponent } from './components/productos_elaborad
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [BebidaService, IngredienteService, UsuarioService, ProductoService, ProveedorService,Producto_ElaboradoService],
+  providers: [BebidaService, IngredienteService, UsuarioService, ProductoService, ProveedorService,Producto_ElaboradoService, Producto_Elaborado_DetailService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

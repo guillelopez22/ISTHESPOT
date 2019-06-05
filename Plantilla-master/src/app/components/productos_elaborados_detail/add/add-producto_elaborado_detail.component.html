@@ -1,0 +1,38 @@
+<div class="col-md-3">
+  <h2 class="text-center">Agregar Producto Elaborado Detallado</h2>
+  <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Id Producto Elaborado:</label>
+      <input type="text" formControlName="idProducto_Elaborado" placeholder="Ingrese el id" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idProducto_Elaborado.errors }">
+      <div *ngIf="submitted && f.idProducto_Elaborado.errors">
+        <div *ngIf="f.idProducto_Elaborado.errors.required">El id es requerido</div>
+      </div>
+    </div>
+ 
+  <div class="form-group">
+      <label>Id Bebida:</label>
+      <input type="text" formControlName="idBebida" placeholder="Ingrese el idr" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idBebida.errors }">
+      <div *ngIf="submitted && f.idBebida.errors">
+        <div *ngIf="f.idBebida.errors.required">El id de bebida es requerido</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Id Insumo:</label>
+      <input type="text" formControlName="idInsumo" placeholder="Ingrese el idr" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idInsumo.errors }">
+      <div *ngIf="submitted && f.idInsumo.errors">
+        <div *ngIf="f.idInsumo.errors.required">El id de bebida es requerido</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+        <label>Cantidad:</label>
+        <input type="text" formControlName="cantidad" placeholder="Introduzca la cantidad" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cantidad.errors }">
+        <div *ngIf="submitted && f.cantidad.errors">
+          <div *ngIf="f.cantidad.errors.required">La cantidad es requerida</div>
+        </div>
+    </div>
+
+    <button type="submit"  class="btn btn-info">Guardar</button>
+  </form>
+</div>

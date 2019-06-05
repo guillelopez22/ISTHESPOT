@@ -26,6 +26,11 @@ import { EditProveedorComponent } from './components/proveedores/edit/edit-prove
 import { ListProductos_ElaboradosComponent } from './components/productos_elaborados/list/list-productos_elaborados.component';
 import { AddProducto_ElaboradoComponent } from './components/productos_elaborados/add/add-producto_elaborado.component';
 import { EditProducto_ElaboradoComponent } from './components/productos_elaborados/edit/edit-producto_elaborado.component';
+//productos elaborados detallados
+import { ListProductos_Elaborados_DetailComponent } from './components/productos_elaborados_detail/list/list-productos_elaborados_detail.component';
+import { AddProducto_Elaborado_DetailComponent } from './components/productos_elaborados_detail/add/add-producto_elaborado_detail.component';
+import {EditProducto_Elaborado_DetailComponent} from './components/productos_elaborados_detail/edit/edit-producto_elaborado_detail.component';
+
 
 const routes: Routes = [
   { path: 'add-bebida', component: AddBebidaComponent },
@@ -46,6 +51,10 @@ const routes: Routes = [
   { path: 'add-producto_elaborado', component: AddProducto_ElaboradoComponent },
   { path: 'edit-producto_elaborado', component: EditProducto_ElaboradoComponent},
   { path: '', component: ListProductos_ElaboradosComponent, pathMatch: 'full' },
+  { path: 'edit-producto_elaborado_detail', component: EditProducto_Elaborado_DetailComponent},
+  { path: '', component: ListProductos_Elaborados_DetailComponent, pathMatch: 'full' },
+  { path: 'add-producto_elaborado_detail', component: AddProducto_Elaborado_DetailComponent }
+
 ];
 
 @NgModule({
