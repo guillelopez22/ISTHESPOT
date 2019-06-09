@@ -3,36 +3,55 @@
   <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label>Id Producto Elaborado:</label>
-      <input type="text" formControlName="idProducto_Elaborado" placeholder="Ingrese el id" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idProducto_Elaborado.errors }">
+      <div></div>
+      <select class="form-control" formControlName="idProducto_Elaborado" [(ngModel)]="productos_elaborados.idProducto_Elaborado"
+        [ngClass]="{ 'is-invalid': submitted && f.idProducto_Elaborado.errors }">
+        <option *ngFor="let producto_elaborado of productos_elaborados">
+          {{producto_elaborado._id}}
+        </option>
+      </select>
       <div *ngIf="submitted && f.idProducto_Elaborado.errors">
-        <div *ngIf="f.idProducto_Elaborado.errors.required">El id es requerido</div>
+        <div *ngIf="f.idProducto_Elaborado.errors.required">El id Producto Elaborado es requerido</div>
       </div>
     </div>
- 
-  <div class="form-group">
+
+    <div class="form-group">
       <label>Id Bebida:</label>
-      <input type="text" formControlName="idBebida" placeholder="Ingrese el idr" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idBebida.errors }">
+      <div></div>
+      <select class="form-control" formControlName="idBebida" [(ngModel)]="bebidas.idBebida"
+        [ngClass]="{ 'is-invalid': submitted && f.idBebida.errors }">
+        <option *ngFor="let bebida of bebidas">
+          {{bebida._id}}
+        </option>
+      </select>
       <div *ngIf="submitted && f.idBebida.errors">
-        <div *ngIf="f.idBebida.errors.required">El id de bebida es requerido</div>
+        <div *ngIf="f.idBebida.errors.required">El id Bebida es requerido</div>
       </div>
     </div>
 
     <div class="form-group">
       <label>Id Insumo:</label>
-      <input type="text" formControlName="idInsumo" placeholder="Ingrese el idr" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idInsumo.errors }">
+      <div></div>
+      <select class="form-control" formControlName="idInsumo" [(ngModel)]="ingredientes.idIngrediente"
+        [ngClass]="{ 'is-invalid': submitted && f.idInsumo.errors }">
+        <option *ngFor="let ingrediente of ingredientes">
+          {{ingrediente._id}}
+        </option>
+      </select>
       <div *ngIf="submitted && f.idInsumo.errors">
-        <div *ngIf="f.idInsumo.errors.required">El id de bebida es requerido</div>
+        <div *ngIf="f.idInsumo.errors.required">El id Insumo es requerido</div>
       </div>
     </div>
 
     <div class="form-group">
-        <label>Cantidad:</label>
-        <input type="text" formControlName="cantidad" placeholder="Introduzca la cantidad" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cantidad.errors }">
-        <div *ngIf="submitted && f.cantidad.errors">
-          <div *ngIf="f.cantidad.errors.required">La cantidad es requerida</div>
-        </div>
+      <label>Cantidad:</label>
+      <input type="number" formControlName="cantidad" placeholder="Introduzca la cantidad" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f.cantidad.errors }">
+      <div *ngIf="submitted && f.cantidad.errors">
+        <div *ngIf="f.cantidad.errors.required">La cantidad es requerida</div>
+      </div>
     </div>
 
-    <button type="submit"  class="btn btn-info">Guardar</button>
+    <button type="submit" class="btn btn-info">Guardar</button>
   </form>
 </div>
