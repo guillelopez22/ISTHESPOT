@@ -24,8 +24,34 @@
           <td>{{producto_elaborado_detail.idInsumo}}</td>
           <td>{{producto_elaborado_detail.cantidad}}</td>
           <td>
-            <button (click)="deleteProducto_Elaborado_Detail(producto_elaborado_detail)" class="btn btn-info">
-              Eliminar</button>
+            <button type="button" class="btn btn-danger" data-toggle="modal" [attr.data-target]="'#myModal' + producto_elaborado_detail._id">
+              Eliminar
+            </button>
+            <!-- The Modal -->
+            <div class="modal" [attr.id]="'myModal' + producto_elaborado_detail._id">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header" style="color: black">
+                    <h4 class="modal-title">Eliminar</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+
+                  <!-- Modal body -->
+                  <div class="modal-body" style="color: black">
+                    ¿Seguro que desea eliminar?
+                  </div>
+
+                  <!-- Modal footer -->
+                  <div class="modal-footer" style="color: black">
+                    <button (click)="deleteProducto_Elaborado_Detail(producto_elaborado_detail)" class="btn btn-info" data-dismiss="modal"> Eliminar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
             <button (click)="updateProducto_Elaborado_Detail(producto_elaborado_detail)" style="margin-left: 20px;"
               class="btn btn-info"> Editar</button>
           </td>
