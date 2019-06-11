@@ -1,36 +1,42 @@
-<div class="container col-md-12"> 
-    <div>
-        <button (click)="addBebida()" class="btn btn-info">Agregar Bebida</button>
+<div class="">
+  <br>
+    <div class="col-md-12"> 
+        <h2 style="text-align: center; color:aliceblue">Bebidas</h2>  
+        <div>
+            <button (click)="addBebida()" class="btn btn-success">Agregar Bebida</button>
+          </div>
+          <br> 
+      
+      <div class="table-responsive table-container">  
+        <table class="table table-dark table-hover table-striped">  
+          <thead class="thead-light">  
+            <tr>  
+              <th>Nombre</th>
+              <th>idProveedor</th>  
+              <th>Tipo</th> 
+              <th>Inventario</th> 
+              <th>Descripcion</th>
+              <th>Action</th> 
+            </tr>  
+          </thead>  
+          <tbody>  
+            <tr *ngFor="let bebida of bebidas"> 
+               
+              <td>{{bebida.nombre}}</td>
+              <td>{{bebida.idProveedor}}</td>  
+              <td>{{bebida.tipo}}</td>
+              <td>{{bebida.inventario}}</td> 
+              <td>{{bebida.descripcion}}</td> 
+               
+              <td>  
+                <button (click)="deleteBebida(bebida)" class="btn btn-danger"> Eliminar</button>  
+                <button (click)="updateBebida(bebida)" style="margin-left: 20px;" class="btn btn-info"> Editar</button>  
+              </td>  
+            </tr>  
+          </tbody>  
+        </table>  
       </div> 
-  <h2>Bebidas</h2>  
-  <div class="table-responsive table-container">  
-    <table class="table table-dark table-hover table-striped">  
-      <thead class="thead-light">  
-        <tr>  
-          <th>Nombre</th>
-          <th>idProveedor</th>  
-          <th>Tipo</th> 
-          <th>Inventario</th> 
-          <th>Descripcion</th>
-          <th>Action</th> 
-        </tr>  
-      </thead>  
-      <tbody>  
-        <tr *ngFor="let bebida of bebidas"> 
-           
-          <td>{{bebida.nombre}}</td>
-          <td>{{bebida.idProveedor}}</td>  
-          <td>{{bebida.tipo}}</td>
-          <td>{{bebida.inventario}}</td> 
-          <td>{{bebida.descripcion}}</td> 
-           
-          <td>  
-            <button (click)="deleteBebida(bebida)" class="btn btn-info"> Eliminar</button>  
-            <button (click)="updateBebida(bebida)" style="margin-left: 20px;" class="btn btn-info"> Editar</button>  
-          </td>  
-        </tr>  
-      </tbody>  
-    </table>  
-  </div> 
-   
-</div> 
+       
+    </div> 
+
+</div>

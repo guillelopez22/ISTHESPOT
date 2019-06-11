@@ -1,52 +1,54 @@
-<div class="col-md-3">
-  <h2 class="text-center">Editar Producto</h2>
-  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-        
-    <div>
-      <label>Id Bebida:</label>
-      <div></div>
-      <select formControlName="idBebida">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
-  </div>
-
-    <div>
-      <label>Id Producto Elaborado:</label>
-      <div></div>
-      <select formControlName="idProducto_Elaborado">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
-  </div>
-
-        <div class="form-group">
-          <label>Nombre:</label>
-          <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
-          <div *ngIf="submitted && f.nombre.errors">
-            <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
-          </div>
-        </div>
-  
-        <div class="form-group">
-            <label>Descripcion:</label>
-            <input type="text" formControlName="descripcion" placeholder="Descripcion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
-            <div *ngIf="submitted && f.descripcion.errors">
-              <div *ngIf="f.descripcion.errors.required">La descripción es requerida</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-          <label>Precio:</label>
-          <input type="text" formControlName="precio" placeholder="Precio" class="form-control" type ="number" type ="number" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
-          <div *ngIf="submitted && f.precio.errors">
-            <div *ngIf="f.precio.errors.required">El precio es requerido</div>
-          </div>
+<br><br>
+<div class="card" style="width: 500px; display: block; margin-left: auto; margin-right:auto">
+  <div class="card-body">
+      <h2 class="text-center">Editar Producto</h2>
+      <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            
+        <div>
+          <label>Id Bebida:</label>
+          <select class="form-control" formControlName="idBebida">
+            <option class="form-control" value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
       </div>
+    
+        <div>
+          <label>Id Producto Elaborado:</label>
+          <select class="form-control" formControlName="idProducto_Elaborado">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+      </div>
+    
+            <div class="form-group">
+              <label>Nombre:</label>
+              <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+              <div *ngIf="submitted && f.nombre.errors">
+                <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
+              </div>
+            </div>
+      
+            <div class="form-group">
+                <label>Descripcion:</label>
+                <input type="text" formControlName="descripcion" placeholder="Descripcion" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
+                <div *ngIf="submitted && f.descripcion.errors">
+                  <div *ngIf="f.descripcion.errors.required">La descripción es requerida</div>
+                </div>
+            </div>
+    
+            <div class="form-group">
+              <label>Precio:</label>
+              <input type="text" formControlName="precio" placeholder="Precio" class="form-control" type ="number" type ="number" [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
+              <div *ngIf="submitted && f.precio.errors">
+                <div *ngIf="f.precio.errors.required">El precio es requerido</div>
+              </div>
+          </div>
+    
+        <button type="submit"  class="btn btn-info">Actualizar</button>
+      </form>
 
-    <button type="submit"  class="btn btn-info">Actualizar</button>
-  </form>
+  </div>
 </div>
 

@@ -1,32 +1,37 @@
-<div class="container col-md-12"> 
-    <div>
-        <button (click)="addProducto_Elaborado_Detail()" class="btn btn-info">Agregar Producto Elaborado Detallado</button>
-      </div> 
-  <h2>Producto Elaborado Detallado</h2>  
-  <div class="table-responsive table-container">  
-    <table class="table table-dark table-hover table-striped">  
-      <thead class="thead-light">  
-        <tr>  
+<br>
+<div class="col-md-12">
+  <h2 style="text-align: center; color:aliceblue">Producto Elaborado Detallado</h2>
+  <div>
+    <button (click)="addProducto_Elaborado_Detail()" class="btn btn-success">Agregar Producto Elaborado
+      Detallado</button>
+  </div>
+  <br>
+  <div class="table-responsive table-container">
+    <table class="table table-dark table-hover table-striped">
+      <thead class="thead-light">
+        <tr>
           <th>id Producto Elaborado</th>
-          <th>id Bebida</th>  
-          <th>id Insumo</th> 
+          <th>id Bebida</th>
+          <th>id Insumo</th>
           <th>Cantidad</th>
-          <th>Action</th> 
-        </tr>  
-      </thead>  
-      <tbody>  
-        <tr *ngFor="let producto_elaborado_detail of productos_elaborados_detail"> 
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto_elaborado_detail of productos_elaborados_detail">
           <td>{{producto_elaborado_detail.idProducto_Elaborado}}</td>
-          <td>{{producto_elaborado_detail.idBebida}}</td>  
-          <td>{{producto_elaborado_detail.idInsumo}}</td>  
-          <td>{{producto_elaborado_detail.cantidad}}</td>  
-          <td>  
-            <button (click)="deleteProducto_Elaborado_Detail(producto_elaborado_detail)" class="btn btn-info"> Eliminar</button>  
-            <button (click)="updateProducto_Elaborado_Detail(producto_elaborado_detail)" style="margin-left: 20px;" class="btn btn-info"> Editar</button>  
-          </td>  
-        </tr>  
-      </tbody>  
-    </table>  
-  </div> 
-   
-</div> 
+          <td>{{producto_elaborado_detail.idBebida}}</td>
+          <td>{{producto_elaborado_detail.idInsumo}}</td>
+          <td>{{producto_elaborado_detail.cantidad}}</td>
+          <td>
+            <button (click)="deleteProducto_Elaborado_Detail(producto_elaborado_detail)" class="btn btn-info">
+              Eliminar</button>
+            <button (click)="updateProducto_Elaborado_Detail(producto_elaborado_detail)" style="margin-left: 20px;"
+              class="btn btn-info"> Editar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

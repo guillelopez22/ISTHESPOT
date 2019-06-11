@@ -1,31 +1,34 @@
-<div class="container col-md-12"> 
-    <div>
-        <button (click)="addProducto_Elaborado()" class="btn btn-info">Agregar Producto Elaborado</button>
-      </div> 
-  <h2>Producto Elaborado</h2>  
-  <div class="table-responsive table-container">  
-    <table class="table table-dark table-hover table-striped">  
-      <thead class="thead-light">  
-        <tr>  
+<br>
+<div class="col-md-12">
+  <h2 style="text-align: center; color:aliceblue">Productos Elaborados</h2>
+  <div>
+    <button (click)="addProducto_Elaborado()" class="btn btn-success">Agregar Producto Elaborado</button>
+  </div>
+  <br>
+  <div class="table-responsive table-container">
+    <table class="table table-dark table-hover table-striped">
+      <thead class="thead-light">
+        <tr>
           <th>id Producto Detail</th>
-          <th>Tipo</th>  
-          <th>Descripcion</th> 
-          <th>Action</th> 
-        </tr>  
-      </thead>  
-      <tbody>  
-        <tr *ngFor="let producto_elaborado of productos_elaborados"> 
-           
+          <th>Tipo</th>
+          <th>Descripcion</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto_elaborado of productos_elaborados">
+
           <td>{{producto_elaborado.idProducto_Elaborado_Detail}}</td>
-          <td>{{producto_elaborado.tipo}}</td>  
-          <td>{{producto_elaborado.descripcion}}</td> 
-          <td>  
-            <button (click)="deleteProducto_Elaborado(producto_elaborado)" class="btn btn-info"> Eliminar</button>  
-            <button (click)="updateProducto_Elaborado(producto_elaborado)" style="margin-left: 20px;" class="btn btn-info"> Editar</button>  
-          </td>  
-        </tr>  
-      </tbody>  
-    </table>  
-  </div> 
-   
-</div> 
+          <td>{{producto_elaborado.tipo}}</td>
+          <td>{{producto_elaborado.descripcion}}</td>
+          <td>
+            <button (click)="deleteProducto_Elaborado(producto_elaborado)" class="btn btn-danger"> Eliminar</button>
+            <button (click)="updateProducto_Elaborado(producto_elaborado)" style="margin-left: 20px;"
+              class="btn btn-info"> Editar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

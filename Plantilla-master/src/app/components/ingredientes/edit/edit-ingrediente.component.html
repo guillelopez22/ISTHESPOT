@@ -1,34 +1,38 @@
-<div class="col-md-3">
-    <h2 class="text-center">Editar Ingrediente</h2>
-    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label>Nombre:</label>
-            <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
-            <div *ngIf="submitted && f.nombre.errors">
-              <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
+<br><br>
+<div class="card" style="width: 500px; display: block; margin-left: auto; margin-right:auto">
+    <div class="card-body">
+        <h2 class="text-center">Editar Ingrediente</h2>
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label>Nombre:</label>
+                <input type="text" formControlName="nombre" placeholder="Nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+                <div *ngIf="submitted && f.nombre.errors">
+                  <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label>Inventario:</label>
+                <input type="text" formControlName="inventario" placeholder="Inventario" class="form-control" type ="number" [ngClass]="{ 'is-invalid': submitted && f.inventario.errors }">
+                <div *ngIf="submitted && f.inventario.errors">
+                  <div *ngIf="f.inventario.errors.required">El número de inventario es requerido</div>
+                </div>
+              </div>
+        
+              <div>
+                <label>Id Proveedor:</label>
+                <div></div>
+                <select class="form-control" formControlName="idProveedor" [(ngModel)]="proveedores.nombre">
+                  <option *ngFor="let proveedor of proveedores" 
+                  [value]="proveedor.nombre" >{{proveedor._id}}-
+                  {{proveedor.nombre}}
+                  </option>
+                </select>
             </div>
-          </div>
-          
-          <div class="form-group">
-            <label>Inventario:</label>
-            <input type="text" formControlName="inventario" placeholder="Inventario" class="form-control" type ="number" [ngClass]="{ 'is-invalid': submitted && f.inventario.errors }">
-            <div *ngIf="submitted && f.inventario.errors">
-              <div *ngIf="f.inventario.errors.required">El número de inventario es requerido</div>
-            </div>
-          </div>
-    
-          <div>
-            <label>Id Proveedor:</label>
-            <div></div>
-            <select formControlName="idProveedor" [(ngModel)]="proveedores.nombre">
-              <option *ngFor="let proveedor of proveedores" 
-              [value]="proveedor.nombre" >{{proveedor._id}}-
-              {{proveedor.nombre}}
-              </option>
-            </select>
-        </div>
-  
-      <button type="submit"  class="btn btn-info">Actualizar</button>
-    </form>
+            <br>
+          <button type="submit"  class="btn btn-info">Actualizar</button>
+        </form>
+
+    </div>
   </div>
   

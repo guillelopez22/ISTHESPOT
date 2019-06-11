@@ -1,8 +1,10 @@
 <div class="container col-md-12"> 
-  <div>
-      <button (click)="addProducto()" class="btn btn-info">Agregar Producto</button>
-    </div> 
-<h2>Productos</h2>  
+  <br>
+<h2 class="text-center" style="color:aliceblue">Productos</h2>
+<div>
+    <button (click)="addProducto()" class="btn btn-success">Agregar Producto</button>
+  </div>   
+  <br>
 <div class="table-responsive table-container">  
   <table class="table table-dark table-hover table-striped">  
     <thead class="thead-light">  
@@ -25,7 +27,7 @@
         <td>{{producto.precio}}</td> 
          
         <td>  
-          <button (click)="deleteProducto(producto)" class="btn btn-info"> Eliminar</button>  
+          <button (click)="deleteProducto(producto)" class="btn btn-danger"> Eliminar</button>  
           <button (click)="updateProducto(producto)" style="margin-left: 20px;" class="btn btn-info"> Editar</button>  
         </td>  
       </tr>  

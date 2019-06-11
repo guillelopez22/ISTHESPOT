@@ -1,43 +1,47 @@
-<div class="col-md-3">
-  <h2 class="text-center">Editar Producto Elaborado</h2>
-  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+<br><br>
+<div class="card" style="width: 500px; display: block; margin-left: auto; margin-right:auto">
+  <div class="card-body">
+    <h2 class="text-center">Editar Producto Elaborado</h2>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
 
-    <div class="form-group">
-      <label>Id Producto Elaborado Detail:</label>
-      <div></div>
-      <select class="form-control" formControlName="idProducto_Elaborado_Detail"
-        [(ngModel)]="productos_elaborados_detail.idProducto_Elaborado_Detail"
-        [ngClass]="{ 'is-invalid': submitted && f.idProducto_Elaborado_Detail.errors }">
-        <option *ngFor="let producto_elaborado_detail of productos_elaborados_detail">{{producto_elaborado_detail._id}}
-        </option>
-      </select>
-      <div *ngIf="submitted && f.idProducto_Elaborado_Detail.errors">
-        <div *ngIf="f.idProducto_Elaborado_Detail.errors.required">El id es requerida</div>
+      <div class="form-group">
+        <label>Id Producto Elaborado Detail:</label>
+        <div></div>
+        <select class="form-control" formControlName="idProducto_Elaborado_Detail"
+          [(ngModel)]="productos_elaborados_detail.idProducto_Elaborado_Detail"
+          [ngClass]="{ 'is-invalid': submitted && f.idProducto_Elaborado_Detail.errors }">
+          <option *ngFor="let producto_elaborado_detail of productos_elaborados_detail">
+            {{producto_elaborado_detail._id}}
+          </option>
+        </select>
+        <div *ngIf="submitted && f.idProducto_Elaborado_Detail.errors">
+          <div *ngIf="f.idProducto_Elaborado_Detail.errors.required">El id es requerida</div>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>Tipo:</label>
-      <div></div>
-      <select class="form-control" formControlName="tipo" [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
-      <div *ngIf="submitted && f.tipo.errors">
-        <div *ngIf="f.tipo.errors.required">El tipo es requerido</div>
+      <div class="form-group">
+        <label>Tipo:</label>
+        <div></div>
+        <select class="form-control" formControlName="tipo" [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+        <div *ngIf="submitted && f.tipo.errors">
+          <div *ngIf="f.tipo.errors.required">El tipo es requerido</div>
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>Descripcion:</label>
-      <input type="text" formControlName="descripcion" placeholder="Descripcion" class="form-control"
-        [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
-      <div *ngIf="submitted && f.descripcion.errors">
-        <div *ngIf="f.descripcion.errors.required">La descripción es requerida</div>
+      <div class="form-group">
+        <label>Descripcion:</label>
+        <input type="text" formControlName="descripcion" placeholder="Descripcion" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }">
+        <div *ngIf="submitted && f.descripcion.errors">
+          <div *ngIf="f.descripcion.errors.required">La descripción es requerida</div>
+        </div>
       </div>
-    </div>
 
-    <button type="submit" class="btn btn-info">Actualizar</button>
-  </form>
+      <button type="submit" class="btn btn-info">Actualizar</button>
+    </form>
+  </div>
 </div>

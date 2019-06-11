@@ -1,52 +1,60 @@
-<div class="col-md-3">
-        <h2 class="text-center">Editar Usuario</h2>
-        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
-          <div class="form-group">
-            <label>IdPersonal:</label>
-            <input type="text" formControlName="IdPersonal" placeholder="IdPersonal" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.IdPersonal.errors }">
-            <div *ngIf="submitted && f.IdPersonal.errors">
-              <div *ngIf="f.IdPersonal.errors.required">El id personal es requerido</div>
-            </div>
-          </div>
-    
-          <div class="form-group">
-            <label>idOrdenes:</label>
-            <input type="text" formControlName="idOrdenes" placeholder="idOrdenes:" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idOrdenes.errors }">
-            <div *ngIf="submitted && f.idOrdenes.errors">
-              <div *ngIf="f.idOrdenes.errors.required">Id ordenes es requrido</div>
-            </div>
-          </div>
-    
-          <div class="form-group">
-            <label>Nombre de Usuario:</label>
-            <input type="text" formControlName="usuario" placeholder="usuario" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.usuario.errors }">
-            <div *ngIf="submitted && f.usuario.errors">
-              <div *ngIf="f.usuario.errors.required">El usuario es requerido</div>
-            </div>
-          </div>
-          <div class="form-group">
-              <label>Contrasena:</label>
-              <input type="text" formControlName="contrasena" placeholder="contrasena" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.contrasena.errors }">
-              <div *ngIf="submitted && f.contrasena.errors">
-                <div *ngIf="f.contrasena.errors.required">La contrasena es requerida</div>
-              </div>
-          </div>
-          <div class="form-group">
-            <label>Nombre completo:</label>
-            <input type="text" formControlName="nombre" placeWholder="nombre" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
-            <div *ngIf="submitted && f.nombre.errors">
-              <div *ngIf="f.nombre.errors.required">El usuario es requerido</div>
-            </div>
-          </div>
-      
-          <div class="form-group">
-              <label>Telefono:</label>
-              <input type="text" formControlName="telefono" placeholder="telefono" class="form-control" type ="number" [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }">
-              <div *ngIf="submitted && f.telefono.errors">
-                <div *ngIf="f.telefono.errors.required">El telefono es requerida</div>
-              </div>
-          </div>
-          <!--
+<br><br>
+<div class="card" style="width: 500px; display: block; margin-left: auto; margin-right:auto">
+  <div class="card-body">
+    <h2 class="text-center">Editar Usuario</h2>
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>IdPersonal:</label>
+        <input type="text" formControlName="IdPersonal" placeholder="IdPersonal" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.IdPersonal.errors }">
+        <div *ngIf="submitted && f.IdPersonal.errors">
+          <div *ngIf="f.IdPersonal.errors.required">El id personal es requerido</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>idOrdenes:</label>
+        <input type="text" formControlName="idOrdenes" placeholder="idOrdenes:" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.idOrdenes.errors }">
+        <div *ngIf="submitted && f.idOrdenes.errors">
+          <div *ngIf="f.idOrdenes.errors.required">Id ordenes es requrido</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Nombre de Usuario:</label>
+        <input type="text" formControlName="usuario" placeholder="usuario" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.usuario.errors }">
+        <div *ngIf="submitted && f.usuario.errors">
+          <div *ngIf="f.usuario.errors.required">El usuario es requerido</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Contrasena:</label>
+        <input type="text" formControlName="contrasena" placeholder="contrasena" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.contrasena.errors }">
+        <div *ngIf="submitted && f.contrasena.errors">
+          <div *ngIf="f.contrasena.errors.required">La contrasena es requerida</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Nombre completo:</label>
+        <input type="text" formControlName="nombre" placeWholder="nombre" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+        <div *ngIf="submitted && f.nombre.errors">
+          <div *ngIf="f.nombre.errors.required">El usuario es requerido</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Telefono:</label>
+        <input type="text" formControlName="telefono" placeholder="telefono" class="form-control" type="number"
+          [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }">
+        <div *ngIf="submitted && f.telefono.errors">
+          <div *ngIf="f.telefono.errors.required">El telefono es requerida</div>
+        </div>
+      </div>
+      <!--
 
           <div class="form-group">
             <label>Scope:</label>
@@ -57,17 +65,17 @@
           </div>    
           -->
 
-          <div>
-              <label>Scope:</label>
-              <div></div>
-              <select formControlName="scope">
-                <option value="admin">Admin</option>
-                <option value="gerente">Gerente</option>
-                <option value="empleado">Empleado</option>
-              </select>
-          </div>
-
-          <button type="submit"  class="btn btn-info">Actualizar</button>
-        </form>
+      <div>
+        <label>Scope:</label>
+        <div></div>
+        <select class="form-control" formControlName="scope">
+          <option value="admin">Admin</option>
+          <option value="gerente">Gerente</option>
+          <option value="empleado">Empleado</option>
+        </select>
       </div>
-      
+
+      <button type="submit" class="btn btn-info">Actualizar</button>
+    </form>
+  </div>
+</div>

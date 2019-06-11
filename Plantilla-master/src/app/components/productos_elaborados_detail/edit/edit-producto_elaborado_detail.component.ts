@@ -4,10 +4,16 @@ import { Producto_Elaborado_DetailService } from '../../../services/producto_ela
 import { first } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { Producto_Elaborado_DetailModel } from '../../../Models/Producto_Elaborado_DetailModel';
+import {BebidaModel} from 'src/app/Models/BebidaModel';
+import {BebidaService} from '../../../services/bebida.service'
+import {IngredienteModel} from 'src/app/Models/IngredienteModel';
+import {IngredienteService} from '../../../services/ingrediente.service'
+import {Producto_ElaboradoModel} from 'src/app/Models/Producto_ElaboradoModel';
+import {Producto_ElaboradoService} from '../../../services/producto_elaborado.service'
 
 @Component({
   selector: 'app-edit-producto_elaborado_detail',
-  templateUrl: './edit-producto_elaborado_detail.component.html',
+  templateUrl: './edit-producto_elaborado_detail.component.html', 
   styleUrls: ['./edit-producto_elaborado_detail.component.css']
 })
 export class EditProducto_Elaborado_DetailComponent implements OnInit {
@@ -15,8 +21,11 @@ export class EditProducto_Elaborado_DetailComponent implements OnInit {
   producto_elaborado_detail: Producto_Elaborado_DetailModel;
   editForm: FormGroup;
   submitted = false;
+  bebidas: BebidaModel[];
+  insumos: IngredienteModel[];
+  productos_elaborados: Producto_ElaboradoModel[];
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private producto_elaborado_detailService: Producto_Elaborado_DetailService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private producto_elaborado_detailService: Producto_Elaborado_DetailService, private producto_elaboradoService: Producto_ElaboradoService, private IngredienteService: IngredienteService, private BebidaService: BebidaService) { }
 
   ngOnInit() {
     let producto_elaborado_detailId = localStorage.getItem("producto_elaborado_detailId");
@@ -38,6 +47,27 @@ export class EditProducto_Elaborado_DetailComponent implements OnInit {
       console.log(data);
       this.editForm.patchValue(data); //Don't use editForm.setValue() as it will throw console error
     });
+    this.getAllProducto_Elaborado();
+    this.getAllBebida();
+    this.getAllInsumo();
+  }
+
+  getAllProducto_Elaborado(): void{
+    this.producto_elaboradoService.getAllProductos_Elaborados().subscribe(data=>{
+      this.productos_elaborados = data;
+    })
+  }
+
+  getAllBebida(): void{
+    this.BebidaService.getAllBebidas().subscribe(data=>{
+      this.bebidas = data;
+    })
+  }
+
+  getAllInsumo(): void{
+    this.IngredienteService.getAllIngredientes().subscribe(data=>{
+      this.insumos = data;
+    })
   }
 
   // get the form short name to access the form fields
