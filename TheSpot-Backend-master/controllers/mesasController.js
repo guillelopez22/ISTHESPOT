@@ -2,22 +2,26 @@ var mesa = require('../schemas/mesa.js');
 var mongoose = require('mongoose');
 
 exports.getMesas = {
+  /*
   auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
   },
+  */
   handler: function(request, reply){
     var Mesas = mesa.find({});
     reply(Mesas);
   }
 }
 exports.getMesaId = {
+  /*
   auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
   },
+  */
   handler : function(request, reply){
     mesa.findOne({'_id' : request.params._id}, function(err, Mesa){
       if(!err && Mesa){
@@ -31,11 +35,13 @@ exports.getMesaId = {
   }
 }
 exports.getMesaName = {
+  /*
   auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'cliente']
   },
+  */
   handler : function(request, reply){
     mesa.find({'nombre' : request.params.nombre}, function(err, Mesas){
       if(!err && Mesas){
@@ -49,11 +55,13 @@ exports.getMesaName = {
   }
 }
 exports.getMesaNumero = {
+  /*
   auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
   },
+  */
   handler : function(request, reply){
     mesa.find({'numero' : request.params.numero}, function(err, Mesas){
       if(!err && Mesas){
@@ -67,11 +75,13 @@ exports.getMesaNumero = {
   }
 }
 exports.getMesaIdOrdenes = {
+  /*
   auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
   },
+  */
   handler : function(request, reply){
     mesa.find({'IdOrden' : request.params.IdOrden}, function(err, Mesas){
       if(!err && Mesas){
@@ -85,11 +95,13 @@ exports.getMesaIdOrdenes = {
   }
 }
 exports.modifyMesa = {
+  /*
   auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
   },
+  */
   handler: function(request, reply){
     mesa.update(
       {'_id': request.params._id},
@@ -109,12 +121,15 @@ exports.modifyMesa = {
     );
   }
 }
+
 exports.deleteMesa = {
+  /*
   auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
   },
+  */
   handler: function(request, reply){
     mesa.findOne({'_id' : request.params._id}, function(err, mesa){
       if(err){
@@ -129,11 +144,13 @@ exports.deleteMesa = {
   }
 }
 exports.createMesa = {
+  /*
   auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
   },
+  */
   handler: function(request, reply){
     var newMesa = new mesa({
       idOrden : request.payload.idProveedor,

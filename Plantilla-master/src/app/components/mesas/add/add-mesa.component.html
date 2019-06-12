@@ -1,0 +1,33 @@
+<div class="col-md-3">
+    <h2 class="text-center">Agregar Mesa</h2>
+    <form [formGroup]="addForm" (ngSubmit)="onSubmit()">
+
+      <div class="form-group">
+        <label>Id orden:</label>
+        <input type="text" formControlName="idOrden" placeholder="Id de la orden inicial" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.idOrden.errors }">
+        <div *ngIf="submitted && f.idOrden.errors">
+          <div *ngIf="f.idOrden.errors.required">El idOrden es requerido</div>
+        </div>
+      </div>
+    
+   <div class="form-group">
+        <label>Nombre:</label>
+        <input type="text" formControlName="nombre" placeholder="Nombre o codigo de la mesa" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }">
+        <div *ngIf="submitted && f.nombre.errors">
+          <div *ngIf="f.nombre.errors.required">El nombre es requerido</div>
+        </div>
+      </div>
+  
+  <div class="form-group">
+    <label>Numero:</label>
+    <input type="text" formControlName="numero" placeholder="Introduzca el numero de mesa" type ="number" class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.numero.errors }">
+    <div *ngIf="submitted && f.numero.errors">
+      <div *ngIf="f.numero.errors.required">El número de inventario es requerido</div>
+    </div>
+  </div>
+  
+  
+      <button type="submit"  class="btn btn-info">Guardar</button>
+    </form>
+  </div>
