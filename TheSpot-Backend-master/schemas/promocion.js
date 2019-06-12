@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var PromocionSchema = new mongoose.Schema({
-  idProductos: [String],
+  idProducto: String,
   nombre : String,
   descripcion : String,
   cantidad : Number,

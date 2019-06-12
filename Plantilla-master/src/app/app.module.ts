@@ -41,6 +41,11 @@ import { Producto_Elaborado_DetailService } from './services/producto_elaborado_
 import { ListProductos_Elaborados_DetailComponent } from './components/productos_elaborados_detail/list/list-productos_elaborados_detail.component';
 import { AddProducto_Elaborado_DetailComponent } from './components/productos_elaborados_detail/add/add-producto_elaborado_detail.component';
 import {EditProducto_Elaborado_DetailComponent} from './components/productos_elaborados_detail/edit/edit-producto_elaborado_detail.component';
+//promociones
+import { PromocionService } from './services/promocion.service';
+import { ListPromocionesComponent } from './components/promociones/list/list-promociones.component';
+import { AddPromocionComponent } from './components/promociones/add/add-promocion.component';
+import {EditPromocionComponent} from './components/promociones/edit/edit-promocion.component';
 //Mesas
 import { ListMesasComponent } from './components/mesas/list/list-mesas.component';
 import { AddMesaComponent } from './components/mesas/add/add-mesa.component';
@@ -72,6 +77,9 @@ import { MesaService } from './services/mesa.service';
     ListProductos_Elaborados_DetailComponent,
     AddProducto_Elaborado_DetailComponent,
     EditProducto_Elaborado_DetailComponent,
+    ListPromocionesComponent,
+    AddPromocionComponent,
+    EditPromocionComponent
     ListMesasComponent,
     AddMesaComponent,
     EditMesaComponent,
@@ -82,7 +90,17 @@ import { MesaService } from './services/mesa.service';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [BebidaService, IngredienteService, UsuarioService, ProductoService, ProveedorService,Producto_ElaboradoService, Producto_Elaborado_DetailService, MesaService],
+  providers: [
+    BebidaService, 
+    IngredienteService, 
+    UsuarioService, 
+    ProductoService, 
+    ProveedorService,
+    Producto_ElaboradoService, 
+    Producto_Elaborado_DetailService,
+    PromocionService,
+    MesaService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
