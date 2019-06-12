@@ -2,22 +2,22 @@ var promocion = require('../schemas/promocion.js');
 var mongoose = require('mongoose');
 
 exports.getPromociones = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal']
-  },
+  },*/
   handler: function(request, reply){
     var promociones = promocion.find({});
     reply(promociones);
   }
 }
 exports.getPromocionId = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal']
-  },
+  },*/
   handler : function(request, reply){
     promocion.findOne({'_id' : request.params._id}, function(err, Promocion){
       if(!err && Promocion){
@@ -31,13 +31,13 @@ exports.getPromocionId = {
   }
 }
 exports.getPromocionProductos = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
-    promocion.find({'idProductos' : request.params.idProductos}, function(err, Promocion){
+    promocion.find({'idProducto' : request.params.idProducto}, function(err, Promocion){
       if(!err && Promocion){
         return reply(Promocion);
       }else if(!err){
@@ -49,11 +49,11 @@ exports.getPromocionProductos = {
   }
 }
 exports.getPromocionDescuento = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     promocion.find({'idProveedor' : request.params.descuento}, function(err, Promocion){
       if(!err && Promocion){
@@ -67,11 +67,11 @@ exports.getPromocionDescuento = {
   }
 }
 exports.getPromocionName = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     promocion.find({'nombre' : request.params.nombre}, function(err, Promocion){
       if(!err && Promocion){
@@ -85,11 +85,11 @@ exports.getPromocionName = {
   }
 }
 exports.getPromocionHora_Inicio = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     promocion.find({'hora_inicio' : request.params.hora_inicio}, function(err, Promocion){
       if(!err && Promocion){
@@ -103,11 +103,11 @@ exports.getPromocionHora_Inicio = {
   }
 }
 exports.getPromocionHora_Final = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     promocion.find({'hora_final' : request.params.hora_final}, function(err, Promocion){
       if(!err && Promocion){
@@ -121,17 +121,17 @@ exports.getPromocionHora_Final = {
   }
 }
 exports.modifyPromocion = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     promocion.update(
       {'_id': request.params._id},
       {$set:
         {
-          idProductos : request.payload.idProductos,
+          idProducto : request.payload.idProducto,
           nombre : request.payload.nombre,
           descripcion : request.payload.descripcion,
           cantidad : request.payload.cantidad,
@@ -150,11 +150,11 @@ exports.modifyPromocion = {
   }
 }
 exports.deletePromocion = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     promocion.findOne({'_id' : request.params._id}, function(err, Promocion){
       if(err){
@@ -169,14 +169,14 @@ exports.deletePromocion = {
   }
 }
 exports.createPromocion = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     var newPromocion = new promocion({
-      idProductos : request.payload.idProductos,
+      idProducto : request.payload.idProducto,
       nombre : request.payload.nombre,
       descripcion : request.payload.descripcion,
       cantidad : request.payload.cantidad,

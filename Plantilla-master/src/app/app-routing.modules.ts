@@ -30,6 +30,11 @@ import { EditProducto_ElaboradoComponent } from './components/productos_elaborad
 import { ListProductos_Elaborados_DetailComponent } from './components/productos_elaborados_detail/list/list-productos_elaborados_detail.component';
 import { AddProducto_Elaborado_DetailComponent } from './components/productos_elaborados_detail/add/add-producto_elaborado_detail.component';
 import {EditProducto_Elaborado_DetailComponent} from './components/productos_elaborados_detail/edit/edit-producto_elaborado_detail.component';
+//promociones
+import { ListPromocionesComponent } from './components/promociones/list/list-promociones.component';
+import { AddPromocionComponent } from './components/promociones/add/add-promocion.component';
+import {EditPromocionComponent} from './components/promociones/edit/edit-promocion.component';
+
 
 
 const routes: Routes = [
@@ -53,7 +58,10 @@ const routes: Routes = [
   { path: '', component: ListProductos_ElaboradosComponent, pathMatch: 'full' },
   { path: 'edit-producto_elaborado_detail', component: EditProducto_Elaborado_DetailComponent},
   { path: '', component: ListProductos_Elaborados_DetailComponent, pathMatch: 'full' },
-  { path: 'add-producto_elaborado_detail', component: AddProducto_Elaborado_DetailComponent }
+  { path: 'add-producto_elaborado_detail', component: AddProducto_Elaborado_DetailComponent },
+  { path: 'add-promocion', component: AddPromocionComponent },
+  { path: 'edit-promocion', component: EditPromocionComponent},
+  { path: '', component: ListPromocionesComponent, pathMatch: 'full' }
 
 ];
 
