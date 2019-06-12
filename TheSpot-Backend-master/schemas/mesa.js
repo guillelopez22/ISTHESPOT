@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var MesaSchema = new mongoose.Schema({
-  idOrden: [String],
+  idOrden: String,
   nombre: String,
   numero: Number,
 });
