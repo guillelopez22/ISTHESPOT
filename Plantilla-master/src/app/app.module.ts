@@ -46,6 +46,11 @@ import { PromocionService } from './services/promocion.service';
 import { ListPromocionesComponent } from './components/promociones/list/list-promociones.component';
 import { AddPromocionComponent } from './components/promociones/add/add-promocion.component';
 import {EditPromocionComponent} from './components/promociones/edit/edit-promocion.component';
+//Mesas
+import { ListMesasComponent } from './components/mesas/list/list-mesas.component';
+import { AddMesaComponent } from './components/mesas/add/add-mesa.component';
+import { EditMesaComponent } from './components/mesas/edit/edit-mesa.component';
+import { MesaService } from './services/mesa.service';
 
 
 @NgModule({
@@ -75,6 +80,9 @@ import {EditPromocionComponent} from './components/promociones/edit/edit-promoci
     ListPromocionesComponent,
     AddPromocionComponent,
     EditPromocionComponent
+    ListMesasComponent,
+    AddMesaComponent,
+    EditMesaComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,7 +98,8 @@ import {EditPromocionComponent} from './components/promociones/edit/edit-promoci
     ProveedorService,
     Producto_ElaboradoService, 
     Producto_Elaborado_DetailService,
-    PromocionService
+    PromocionService,
+    MesaService,
   ],
   bootstrap: [AppComponent]
 })

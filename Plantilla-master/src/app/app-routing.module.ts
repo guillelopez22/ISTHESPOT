@@ -34,7 +34,10 @@ import {EditProducto_Elaborado_DetailComponent} from './components/productos_ela
 import { ListPromocionesComponent } from './components/promociones/list/list-promociones.component';
 import { AddPromocionComponent } from './components/promociones/add/add-promocion.component';
 import {EditPromocionComponent} from './components/promociones/edit/edit-promocion.component';
-
+//Mesas
+import { ListMesasComponent } from './components/mesas/list/list-mesas.component';
+import { AddMesaComponent } from './components/mesas/add/add-mesa.component';
+import { EditMesaComponent } from './components/mesas/edit/edit-mesa.component';
 
 
 const routes: Routes = [
@@ -61,7 +64,10 @@ const routes: Routes = [
   { path: 'add-producto_elaborado_detail', component: AddProducto_Elaborado_DetailComponent },
   { path: 'add-promocion', component: AddPromocionComponent },
   { path: 'edit-promocion', component: EditPromocionComponent},
-  { path: 'list-promocion', component: ListPromocionesComponent, pathMatch: 'full' }
+  { path: 'list-promocion', component: ListPromocionesComponent, pathMatch: 'full' },
+  { path: 'add-mesa', component: AddMesaComponent },
+  { path: 'edit-mesa', component: EditMesaComponent},
+  { path: 'list-mesa', component: ListMesasComponent, pathMatch: 'full' }
 ];
 
 @NgModule({
