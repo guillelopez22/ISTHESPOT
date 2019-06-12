@@ -9,7 +9,7 @@ export class MesaService {
 
   constructor(private http: HttpClient) { }
 
-  baseurl: string = "http://127.0.0.1:8000/";
+  baseurl: string = "http://localhost:8000/";
 
   getAllMesas(){
     return this.http.get<MesaModel[]>(this.baseurl + 'mesas');
@@ -23,7 +23,7 @@ export class MesaService {
     return this.http.post(this.baseurl + 'mesas/create', mesas, {responseType: 'text'});
   }
 
-  deleteMesa(_id: String){
+  deleteMesa(_id: string){
     return this.http.delete(this.baseurl + 'mesas/delete/' + _id, {responseType: 'text'});
   }
 

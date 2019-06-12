@@ -134,8 +134,8 @@ exports.deleteMesa = {
     mesa.findOne({'_id' : request.params._id}, function(err, mesa){
       if(err){
         return reply(boom.badRequest("Could not delete mesa"));
-      }else if(!err && Mesa){
-        Mesa.remove();
+      }else if(!err && mesa){
+        mesa.remove();
         return reply('Mesa deleted succesfully');
       }else if(!err){
         return reply(boom.notFound());
