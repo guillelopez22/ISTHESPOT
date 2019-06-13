@@ -27,81 +27,81 @@ Vue.use(VueRouter);
 // Vue.http.options.credentials = true;
 
 const router = new VueRouter({
-    routes : [
-      {
-        name: 'Home',
-        path:"/",
-        component:Home
-      },
-      {
-        name: 'Menu',
-        path:'/menu',
-        component:Menu
-      },
-      {
-        name: 'Ordenes',
-        path:"/ordenes",
-        component:Ordenes
-      },
-      {
-        name: 'Register',
-        path:"/registrar",
-        component:Register
-      },
-      {
-        name: 'Login',
-        path:'/login',
-        component:Login
-      },
-      {
-        name: 'Admin',
-        path:'/admin',
-        component:Admin,
-        children: [
-          {
-            name: 'Bebida',
-            path:"/bebida",
-            component:Bebida
-          },
-          {
-            name: 'Combo',
-            path:"/combo",
-            component:Combo
-          },
-          {
-            name: 'Insumo',
-            path:"/insumo",
-            component:Insumo
-          },
-          {
-            name: 'Mesa',
-            path:"/mesa",
-            component:Mesa
-          },
-          {
-            name: 'Personal',
-            path:"/personal",
-            component:Personal
-          },
-          {
-            name: 'Producto',
-            path:"/producto",
-            component:Producto
-          },
-          {
-            name: 'Promocion',
-            path:"/promocion",
-            component:Promocion
-          },
-          {
-            name: 'Proveedor',
-            path:"/proveedor",
-            component:Proveedor
-          }
-        ]
-      }
-    ],
-    mode: 'history'
+  routes: [
+    {
+      name: 'Home',
+      path: "/",
+      component: Home
+    },
+    {
+      name: 'Menu',
+      path: '/menu',
+      component: Menu
+    },
+    {
+      name: 'Ordenes',
+      path: "/ordenes",
+      component: Ordenes
+    },
+    {
+      name: 'Register',
+      path: "/registrar",
+      component: Register
+    },
+    {
+      name: 'Login',
+      path: '/login',
+      component: Login
+    },
+    {
+      name: 'Admin',
+      path: '/admin',
+      component: Admin,
+      children: [
+        {
+          name: 'Bebida',
+          path: "/bebida",
+          component: Bebida
+        },
+        {
+          name: 'Combo',
+          path: "/combo",
+          component: Combo
+        },
+        {
+          name: 'Insumo',
+          path: "/insumo",
+          component: Insumo
+        },
+        {
+          name: 'Personal',
+          path: "/personal",
+          component: Personal
+        },
+        {
+          name: 'Mesa',
+          path: "/mesa",
+          component: Mesa
+        },
+        {
+          name: 'Producto',
+          path: "/producto",
+          component: Producto
+        },
+        {
+          name: 'Promocion',
+          path: "/promocion",
+          component: Promocion
+        },
+        {
+          name: 'Proveedor',
+          path: "/proveedor",
+          component: Proveedor
+        }
+      ]
+    }
+  ],
+  mode: 'history'
 })
 
 new Vue({ // eslint-disable-line no-new

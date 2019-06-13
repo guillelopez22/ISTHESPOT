@@ -12,11 +12,6 @@
            Insumo
         </div>
       </router-link>
-      <router-link to="/personal">
-        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
-           Personal
-        </div>
-      </router-link>
       <router-link to="/producto">
         <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
            Producto
@@ -30,6 +25,21 @@
       <router-link to="/proveedor">
         <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
            Proveedor
+        </div>
+      </router-link>
+      <router-link to="/productoelaborado">
+        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
+           Producto Elaborado
+        </div>
+      </router-link>
+      <router-link to="/productoelaboradodetallado">
+        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
+           Producto Elaborado Detallado
+        </div>
+      </router-link>
+      <router-link to="/mesa">
+        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
+           Mesa
         </div>
       </router-link>
     </div>
