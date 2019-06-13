@@ -32,9 +32,9 @@
           <td>
             <a
               v-on:click="startToModifyProductoElaboradoDetallado(productoelaboradodetallado)"
-              class="btn-floating btn-small waves-effect waves-light grey darken-4"
+              class="btn-floating btn-small waves-effect waves-light green"
             >
-              <i class="material-icons">arrow_downward</i>
+              <i class="material-icons">update</i>
             </a>
           </td>
           <td>
@@ -148,7 +148,7 @@
         </div>
         <div id="importance" class="input-field col s6 center">
           <br>
-          <label id="idProductoElaborado">
+          <label id="idInsumo">
             <h4>
               <a v-on:click="borrarInsumo()" class="waves-effect waves-light">
                 <i class="material-icons">delete</i>
@@ -228,7 +228,7 @@ export default {
         this.$http
           .get("http://localhost:8000/bebidas/searchbyid/{_id}")
           .then(response => {
-            this.nombreBeb = response.body.bebida.nombre;
+            this.nombreBeb = response.body.productoelaborado.idBebida;
           });
       }
     },
@@ -239,7 +239,7 @@ export default {
         this.$http
           .get("http://localhost:8000/insumos/searchbyid/{_id}")
           .then(response => {
-            this.nombreIns = response.body.insumo.nombre;
+            this.nombreIns = response.body.productoelaborado.idInsumo;
           });
       }
     }
@@ -272,16 +272,20 @@ export default {
     },
     createProductoElaboradoDetallado() {
       this.loading = true;
-      this.productoelaboradodetallado.idProductoElaborado = this.idProv;
+      this.productoelaboradodetallado.idProducto_Elaborado = this.idProd;
+      this.bebidas.idBebida = this.idBeb;
+      this.insumo.idInsumo = this.idIns;
       this.$http
         .post(
           "http://localhost:8000/prod_elaborado_detail/create",
-          this.productoelaboradodetallado
+          this.productoelaboradodetallado,this.bebidas,this.insumo
         )
         .then(response => {
           this.loading = false;
           if (response.body.success) {
             this.productoelaboradodetallado = {};
+            this.bebidas = {};
+            this.insumo = {};
             sweetAlert(
               "Creado con exito!",
               "Los cambios estan en la tabla",
@@ -311,7 +315,9 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = productoelaboradodetallado._id;
       this.productoelaboradodetallado = productoelaboradodetallado;
-      this.idProd = productoelaboradodetallado.idProductoElaborado;
+      this.idProd = productoelaboradodetallado.idProducto_Elaborado;
+      this.idIns = insumo.idInsumo;
+      this.idBeb = bebidas.idBebida;
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
@@ -319,25 +325,28 @@ export default {
       this.loading = true;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
-        this.productoelaboradodetallado.idProductoElaborado = this.idProv;
+        this.productoelaboradodetallado.idProducto_Elaborado = this.idProv;
+        this.bebidas.idBebida = this.idBeb;
+        this.insumo.idInsumo = this.idIns;
         this.$http
           .put(
             "http://localhost:8000/prod_elaborado_detail/update/" +
               this.idModificar,
-            this.productoelaboradodetallado
+            this.productoelaboradodetallado,this.bebidas,this.insumo
           )
           .then(response => {
             if (response.body.success) {
               this.getProductoElaboradoDetallado();
               this.loading = false;
+              sweetAlert("Oops...", "Error al modificar", "error");
+              this.productoelaboradodetallado = {};
+            } else {
               sweetAlert(
                 "Modificado con exito!",
                 "Los cambios estan en la tabla",
                 "success"
               );
               this.productoelaboradodetallado = {};
-            } else {
-              sweetAlert("Oops...", "Error al modificar", "error");
               this.loading = false;
             }
           });
@@ -353,10 +362,10 @@ export default {
         .then(response => {
           this.loading = false;
           if (response.body.success) {
+            sweetAlert("Oops...", "Error al eliminar", "error");
+          } else {
             this.getProductoElaboradoDetallado();
             sweetAlert("Deleted!", "Los cambios estan en la tabla", "success");
-          } else {
-            sweetAlert("Oops...", "Error al eliminar", "error");
           }
         });
     },
@@ -369,25 +378,23 @@ export default {
         });
     },
     getBebidas() {
-      this.$http
-        .get("http://localhost:8000/bebidas")
-        .then(response => {
-          console.log(response);
-          this.bebidas = response.body;
-        });
+      this.$http.get("http://localhost:8000/bebidas").then(response => {
+        console.log(response);
+        this.bebidas = response.body;
+      });
     },
     getInsumos() {
-      this.$http
-        .get("http://localhost:8000/insumos")
-        .then(response => {
-          console.log(response);
-          this.insumos = response.body;
-        });
+      this.$http.get("http://localhost:8000/insumos").then(response => {
+        console.log(response);
+        this.insumos = response.body;
+      });
     }
   },
   beforeMount() {
     this.getProductoElaboradoDetallado();
-    this.getProductoElaborados();
+    this.getProductosElaborados();
+    this.getBebidas();
+    this.getInsumos();
   },
   mounted() {
     $("ul.tabs").tabs();
@@ -549,7 +556,7 @@ h4 {
 /* label focus color */
 input {
   font-family: "Roboto", sans-serif;
-  color: white;
+  color: black;
   font-weight: normal;
   font-size: 17px;
 }

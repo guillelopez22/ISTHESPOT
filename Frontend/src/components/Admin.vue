@@ -3,42 +3,43 @@
     <h2 >Admin Control</h2>
     <div class="cont">
       <router-link to="/bebida">
-        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
+      <!--col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red-->
+        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            Bebida
         </div>
       </router-link>
       <router-link to="/insumo">
-        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
+        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            Insumo
         </div>
       </router-link>
       <router-link to="/producto">
-        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
+        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            Producto
         </div>
       </router-link>
       <router-link to="/promocion">
-        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
+        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            Promocion
         </div>
       </router-link>
       <router-link to="/proveedor">
-        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
+        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            Proveedor
         </div>
       </router-link>
       <router-link to="/productoelaborado">
-        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
+        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            Producto Elaborado
         </div>
       </router-link>
       <router-link to="/productoelaboradodetallado">
-        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
+        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            Producto Elaborado Detallado
         </div>
       </router-link>
       <router-link to="/mesa">
-        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
+        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            Mesa
         </div>
       </router-link>
@@ -88,10 +89,10 @@ export default {
   .contain{
     padding: 35px;
     font-size:20px;
-    -webkit-transition: background-color 1s ease-out;
-    -moz-transition: background-color 1s ease-out;
-    -o-transition: background-color 1s ease-out;
-    transition: background-color 1s ease-out;
+    -webkit-transition: background-color 1s ease-in;
+    -moz-transition: background-color 1s ease-in;
+    -o-transition: background-color 1s ease-in;
+    transition: background-color 1s ease-in;
   }
   .contain:hover{
     background-color:  #262626;

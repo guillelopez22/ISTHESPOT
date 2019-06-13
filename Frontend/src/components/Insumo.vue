@@ -30,9 +30,9 @@
           <td>
             <a
               v-on:click="startToModifyInsumo(insumo)"
-              class="btn-floating btn-small waves-effect waves-light grey darken-4"
+              class="btn-floating btn-small waves-effect waves-light green"
             >
-              <i class="material-icons">arrow_downward</i>
+              <i class="material-icons">update</i>
             </a>
           </td>
           <td>

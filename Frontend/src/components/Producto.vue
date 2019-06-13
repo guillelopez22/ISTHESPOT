@@ -1,42 +1,50 @@
 <template>
   <div id="root">
-    <h2>Producto</h2>
+    <h2>
+      Producto
+      <a
+        class="btn-floating btn-small btn tooltipped -red"
+        data-position="top"
+        data-delay="50"
+        id="boton"
+        data-tooltip="Para modificar primero tienes que hacer click en  el boton de modificar en la tabla"
+      >
+        <i class="material-icons left">help</i>Update
+      </a>
+    </h2>
     <table class="table centered">
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Descripcion</th>
+          <th>idProducto_Elaborado</th>
+          <th>IdBebida</th>
           <th>Precio</th>
-          <th>Id Bebida</th>
-          <th>Id Producto Elaborado</th>
-          <th>Borrar</th>
+          <th>Descripcion</th>
           <th>Modificar</th>
+          <th>Borrar</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="producto in productos">
-          <td contenteditable v-model="producto.nombre">{{producto.nombre}}</td>
-          <td contenteditable v-model="producto.descripcion">{{producto.descripcion}}</td>
-          <td contenteditable v-model="producto.precio">{{producto.precio}}</td>
-          <td contenteditable v-model="producto.idBebida">{{producto.idBebida}}</td>
-          <td
-            contenteditable
-            v-model="producto.idProducto_Elaborado"
-          >{{producto.idProducto_Elaborado}}</td>
+          <td>{{producto.nombre}}</td>
+          <td>{{producto.idProducto_Elaborado}}</td>
+          <td>{{producto.idBebida}}</td>
+          <td>{{producto.precio}}</td>
+          <td>{{producto.descripcion}}</td>
           <td>
             <a
-              v-on:click="deleteProducto(producto._id)"
-              class="btn-floating btn-small waves-effect waves-light red"
+              v-on:click="startToModifyproducto(producto)"
+              class="btn-floating btn-small waves-effect waves-light green"
             >
-              <i class="material-icons">delete</i>
+              <i class="material-icons">update</i>
             </a>
           </td>
           <td>
             <a
-              v-on:click="modifyProducto(producto._id)"
+              v-on:click="deleteproducto(producto._id)"
               class="btn-floating btn-small waves-effect waves-light red"
             >
-              <i class="material-icons">update</i>
+              <i class="material-icons">delete</i>
             </a>
           </td>
         </tr>
@@ -45,43 +53,96 @@
     <br>
     <ul id="tabs-swipe-demo" class="tabs">
       <li class="tab col s3">
-        <a class="active" href="#test-swipe-1">Crear</a>
+        <a class="active" v-on:click="tabControl('test-swipe-1')" href="#test-swipe-1">Crear</a>
       </li>
       <li class="tab col s3">
-        <a href="#test-swipe-2">Modificar</a>
+        <a v-on:click="tabControl('test-swipe-2')" href="#test-swipe-2">Modificar</a>
       </li>
     </ul>
-
     <div class="row">
-      <div class="input-field col s6">
-        <input type="text" v-model="producto.nombre" :disabled="loading" id="Nombre">
+      <div class="input-field col s12">
+        <input
+          v-on:input="producto.nombre = $event.target.value"
+          type="text"
+          v-model="producto.nombre"
+          :disabled="loading"
+          id="Nombre"
+        >
         <label for="Nombre">Nombre</label>
       </div>
       <div class="input-field col s6">
         <input
-          v-model="producto.descripcion"
+          v-on:input="producto.idBebida = $event.target.value"
+          v-model="producto.idBebida"
           :disabled="loading"
-          id="Descripcion"
+          id="Tipo"
           type="text"
           class="validate"
         >
-        <label for="Descripcion">Descripcion</label>
+        <label for="idBebida">idBebida</label>
       </div>
       <div class="input-field col s6">
         <input
+          v-on:input="producto.precio = $event.target.value"
+          type="number"
           v-model="producto.precio"
           :disabled="loading"
           id="Precio"
-          type="number"
-          class="validate"
         >
         <label for="Precio">Precio</label>
+      </div>
+      <div class="row">
+        <form class="col s12">
+          <div class="row">
+            <div class="input-field col s12">
+              <textarea
+                v-on:input="producto.descripcion = $event.target.value"
+                v-model="producto.descripcion"
+                :disabled="loading"
+                id="Descripcion"
+                type="text"
+                class="materialize-textarea"
+              ></textarea>
+              <label for="Descripcion">Descripción</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row -white" id="contenedorTablaExterna">
+        <div class="col s6">
+          <h5>Seleccionar ID Producto Elaborado:</h5>
+          <p>(hacer click en el nombre deseado)</p>
+          <hr>
+          <ul v-for="productoelaborado in productoelaborados">
+            <li>
+              <i class="material-icons left">pages</i>
+              {{proveedor.nombre}}
+              <a
+                v-on:click="newProductoElaborado(productoelaborado._id)"
+                class="btn-floating btn-small waves-effect waves-light black secondary-content"
+              >
+                <i class="material-icons">done</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div id="importance" class="input-field col s6 center">
+          <br>
+          <label id="idProveedor">
+            <h4>
+              <a v-on:click="borrarProveedor()" class="waves-effect waves-light">
+                <i class="material-icons">delete</i>
+              </a>
+              {{idProv}} {{nombreProv}}
+            </h4>
+          </label>
+        </div>
       </div>
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
         class="waves-effect waves-light btn-large"
-        v-on:click="createProducto"
+        v-on:click="createproducto"
         :disabled="loading"
         id="boton"
       >
@@ -89,45 +150,12 @@
       </a>
     </div>
     <div id="test-swipe-2" class="col s12">
-      <div class="input-field col s12">
-        <select v-model="selected">
-          <option
-            v-for="producto in productos"
-            v-bind:value="producto"
-            value="1"
-          >{{producto.titulo}}</option>
-        </select>
-        <label>Selected: {{ selected }}</label>
-      </div>
-      <div class="row">
-        <div class="input-field col s6">
-          <input type="text" v-model="producto.nombre" :disabled="loading" id="Nombre">
-          <label for="Nombre">Nombre</label>
-        </div>
-        <div class="input-field col s6">
-          <input
-            v-model="producto.descripcion"
-            :disabled="loading"
-            id="Descripcion"
-            type="text"
-            class="validate"
-          >
-          <label for="Descripcion">Descripcion</label>
-        </div>
-        <div class="input-field col s6">
-          <input
-            v-model="producto.precio"
-            :disabled="loading"
-            id="Precio"
-            type="number"
-            class="validate"
-          >
-          <label for="Precio">Precio</label>
-        </div>
-      </div>
+      <div
+        class="card"
+      >Atención: Los cambios realizados no se guardan hasta que haga click en el botón de update.</div>
       <a
         class="waves-effect waves-light btn-large"
-        v-on:click="modifyProducto(producto._id)"
+        v-on:click="modifyproducto"
         :disabled="loading"
         id="boton"
       >
@@ -144,77 +172,165 @@ export default {
     return {
       productos: [],
       producto: {},
-      loading: false
+      loading: false,
+      idModificar: "",
+      idProv: "N/A",
+      nombreProv: "",
+      selectedTab: "test-swipe-1",
+      proveedor: {},
+      proveedores: []
     };
   },
+  watch: {
+    idProv: function(val) {
+      if (val != "N/A") {
+        this.nombreProv = "";
+      } else {
+        this.$http
+          .get("http://localhost:8000/proveedor/searchbyid/{_id}")
+          .then(response => {
+            this.nombreProv = response.body.proveedor.nombre;
+          });
+      }
+    }
+  },
   methods: {
-    getProducto() {
+    getproducto() {
       this.$http.get("http://localhost:8000/productos").then(response => {
         this.productos = response.body;
       });
     },
-    createProducto() {
+    newProveedor(proveedor_id) {
+      this.idProv = proveedor_id;
+    },
+    borrarProveedor() {
+      this.idProv = "N/A";
+    },
+    createproducto() {
       this.loading = true;
+      this.producto.idProveedor = this.idProv;
       this.$http
         .post("http://localhost:8000/productos/create", this.producto)
         .then(response => {
           this.loading = false;
           if (response.body.success) {
+            this.producto = {};
             sweetAlert(
               "Creado con exito!",
               "Los cambios estan en la tabla",
               "success"
             );
-            this.getProducto();
+            this.getproducto();
           } else {
             sweetAlert("Oops...", "Error al crear", "error");
           }
         });
     },
-    modifyProducto(id) {
+    tabControl(idTab) {
+      if (idTab === "test-swipe-1") {
+        this.idModificar = "";
+        this.selectedTab = "test-swipe-1";
+        this.producto = {};
+      } else {
+        if (this.idModificar === "") {
+          swal(
+            "Recuerda!",
+            "Para modificar primero tienes que hacer click en  el boton de modificar en la tabla"
+          );
+        }
+      }
+    },
+    startToModifyproducto(producto) {
+      this.selectedTab = "test-swipe-2";
+      this.idModificar = producto._id;
+      this.producto = producto;
+      this.idProv = producto.idProveedor;
+      $("ul.tabs").tabs("select_tab", "test-swipe-2");
+      Materialize.updateTextFields();
+    },
+    modifyproducto() {
+      this.loading = true;
+      if (this.idModificar != "") {
+        Materialize.updateTextFields();
+        this.producto.idProveedor = this.idProv;
+        this.$http
+          .put(
+            "http://localhost:8000/productos/update/" + this.idModificar,
+            this.producto
+          )
+          .then(response => {
+            if (response.body.success) {
+              this.getproducto();
+              this.loading = false;
+              sweetAlert("Oops...", "Error al modificar", "error");
+            } else {
+              sweetAlert(
+                "Modificado con exito!",
+                "Los cambios estan en la tabla",
+                "success"
+              );
+              this.producto = {};
+              this.loading = false;
+            }
+          });
+      }
+    },
+    deleteproducto(idproducto) {
       this.loading = true;
       this.$http
-        .put("http://localhost:8000/productos/update/" + id, this.producto)
+        .delete("http://localhost:8000/productos/delete/" + idproducto)
         .then(response => {
           this.loading = false;
           if (response.body.success) {
-            sweetAlert(
-              "Modificado con exito!",
-              "Los cambios estan en la tabla",
-              "success"
-            );
-            this.getProducto();
+            sweetAlert("Oops...", "Error al eliminar", "error");
+            this.getproducto();
           } else {
-            sweetAlert("Oops...", "Error al modificar", "error");
+            sweetAlert("Deleted!", "Los cambios estan en la tabla", "success");
+            this.getproducto();
           }
         });
     },
-    deleteProducto(id) {
-      this.loading = true;
-      this.$http
-        .delete("http://localhost:8000/productos/delete/" + id)
-        .then(response => {
-          this.loading = false;
-          if (response.body.success) {
-            this.getProducto();
-            sweetAlert("Deleted!", "Se ha eliminado el Libro", "success");
-          } else {
-            sweetAlert("Oops...", "Error al eliminar", "error");
-          }
-        });
+    getProveedores() {
+      this.$http.get("http://localhost:8000/proveedores").then(response => {
+        console.log(response);
+        this.proveedores = response.body;
+      });
     }
   },
   beforeMount() {
-    this.getProducto();
+    this.getproducto();
+    this.getProveedores();
   },
   mounted() {
     $("ul.tabs").tabs();
     $("select").material_select();
+    $(".tooltipped").tooltip({ delay: 50 });
   }
 };
 </script>
 
 <style scoped>
+#importance {
+  color: black !important;
+  opacity: 0.7;
+  text-align: center;
+  font-family: "Roboto", sans-serif !important;
+  font-weight: lighter;
+}
+.collection-item {
+  color: black;
+}
+.card {
+  padding: 10px;
+  font-family: "Roboto", sans-serif;
+  font-weight: lighter;
+  background-color: black;
+  font-size: 15px;
+  color: white;
+}
+#contenedorTablaExterna {
+  border-radius: 5px;
+}
 td {
   font-family: "Source Sans Pro", sans-serif;
 }
@@ -231,7 +347,7 @@ th {
   vertical-align: middle;
 }
 .table thead {
-  font-family: "Josefin Slab", serif;
+  font-family: "Roboto", sans-serif;
   font-weight: bold;
   font-size: 30px;
 }
@@ -279,9 +395,12 @@ th {
   background-color: #262626;
   color: #fff;
 }
+#TOOLTIP-ID.backdrop {
+  background-color: red;
+}
 h4 {
-  font-family: "Playfair Display";
-  text-align: left;
+  text-align: center;
+  color: black !important;
 }
 #root {
   font-family: "Playfair Display";
