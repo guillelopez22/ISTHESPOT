@@ -9,27 +9,31 @@
     <table class="table centered">
 			<thead>
 				<tr>
-					<th>Nombre</th>
-					<th>IdProveedor</th>
-					<th>Tipo</th>
-          <th>Inventario</th>
-          <th>Descripcion</th>
+					<th>Id Personal</th>
+					<th>Id Ordenes</th>
+					<th>Usuario</th>
+          <th>Contrasena</th>
+          <th>Nombre</th>
+          <th>Telefono</th>
+          <th>Scope</th>
           <th>Modificar</th>
 					<th>Borrar</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="bebida in bebidas">
-					<td >{{bebida.nombre}}</td>
-					<td >{{bebida.idProveedor}}</td>
-					<td >{{bebida.tipo}}</td>
-          <td >{{bebida.inventario}}</td>
-					<td >{{bebida.descripcion}}</td>
+				<tr v-for="usuario in usuarios">
+					<td >{{usuario.IdPersonal}}</td>
+					<td >{{usuario.idOrdenes}}</td>
+					<td >{{usuario.usuario}}</td>
+          <td >{{usuario.contrasena}}</td>
+          <td >{{usuario.nombre}}</td>
+					<td >{{usuario.telefono}}</td>
+          <td >{{usuario.scope}}</td>
           <td>
-						<a v-on:click="startToModifyBebida(bebida)" class="btn-floating btn-small waves-effect waves-light grey darken-4"><i class="material-icons">arrow_downward</i></a>
+						<a v-on:click="startToModifyUsuario(usuario)" class="btn-floating btn-small waves-effect waves-light grey darken-4"><i class="material-icons">arrow_downward</i></a>
 					</td>
 					<td>
-						<a v-on:click="deleteBebida(bebida._id)" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
+						<a v-on:click="deleteUsuario(usuario._id)" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
 					</td>
 				</tr>
 			</tbody>
@@ -41,54 +45,37 @@
     </ul>
     <div class="row">
         <div class="input-field col s12">
-          <input v-on:input="bebida.nombre = $event.target.value" type="text" v-model="bebida.nombre" :disabled="loading"  id="Nombre">
-          <label for="Nombre">Nombre</label>
+          <input v-on:input="usuario.IdPersonal = $event.target.value" type="text" v-model="usuario.IdPersonal" :disabled="loading"  id="IdPersonal">
+          <label for="IdPersonal">Id Personal</label>
         </div>
         <div class="input-field col s6">
-          <input v-on:input="bebida.tipo = $event.target.value" v-model="bebida.tipo" :disabled="loading"  id="Tipo" type="text" class="validate">
-          <label for="Tipo">Tipo</label>
+          <input v-on:input="usuario.idOrdenes = $event.target.value" v-model="usuario.idOrdenes" :disabled="loading"  id="idOrdenes" type="text" class="validate">
+          <label for="idOrdenes">idOrdenes</label>
         </div>
         <div class="input-field col s6">
-          <input v-on:input="bebida.inventario = $event.target.value" type="number" v-model="bebida.inventario" :disabled="loading"  id="Inventario">
-          <label for="Inventario">Inventario</label>
+          <input v-on:input="usuario.usuario = $event.target.value" type="text" v-model="usuario.usuario" :disabled="loading"  id="usuario">
+          <label for="usuario">Usuario</label>
         </div>
-        <div class="row">
-          <form class="col s12">
-            <div class="row">
-              <div class="input-field col s12">
-                <textarea v-on:input="bebida.descripcion = $event.target.value" v-model="bebida.descripcion" :disabled="loading"  id="Descripcion" type="text"  class="materialize-textarea"></textarea>
-                <label for="Descripcion">Descripción</label>
-              </div>
-            </div>
-          </form>
+        <div class="input-field col s6">
+          <input v-on:input="usuario.contrasena = $event.target.value" type="text" v-model="usuario.contrasena" :disabled="loading"  id="contrasena">
+          <label for="contrasena">Contrasena</label>
         </div>
-        <div class="row -white" id="contenedorTablaExterna">
-          <div class="col s6" >
-            <h5>Seleccionar ID Proveedor:</h5><p>(hacer click en el nombre deseado)</p>
-            <hr>
-            <ul v-for="proveedor in proveedores">
-              <li><i class="material-icons left">pages</i>{{proveedor.nombre}}
-                <a v-on:click="newProveedor(proveedor._id)" class="btn-floating btn-small waves-effect waves-light black secondary-content">
-                  <i class="material-icons">done</i>
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div id="importance" class="input-field col s6 center">
-            <br>
-              <label  id="idProveedor">
-                <h4>
-                  <a v-on:click="borrarProveedor()" class="waves-effect waves-light">
-                    <i class="material-icons">delete</i>
-                  </a> {{idProv}}  {{nombreProv}}
-                </h4>
-              </label>
+        <div class="input-field col s6">
+          <input v-on:input="usuario.nombre = $event.target.value" type="text" v-model="usuario.nombre" :disabled="loading"  id="nombre">
+          <label for="nombre">Nombre</label>
+        </div>
+        <div class="input-field col s6">
+          <input v-on:input="usuario.telefono = $event.target.value" type="text" v-model="usuario.telefono" :disabled="loading"  id="telefono">
+          <label for="telefono">Telefono</label>
+        </div>
+        <div class="input-field col s6">
+          <input v-on:input="usuario.scope = $event.target.value" type="text" v-model="usuario.scope" :disabled="loading"  id="scope">
+          <label for="scope">Scope</label>
+        </div>
 
-          </div>
-        </div>
       </div>
   	  <div id="test-swipe-1" class="col s12">
-        <a class="waves-effect waves-light btn-large " v-on:click="createBebida" :disabled="loading" id="boton">
+        <a class="waves-effect waves-light btn-large " v-on:click="createUsuario" :disabled="loading" id="boton">
           <i class="material-icons left">create</i>Crear
         </a>
       </div>
@@ -96,7 +83,7 @@
         <div class="card">
             Atención: Los cambios realizados no se guardan hasta que haga click en el botón de update.
         </div>
-				<a class="waves-effect waves-light btn-large" v-on:click="modifyBebida" :disabled="loading" id="boton">
+				<a class="waves-effect waves-light btn-large" v-on:click="modifyUsuario" :disabled="loading" id="boton">
 					<i class="material-icons left">update</i>Update
         </a>
   		</div>
@@ -105,53 +92,33 @@
 
 <script>
 export default {
-  name: 'bebida',
+  name: 'usuario',
   data(){
     return{
-      bebidas: [],
-			bebida:{},
+      usuarios: [],
+			usuario:{},
 			loading: false,
       idModificar: '',
-      idProv: 'N/A',
-      nombreProv: '',
       selectedTab: 'test-swipe-1',
-      proveedor:{},
-      proveedores: []
     }
   },
-  watch: {
-    idProv: function (val) {
-      if(val!='N/A'){
-        this.nombreProv = '';
-      }else {
-        this.$http.get('http://localhost:8000/proveedor/searchbyid/{_id}').then((response)=>{
-					this.nombreProv = response.body.proveedor.nombre;
-				});
-      }
-    },
-  },
+  
   methods: {
-      getBebida(){
-				this.$http.get('http://localhost:8000/bebidas').then((response)=>{
-					this.bebidas=response.body;
+      getUsuario(){
+				this.$http.get('http://localhost:8000/usuarios').then((response)=>{
+					this.usuarios=response.body;
 				});
 			},
-      newProveedor(proveedor_id){
-        this.idProv = proveedor_id;
-      },
-      borrarProveedor(){
-        this.idProv = 'N/A';
-      },
-			createBebida(){
+
+			createUsuario(){
 				this.loading=true;
-        this.bebida.idProveedor = this.idProv;
-				this.$http.post('http://localhost:8000/bebidas/create',this.bebida)
+				this.$http.post('http://localhost:8000/usuarios/create',this.usuario)
 				.then((response)=>{
 					this.loading=false;
 					if(response.body.success){
-            this.bebida= {};
+            this.usuario= {};
 						sweetAlert("Creado con exito!", "Los cambios estan en la tabla", "success");
-						this.getBebida();
+						this.getUsuario();
 					}else{
 						sweetAlert("Oops...", "Error al crear", "error");
 					}
@@ -161,7 +128,7 @@ export default {
         if(idTab === 'test-swipe-1'){
           this.idModificar = '';
           this.selectedTab= 'test-swipe-1';
-          this.bebida= {};
+          this.usuario= {};
         }else{
           if(this.idModificar === ''){
             swal("Recuerda!",
@@ -169,26 +136,24 @@ export default {
           }
         }
       },
-      startToModifyBebida(bebida){
+      startToModifyUsuario(usuario){
         this.selectedTab= 'test-swipe-2';
-        this.idModificar = bebida._id;
-        this.bebida = bebida;
-        this.idProv = bebida.idProveedor;
+        this.idModificar = usuario._id;
+        this.usuario = usuario;
         $('ul.tabs').tabs('select_tab', 'test-swipe-2');
         Materialize.updateTextFields();
 			},
-      modifyBebida(){
+      modifyUsuario(){
         this.loading=true;
         if(this.idModificar!=''){
           Materialize.updateTextFields();
-          this.bebida.idProveedor = this.idProv;
-          this.$http.put('http://localhost:8000/bebidas/update/'+this.idModificar,this.bebida)
+          this.$http.put('http://localhost:8000/usuarios/update/'+this.idModificar,this.usuario)
   				.then((response)=>{
   					if(response.body.success){
-              this.getBebida();
+              this.getUsuario();
               this.loading=false;
   						sweetAlert("Modificado con exito!", "Los cambios estan en la tabla", "success");
-              this.bebida= {};
+              this.usuario= {};
   					}else{
   						sweetAlert("Oops...", "Error al modificar", "error");
               this.loading=false;
@@ -196,29 +161,22 @@ export default {
   				});
         }
       },
-      deleteBebida(idBebida){
+      deleteUsuario(idUsuario){
           this.loading=true;
-          this.$http.delete('http://localhost:8000/bebidas/delete/'+idBebida)
+          this.$http.delete('http://localhost:8000/usuarios/delete/'+idUsuario)
             .then((response)=>{
             this.loading=false;
             if(response.body.success){
-              this.getBebida();
+              this.getUsuario();
               sweetAlert("Deleted!", "Los cambios estan en la tabla", "success");
             }else{
               sweetAlert("Oops...", "Error al eliminar", "error");
             }
           });
 			},
-      getProveedores(){
-        this.$http.get('http://localhost:8000/proveedores').then((response)=>{
-          console.log(response)
-					this.proveedores=response.body;
-				});
-      }
   },
   beforeMount(){
-    this.getBebida();
-    this.getProveedores();
+    this.getUsuario();
 	},
   mounted() {
       $('ul.tabs').tabs();

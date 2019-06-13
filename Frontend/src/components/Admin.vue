@@ -43,6 +43,11 @@
            Mesa
         </div>
       </router-link>
+       <router-link to="/usuario">
+        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red">
+           Usuario
+        </div>
+      </router-link>
     </div>
 
     <div class="routerContainer">

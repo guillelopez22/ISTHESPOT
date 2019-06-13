@@ -21,6 +21,7 @@ import Promocion from './components/Promocion.vue'
 import Proveedor from './components/Proveedor.vue'
 import ProductoElaboradoDetallado from './components/ProductoElaboradoDetallado.vue'
 import ProductoElaborado from './components/ProductoElaborado.vue'
+import Usuario from './components/Usuario.vue'
 
 import VueResource from 'vue-resource'
 
@@ -109,6 +110,11 @@ const router = new VueRouter({
           name: 'ProductoElaborado',
           path: "/productoelaborado",
           component: ProductoElaborado
+        },
+        {
+          name: 'Usuario',
+          path: "/usuario",
+          component: Usuario
         }
       ]
     }
