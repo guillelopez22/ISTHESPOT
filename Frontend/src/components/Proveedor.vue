@@ -10,6 +10,7 @@
 					<th>Contacto</th>
 					<th>Email</th>
 					<th>Direccion</th>
+          <th>Modificar</th>
 					<th>Borrar</th>
 				</tr>
 			</thead>
@@ -21,6 +22,9 @@
 					<td>{{proveedor.contacto}}</td>
 					<td>{{proveedor.email}}</td>
 					<td>{{proveedor.direccion}}</td>
+          <td>
+						<a v-on:click="startToModifyProveedor(proveedor)" class="btn-floating btn-small waves-effect waves-light grey darken-4"><i class="material-icons">arrow_downward</i></a>
+					</td>
 					<td>
 						<a v-on:click="deleteProveedor(proveedor._id)" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
 					</td>
@@ -35,46 +39,28 @@
     </ul>
     <div class="row">
         <div class="input-field col s6">
-          <input type="text" v-model="proveedor.titulo" :disabled="loading"  id="Titulo">
-          <label for="Titulo">Titulo</label>
+          <input v-model="proveedor.nombre" :disabled="loading"  id="Nombre" type="text" class="validate">
+          <label for="Nombre">Nombre</label>
         </div>
         <div class="input-field col s6">
-          <input v-model="proveedor.genero" :disabled="loading" id="Genero" type="text"   class="validate">
-          <label for="Genero">Genero</label>
+          <input v-model="proveedor.pais" :disabled="loading"  id="Pais" type="text" class="validate">
+          <label for="Pais">Pais</label>
         </div>
         <div class="input-field col s6">
-          <input v-model="proveedor.autor" :disabled="loading"  id="Autor" type="text" class="validate">
-          <label for="Autor">Autor</label>
+          <input type="number" v-model="proveedor.telefono" :disabled="loading"  id="Telefono">
+          <label for="Telefono">Telefono</label>
         </div>
         <div class="input-field col s6">
-          <input type="number" v-model="proveedor.publicacion" :disabled="loading"  id="Publicación">
-          <label for="Publicación">Publicación</label>
+          <input v-model="proveedor.contacto" :disabled="loading" id="Contacto" type="text"  class="validate">
+          <label for="Contacto">Contacto</label>
         </div>
         <div class="input-field col s6">
-          <input v-model="proveedor.editorial" :disabled="loading" id="Editorial" type="text"  class="validate">
-          <label for="Editorial">Editorial</label>
-        </div>
-        <div class="row">
-          <form class="col s12">
-            <div class="row">
-              <div class="input-field col s12">
-                <textarea v-model="proveedor.descripcion" :disabled="loading"  id="descripcion" type="text"  class="materialize-textarea"></textarea>
-                <label for="descripcion">Descripción</label>
-              </div>
-            </div>
-          </form>
+          <input v-model="proveedor.email" :disabled="loading" id="Email" type="text"  class="validate">
+          <label for="Email">Email</label>
         </div>
         <div class="input-field col s6">
-          <input v-model="proveedor.keywords" :disabled="loading" id="Keywords" type="text"  class="validate">
-          <label for="Keywords">Keywords</label>
-        </div>
-        <div class="input-field col s6">
-          <input v-model="proveedor.copias_total" :disabled="loading"  id="Total de Copias" type="number" class="validate">
-          <label for="Total de Copias">Total de Copias</label>
-        </div>
-        <div class="input-field col s6">
-          <input v-model="proveedor.copias_disponible" :disabled="loading"  id="Copias Disponibles" type="number" class="validate">
-          <label for="Copias Disponibles">Copias Disponibles</label>
+          <input v-model="proveedor.direccion" :disabled="loading" id="Direccion" type="text"  class="validate">
+          <label for="Direccion">Direccion</label>
         </div>
       </div>
 
@@ -160,7 +146,44 @@ export default {
 						sweetAlert("Oops...", "Error al crear", "error");
 					}
 				});
-			},
+      },
+      tabControl(idTab){
+        if(idTab === 'test-swipe-1'){
+          this.idModificar = '';
+          this.selectedTab= 'test-swipe-1';
+          this.proveedor= {};
+        }else{
+          if(this.idModificar === ''){
+            swal("Recuerda!",
+            "Para modificar primero tienes que hacer click en  el boton de modificar en la tabla");
+          }
+        }
+      },
+      startToModifyProveedor(proveedor){
+        this.selectedTab= 'test-swipe-2';
+        this.idModificar = proveedor._id;
+        this.proveedor = proveedor;
+        $('ul.tabs').tabs('select_tab', 'test-swipe-2');
+        Materialize.updateTextFields();
+      },
+      modifyProveedor(){
+        this.loading=true;
+        if(this.idModificar!=''){
+          Materialize.updateTextFields();
+          this.proveedor.idProveedor = this.idProv;
+          this.$http.put('http://localhost:8080/proveedor/update/'+this.idModificar,this.proveedor)
+  				.then((response)=>{
+  					if(response.body.success){
+              
+  						sweetAlert("Modificado con exito!", "Los cambios estan en la tabla", "success");
+              this.getProveedor();
+  					}else{
+  						sweetAlert("Oops...", "Error al modificar", "error");
+              
+            }
+  				});
+        }
+      },
       deleteProveedor(id){
 					this.loading=true;
 					this.$http.delete('http://localhost:8000/proveedor/delete/'+id)
@@ -168,7 +191,7 @@ export default {
 						this.loading=false;
 						if(response.body.success){
 							this.getProveedor();
-							sweetAlert("Deleted!", "Se ha eliminado el Libro", "success");
+							sweetAlert("Deleted!", "Se ha eliminado el Proveedor", "success");
 						}else{
 							sweetAlert("Oops...", "Error al eliminar", "error");
 						}
