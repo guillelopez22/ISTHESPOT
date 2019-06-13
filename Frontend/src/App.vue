@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
-    <nav id="elementos">
+  <div id="app" style="padding-top: 64px;">
+    <nav id="elementos" style="background-color: black; position: fixed; top: 0; width: 100%; z-index: 99;">
       <div class="nav-wrapper">
         <a class="brand-logo z-depth-5"  ><img src="../imgs/the_spot.png" class="materialboxed" width="210" height="65" alt="Logo"></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><router-link to="/"><a>HOME</a></router-link></li>
-          <li><router-link to="/admin"><a>MENU</a></router-link></li>
+          <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
+          <li><router-link to="/admin"><a style="color: white">MENU</a></router-link></li>
           <li>
             <nav>
               <div class="nav-wrapper -white" id="busqueda">
