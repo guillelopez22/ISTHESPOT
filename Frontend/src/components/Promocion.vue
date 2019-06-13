@@ -23,7 +23,9 @@
 					<td>{{promocion.hora_inicio}}</td>
 					<td>{{promocion.hora_final}}</td>
           <td>
-						<a v-on:click="startToModifyPromocion(promocion)" class="btn-floating btn-small waves-effect waves-light grey darken-4"><i class="material-icons">arrow_downward</i></a>
+						<a v-on:click="startToModifyPromocion(promocion)" class="btn-floating btn-small waves-effect waves-light green"
+            >
+              <i class="material-icons">update</i></a>
 					</td>
 					<td>
 						<a v-on:click="deletePromocion(promocion._id)" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
@@ -174,11 +176,12 @@ export default {
           this.$http.put('http://localhost:8080/promocion/update/'+this.idModificar,this.promocion)
   				.then((response)=>{
   					if(response.body.success){
-              
-  						sweetAlert("Modificado con exito!", "Los cambios estan en la tabla", "success");
-              this.getPromocion();
+              sweetAlert("Oops...", "Error al modificar", "error");
+  						this.getProveedor();
   					}else{
-  						sweetAlert("Oops...", "Error al modificar", "error");
+              
+              sweetAlert("Modificado con exito!", "Los cambios estan en la tabla", "success");
+              this.getPromocion();
               
             }
   				});
@@ -190,10 +193,12 @@ export default {
 						.then((response)=>{
 						this.loading=false;
 						if(response.body.success){
-							this.getPromocion();
-							sweetAlert("Deleted!", "Se termino la promocion", "success");
+              sweetAlert("Oops...", "Error al eliminar", "error");
+              this.getProveedor();
 						}else{
-							sweetAlert("Oops...", "Error al eliminar", "error");
+              this.getPromocion();
+							sweetAlert("Deleted!", "Se termino la promocion", "success");
+							
 						}
 					});
 			}
