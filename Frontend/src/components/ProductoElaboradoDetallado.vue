@@ -58,7 +58,7 @@
       </li>
     </ul>
     <div class="row">
-      <div class="input-field col s6">
+      <div class="input-field col s12">
         <input
           v-on:input="productoelaboradodetallado.cantidad = $event.target.value"
           type="number"
@@ -78,7 +78,67 @@
               <i class="material-icons left">pages</i>
               {{productoelaborado.nombre}}
               <a
-                v-on:click="newproductoelaborado(productoelaborado._id)"
+                v-on:click="newProductoElaborado(productoelaborado._id)"
+                class="btn-floating btn-small waves-effect waves-light black secondary-content"
+              >
+                <i class="material-icons">done</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div id="importance" class="input-field col s6 center">
+          <br>
+          <label id="idProducto_Elaborado">
+            <h4>
+              <a v-on:click="borrarProductoElaborado()" class="waves-effect waves-light">
+                <i class="material-icons">delete</i>
+              </a>
+              {{idProd}} {{cantidadProd}}
+            </h4>
+          </label>
+        </div>
+      </div>
+      <div class="row -white" id="contenedorTablaExterna">
+        <div class="col s6">
+          <h5>Seleccionar ID Bebida:</h5>
+          <p>(hacer click en el nombre deseado)</p>
+          <hr>
+          <ul v-for="bebida in bebidas">
+            <li>
+              <i class="material-icons left">pages</i>
+              {{bebida.nombre}}
+              <a
+                v-on:click="newBebida(bebida._id)"
+                class="btn-floating btn-small waves-effect waves-light black secondary-content"
+              >
+                <i class="material-icons">done</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div id="importance" class="input-field col s6 center">
+          <br>
+          <label id="idBebida">
+            <h4>
+              <a v-on:click="borrarBebida()" class="waves-effect waves-light">
+                <i class="material-icons">delete</i>
+              </a>
+              {{idBeb}} {{nombreBeb}}
+            </h4>
+          </label>
+        </div>
+      </div>
+      <div class="row -white" id="contenedorTablaExterna">
+        <div class="col s6">
+          <h5>Seleccionar ID Insumo:</h5>
+          <p>(hacer click en el nombre deseado)</p>
+          <hr>
+          <ul v-for="insumo in insumos">
+            <li>
+              <i class="material-icons left">pages</i>
+              {{insumo.nombre}}
+              <a
+                v-on:click="newInsumo(insumo._id)"
                 class="btn-floating btn-small waves-effect waves-light black secondary-content"
               >
                 <i class="material-icons">done</i>
@@ -90,10 +150,10 @@
           <br>
           <label id="idProductoElaborado">
             <h4>
-              <a v-on:click="borrarProductoElaborado()" class="waves-effect waves-light">
+              <a v-on:click="borrarInsumo()" class="waves-effect waves-light">
                 <i class="material-icons">delete</i>
               </a>
-              {{idProv}} {{nombreProv}}
+              {{idIns}} {{nombreIns}}
             </h4>
           </label>
         </div>
@@ -135,21 +195,51 @@ export default {
       loading: false,
       idModificar: "",
       idProd: "N/A",
-      nombreProd: "",
+      cantidadProd: "",
+      idBeb: "N/A",
+      nombreBeb: "",
+      idIns: "N/A",
+      nombreIns: "",
       selectedTab: "test-swipe-1",
       productoelaborado: {},
-      productoselaborados: []
+      productoselaborados: [],
+      bebida: {},
+      bebidas: [],
+      insumo: {},
+      insumos: []
     };
   },
   watch: {
     idProd: function(val) {
       if (val != "N/A") {
-        this.nombreProv = "";
+        this.cantidadProd = "";
       } else {
         this.$http
           .get("http://localhost:8000/productos_elaborados/searchbyid/{_id}")
           .then(response => {
-            this.nombreProd = response.body.productoelaborado.nombre;
+            this.cantidadProd = response.body.productoelaborado.cantidad;
+          });
+      }
+    },
+    idBeb: function(val) {
+      if (val != "N/A") {
+        this.nombreBeb = "";
+      } else {
+        this.$http
+          .get("http://localhost:8000/bebidas/searchbyid/{_id}")
+          .then(response => {
+            this.nombreBeb = response.body.bebida.nombre;
+          });
+      }
+    },
+    idIns: function(val) {
+      if (val != "N/A") {
+        this.nombreIns = "";
+      } else {
+        this.$http
+          .get("http://localhost:8000/insumos/searchbyid/{_id}")
+          .then(response => {
+            this.nombreIns = response.body.insumo.nombre;
           });
       }
     }
@@ -167,6 +257,18 @@ export default {
     },
     borrarProductoElaborado() {
       this.idProd = "N/A";
+    },
+    newBebida(bebida_id) {
+      this.idBeb = bebida_id;
+    },
+    borrarBebida() {
+      this.idBeb = "N/A";
+    },
+    newInsumo(insumo_id) {
+      this.idIns = insumo_id;
+    },
+    borrarInsumo() {
+      this.idIns = "N/A";
     },
     createProductoElaboradoDetallado() {
       this.loading = true;
@@ -264,6 +366,22 @@ export default {
         .then(response => {
           console.log(response);
           this.productoselaborados = response.body;
+        });
+    },
+    getBebidas() {
+      this.$http
+        .get("http://localhost:8000/bebidas")
+        .then(response => {
+          console.log(response);
+          this.bebidas = response.body;
+        });
+    },
+    getInsumos() {
+      this.$http
+        .get("http://localhost:8000/insumos")
+        .then(response => {
+          console.log(response);
+          this.insumos = response.body;
         });
     }
   },
