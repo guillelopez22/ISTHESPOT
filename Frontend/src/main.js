@@ -19,6 +19,8 @@ import Personal from './components/Personal.vue'
 import Producto from './components/Producto.vue'
 import Promocion from './components/Promocion.vue'
 import Proveedor from './components/Proveedor.vue'
+import ProductoElaboradoDetallado from './components/ProductoElaboradoDetallado.vue'
+import ProductoElaborado from './components/ProductoElaborado.vue'
 
 import VueResource from 'vue-resource'
 
@@ -97,6 +99,16 @@ const router = new VueRouter({
           name: 'Proveedor',
           path: "/proveedor",
           component: Proveedor
+        },
+        {
+          name: 'ProductoElaboradoDetallado',
+          path: "/productoelaboradodetallado",
+          component: ProductoElaboradoDetallado
+        },
+        {
+          name: 'ProductoElaborado',
+          path: "/productoelaborado",
+          component: ProductoElaborado
         }
       ]
     }
