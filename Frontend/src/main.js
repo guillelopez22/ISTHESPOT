@@ -23,6 +23,7 @@ import ProductoElaboradoDetallado from './components/ProductoElaboradoDetallado.
 import ProductoElaborado from './components/ProductoElaborado.vue'
 import Usuario from './components/Usuario.vue'
 
+
 import VueResource from 'vue-resource'
 
 Vue.use(VueResource);
@@ -82,7 +83,7 @@ const router = new VueRouter({
           component: Personal
         },
         {
-          name: 'Mesa',
+          name: 'Mesas',
           path: "/mesa",
           component: Mesa
         },

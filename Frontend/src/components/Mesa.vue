@@ -1,7 +1,7 @@
 <template>
   <div id="root">
     <h2>
-      Bebida
+      Mesas
       <a
         class="btn-floating btn-small btn tooltipped -red"
         data-position="top"
@@ -16,24 +16,20 @@
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>IdProveedor</th>
-          <th>Tipo</th>
-          <th>Inventario</th>
-          <th>Descripcion</th>
+          <th>IdOrden</th>
+          <th>Numero</th>
           <th>Modificar</th>
           <th>Borrar</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="bebida in bebidas">
-          <td>{{bebida.nombre}}</td>
-          <td>{{bebida.idProveedor}}</td>
-          <td>{{bebida.tipo}}</td>
-          <td>{{bebida.inventario}}</td>
-          <td>{{bebida.descripcion}}</td>
+        <tr v-for="mesa in mesas">
+          <td>{{mesa.nombre}}</td>
+          <td>{{mesa.idOrden}}</td>
+          <td>{{mesa.numero}}</td>
           <td>
             <a
-              v-on:click="startToModifyBebida(bebida)"
+              v-on:click="startToModifyMesa(mesa)"
               class="btn-floating btn-small waves-effect waves-light green"
             >
               <i class="material-icons">update</i>
@@ -41,7 +37,7 @@
           </td>
           <td>
             <a
-              v-on:click="deleteBebida(bebida._id)"
+              v-on:click="deleteMesa(mesa._id)"
               class="btn-floating btn-small waves-effect waves-light red"
             >
               <i class="material-icons">delete</i>
@@ -60,84 +56,29 @@
       </li>
     </ul>
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col s6">
         <input
-          v-on:input="bebida.nombre = $event.target.value"
+          v-on:input="mesa.nombre = $event.target.value"
           type="text"
-          v-model="bebida.nombre"
+          v-model="mesa.nombre"
           :disabled="loading"
           id="Nombre"
         >
         <label for="Nombre">Nombre</label>
       </div>
+  
       <div class="input-field col s6">
         <input
-          v-on:input="bebida.tipo = $event.target.value"
-          v-model="bebida.tipo"
-          :disabled="loading"
-          id="Tipo"
-          type="text"
-          class="validate"
-        >
-        <label for="Tipo">Tipo</label>
-      </div>
-      <div class="input-field col s6">
-        <input
-          v-on:input="bebida.inventario = $event.target.value"
+          v-on:input="mesa.numero = $event.target.value"
           type="number"
-          v-model="bebida.inventario"
+          v-model="mesa.numero"
           :disabled="loading"
-          id="Inventario"
+          id="Numero"
         >
-        <label for="Inventario">Inventario</label>
+        <label for="Numero">Numero</label>
       </div>
-      <div class="row">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s12">
-              <textarea
-                v-on:input="bebida.descripcion = $event.target.value"
-                v-model="bebida.descripcion"
-                :disabled="loading"
-                id="Descripcion"
-                type="text"
-                class="materialize-textarea"
-              ></textarea>
-              <label for="Descripcion">Descripción</label>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="row -white" id="contenedorTablaExterna">
-        <div class="col s6">
-          <h5>Seleccionar ID Proveedor:</h5>
-          <p>(hacer click en el nombre deseado)</p>
-          <hr>
-          <ul v-for="proveedor in proveedores">
-            <li>
-              <i class="material-icons left">pages</i>
-              {{proveedor.nombre}}
-              <a
-                v-on:click="newProveedor(proveedor._id)"
-                class="btn-floating btn-small waves-effect waves-light black secondary-content"
-              >
-                <i class="material-icons">done</i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="importance" class="input-field col s6 center">
-          <br>
-          <label id="idProveedor">
-            <h4>
-              <a v-on:click="borrarProveedor()" class="waves-effect waves-light">
-                <i class="material-icons">delete</i>
-              </a>
-              {{idProv}} {{nombreProv}}
-            </h4>
-          </label>
-        </div>
-      </div>
+    
+      
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
@@ -155,7 +96,7 @@
       >Atención: Los cambios realizados no se guardan hasta que haga click en el botón de update.</div>
       <a
         class="waves-effect waves-light btn-large"
-        v-on:click="modifyBebida"
+        v-on:click="modifyMesa"
         :disabled="loading"
         id="boton"
       >
@@ -167,60 +108,60 @@
 
 <script>
 export default {
-  name: "bebida",
+  name: "mesa",
   data() {
     return {
-      bebidas: [],
-      bebida: {},
+      mesas: [],
+      mesa: {},
       loading: false,
       idModificar: "",
-      idProv: "N/A",
+      idMesa: "N/A",
       nombreProv: "",
       selectedTab: "test-swipe-1",
-      proveedor: {},
-      proveedores: []
+      orden: {},
+      ordenes: []
     };
   },
   watch: {
-    idProv: function(val) {
+    idMesa: function(val) {
       if (val != "N/A") {
         this.nombreProv = "";
       } else {
         this.$http
-          .get("http://localhost:8000/proveedor/searchbyid/{_id}")
+          .get("http://localhost:8000/orden/searchbyid/{_id}")
           .then(response => {
-            this.nombreProv = response.body.proveedor.nombre;
+            this.nombreProv = response.body.orden.nombre;
           });
       }
     }
   },
   methods: {
-    getBebida() {
-      this.$http.get("http://localhost:8000/bebidas").then(response => {
-        this.bebidas = response.body;
+    getMesa() {
+      this.$http.get("http://localhost:8000/mesas").then(response => {
+        this.mesas = response.body;
       });
     },
-    newProveedor(proveedor_id) {
-      this.idProv = proveedor_id;
+    newProveedor(orden_id) {
+      this.idMesa = orden_id;
     },
     borrarProveedor() {
-      this.idProv = "N/A";
+      this.idMesa = "N/A";
     },
     createBebida() {
       this.loading = true;
-      this.bebida.idProveedor = this.idProv;
+      this.mesa.idOrden = this.idMesa;
       this.$http
-        .post("http://localhost:8000/bebidas/create", this.bebida)
+        .post("http://localhost:8000/mesas/create", this.mesa)
         .then(response => {
           this.loading = false;
           if (response.body.success) {
-            this.bebida = {};
+            this.mesa = {};
             sweetAlert(
               "Creado con exito!",
               "Los cambios estan en la tabla",
               "success"
             );
-            this.getBebida();
+            this.getMesa();
           } else {
             sweetAlert("Oops...", "Error al crear", "error");
           }
@@ -230,7 +171,7 @@ export default {
       if (idTab === "test-swipe-1") {
         this.idModificar = "";
         this.selectedTab = "test-swipe-1";
-        this.bebida = {};
+        this.mesa = {};
       } else {
         if (this.idModificar === "") {
           swal(
@@ -240,27 +181,27 @@ export default {
         }
       }
     },
-    startToModifyBebida(bebida) {
+    startToModifyMesa(mesa) {
       this.selectedTab = "test-swipe-2";
-      this.idModificar = bebida._id;
-      this.bebida = bebida;
-      this.idProv = bebida.idProveedor;
+      this.idModificar = mesa._id;
+      this.mesa = mesa;
+      this.idMesa = mesa.idOrden;
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
-    modifyBebida() {
+    modifyMesa() {
       this.loading = true;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
-        this.bebida.idProveedor = this.idProv;
+        this.mesa.idOrden = this.idMesa;
         this.$http
           .put(
-            "http://localhost:8000/bebidas/update/" + this.idModificar,
-            this.bebida
+            "http://localhost:8000/mesas/update/" + this.idModificar,
+            this.mesa
           )
           .then(response => {
             if (response.body.success) {
-              this.getBebida();
+              this.getMesa();
               this.loading = false;
               sweetAlert("Oops...", "Error al modificar", "error");
             } else {
@@ -269,37 +210,37 @@ export default {
                 "Los cambios estan en la tabla",
                 "success"
               );
-              this.bebida = {};
+              this.mesa = {};
               this.loading = false;
             }
           });
       }
     },
-    deleteBebida(idBebida) {
+    deleteMesa(idMesa) {
       this.loading = true;
       this.$http
-        .delete("http://localhost:8000/bebidas/delete/" + idBebida)
+        .delete("http://localhost:8000/mesas/delete/" + idMesa)
         .then(response => {
           this.loading = false;
           if (response.body.success) {
             sweetAlert("Oops...", "Error al eliminar", "error");
-            this.getBebida();
+            this.getMesa();
           } else {
             sweetAlert("Deleted!", "Los cambios estan en la tabla", "success");
-            this.getBebida();
+            this.getMesa();
           }
         });
     },
-    getProveedores() {
-      this.$http.get("http://localhost:8000/proveedores").then(response => {
+    getOrdenes() {
+      this.$http.get("http://localhost:8000/ordenes").then(response => {
         console.log(response);
-        this.proveedores = response.body;
+        this.ordenes = response.body;
       });
     }
   },
   beforeMount() {
-    this.getBebida();
-    this.getProveedores();
+    this.getMesa();
+    this.getOrdenes();
   },
   mounted() {
     $("ul.tabs").tabs();
