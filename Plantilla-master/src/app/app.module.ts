@@ -79,7 +79,7 @@ import { MesaService } from './services/mesa.service';
     EditProducto_Elaborado_DetailComponent,
     ListPromocionesComponent,
     AddPromocionComponent,
-    EditPromocionComponent
+    EditPromocionComponent,
     ListMesasComponent,
     AddMesaComponent,
     EditMesaComponent,

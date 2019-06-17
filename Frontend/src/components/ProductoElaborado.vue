@@ -24,15 +24,15 @@
       </thead>
       <tbody>
         <tr v-for="producto_elaborado in productos_elaborados">
-          <td>{{producto_elaborado.idProducto_Elaborado_Detallado}}</td>
+          <td>{{producto_elaborado.idProducto_Elaborado_Detail}}</td>
           <td>{{producto_elaborado.tipo}}</td>
           <td>{{producto_elaborado.descripcion}}</td>
           <td>
             <a
               v-on:click="startToModifyProducto_Elaborado(producto_elaborado)"
-              class="btn-floating btn-small waves-effect waves-light grey darken-4"
+              class="btn-floating btn-small waves-effect waves-light green"
             >
-              <i class="material-icons">arrow_downward</i>
+              <i class="material-icons">update</i>
             </a>
           </td>
           <td>
@@ -92,9 +92,9 @@
           <ul v-for="producto_elaborado_detail in productos_elaborados_details">
             <li>
               <i class="material-icons left">pages</i>
-              <!--{{producto_elaborado_detail.nombre}}-->
+              {{producto_elaborado_detail.cantidad}}
               <a
-                v-on:click="newProducto_Elaborado_Detallado(producto_elaborado_detail._id)"
+                v-on:click="newProducto_Elaborado_Detail(producto_elaborado_detail._id)"
                 class="btn-floating btn-small waves-effect waves-light black secondary-content"
               >
                 <i class="material-icons">done</i>
@@ -158,14 +158,14 @@ export default {
     };
   },
   watch: {
-    idProv: function(val) {
+    idDetail: function(val) {
       if (val != "N/A") {
         this.cantidad = "";
       } else {
         this.$http
-          .get("http://localhost:8000/producto_elaborado/searchbyid/{_id}")
+          .get("http://localhost:8000/prod_elaborado_detail/searchbyid/{_id}")
           .then(response => {
-            this.cantidad = response.body.producto_elaborado.cantidad;
+            this.cantidad = response.body.producto_elaborado_detail.cantidad;
           });
       }
     }
@@ -176,10 +176,10 @@ export default {
         this.productos_elaborados = response.body;
       });
     },
-    newProducto_Elaborado(poducto_elaborado_detail_id) {
+    newProducto_Elaborado_Detail(producto_elaborado_detail_id) {
       this.idDetail = producto_elaborado_detail_id;
     },
-    borrarProducto_Elaborado() {
+    borrarProducto_Elaborado_Detail() {
       this.idDetail = "N/A";
     },
     createProducto_Elaborado() {
@@ -267,7 +267,7 @@ export default {
         });
     },
     getProductos_Elaborados_Details() {
-      this.$http.get("http://localhost:8000/productos_elaborados_details").then(response => {
+      this.$http.get("http://localhost:8000/prod_elaborado_detail").then(response => {
         console.log(response);
         this.productos_elaborados_details = response.body;
       });

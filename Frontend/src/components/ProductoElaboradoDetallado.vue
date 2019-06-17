@@ -76,7 +76,7 @@
           <ul v-for="productoelaborado in productoselaborados">
             <li>
               <i class="material-icons left">pages</i>
-              {{productoelaborado.nombre}}
+              {{productoelaborado.descripcion}}
               <a
                 v-on:click="newProductoElaborado(productoelaborado._id)"
                 class="btn-floating btn-small waves-effect waves-light black secondary-content"
@@ -228,7 +228,7 @@ export default {
         this.$http
           .get("http://localhost:8000/bebidas/searchbyid/{_id}")
           .then(response => {
-            this.nombreBeb = response.body.productoelaborado.idBebida;
+            this.nombreBeb = response.body.productoelaborado.nombre;
           });
       }
     },
@@ -239,7 +239,7 @@ export default {
         this.$http
           .get("http://localhost:8000/insumos/searchbyid/{_id}")
           .then(response => {
-            this.nombreIns = response.body.productoelaborado.idInsumo;
+            this.nombreIns = response.body.productoelaborado.nombre;
           });
       }
     }
@@ -273,8 +273,8 @@ export default {
     createProductoElaboradoDetallado() {
       this.loading = true;
       this.productoelaboradodetallado.idProducto_Elaborado = this.idProd;
-      this.bebidas.idBebida = this.idBeb;
-      this.insumo.idInsumo = this.idIns;
+      this.productoelaboradodetallado.idBebida = this.idBeb;
+      this.productoelaboradodetallado.idInsumo = this.idIns;
       this.$http
         .post(
           "http://localhost:8000/prod_elaborado_detail/create",
