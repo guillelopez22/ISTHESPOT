@@ -20,6 +20,7 @@
           <th>Numero</th>
           <th>Modificar</th>
           <th>Borrar</th>
+          <th>AgregarOrden</th>
         </tr>
       </thead>
       <tbody>
@@ -41,6 +42,14 @@
               class="btn-floating btn-small waves-effect waves-light red"
             >
               <i class="material-icons">delete</i>
+            </a>
+          </td>
+          <td>
+            <a
+              v-on:click="deleteMesa(mesa._id)"
+              class="btn-floating btn-small waves-effect waves-light blue"
+            >
+              <i class="material-icons">add</i>
             </a>
           </td>
         </tr>
@@ -66,7 +75,7 @@
         >
         <label for="Nombre">Nombre</label>
       </div>
-  
+
       <div class="input-field col s6">
         <input
           v-on:input="mesa.numero = $event.target.value"
@@ -77,13 +86,11 @@
         >
         <label for="Numero">Numero</label>
       </div>
-    
-      
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
         class="waves-effect waves-light btn-large"
-        v-on:click="createBebida"
+        v-on:click="createMesa"
         :disabled="loading"
         id="boton"
       >
@@ -140,11 +147,10 @@ export default {
       this.$http.get("http://localhost:8000/mesas").then(response => {
         this.mesas = response.body;
       });
-    },revisarMesa(idMesa){
-      if(this.mesa.idOrden = this.idMesa && this.mesa.i){
-
+    },
+    revisarMesa(idMesa) {
+      if ((this.mesa.idOrden = this.idMesa && this.mesa.i)) {
       }
-
     },
     newProveedor(orden_id) {
       this.idMesa = orden_id;
@@ -152,30 +158,63 @@ export default {
     borrarProveedor() {
       this.idMesa = "N/A";
     },
-    createBebida() {
+    createMesa() {
       this.loading = true;
       console.log(this.mesa.nombre);
-      if(this.$http.get("http://localhost:8000/mesas/searchbyname/"+this.mesa.nombre)=="[]"){
-        console.log("No existe la mesa ni el numero puedo entrar");
-      }else{
-        console.log("Ya existe la mesa y el numero")
-      }
       this.$http
-        .post("http://localhost:8000/mesas/create", this.mesa)
+        .get("http://localhost:8000/mesas/searchbyname/" + this.mesa.nombre)
         .then(response => {
-          this.loading = false;
-          if (response.body.success) {
-            this.mesa = {};
+          if (response.body.length == 0) {
+            /*mirar si es el mismo nombre*/
+            this.$http
+              .get(
+                "http://localhost:8000/mesas/searchbynumero/" + this.mesa.numero
+              )
+              .then(response => {
+                if (response.body.length == 0) {
+                  /*mirar si es el mismo numero*/
+                  console.log(this.mesa);
+                  this.$http
+                    .post("http://localhost:8000/mesas/create", this.mesa)
+                    .then(response => {
+                      this.loading = false;
+                      if (response.body.success) {
+                        this.mesa = {};
+                        sweetAlert(
+                          "Creado con exito!",
+                          "Los cambios estan en la tabla",
+                          "success"
+                        );
+                        this.getMesa();
+                      } else {
+                        sweetAlert("Oops...", "Error al crear", "error");
+                      }
+                    });
+                } else {
+                  sweetAlert(
+                    //ya existe mesa con ese numero
+                    "Oops...",
+                    "Error al crear,ya existe una mesa con el mismo numero",
+                    "error"
+                  );
+                  this.getMesa();
+                  this.loading = false;
+                }
+              });
+            console.log(response.body);
+          } else {
+            //ya existe mesa con ese nombre
             sweetAlert(
-              "Creado con exito!",
-              "Los cambios estan en la tabla",
-              "success"
+              "Oops...",
+              "Error al crear,ya existe una mesa con el mismo nombre",
+              "error"
             );
             this.getMesa();
-          } else {
-            sweetAlert("Oops...", "Error al crear", "error");
+            this.loading = false;
+            console.log("Ya existe la mesa y el numero");
+            console.log(response.body.length);
           }
-        })
+        });
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {
@@ -188,7 +227,6 @@ export default {
             "Recuerda!",
             "Para modificar primero tienes que hacer click en  el boton de modificar en la tabla"
           );
-          
         }
       }
     },
@@ -203,7 +241,7 @@ export default {
     modifyMesa() {
       this.loading = true;
       if (this.idModificar != "") {
-      Materialize.updateTextFields();
+        Materialize.updateTextFields();
         this.$http
           .put(
             "http://localhost:8000/mesas/update/" + this.idModificar,
@@ -225,10 +263,25 @@ export default {
               this.loading = false;
             }
           });
+      } else {
+        sweetAlert(
+          //ya existe mesa con ese numero
+          "Oops...",
+          "Error al crear,ya existe una mesa con el mismo numero",
+          "error"
+        );
+        this.getMesa();
+        this.loading = false;
       }
     },
     deleteMesa(idMesa) {
       this.loading = true;
+      console.log(this.mesa.orden_id);
+      this.$http.get("http://localhost:8000/mesas/searchbyIdOrden/" +this.mesa.orden_id,this.mesa._id).then(
+        response =>{
+          console.log(response.body);
+        }
+      )
       this.$http
         .delete("http://localhost:8000/mesas/delete/" + idMesa)
         .then(response => {
