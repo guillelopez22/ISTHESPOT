@@ -140,6 +140,11 @@ export default {
       this.$http.get("http://localhost:8000/mesas").then(response => {
         this.mesas = response.body;
       });
+    },revisarMesa(idMesa){
+      if(this.mesa.idOrden = this.idMesa && this.mesa.i){
+
+      }
+
     },
     newProveedor(orden_id) {
       this.idMesa = orden_id;
@@ -149,7 +154,12 @@ export default {
     },
     createBebida() {
       this.loading = true;
-      this.mesa.idOrden = this.idMesa;
+      console.log(this.mesa.nombre);
+      if(this.$http.get("http://localhost:8000/mesas/searchbyname/"+this.mesa.nombre)=="[]"){
+        console.log("No existe la mesa ni el numero puedo entrar");
+      }else{
+        console.log("Ya existe la mesa y el numero")
+      }
       this.$http
         .post("http://localhost:8000/mesas/create", this.mesa)
         .then(response => {
@@ -165,7 +175,7 @@ export default {
           } else {
             sweetAlert("Oops...", "Error al crear", "error");
           }
-        });
+        })
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {
@@ -178,6 +188,7 @@ export default {
             "Recuerda!",
             "Para modificar primero tienes que hacer click en  el boton de modificar en la tabla"
           );
+          
         }
       }
     },
@@ -185,15 +196,14 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = mesa._id;
       this.mesa = mesa;
-      this.idMesa = mesa.idOrden;
+      /*this.idMesa = mesa.idOrden;*/
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
     modifyMesa() {
       this.loading = true;
       if (this.idModificar != "") {
-        Materialize.updateTextFields();
-        this.mesa.idOrden = this.idMesa;
+      Materialize.updateTextFields();
         this.$http
           .put(
             "http://localhost:8000/mesas/update/" + this.idModificar,
@@ -210,6 +220,7 @@ export default {
                 "Los cambios estan en la tabla",
                 "success"
               );
+              this.getMesa();
               this.mesa = {};
               this.loading = false;
             }

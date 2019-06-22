@@ -153,7 +153,7 @@ exports.createMesa = {
   */
   handler: function(request, reply){
     var newMesa = new mesa({
-      idOrden : request.payload.idProveedor,
+      idOrden : null,
       nombre : request.payload.nombre,
       numero: request.payload.numero
     });
