@@ -222,24 +222,51 @@ export default {
   				});
         }
       },
-      deleteUsuario(idUsuario){
-        this.inicio = 0;
-        this.final = 5;
-        this.currentPage = 1;
-          this.loading=true;
-          this.$http.delete('http://localhost:8000/usuarios/delete/'+idUsuario)
-            .then((response)=>{
-            this.loading=false;
-            if(response.body.success){
-              this.getUsuario();
-              sweetAlert("Oops...", "Error al eliminar", "error");
-            }else{
-              this.getUsuario();
-              sweetAlert("Deleted!", "Los cambios estan en la tabla", "success");
-              
+      deleteUsuario(idUsuario) {
+      let _this = this 
+      sweetAlert(
+        {
+          title: "¿Estás seguro?",
+          text: "No podrás revertir los cambios",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Eliminar",
+          cancelButtonText: "Cancelar",
+          showCloseButton: true,
+          showLoaderOnConfirm: true
+        },
+        function(inputValue) {
+          setTimeout(function() {
+            if (inputValue) {
+              //****************************************************** */
+              _this.loading = true;
+              _this.$http.delete("http://localhost:8000/usuarios/delete/" + idUsuario).then(
+                response => {
+                  this.loading = false;
+                  if (response.body.success) {
+                    sweetAlert("Oops...", "Error al eliminar", "error");
+                    _this.getUsuario();
+                  } else {
+                    sweetAlert(
+                      "Deleted!",
+                      "Los cambios estan en la tabla",
+                      "success"
+                    );
+                    _this.inicio = 0;
+                    _this.final = 5;
+                    _this.currentPage = 0;
+                    _this.getUsuario();
+                  }
+                }
+              );
+              //****************************************************** */
+            } else {
+              sweetAlert("Cancelado","Tus datos están a salvo", "info");
             }
-          });
-			},
+          }, 500);
+        }
+      );
+    },
   },
   beforeMount(){
     this.getUsuario();

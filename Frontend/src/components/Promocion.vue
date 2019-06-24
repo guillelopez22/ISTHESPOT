@@ -194,7 +194,7 @@ export default {
         this.final = 5;
         this.currentPage = 1;
 				this.loading=true;
-				this.$http.post('http://localhost:8000/promocion/create',this.promocion)
+				this.$http.post('http://localhost:8000/promociones/create',this.promocion)
 				.then((response)=>{
 					this.loading=false;
 					if(response.body.success){
@@ -229,7 +229,7 @@ export default {
         if(this.idModificar!=''){
           Materialize.updateTextFields();
           this.promocion.idPromocion = this.idPromo;
-          this.$http.put('http://localhost:8080/promocion/update/'+this.idModificar,this.promocion)
+          this.$http.put('http://localhost:8080/promociones/update/'+this.idModificar,this.promocion)
   				.then((response)=>{
   					if(response.body.success){
               sweetAlert("Oops...", "Error al modificar", "error");
@@ -243,24 +243,51 @@ export default {
   				});
         }
       },
-      deletePromocion(id){
-          this.inicio = 0;
-          this.final = 5;
-          this.currentPage = 1;
-					this.loading=true;
-					this.$http.delete('http://localhost:8000/promocion/delete/'+id)
-						.then((response)=>{
-						this.loading=false;
-						if(response.body.success){
-              sweetAlert("Oops...", "Error al eliminar", "error");
-              this.getProveedor();
-						}else{
-              this.getPromocion();
-							sweetAlert("Deleted!", "Se termino la promocion", "success");
-							
-						}
-					});
-			}
+      deletePromocion(idPromocion) {
+      let _this = this 
+      sweetAlert(
+        {
+          title: "¿Estás seguro?",
+          text: "No podrás revertir los cambios",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Eliminar",
+          cancelButtonText: "Cancelar",
+          showCloseButton: true,
+          showLoaderOnConfirm: true
+        },
+        function(inputValue) {
+          setTimeout(function() {
+            if (inputValue) {
+              //****************************************************** */
+              _this.loading = true;
+              _this.$http.delete("http://localhost:8000/promociones/delete/" + idPromocion).then(
+                response => {
+                  this.loading = false;
+                  if (response.body.success) {
+                    sweetAlert("Oops...", "Error al eliminar", "error");
+                    _this.getPromocion();
+                  } else {
+                    sweetAlert(
+                      "Deleted!",
+                      "Los cambios estan en la tabla",
+                      "success"
+                    );
+                    _this.inicio = 0;
+                    _this.final = 5;
+                    _this.currentPage = 0;
+                    _this.getPromocion();
+                  }
+                }
+              );
+              //****************************************************** */
+            } else {
+              sweetAlert("Cancelado","Tus datos están a salvo", "info");
+            }
+          }, 500);
+        }
+      );
+    },
   },
   beforeMount(){
     this.getPromocion();

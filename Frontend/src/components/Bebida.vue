@@ -331,24 +331,53 @@ export default {
           });
       }
     },
-    deleteBebida(idBebida) {
-      this.inicio = 0;
-      this.final = 5;
-      this.currentPage = 1;
-      this.loading = true;
-      this.$http
-        .delete("http://localhost:8000/bebidas/delete/" + idBebida)
-        .then(response => {
-          this.loading = false;
-          if (response.body.success) {
-            sweetAlert("Oops...", "Error al eliminar", "error");
-            this.getBebida();
-          } else {
-            sweetAlert("Deleted!", "Los cambios estan en la tabla", "success");
-            this.getBebida();
-          }
-        });
+
+  deleteBebida(idBebida) {
+      let _this = this 
+      sweetAlert(
+        {
+          title: "¿Estás seguro?",
+          text: "No podrás revertir los cambios",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Eliminar",
+          cancelButtonText: "Cancelar",
+          showCloseButton: true,
+          showLoaderOnConfirm: true
+        },
+        function(inputValue) {
+          setTimeout(function() {
+            if (inputValue) {
+              //****************************************************** */
+              _this.loading = true;
+              _this.$http.delete("http://localhost:8000/bebidas/delete/" + idBebida).then(
+                response => {
+                  this.loading = false;
+                  if (response.body.success) {
+                    sweetAlert("Oops...", "Error al eliminar", "error");
+                    _this.getBebida();
+                  } else {
+                    sweetAlert(
+                      "Deleted!",
+                      "Los cambios estan en la tabla",
+                      "success"
+                    );
+                    _this.inicio = 0;
+                    _this.final = 5;
+                    _this.currentPage = 0;
+                    _this.getBebida();
+                  }
+                }
+              );
+              //****************************************************** */
+            } else {
+              sweetAlert("Cancelado","Tus datos están a salvo", "info");
+            }
+          }, 500);
+        }
+      );
     },
+
     getProveedores() {
       this.$http.get("http://localhost:8000/proveedores").then(response => {
         console.log(response);
