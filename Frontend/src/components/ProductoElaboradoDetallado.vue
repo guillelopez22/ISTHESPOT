@@ -1,5 +1,5 @@
 <template>
-  <div id="root">
+  <div id="root"> 
     <h2>
       Producto Elaborado Detallado
       <a
@@ -12,6 +12,10 @@
         <i class="material-icons left">help</i>Update
       </a>
     </h2>
+    <p>Pagina Actual: {{currentPage}}</p>
+    <button v-on:click="anterior()">Anterior</button>
+    <button v-on:click="siguiente()">Siguiente</button>
+    <br>
     <table class="table centered">
       <thead>
         <tr>
@@ -24,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="productoelaboradodetallado in productoselaboradosdetallados">
+        <tr v-for="productoelaboradodetallado in data" v-bind:key="productoelaboradodetallado">
           <td>{{productoelaboradodetallado.idProducto_Elaborado}}</td>
           <td>{{productoelaboradodetallado.idBebida}}</td>
           <td>{{productoelaboradodetallado.idInsumo}}</td>
@@ -206,7 +210,12 @@ export default {
       bebida: {},
       bebidas: [],
       insumo: {},
-      insumos: []
+      insumos: [],
+      data: [],
+      inicio: 0,
+      final: 5,
+      currentPage: 1,
+      size: 1
     };
   },
   watch: {
@@ -245,11 +254,55 @@ export default {
     }
   },
   methods: {
+    siguiente(){
+      if(this.currentPage < this.size){
+        this.currentPage = this.currentPage + 1;
+        if(this.productoselaboradosdetallados.length % 5 == 0){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.productoselaboradosdetallados.slice(this.inicio, this.final)
+        }else if((this.productoselaboradosdetallados.length % 5 != 0) && (this.currentPage == this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + (this.productoselaboradosdetallados.length%5)
+          this.data = this.productoselaboradosdetallados.slice(this.inicio, this.final)
+        }else if((this.productoselaboradosdetallados.length % 5 != 0) && (this.currentPage < this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.productoselaboradosdetallados.slice(this.inicio, this.final)
+        }
+      }
+    },
+    anterior(){
+      if(this.currentPage > 1){
+        this.currentPage = this.currentPage - 1;
+        if(this.currentPage < this.size){
+          if(this.productoselaboradosdetallados.length % 5 == 0){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.productoselaboradosdetallados.slice(this.inicio, this.final)
+          }else if((this.productoselaboradosdetallados.length % 5 != 0) && (this.currentPage == this.size-1)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - (this.productoselaboradosdetallados.length%5)
+            this.data = this.productoselaboradosdetallados.slice(this.inicio, this.final)
+          }else if((this.productoselaboradosdetallados.length % 5 != 0) && (this.currentPage < this.size)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.productoselaboradosdetallados.slice(this.inicio, this.final)
+          }
+        }
+      }
+    },
     getProductoElaboradoDetallado() {
       this.$http
         .get("http://localhost:8000/prod_elaborado_detail")
         .then(response => {
           this.productoselaboradosdetallados = response.body;
+          this.data = this.productoselaboradosdetallados.slice(this.inicio,this.final)
+        if(this.productoselaboradosdetallados.length % 5 == 0){
+          this.size = this.productoselaboradosdetallados.length/5
+        }else{
+          this.size = parseInt(this.productoselaboradosdetallados.length/5)+1
+        }
         });
     },
     newProductoElaborado(productoelaborado_id) {
@@ -271,6 +324,9 @@ export default {
       this.idIns = "N/A";
     },
     createProductoElaboradoDetallado() {
+      this.inicio = 0;
+      this.final = 5;
+      this.currentPage = 1;
       this.loading = true;
       this.productoelaboradodetallado.idProducto_Elaborado = this.idProd;
       this.productoelaboradodetallado.idBebida = this.idBeb;
@@ -353,6 +409,9 @@ export default {
       }
     },
     deleteProductoElaboradoDetallado(idProductoElaboradoDetallado) {
+      this.inicio = 0;
+      this.final = 5;
+      this.currentPage = 1;
       this.loading = true;
       this.$http
         .delete(

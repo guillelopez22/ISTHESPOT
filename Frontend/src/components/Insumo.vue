@@ -1,5 +1,5 @@
 <template>
-  <div id="root">
+  <div id="root"> 
     <h2>
       Insumo
       <a
@@ -12,6 +12,10 @@
         <i class="material-icons left">help</i>Update
       </a>
     </h2>
+    <p>Pagina Actual: {{currentPage}}</p>
+    <button v-on:click="anterior()">Anterior</button>
+    <button v-on:click="siguiente()">Siguiente</button>
+    <br>
     <table class="table centered">
       <thead>
         <tr>
@@ -23,7 +27,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="insumo in insumos">
+        <tr v-for="insumo in data" v-bind:key="insumo">
           <td>{{insumo.nombre}}</td>
           <td>{{insumo.inventario}}</td>
           <td>{{insumo.idProveedor}}</td>
@@ -146,7 +150,12 @@ export default {
       nombreProv: "",
       selectedTab: "test-swipe-1",
       proveedor: {},
-      proveedores: []
+      proveedores: [],
+      data: [],
+      inicio: 0,
+      final: 5,
+      currentPage: 1,
+      size: 1
     };
   },
   watch: {
@@ -163,9 +172,53 @@ export default {
     }
   },
   methods: {
+    siguiente(){
+      if(this.currentPage < this.size){
+        this.currentPage = this.currentPage + 1;
+        if(this.insumos.length % 5 == 0){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.insumos.slice(this.inicio, this.final)
+        }else if((this.insumos.length % 5 != 0) && (this.currentPage == this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + (this.insumos.length%5)
+          this.data = this.insumos.slice(this.inicio, this.final)
+        }else if((this.insumos.length % 5 != 0) && (this.currentPage < this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.insumos.slice(this.inicio, this.final)
+        }
+      }
+    },
+    anterior(){
+      if(this.currentPage > 1){
+        this.currentPage = this.currentPage - 1;
+        if(this.currentPage < this.size){
+          if(this.insumos.length % 5 == 0){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.insumos.slice(this.inicio, this.final)
+          }else if((this.insumos.length % 5 != 0) && (this.currentPage == this.size-1)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - (this.insumos.length%5)
+            this.data = this.insumos.slice(this.inicio, this.final)
+          }else if((this.insumos.length % 5 != 0) && (this.currentPage < this.size)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.insumos.slice(this.inicio, this.final)
+          }
+        }
+      }
+    },
     getInsumo() {
       this.$http.get("http://localhost:8000/insumos").then(response => {
         this.insumos = response.body;
+        this.data = this.insumos.slice(this.inicio,this.final)
+        if(this.insumos.length % 5 == 0){
+          this.size = this.insumos.length/5
+        }else{
+          this.size = parseInt(this.insumos.length/5)+1
+        }
       });
     },
     newProveedor(proveedor_id) {
@@ -175,6 +228,9 @@ export default {
       this.idProv = "N/A";
     },
     createInsumo() {
+      this.inicio = 0;
+      this.final = 5;
+      this.currentPage = 1;
       this.loading = true;
       this.insumo.idProveedor = this.idProv;
       this.$http
@@ -247,6 +303,9 @@ export default {
       }
     },
     deleteInsumo(idInsumo) {
+      this.inicio = 0;
+      this.final = 5;
+      this.currentPage = 1;
       this.loading = true;
       this.$http
         .delete("http://localhost:8000/insumos/delete/" + idInsumo)

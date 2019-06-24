@@ -1,7 +1,11 @@
 <template>
   <div id="root">
     <h2>Proveedor</h2>
-    <table class="table centered">
+    <p>Pagina Actual: {{currentPage}}</p>
+    <button v-on:click="anterior()">Anterior</button>
+    <button v-on:click="siguiente()">Siguiente</button>
+    <br>
+    <table class="table centered"> 
       <thead>
         <tr>
           <th>Nombre</th>
@@ -15,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="proveedor in proveedores">
+        <tr v-for="proveedor in data" v-bind:key="proveedor">
           <td>{{proveedor.nombre}}</td>
           <td>{{proveedor.pais}}</td>
           <td>{{proveedor.telefono}}</td>
@@ -145,7 +149,12 @@ export default {
     return {
       proveedores: [],
       proveedor: {},
-      loading: false
+      loading: false,
+      data: [],
+      inicio: 0,
+      final: 5,
+      currentPage: 1,
+      size: 1
     };
   },
   directives: {
@@ -172,12 +181,59 @@ export default {
     }
   },
   methods: {
+    siguiente(){
+      if(this.currentPage < this.size){
+        this.currentPage = this.currentPage + 1;
+        if(this.proveedores.length % 5 == 0){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.proveedores.slice(this.inicio, this.final)
+        }else if((this.proveedores.length % 5 != 0) && (this.currentPage == this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + (this.proveedores.length%5)
+          this.data = this.proveedores.slice(this.inicio, this.final)
+        }else if((this.proveedores.length % 5 != 0) && (this.currentPage < this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.proveedores.slice(this.inicio, this.final)
+        }
+      }
+    },
+    anterior(){
+      if(this.currentPage > 1){
+        this.currentPage = this.currentPage - 1;
+        if(this.currentPage < this.size){
+          if(this.proveedores.length % 5 == 0){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.proveedores.slice(this.inicio, this.final)
+          }else if((this.proveedores.length % 5 != 0) && (this.currentPage == this.size-1)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - (this.proveedores.length%5)
+            this.data = this.proveedores.slice(this.inicio, this.final)
+          }else if((this.proveedores.length % 5 != 0) && (this.currentPage < this.size)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.proveedores.slice(this.inicio, this.final)
+          }
+        }
+      }
+    },
     getProveedor() {
       this.$http.get("http://localhost:8000/proveedores").then(response => {
         this.proveedores = response.body;
+        this.data = this.proveedores.slice(this.inicio,this.final)
+        if(this.proveedores.length % 5 == 0){
+          this.size = this.proveedores.length/5
+        }else{
+          this.size = parseInt(this.proveedores.length/5)+1
+        }
       });
     },
     createProveedor() {
+      this.inicio = 0;
+      this.final = 5;
+      this.currentPage = 1;
       this.loading = true;
       this.$http
         .post("http://localhost:8000/proveedor/create", this.proveedor)
@@ -242,6 +298,9 @@ export default {
       }
     },
     deleteProveedor(id) {
+      this.inicio = 0;
+      this.final = 5;
+      this.currentPage = 1;
       this.loading = true;
       this.$http
         .delete("http://localhost:8000/proveedor/delete/" + id)

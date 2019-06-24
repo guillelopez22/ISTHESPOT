@@ -1,5 +1,5 @@
 <template>
-  <div id="root">
+  <div id="root"> 
     <h2>
       Producto
       <a
@@ -12,6 +12,10 @@
         <i class="material-icons left">help</i>Update
       </a>
     </h2>
+    <p>Pagina Actual: {{currentPage}}</p>
+    <button v-on:click="anterior()">Anterior</button>
+    <button v-on:click="siguiente()">Siguiente</button>
+    <br>
     <table class="table centered">
       <thead>
         <tr>
@@ -25,7 +29,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="producto in productos">
+        <tr v-for="producto in data" v-bind:key="producto">
           <td>{{producto.nombre}}</td>
           <td>{{producto.idProducto_Elaborado}}</td>
           <td>{{producto.idBebida}}</td>
@@ -178,7 +182,12 @@ export default {
       nombreProv: "",
       selectedTab: "test-swipe-1",
       proveedor: {},
-      proveedores: []
+      proveedores: [],
+      data: [],
+      inicio: 0,
+      final: 5,
+      size: 1,
+      currentPage: 1
     };
   },
   watch: {
@@ -195,9 +204,53 @@ export default {
     }
   },
   methods: {
+    siguiente(){
+      if(this.currentPage < this.size){
+        this.currentPage = this.currentPage + 1;
+        if(this.productos.length % 5 == 0){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.productos.slice(this.inicio, this.final)
+        }else if((this.productos.length % 5 != 0) && (this.currentPage == this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + (this.productos.length%5)
+          this.data = this.productos.slice(this.inicio, this.final)
+        }else if((this.productos.length % 5 != 0) && (this.currentPage < this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.productos.slice(this.inicio, this.final)
+        }
+      }
+    },
+    anterior(){
+      if(this.currentPage > 1){
+        this.currentPage = this.currentPage - 1;
+        if(this.currentPage < this.size){
+          if(this.productos.length % 5 == 0){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.productos.slice(this.inicio, this.final)
+          }else if((this.productos.length % 5 != 0) && (this.currentPage == this.size-1)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - (this.productos.length%5)
+            this.data = this.productos.slice(this.inicio, this.final)
+          }else if((this.productos.length % 5 != 0) && (this.currentPage < this.size)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.productos.slice(this.inicio, this.final)
+          }
+        }
+      }
+    },
     getproducto() {
       this.$http.get("http://localhost:8000/productos").then(response => {
         this.productos = response.body;
+        this.data = this.productos.slice(this.inicio,this.final)
+        if(this.productos.length % 5 == 0){
+          this.size = this.productos.length/5
+        }else{
+          this.size = parseInt(this.productos.length/5)+1
+        }
       });
     },
     newProveedor(proveedor_id) {
@@ -207,6 +260,9 @@ export default {
       this.idProv = "N/A";
     },
     createproducto() {
+      this.inicio = 0;
+      this.final = 5;
+      this.currentPage = 1;
       this.loading = true;
       this.producto.idProveedor = this.idProv;
       this.$http
@@ -276,6 +332,9 @@ export default {
       }
     },
     deleteproducto(idproducto) {
+      this.inicio = 0;
+      this.final = 5;
+      this.currentPage = 1;
       this.loading = true;
       this.$http
         .delete("http://localhost:8000/productos/delete/" + idproducto)

@@ -12,10 +12,14 @@
         <i class="material-icons left">help</i>Update
       </a>
     </h2>
+    <p>Pagina Actual: {{currentPage}}</p>
+    <button v-on:click="anterior()">Anterior</button>
+    <button v-on:click="siguiente()">Siguiente</button>
+    <br>
     <table class="table centered">
       <thead>
         <tr>
-          <th>Nombre</th>
+          <th>Nombre</th> 
           <th>IdOrden</th>
           <th>Numero</th>
           <th>Modificar</th>
@@ -24,7 +28,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="mesa in mesas">
+        <tr v-for="mesa in data" v-bind:key="mesa">
           <td>{{mesa.nombre}}</td>
           <td>{{mesa.idOrden}}</td>
           <td>{{mesa.numero}}</td>
@@ -126,7 +130,12 @@ export default {
       nombreProv: "",
       selectedTab: "test-swipe-1",
       orden: {},
-      ordenes: []
+      ordenes: [],
+      data: [],
+      inicio: 0,
+      final: 5,
+      currentPage: 1,
+      size: 1
     };
   },
   watch: {
@@ -143,9 +152,53 @@ export default {
     }
   },
   methods: {
+    siguiente(){
+      if(this.currentPage < this.size){
+        this.currentPage = this.currentPage + 1;
+        if(this.mesas.length % 5 == 0){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.mesas.slice(this.inicio, this.final)
+        }else if((this.mesas.length % 5 != 0) && (this.currentPage == this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + (this.mesas.length%5)
+          this.data = this.mesas.slice(this.inicio, this.final)
+        }else if((this.mesas.length % 5 != 0) && (this.currentPage < this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.mesas.slice(this.inicio, this.final)
+        }
+      }
+    },
+    anterior(){
+      if(this.currentPage > 1){
+        this.currentPage = this.currentPage - 1;
+        if(this.currentPage < this.size){
+          if(this.mesas.length % 5 == 0){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.mesas.slice(this.inicio, this.final)
+          }else if((this.mesas.length % 5 != 0) && (this.currentPage == this.size-1)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - (this.mesas.length%5)
+            this.data = this.mesas.slice(this.inicio, this.final)
+          }else if((this.mesas.length % 5 != 0) && (this.currentPage < this.size)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.mesas.slice(this.inicio, this.final)
+          }
+        }
+      }
+    },
     getMesa() {
       this.$http.get("http://localhost:8000/mesas").then(response => {
         this.mesas = response.body;
+        this.data = this.mesas.slice(this.inicio,this.final)
+        if(this.mesas.length % 5 == 0){
+          this.size = this.mesas.length/5
+        }else{
+          this.size = parseInt(this.mesas.length/5)+1
+        }
       });
     },
     revisarMesa(idMesa) {
@@ -159,6 +212,9 @@ export default {
       this.idMesa = "N/A";
     },
     createMesa() {
+      this.inicio = 0;
+      this.final = 5;
+      this.currentPage = 1;
       this.loading = true;
       console.log(this.mesa.nombre);
       this.$http
@@ -275,6 +331,9 @@ export default {
       }
     },
     deleteMesa(idMesa) {
+      this.inicio = 0;
+      this.final = 5;
+      this.currentPage = 1;
       this.loading = true;
       console.log(this.mesa.orden_id);
       this.$http.get("http://localhost:8000/mesas/searchbyIdOrden/" +this.mesa.orden_id,this.mesa._id).then(

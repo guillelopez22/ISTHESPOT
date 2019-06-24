@@ -6,10 +6,14 @@
         <i class="material-icons left">help</i>Update
       </a>
     </h2>
+    <p>Pagina Actual: {{currentPage}}</p>
+    <button v-on:click="anterior()">Anterior</button>
+    <button v-on:click="siguiente()">Siguiente</button>
+    <br>
     <table class="table centered">
 			<thead>
 				<tr>
-					<th>Id Personal</th>
+					<th>Id Personal</th> 
 					<th>Id Ordenes</th>
 					<th>Usuario</th>
           <th>Contrasena</th>
@@ -21,7 +25,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="usuario in usuarios">
+				<tr v-for="usuario in data" v-bind:key="usuario">
 					<td >{{usuario.IdPersonal}}</td>
 					<td >{{usuario.idOrdenes}}</td>
 					<td >{{usuario.usuario}}</td>
@@ -102,17 +106,69 @@ export default {
 			loading: false,
       idModificar: '',
       selectedTab: 'test-swipe-1',
+      data: [],
+      inicio: 0,
+      final: 5,
+      currentPage: 1,
+      size: 1
     }
   },
   
   methods: {
+    siguiente(){
+      if(this.currentPage < this.size){
+        this.currentPage = this.currentPage + 1;
+        if(this.usuarios.length % 5 == 0){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.usuarios.slice(this.inicio, this.final)
+        }else if((this.usuarios.length % 5 != 0) && (this.currentPage == this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + (this.usuarios.length%5)
+          this.data = this.usuarios.slice(this.inicio, this.final)
+        }else if((this.usuarios.length % 5 != 0) && (this.currentPage < this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.usuarios.slice(this.inicio, this.final)
+        }
+      }
+    },
+    anterior(){
+      if(this.currentPage > 1){
+        this.currentPage = this.currentPage - 1;
+        if(this.currentPage < this.size){
+          if(this.usuarios.length % 5 == 0){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.usuarios.slice(this.inicio, this.final)
+          }else if((this.usuarios.length % 5 != 0) && (this.currentPage == this.size-1)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - (this.usuarios.length%5)
+            this.data = this.usuarios.slice(this.inicio, this.final)
+          }else if((this.usuarios.length % 5 != 0) && (this.currentPage < this.size)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.usuarios.slice(this.inicio, this.final)
+          }
+        }
+      }
+    },
       getUsuario(){
 				this.$http.get('http://localhost:8000/usuarios').then((response)=>{
-					this.usuarios=response.body;
+          this.usuarios=response.body;
+          this.data = this.usuarios.slice(this.inicio,this.final)
+        if(this.usuarios.length % 5 == 0){
+          this.size = this.usuarios.length/5
+        }else{
+          this.size = parseInt(this.usuarios.length/5)+1
+        }
 				});
 			},
 
 			createUsuario(){
+        this.inicio = 0;
+        this.final = 5;
+        this.currentPage = 1;
 				this.loading=true;
 				this.$http.post('http://localhost:8000/usuarios/create',this.usuario)
 				.then((response)=>{
@@ -167,6 +223,9 @@ export default {
         }
       },
       deleteUsuario(idUsuario){
+        this.inicio = 0;
+        this.final = 5;
+        this.currentPage = 1;
           this.loading=true;
           this.$http.delete('http://localhost:8000/usuarios/delete/'+idUsuario)
             .then((response)=>{

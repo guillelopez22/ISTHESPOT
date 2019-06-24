@@ -1,6 +1,10 @@
 <template>
-  <div id="root">
+  <div id="root"> 
     <h2>Promocion</h2>
+    <p>Pagina Actual: {{currentPage}}</p>
+    <button v-on:click="anterior()">Anterior</button>
+    <button v-on:click="siguiente()">Siguiente</button>
+    <br>
     <table class="table centered">
 			<thead>
 				<tr>
@@ -15,7 +19,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="promocion in promociones">
+				<tr v-for="promocion in data" v-bind:key="promocion">
 					<td>{{promocion.nombre}}</td>
 					<td>{{promocion.descripcion}}</td>
 					<td>{{promocion.cantidad}}</td>
@@ -104,7 +108,12 @@ export default {
     return{
       promociones: [],
 			promocion:{},
-			loading: false
+      loading: false,
+      data: [],
+      inicio: 0,
+      final: 5,
+      currentPage: 1,
+      size: 1
     }
   },
   directives: {
@@ -131,12 +140,59 @@ export default {
     }
   },
   methods: {
+    siguiente(){
+      if(this.currentPage < this.size){
+        this.currentPage = this.currentPage + 1;
+        if(this.promociones.length % 5 == 0){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.promociones.slice(this.inicio, this.final)
+        }else if((this.promociones.length % 5 != 0) && (this.currentPage == this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + (this.promociones.length%5)
+          this.data = this.promociones.slice(this.inicio, this.final)
+        }else if((this.promociones.length % 5 != 0) && (this.currentPage < this.size)){
+          this.inicio = this.inicio + 5
+          this.final = this.final + 5
+          this.data = this.promociones.slice(this.inicio, this.final)
+        }
+      }
+    },
+    anterior(){
+      if(this.currentPage > 1){
+        this.currentPage = this.currentPage - 1;
+        if(this.currentPage < this.size){
+          if(this.promociones.length % 5 == 0){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.promociones.slice(this.inicio, this.final)
+          }else if((this.promociones.length % 5 != 0) && (this.currentPage == this.size-1)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - (this.promociones.length%5)
+            this.data = this.promociones.slice(this.inicio, this.final)
+          }else if((this.promociones.length % 5 != 0) && (this.currentPage < this.size)){
+            this.inicio = this.inicio - 5
+            this.final = this.final - 5
+            this.data = this.promociones.slice(this.inicio, this.final)
+          }
+        }
+      }
+    },
       getPromocion(){
 				this.$http.get('http://localhost:8000/promociones').then((response)=>{
-					this.promociones=response.body;
+          this.promociones=response.body;
+          this.data = this.promociones.slice(this.inicio,this.final)
+        if(this.promociones.length % 5 == 0){
+          this.size = this.promociones.length/5
+        }else{
+          this.size = parseInt(this.promociones.length/5)+1
+        }
 				});
 			},
 			createPromocion(){
+        this.inicio = 0;
+        this.final = 5;
+        this.currentPage = 1;
 				this.loading=true;
 				this.$http.post('http://localhost:8000/promocion/create',this.promocion)
 				.then((response)=>{
@@ -188,6 +244,9 @@ export default {
         }
       },
       deletePromocion(id){
+          this.inicio = 0;
+          this.final = 5;
+          this.currentPage = 1;
 					this.loading=true;
 					this.$http.delete('http://localhost:8000/promocion/delete/'+id)
 						.then((response)=>{
