@@ -20,8 +20,8 @@
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>idProducto_Elaborado</th>
-          <th>IdBebida</th>
+          <th>Producto_Elaborado</th>
+          <th>Numero</th>
           <th>Precio</th>
           <th>Descripcion</th>
           <th>Modificar</th>
@@ -83,7 +83,7 @@
           type="text"
           class="validate"
         >
-        <label for="idBebida">idBebida</label>
+        <label for="idBebida">Numero</label>
       </div>
       <div class="input-field col s6">
         <input
@@ -117,12 +117,12 @@
           <h5>Seleccionar ID Producto Elaborado:</h5>
           <p>(hacer click en el nombre deseado)</p>
           <hr>
-          <ul v-for="productoelaborado in productoelaborados">
+          <ul v-for="producto_elaborado in producto_elaborados">
             <li>
               <i class="material-icons left">pages</i>
-              {{proveedor.nombre}}
+              {{producto_elaborado.tipo}}
               <a
-                v-on:click="newProductoElaborado(productoelaborado._id)"
+                v-on:click="newproducto_elaborado(producto_elaborado._id)"
                 class="btn-floating btn-small waves-effect waves-light black secondary-content"
               >
                 <i class="material-icons">done</i>
@@ -132,9 +132,9 @@
         </div>
         <div id="importance" class="input-field col s6 center">
           <br>
-          <label id="idProveedor">
+          <label id="idproducto_elaborado">
             <h4>
-              <a v-on:click="borrarProveedor()" class="waves-effect waves-light">
+              <a v-on:click="borrarproducto_elaborado()" class="waves-effect waves-light">
                 <i class="material-icons">delete</i>
               </a>
               {{idProv}} {{nombreProv}}
@@ -181,8 +181,8 @@ export default {
       idProv: "N/A",
       nombreProv: "",
       selectedTab: "test-swipe-1",
-      proveedor: {},
-      proveedores: [],
+      producto_elaborado: {},
+      producto_elaborados: [],
       data: [],
       inicio: 0,
       final: 5,
@@ -196,9 +196,9 @@ export default {
         this.nombreProv = "";
       } else {
         this.$http
-          .get("http://localhost:8000/proveedor/searchbyid/{_id}")
+          .get("http://localhost:8000/productos_elaborados/searchbyid/{_id}")
           .then(response => {
-            this.nombreProv = response.body.proveedor.nombre;
+            this.nombreProv = response.body.producto_elaborado.tipo;
           });
       }
     }
@@ -253,10 +253,10 @@ export default {
         }
       });
     },
-    newProveedor(proveedor_id) {
-      this.idProv = proveedor_id;
+    newproducto_elaborado(producto_elaborado_id) {
+      this.idProv = producto_elaborado_id;
     },
-    borrarProveedor() {
+    borrarproducto_elaborado() {
       this.idProv = "N/A";
     },
     createproducto() {
@@ -264,7 +264,7 @@ export default {
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
-      this.producto.idProveedor = this.idProv;
+      this.producto.idProducto_Elaborado = this.idProv;
       this.$http
         .post("http://localhost:8000/productos/create", this.producto)
         .then(response => {
@@ -300,7 +300,7 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = producto._id;
       this.producto = producto;
-      this.idProv = producto.idProveedor;
+      this.idProv = producto.idproducto_elaborado;
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
@@ -308,7 +308,7 @@ export default {
       this.loading = true;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
-        this.producto.idProveedor = this.idProv;
+        this.producto.idproducto_elaborado = this.idProv;
         this.$http
           .put(
             "http://localhost:8000/productos/update/" + this.idModificar,
@@ -376,16 +376,16 @@ export default {
         }
       );
     },
-    getProveedores() {
-      this.$http.get("http://localhost:8000/proveedores").then(response => {
+    getproductos_elaborados() {
+      this.$http.get("http://localhost:8000/productos_elaborados").then(response => {
         console.log(response);
-        this.proveedores = response.body;
+        this.producto_elaborados = response.body;
       });
     }
   },
   beforeMount() {
     this.getproducto();
-    this.getProveedores();
+    this.getproductos_elaborados();
   },
   mounted() {
     $("ul.tabs").tabs();
