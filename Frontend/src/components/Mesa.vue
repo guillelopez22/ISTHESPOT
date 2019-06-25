@@ -390,7 +390,7 @@ export default {
                     );
                     _this.inicio = 0;
                     _this.final = 5;
-                    _this.currentPage = 0;
+                    _this.currentPage = 1;
                     _this.getMesa();
                   }
                 });
