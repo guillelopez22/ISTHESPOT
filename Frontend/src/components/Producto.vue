@@ -233,7 +233,7 @@ export default {
       this.$http
         .get("http://localhost:8000/bebidas/searchbyid/{_id}")
         .then(response => {
-          this.nombreBeb = response.body.bebidas.nombre;
+          this.nombreBeb = response.body.bebida.nombre;
         });
     }
   },
@@ -438,14 +438,15 @@ export default {
           console.log(response);
           this.producto_elaborados = response.body;
         });
+    },
+    getBebidas() {
+      this.$http.get("http://localhost:8000/bebidas").then(response => {
+        console.log(response);
+        this.bebidas = response.body;
+      });
     }
   },
-  getBebidas() {
-    this.$http.get("http://localhost:8000/bebidas").then(response => {
-      console.log(response);
-      this.bebidas = response.body;
-    });
-  },
+
   beforeMount() {
     this.getproducto();
     this.getproductos_elaborados();
