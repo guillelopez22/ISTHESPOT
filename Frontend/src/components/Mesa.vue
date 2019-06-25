@@ -19,7 +19,7 @@
     <table class="table centered">
       <thead>
         <tr>
-          <th>Nombre</th> 
+          <th>Nombre</th>
           <th>IdOrden</th>
           <th>Numero</th>
           <th>Modificar</th>
@@ -152,40 +152,49 @@ export default {
     }
   },
   methods: {
-    siguiente(){
-      if(this.currentPage < this.size){
+    siguiente() {
+      if (this.currentPage < this.size) {
         this.currentPage = this.currentPage + 1;
-        if(this.mesas.length % 5 == 0){
-          this.inicio = this.inicio + 5
-          this.final = this.final + 5
-          this.data = this.mesas.slice(this.inicio, this.final)
-        }else if((this.mesas.length % 5 != 0) && (this.currentPage == this.size)){
-          this.inicio = this.inicio + 5
-          this.final = this.final + (this.mesas.length%5)
-          this.data = this.mesas.slice(this.inicio, this.final)
-        }else if((this.mesas.length % 5 != 0) && (this.currentPage < this.size)){
-          this.inicio = this.inicio + 5
-          this.final = this.final + 5
-          this.data = this.mesas.slice(this.inicio, this.final)
+        if (this.mesas.length % 5 == 0) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + 5;
+          this.data = this.mesas.slice(this.inicio, this.final);
+        } else if (
+          this.mesas.length % 5 != 0 &&
+          this.currentPage == this.size
+        ) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + (this.mesas.length % 5);
+          this.data = this.mesas.slice(this.inicio, this.final);
+        } else if (this.mesas.length % 5 != 0 && this.currentPage < this.size) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + 5;
+          this.data = this.mesas.slice(this.inicio, this.final);
         }
       }
     },
-    anterior(){
-      if(this.currentPage > 1){
+    anterior() {
+      if (this.currentPage > 1) {
         this.currentPage = this.currentPage - 1;
-        if(this.currentPage < this.size){
-          if(this.mesas.length % 5 == 0){
-            this.inicio = this.inicio - 5
-            this.final = this.final - 5
-            this.data = this.mesas.slice(this.inicio, this.final)
-          }else if((this.mesas.length % 5 != 0) && (this.currentPage == this.size-1)){
-            this.inicio = this.inicio - 5
-            this.final = this.final - (this.mesas.length%5)
-            this.data = this.mesas.slice(this.inicio, this.final)
-          }else if((this.mesas.length % 5 != 0) && (this.currentPage < this.size)){
-            this.inicio = this.inicio - 5
-            this.final = this.final - 5
-            this.data = this.mesas.slice(this.inicio, this.final)
+        if (this.currentPage < this.size) {
+          if (this.mesas.length % 5 == 0) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - 5;
+            this.data = this.mesas.slice(this.inicio, this.final);
+          } else if (
+            this.mesas.length % 5 != 0 &&
+            this.currentPage == this.size - 1
+          ) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - (this.mesas.length % 5);
+            this.data = this.mesas.slice(this.inicio, this.final);
+          } else if (
+            this.mesas.length % 5 != 0 &&
+            this.currentPage < this.size
+          ) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - 5;
+            this.data = this.mesas.slice(this.inicio, this.final);
           }
         }
       }
@@ -193,11 +202,11 @@ export default {
     getMesa() {
       this.$http.get("http://localhost:8000/mesas").then(response => {
         this.mesas = response.body;
-        this.data = this.mesas.slice(this.inicio,this.final)
-        if(this.mesas.length % 5 == 0){
-          this.size = this.mesas.length/5
-        }else{
-          this.size = parseInt(this.mesas.length/5)+1
+        this.data = this.mesas.slice(this.inicio, this.final);
+        if (this.mesas.length % 5 == 0) {
+          this.size = this.mesas.length / 5;
+        } else {
+          this.size = parseInt(this.mesas.length / 5) + 1;
         }
       });
     },
@@ -216,61 +225,70 @@ export default {
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
-      console.log(this.mesa.nombre);
-      this.$http
-        .get("http://localhost:8000/mesas/searchbyname/" + this.mesa.nombre)
-        .then(response => {
-          if (response.body.length == 0) {
-            /*mirar si es el mismo nombre*/
-            this.$http
-              .get(
-                "http://localhost:8000/mesas/searchbynumero/" + this.mesa.numero
-              )
-              .then(response => {
-                if (response.body.length == 0) {
-                  /*mirar si es el mismo numero*/
-                  console.log(this.mesa);
-                  this.$http
-                    .post("http://localhost:8000/mesas/create", this.mesa)
-                    .then(response => {
-                      this.loading = false;
-                      if (response.body.success) {
-                        this.mesa = {};
-                        sweetAlert(
-                          "Creado con exito!",
-                          "Los cambios estan en la tabla",
-                          "success"
-                        );
-                        this.getMesa();
-                      } else {
-                        sweetAlert("Oops...", "Error al crear", "error");
-                      }
-                    });
-                } else {
-                  sweetAlert(
-                    //ya existe mesa con ese numero
-                    "Oops...",
-                    "Error al crear,ya existe una mesa con el mismo numero",
-                    "error"
-                  );
-                  this.getMesa();
-                  this.loading = false;
-                }
-              });
-            console.log(response.body);
-          } else {
-            //ya existe mesa con ese nombre
-            sweetAlert(
-              "Oops...",
-              "Error al crear,ya existe una mesa con el mismo nombre",
-              "error"
-            );
-            this.getMesa();
-            this.loading = false;
-            console.log("Ya existe la mesa y el numero");
-            console.log(response.body.length);
-          }
-        });
+
+      if(this.mesa.nombre== undefined || this.mesa.numero== undefined){
+        
+        this.loading = false;
+        sweetAlert("Oops...", "Error al crear,esta vacio :(", "error");
+        
+      }else{
+      
+        this.$http
+          .get("http://localhost:8000/mesas/searchbyname/" + this.mesa.nombre)
+          .then(response => {
+            if (response.body.length == 0) {
+              /*mirar si es el mismo nombre*/
+              this.$http
+                .get(
+                  "http://localhost:8000/mesas/searchbynumero/" +
+                    this.mesa.numero
+                )
+                .then(response => {
+                  if (response.body.length == 0) {
+                    /*mirar si es el mismo numero*/
+                    
+                    this.$http
+                      .post("http://localhost:8000/mesas/create", this.mesa)
+                      .then(response => {
+                        this.loading = false;
+                        if (response.body.success) {
+                          this.mesa = {};
+                          sweetAlert(
+                            "Creado con exito!",
+                            "Los cambios estan en la tabla",
+                            "success"
+                          );
+                          this.getMesa();
+                        } else {
+                          sweetAlert("Oops...", "Error al crear", "error");
+                        }
+                      });
+                  } else {
+                    sweetAlert(
+                      //ya existe mesa con ese numero
+                      "Oops...",
+                      "Error al crear,ya existe una mesa con el mismo numero",
+                      "error"
+                    );
+                    this.getMesa();
+                    this.loading = false;
+                  }
+                });
+            
+            } else {
+              //ya existe mesa con ese nombre
+              sweetAlert(
+                "Oops...",
+                "Error al crear,ya existe una mesa con el mismo nombre",
+                "error"
+              );
+              this.getMesa();
+              this.loading = false;
+              console.log("Ya existe la mesa y el numero");
+              console.log(response.body.length);
+            }
+          });}
+       
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {
@@ -297,7 +315,7 @@ export default {
     modifyMesa() {
       this.loading = true;
       if (this.idModificar != "") {
-        Materialize.updateTextFields();
+        
         this.$http
           .put(
             "http://localhost:8000/mesas/update/" + this.idModificar,
@@ -331,13 +349,16 @@ export default {
       }
     },
     deleteMesa(idMesa) {
-      let _this = this
+      let _this = this;
       console.log(this.mesa.orden_id);
-      this.$http.get("http://localhost:8000/mesas/searchbyIdOrden/" +this.mesa.orden_id,this.mesa._id).then(
-        response =>{
+      this.$http
+        .get(
+          "http://localhost:8000/mesas/searchbyIdOrden/" + this.mesa.orden_id,
+          this.mesa._id
+        )
+        .then(response => {
           console.log(response.body);
-        }
-      )
+        });
       sweetAlert(
         {
           title: "¿Estás seguro?",
@@ -354,8 +375,9 @@ export default {
             if (inputValue) {
               //****************************************************** */
               _this.loading = true;
-              _this.$http.delete("http://localhost:8000/mesas/delete/" + idMesa).then(
-                response => {
+              _this.$http
+                .delete("http://localhost:8000/mesas/delete/" + idMesa)
+                .then(response => {
                   this.loading = false;
                   if (response.body.success) {
                     sweetAlert("Oops...", "Error al eliminar", "error");
@@ -371,11 +393,10 @@ export default {
                     _this.currentPage = 0;
                     _this.getMesa();
                   }
-                }
-              );
+                });
               //****************************************************** */
             } else {
-              sweetAlert("Cancelado","Tus datos están a salvo", "info");
+              sweetAlert("Cancelado", "Tus datos están a salvo", "info");
             }
           }, 500);
         }
