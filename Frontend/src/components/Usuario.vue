@@ -30,9 +30,7 @@
 					<td >{{usuario.telefono}}</td>
           <td >{{usuario.scope}}</td>
           <td>
-						<a v-on:click="startToModifyUsuario(usuario)" class="btn-floating btn-small waves-effect waves-light green"
-            >
-              <i class="material-icons">update</i></a>
+						<a v-on:click="startToModifyUsuario(usuario)" class="btn-floating btn-small waves-effect waves-light grey darken-4"><i class="material-icons">arrow_downward</i></a>
 					</td>
 					<td>
 						<a v-on:click="deleteUsuario(usuario._id)" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
@@ -154,13 +152,10 @@ export default {
   					if(response.body.success){
               this.getUsuario();
               this.loading=false;
-  						sweetAlert("Oops...", "Error al modificar", "error");
+  						sweetAlert("Modificado con exito!", "Los cambios estan en la tabla", "success");
               this.usuario= {};
   					}else{
-              this.getUsuario();
-              
-  						sweetAlert("Modificado con exito!", "Los cambios estan en la tabla", "success");
-  						
+  						sweetAlert("Oops...", "Error al modificar", "error");
               this.loading=false;
             }
   				});
@@ -173,11 +168,9 @@ export default {
             this.loading=false;
             if(response.body.success){
               this.getUsuario();
-              sweetAlert("Oops...", "Error al eliminar", "error");
-            }else{
-              this.getUsuario();
               sweetAlert("Deleted!", "Los cambios estan en la tabla", "success");
-              
+            }else{
+              sweetAlert("Oops...", "Error al eliminar", "error");
             }
           });
 			},
