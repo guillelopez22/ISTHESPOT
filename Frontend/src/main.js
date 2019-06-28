@@ -22,6 +22,7 @@ import Proveedor from './components/Proveedor.vue'
 import ProductoElaboradoDetallado from './components/ProductoElaboradoDetallado.vue'
 import ProductoElaborado from './components/ProductoElaborado.vue'
 import Usuario from './components/Usuario.vue'
+import MesaMesero from './components/MesaMesero.vue'
 
 
 import VueResource from 'vue-resource'
@@ -116,6 +117,11 @@ const router = new VueRouter({
           name: 'Usuario',
           path: "/usuario",
           component: Usuario
+        },
+        {
+          name: 'MesaMesero',
+          path: "/mesamesero",
+          component: MesaMesero
         }
       ]
     }

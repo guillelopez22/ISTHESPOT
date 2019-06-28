@@ -48,6 +48,11 @@
            Usuario
         </div>
       </router-link>
+      <router-link to="/mesamesero">
+        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-1 -red">
+           MesaMesero
+        </div>
+      </router-link>
     </div>
 
     <div class="routerContainer">
