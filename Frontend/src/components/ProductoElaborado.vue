@@ -13,13 +13,13 @@
       </a>
     </h2>
     <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()">Anterior</button>
-    <button v-on:click="siguiente()">Siguiente</button>
+    <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
+    <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
     <br>
     <table class="table centered">
       <thead>
         <tr>
-          <th>Id Producto Elaborado Detallado</th>
+          <th>Producto Elaborado Detallado</th>
           <th>Tipo</th>
           <th>Descripcion</th>
           <th>Modificar</th>
@@ -27,8 +27,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="producto_elaborado in data" v-bind:key="producto_elaborado">
-          <td>{{producto_elaborado.idProducto_Elaborado_Detail}}</td>
+        <tr v-for="(producto_elaborado,index) in data">
+          <td>{{productos_elaborados_details2[index]}}</td>
           <td>{{producto_elaborado.tipo}}</td>
           <td>{{producto_elaborado.descripcion}}</td>
           <td>
@@ -159,6 +159,7 @@ export default {
       selectedTab: "test-swipe-1",
       producto_elaborado_detail: {},
       productos_elaborados_details: [],
+      productos_elaborados_details2: [],
       currentPage: 1,
       data: [],
       inicio: 0,
@@ -219,8 +220,18 @@ export default {
       }
     },
     getProducto_Elaborado() {
+      let _this = this;
       this.$http.get("http://localhost:8000/productos_elaborados").then(response => {
         this.productos_elaborados = response.body;
+        response.body.map(function(value, key) {
+          var j;
+          var p1 = _this.productos_elaborados_details;
+          for (j = 0; j < p1.length; j++) {
+            if (value.idProducto_Elaborado_Detail == p1[j]._id) {
+              _this.productos_elaborados_details2.push(p1[j].cantidad);
+            }
+          }
+        });
         this.data = this.productos_elaborados.slice(this.inicio,this.final)
         if(this.productos_elaborados.length % 5 == 0){
           this.size = this.productos_elaborados.length/5
@@ -360,8 +371,8 @@ export default {
     }
   },
   beforeMount() {
-    this.getProducto_Elaborado();
     this.getProductos_Elaborados_Details();
+    this.getProducto_Elaborado();
   },
   mounted() {
     $("ul.tabs").tabs();

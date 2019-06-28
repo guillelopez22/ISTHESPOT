@@ -13,14 +13,14 @@
       </a>
     </h2>
     <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()">Anterior</button>
-    <button v-on:click="siguiente()">Siguiente</button>
+    <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
+    <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
     <br>
     <table class="table centered">
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>IdProveedor</th>
+          <th>Proveedor</th>
           <th>Tipo</th>
           <th>Inventario</th>
           <th>Descripcion</th>
@@ -29,9 +29,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="bebida in data" v-bind:key="bebida">
+        <tr v-for="(bebida, index) in data">
           <td>{{bebida.nombre}}</td>
-          <td>{{bebida.idProveedor}}</td>
+          <td>{{proveedores2[index]}}</td>
           <td>{{bebida.tipo}}</td>
           <td>{{bebida.inventario}}</td>
           <td>{{bebida.descripcion}}</td>
@@ -183,11 +183,12 @@ export default {
       selectedTab: "test-swipe-1",
       proveedor: {},
       proveedores: [],
+      proveedores2: [],
       data: [],
       inicio: 0,
       final: 5,
       currentPage: 1,
-      size: 1,
+      size: 1
     };
   },
   watch: {
@@ -204,52 +205,74 @@ export default {
     }
   },
   methods: {
-    siguiente(){
-      if(this.currentPage < this.size){
+    siguiente() {
+      if (this.currentPage < this.size) {
         this.currentPage = this.currentPage + 1;
-        if(this.bebidas.length % 5 == 0){
-          this.inicio = this.inicio + 5
-          this.final = this.final + 5
-          this.data = this.bebidas.slice(this.inicio, this.final)
-        }else if((this.bebidas.length % 5 != 0) && (this.currentPage == this.size)){
-          this.inicio = this.inicio + 5
-          this.final = this.final + (this.bebidas.length%5)
-          this.data = this.bebidas.slice(this.inicio, this.final)
-        }else if((this.bebidas.length % 5 != 0) && (this.currentPage < this.size)){
-          this.inicio = this.inicio + 5
-          this.final = this.final + 5
-          this.data = this.bebidas.slice(this.inicio, this.final)
+        if (this.bebidas.length % 5 == 0) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + 5;
+          this.data = this.bebidas.slice(this.inicio, this.final);
+        } else if (
+          this.bebidas.length % 5 != 0 &&
+          this.currentPage == this.size
+        ) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + (this.bebidas.length % 5);
+          this.data = this.bebidas.slice(this.inicio, this.final);
+        } else if (
+          this.bebidas.length % 5 != 0 &&
+          this.currentPage < this.size
+        ) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + 5;
+          this.data = this.bebidas.slice(this.inicio, this.final);
         }
       }
     },
-    anterior(){
-      if(this.currentPage > 1){
+    anterior() {
+      if (this.currentPage > 1) {
         this.currentPage = this.currentPage - 1;
-        if(this.currentPage < this.size){
-          if(this.bebidas.length % 5 == 0){
-            this.inicio = this.inicio - 5
-            this.final = this.final - 5
-            this.data = this.bebidas.slice(this.inicio, this.final)
-          }else if((this.bebidas.length % 5 != 0) && (this.currentPage == this.size-1)){
-            this.inicio = this.inicio - 5
-            this.final = this.final - (this.bebidas.length%5)
-            this.data = this.bebidas.slice(this.inicio, this.final)
-          }else if((this.bebidas.length % 5 != 0) && (this.currentPage < this.size)){
-            this.inicio = this.inicio - 5
-            this.final = this.final - 5
-            this.data = this.bebidas.slice(this.inicio, this.final)
+        if (this.currentPage < this.size) {
+          if (this.bebidas.length % 5 == 0) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - 5;
+            this.data = this.bebidas.slice(this.inicio, this.final);
+          } else if (
+            this.bebidas.length % 5 != 0 &&
+            this.currentPage == this.size - 1
+          ) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - (this.bebidas.length % 5);
+            this.data = this.bebidas.slice(this.inicio, this.final);
+          } else if (
+            this.bebidas.length % 5 != 0 &&
+            this.currentPage < this.size
+          ) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - 5;
+            this.data = this.bebidas.slice(this.inicio, this.final);
           }
         }
       }
     },
     getBebida() {
+      let _this = this;
       this.$http.get("http://localhost:8000/bebidas").then(response => {
         this.bebidas = response.body;
-        this.data = this.bebidas.slice(this.inicio,this.final)
-        if(this.bebidas.length % 5 == 0){
-          this.size = this.bebidas.length/5
-        }else{
-          this.size = parseInt(this.bebidas.length/5)+1
+        response.body.map(function(value, key) {
+          var i;
+          var p = _this.proveedores;
+          for (i = 0; i < p.length; i++) {
+            if (value.idProveedor == p[i]._id) {
+              _this.proveedores2.push(p[i].nombre);
+            }
+          }
+        });
+        this.data = this.bebidas.slice(this.inicio, this.final);
+        if (this.bebidas.length % 5 == 0) {
+          this.size = this.bebidas.length / 5;
+        } else {
+          this.size = parseInt(this.bebidas.length / 5) + 1;
         }
       });
     },
@@ -332,8 +355,8 @@ export default {
       }
     },
 
-  deleteBebida(idBebida) {
-      let _this = this 
+    deleteBebida(idBebida) {
+      let _this = this;
       sweetAlert(
         {
           title: "¿Estás seguro?",
@@ -350,8 +373,9 @@ export default {
             if (inputValue) {
               //****************************************************** */
               _this.loading = true;
-              _this.$http.delete("http://localhost:8000/bebidas/delete/" + idBebida).then(
-                response => {
+              _this.$http
+                .delete("http://localhost:8000/bebidas/delete/" + idBebida)
+                .then(response => {
                   this.loading = false;
                   if (response.body.success) {
                     sweetAlert("Oops...", "Error al eliminar", "error");
@@ -367,11 +391,10 @@ export default {
                     _this.currentPage = 1;
                     _this.getBebida();
                   }
-                }
-              );
+                });
               //****************************************************** */
             } else {
-              sweetAlert("Cancelado","Tus datos están a salvo", "info");
+              sweetAlert("Cancelado", "Tus datos están a salvo", "info");
             }
           }, 500);
         }
@@ -386,8 +409,8 @@ export default {
     }
   },
   beforeMount() {
-    this.getBebida();
     this.getProveedores();
+    this.getBebida();
   },
   mounted() {
     $("ul.tabs").tabs();

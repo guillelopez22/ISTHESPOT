@@ -1,5 +1,5 @@
 <template>
-  <div id="root"> 
+  <div id="root">
     <h2>
       Producto Elaborado Detallado
       <a
@@ -13,25 +13,25 @@
       </a>
     </h2>
     <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()">Anterior</button>
-    <button v-on:click="siguiente()">Siguiente</button>
+   <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
+    <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
     <br>
     <table class="table centered">
       <thead>
         <tr>
-          <th>IdProductoElaborado</th>
-          <th>IdBebida</th>
-          <th>IdInsumo</th>
+          <th>Producto Elaborado</th>
+          <th>Bebida</th>
+          <th>Insumo</th>
           <th>Cantidad</th>
           <th>Modificar</th>
           <th>Borrar</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="productoelaboradodetallado in data" v-bind:key="productoelaboradodetallado">
-          <td>{{productoelaboradodetallado.idProducto_Elaborado}}</td>
-          <td>{{productoelaboradodetallado.idBebida}}</td>
-          <td>{{productoelaboradodetallado.idInsumo}}</td>
+        <tr v-for="(productoelaboradodetallado,index) in data">
+          <td>{{productoselaborados2[index]}}</td>
+          <td>{{bebidas2[index]}}</td>
+          <td>{{insumos2[index]}}</td>
           <td>{{productoelaboradodetallado.cantidad}}</td>
           <td>
             <a
@@ -207,10 +207,13 @@ export default {
       selectedTab: "test-swipe-1",
       productoelaborado: {},
       productoselaborados: [],
+      productoselaborados2: [],
       bebida: {},
       bebidas: [],
+      bebidas2: [],
       insumo: {},
       insumos: [],
+      insumos2: [],
       data: [],
       inicio: 0,
       final: 5,
@@ -254,55 +257,115 @@ export default {
     }
   },
   methods: {
-    siguiente(){
-      if(this.currentPage < this.size){
+    siguiente() {
+      if (this.currentPage < this.size) {
         this.currentPage = this.currentPage + 1;
-        if(this.productoselaboradosdetallados.length % 5 == 0){
-          this.inicio = this.inicio + 5
-          this.final = this.final + 5
-          this.data = this.productoselaboradosdetallados.slice(this.inicio, this.final)
-        }else if((this.productoselaboradosdetallados.length % 5 != 0) && (this.currentPage == this.size)){
-          this.inicio = this.inicio + 5
-          this.final = this.final + (this.productoselaboradosdetallados.length%5)
-          this.data = this.productoselaboradosdetallados.slice(this.inicio, this.final)
-        }else if((this.productoselaboradosdetallados.length % 5 != 0) && (this.currentPage < this.size)){
-          this.inicio = this.inicio + 5
-          this.final = this.final + 5
-          this.data = this.productoselaboradosdetallados.slice(this.inicio, this.final)
+        if (this.productoselaboradosdetallados.length % 5 == 0) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + 5;
+          this.data = this.productoselaboradosdetallados.slice(
+            this.inicio,
+            this.final
+          );
+        } else if (
+          this.productoselaboradosdetallados.length % 5 != 0 &&
+          this.currentPage == this.size
+        ) {
+          this.inicio = this.inicio + 5;
+          this.final =
+            this.final + (this.productoselaboradosdetallados.length % 5);
+          this.data = this.productoselaboradosdetallados.slice(
+            this.inicio,
+            this.final
+          );
+        } else if (
+          this.productoselaboradosdetallados.length % 5 != 0 &&
+          this.currentPage < this.size
+        ) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + 5;
+          this.data = this.productoselaboradosdetallados.slice(
+            this.inicio,
+            this.final
+          );
         }
       }
     },
-    anterior(){
-      if(this.currentPage > 1){
+    anterior() {
+      if (this.currentPage > 1) {
         this.currentPage = this.currentPage - 1;
-        if(this.currentPage < this.size){
-          if(this.productoselaboradosdetallados.length % 5 == 0){
-            this.inicio = this.inicio - 5
-            this.final = this.final - 5
-            this.data = this.productoselaboradosdetallados.slice(this.inicio, this.final)
-          }else if((this.productoselaboradosdetallados.length % 5 != 0) && (this.currentPage == this.size-1)){
-            this.inicio = this.inicio - 5
-            this.final = this.final - (this.productoselaboradosdetallados.length%5)
-            this.data = this.productoselaboradosdetallados.slice(this.inicio, this.final)
-          }else if((this.productoselaboradosdetallados.length % 5 != 0) && (this.currentPage < this.size)){
-            this.inicio = this.inicio - 5
-            this.final = this.final - 5
-            this.data = this.productoselaboradosdetallados.slice(this.inicio, this.final)
+        if (this.currentPage < this.size) {
+          if (this.productoselaboradosdetallados.length % 5 == 0) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - 5;
+            this.data = this.productoselaboradosdetallados.slice(
+              this.inicio,
+              this.final
+            );
+          } else if (
+            this.productoselaboradosdetallados.length % 5 != 0 &&
+            this.currentPage == this.size - 1
+          ) {
+            this.inicio = this.inicio - 5;
+            this.final =
+              this.final - (this.productoselaboradosdetallados.length % 5);
+            this.data = this.productoselaboradosdetallados.slice(
+              this.inicio,
+              this.final
+            );
+          } else if (
+            this.productoselaboradosdetallados.length % 5 != 0 &&
+            this.currentPage < this.size
+          ) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - 5;
+            this.data = this.productoselaboradosdetallados.slice(
+              this.inicio,
+              this.final
+            );
           }
         }
       }
     },
     getProductoElaboradoDetallado() {
+      let _this = this;
       this.$http
         .get("http://localhost:8000/prod_elaborado_detail")
         .then(response => {
           this.productoselaboradosdetallados = response.body;
-          this.data = this.productoselaboradosdetallados.slice(this.inicio,this.final)
-        if(this.productoselaboradosdetallados.length % 5 == 0){
-          this.size = this.productoselaboradosdetallados.length/5
-        }else{
-          this.size = parseInt(this.productoselaboradosdetallados.length/5)+1
-        }
+          response.body.map(function(value, key) {
+            var i;
+            var p = _this.bebidas;
+            for (i = 0; i < p.length; i++) {
+              if (value.idBebida == p[i]._id) {
+                _this.bebidas2.push(p[i].nombre);
+              }
+            }
+            var j;
+            var p1 = _this.productoselaborados;
+            for (j = 0; j < p1.length; j++) {
+              if (value.idProducto_Elaborado == p1[j]._id) {
+                _this.productoselaborados2.push(p1[j].tipo);
+              }
+            }
+            var k;
+            var p2 = _this.insumos;
+            for (k = 0; k < p2.length; k++) {
+              if (value.idInsumo == p2[k]._id) {
+                _this.insumos2.push(p2[k].nombre);
+              }
+            }
+          });
+          this.data = this.productoselaboradosdetallados.slice(
+            this.inicio,
+            this.final
+          );
+          if (this.productoselaboradosdetallados.length % 5 == 0) {
+            this.size = this.productoselaboradosdetallados.length / 5;
+          } else {
+            this.size =
+              parseInt(this.productoselaboradosdetallados.length / 5) + 1;
+          }
         });
     },
     newProductoElaborado(productoelaborado_id) {
@@ -334,7 +397,9 @@ export default {
       this.$http
         .post(
           "http://localhost:8000/prod_elaborado_detail/create",
-          this.productoelaboradodetallado,this.bebidas,this.insumo
+          this.productoelaboradodetallado,
+          this.bebidas,
+          this.insumo
         )
         .then(response => {
           this.loading = false;
@@ -388,7 +453,9 @@ export default {
           .put(
             "http://localhost:8000/prod_elaborado_detail/update/" +
               this.idModificar,
-            this.productoelaboradodetallado,this.bebidas,this.insumo
+            this.productoelaboradodetallado,
+            this.bebidas,
+            this.insumo
           )
           .then(response => {
             if (response.body.success) {
@@ -409,7 +476,7 @@ export default {
       }
     },
     deleteProductoElaboradoDetallado(IdProductoElaboradoDetallado) {
-      let _this = this 
+      let _this = this;
       sweetAlert(
         {
           title: "¿Estás seguro?",
@@ -426,8 +493,12 @@ export default {
             if (inputValue) {
               //****************************************************** */
               _this.loading = true;
-              _this.$http.delete("http://localhost:8000/prod_elaborado_detail/delete/" + IdProductoElaboradoDetallado).then(
-                response => {
+              _this.$http
+                .delete(
+                  "http://localhost:8000/prod_elaborado_detail/delete/" +
+                    IdProductoElaboradoDetallado
+                )
+                .then(response => {
                   this.loading = false;
                   if (response.body.success) {
                     sweetAlert("Oops...", "Error al eliminar", "error");
@@ -443,11 +514,10 @@ export default {
                     _this.currentPage = 1;
                     _this.getProductoElaboradoDetallado();
                   }
-                }
-              );
+                });
               //****************************************************** */
             } else {
-              sweetAlert("Cancelado","Tus datos están a salvo", "info");
+              sweetAlert("Cancelado", "Tus datos están a salvo", "info");
             }
           }, 500);
         }
@@ -475,10 +545,10 @@ export default {
     }
   },
   beforeMount() {
-    this.getProductoElaboradoDetallado();
-    this.getProductosElaborados();
     this.getBebidas();
+    this.getProductosElaborados();
     this.getInsumos();
+    this.getProductoElaboradoDetallado();
   },
   mounted() {
     $("ul.tabs").tabs();

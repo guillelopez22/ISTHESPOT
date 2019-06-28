@@ -7,8 +7,8 @@
       </a>
     </h2>
     <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()">Anterior</button>
-    <button v-on:click="siguiente()">Siguiente</button>
+  <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
+    <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
     <br>
     <table class="table centered">
 			<thead>

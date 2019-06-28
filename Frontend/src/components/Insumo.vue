@@ -13,24 +13,24 @@
       </a>
     </h2>
     <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()">Anterior</button>
-    <button v-on:click="siguiente()">Siguiente</button>
+    <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
+    <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
     <br>
     <table class="table centered">
       <thead>
         <tr>
           <th>Nombre</th>
           <th>Inventario</th>
-          <th>IdProveedor</th>
+          <th>Proveedor</th>
           <th>Modificar</th>
           <th>Borrar</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="insumo in data" v-bind:key="insumo">
+        <tr v-for="(insumo,index) in data">
           <td>{{insumo.nombre}}</td>
           <td>{{insumo.inventario}}</td>
-          <td>{{insumo.idProveedor}}</td>
+          <td>{{proveedores2[index]}}</td>
           <td>
             <a
               v-on:click="startToModifyInsumo(insumo)"
@@ -151,6 +151,7 @@ export default {
       selectedTab: "test-swipe-1",
       proveedor: {},
       proveedores: [],
+      proveedores2: [],
       data: [],
       inicio: 0,
       final: 5,
@@ -211,8 +212,18 @@ export default {
       }
     },
     getInsumo() {
+      let _this = this;
       this.$http.get("http://localhost:8000/insumos").then(response => {
         this.insumos = response.body;
+        response.body.map(function(value, key) {
+          var i;
+          var p = _this.proveedores;
+          for (i = 0; i < p.length; i++) {
+            if (value.idProveedor == p[i]._id) {
+              _this.proveedores2.push(p[i].nombre);
+            }
+          }
+        });
         this.data = this.insumos.slice(this.inicio,this.final)
         if(this.insumos.length % 5 == 0){
           this.size = this.insumos.length/5
@@ -355,8 +366,8 @@ export default {
     }
   },
   beforeMount() {
-    this.getInsumo();
     this.getProveedores();
+    this.getInsumo();
   },
   mounted() {
     $("ul.tabs").tabs();

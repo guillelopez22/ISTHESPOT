@@ -13,15 +13,15 @@
       </a>
     </h2>
     <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()">Anterior</button>
-    <button v-on:click="siguiente()">Siguiente</button>
+    <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
+    <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
     <br>
     <table class="table centered">
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Producto_Elaborado</th>
-          <th>IdBebida</th>
+          <th>Producto Elaborado</th>
+          <th>Bebida</th>
           <th>Precio</th>
           <th>Descripcion</th>
           <th>Modificar</th>
@@ -29,10 +29,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="producto in data" v-bind:key="producto">
+        <tr v-for="(producto,index) in data">
           <td>{{producto.nombre}}</td>
-          <td>{{producto.idProducto_Elaborado}}</td>
-          <td>{{producto.idBebida}}</td>
+          <td>{{producto_elaborados2[index]}}</td>
+          <td>{{bebidas2[index]}}</td>
           <td>{{producto.precio}}</td>
           <td>{{producto.descripcion}}</td>
           <td>
@@ -204,8 +204,10 @@ export default {
       selectedTab: "test-swipe-1",
       producto_elaborado: {},
       producto_elaborados: [],
+      producto_elaborados2: [],
       bebida: {},
       bebidas: [],
+      bebidas2: [],
       data: [],
       inicio: 0,
       final: 5,
@@ -289,8 +291,27 @@ export default {
       }
     },
     getproducto() {
+      let _this = this;
       this.$http.get("http://localhost:8000/productos").then(response => {
         this.productos = response.body;
+        response.body.map(function(value, key) {
+          var i;
+          var p = _this.bebidas;
+          for (i = 0; i < p.length; i++) {
+            if (value.idBebida == p[i]._id) {
+              _this.bebidas2.push(p[i].nombre);
+            }
+          }
+          console.log(_this.bebidas2);
+          var j;
+          var p1 = _this.producto_elaborados;
+          for (j = 0; j < p1.length; j++) {
+            if (value.idProducto_Elaborado == p1[j]._id) {
+              _this.producto_elaborados2.push(p1[j].tipo);
+            }
+          }
+          console.log(_this.producto_elaborados2);
+        });
         this.data = this.productos.slice(this.inicio, this.final);
         if (this.productos.length % 5 == 0) {
           this.size = this.productos.length / 5;
@@ -448,9 +469,9 @@ export default {
   },
 
   beforeMount() {
-    this.getproducto();
     this.getproductos_elaborados();
     this.getBebidas();
+    this.getproducto();
   },
   mounted() {
     $("ul.tabs").tabs();
