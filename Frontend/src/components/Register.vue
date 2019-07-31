@@ -40,20 +40,20 @@
               <div class="row">
                 <div class="input-field col s12">
                   <i class="material-icons prefix">vpn_key</i>
-                  <input class="validate" v-model="usuario.contrasena" v-on:input="usuario.contrasena = $event.target.value" type="password" id="contrasena" />
+                  <input class="validate" v-model="contrasena" v-on:input="usuario.contrasena = $event.target.value" type="password" id="contrasena" />
                   <label for="contrasena">Contraseña</label>
                 </div>
               </div>
               <div class="row" style="color:black">
                 <div class="input-field col s12">
                   <i class="material-icons prefix">vpn_key</i>
-                  <input class="validate" v-model="contrasena2" type="password" id="contrasena2" />
+                  <input class="validate" v-model="contrasena2"  type="password" id="contrasena2" />
                   <label for="contrasena2">Reescribir contraseña</label>
                 </div>
               </div>
 
 
-              <div class="row">
+              <!--<div class="row">
                 <label>Seleccion el tipo de usuario</label>
                 <select class="browser-default" v-on:input="usuario.scope = $event.target.value" v-model="usuario.scope" :disable="loading" id="scope">
                   <option value="Cliente">Cliente</option>
@@ -61,7 +61,8 @@
                   <option value="Cajero">Cajero</option>
                   <option value="Mesero">Mesero</option>
                 </select>
-              </div>
+              </div>-->
+              
               <br />
               <p>
                 <input type="checkbox" id="test6" />
@@ -138,13 +139,14 @@ export default {
       usuario: {},
       contrasena: "",
       contrasena2: "",
-      loading: false
+      loading: false,
+      nombre: ''
     };
   },
   methods: {
     newUsuario() {
       this.loading = true;
-      if (this.pass1 === this.pass2) {
+      if (this.contrasena === this.contrasena2) {
         this.loading = false;
         console.log(this.usuario);
         this.$http.post('http://localhost:8000/usuarios/create',this.usuario)
@@ -152,15 +154,18 @@ export default {
 					this.loading=false;
 					if(response.body.success){
             this.usuario= {};
+            this.contrasena = "";
+            this.contrasena2 = "";
 						sweetAlert("Creado con exito!", "Los cambios estan en la tabla", "success");
 						this.getUsuario();
 					}else{
 						sweetAlert("Oops...", "Error al crear", "error");
 					}
-				});
+        });
+        console.log("usuario: "+this.usuario);
+        console.log("nombre: "+this.usuario.nombre)
       } else {
         this.loading = false;
-        console.log(this.pass1+" pass1, "," ",this.pass2+" pass2")
         sweetAlert("Oops...", "La contraseña no es la misma", "error");
       }
     }

@@ -74,9 +74,18 @@
           <input v-on:input="usuario.telefono = $event.target.value" type="text" v-model="usuario.telefono" :disabled="loading"  id="telefono">
           <label for="telefono">Telefono</label>
         </div>
-        <div class="input-field col s6">
+        <!--<div class="input-field col s6">
           <input v-on:input="usuario.scope = $event.target.value" type="text" v-model="usuario.scope" :disabled="loading"  id="scope">
           <label for="scope">Scope</label>
+        </div>-->
+        <label for="scope" >Seleccione el tipo de usuario</label>
+        <div class="input-field col s6">
+          <select style="color: black" class="browser-default" v-on:input="usuario.scope = $event.target.value" type="text" v-model="usuario.scope" :disabled="loading"  id="scope">
+            <option value="Cliente">Cliente</option>
+            <option value="Administrador">Administrador</option>
+            <option value="Cajero">Cajero</option>
+            <option value="Mesero">Mesero</option>
+          </select>       
         </div>
 
       </div>
