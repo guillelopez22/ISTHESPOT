@@ -20,9 +20,12 @@
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Producto Elaborado</th>
+          <!--<th>Producto Elaborado</th>-->
           <th>Bebida</th>
+          <th>Insumo</th>
+          <th>Tipo</th>
           <th>Precio</th>
+          <th>Cantidad</th>
           <th>Descripcion</th>
           <th>Modificar</th>
           <th>Borrar</th>
@@ -31,9 +34,12 @@
       <tbody>
         <tr v-for="(producto,index) in data">
           <td>{{producto.nombre}}</td>
-          <td>{{producto_elaborados2[index]}}</td>
+          <!--<td>{{producto_elaborados2[index]}}</td>-->
           <td>{{bebidas2[index]}}</td>
+          <td>{{insumos2[index]}}</td>
+          <td>{{producto.tipo}}</td>
           <td>{{producto.precio}}</td>
+          <td>{{producto.cantidad}}</td>
           <td>{{producto.descripcion}}</td>
           <td>
             <a
@@ -101,7 +107,21 @@
           </div>
         </form>
       </div>
-      <div class="row -white" id="contenedorTablaExterna">
+
+      <div class="input-field col s12">
+        <input
+          v-on:input="producto.cantidad = $event.target.value"
+          type="number"
+          v-model="producto.cantidad"
+          :disabled="loading"
+          id="Cantidad"
+        >
+        <label for="Cantidad">Cantidad</label>
+      </div>
+
+      
+
+      <!--<div class="row -white" id="contenedorTablaExterna">
         <div class="col s6">
           <h5>Seleccionar ID Producto Elaborado:</h5>
           <p>(hacer click en el nombre deseado)</p>
@@ -130,7 +150,7 @@
             </h4>
           </label>
         </div>
-      </div>
+      </div>-->
       <div class="row -white" id="contenedorTablaExterna">
         <div class="col s6">
           <h5>Seleccionar ID Bebida:</h5>
@@ -161,6 +181,53 @@
           </label>
         </div>
       </div>
+
+      
+      <div class="row -white" id="contenedorTablaExterna">
+        <div class="col s6">
+          <h5>Seleccionar ID Insumo:</h5>
+          <p>(hacer click en el nombre deseado)</p>
+          <hr>
+          <ul v-for="insumo in insumos">
+            <li>
+              <i class="material-icons left">pages</i>
+              {{insumo.nombre}}
+              <a
+                v-on:click="newInsumo(insumo._id)"
+                class="btn-floating btn-small waves-effect waves-light black secondary-content"
+              >
+                <i class="material-icons">done</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div id="importance" class="input-field col s6 center">
+          <br>
+          <label id="idInsumo">
+            <h4>
+              <a v-on:click="borrarInsumo()" class="waves-effect waves-light">
+                <i class="material-icons">delete</i>
+              </a>
+              {{idIns}} {{nombreIns}}
+            </h4>
+          </label>
+        </div>
+      </div>
+
+    -->
+
+
+     <div class="input-field col s12">
+        <input
+          v-on:input="producto.tipo = $event.target.value"
+          type="text"
+          v-model="producto.tipo"
+          :disabled="loading"
+          id="Tipo"
+        >
+        <label for="Tipo">Tipo</label>
+      </div>
+
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
@@ -199,15 +266,20 @@ export default {
       idModificar: "",
       idProv: "N/A",
       idBeb: "N/A",
+      idIns: "N/A",
       nombreBeb: "",
+      nombreIns: "",
       nombreProv: "",
       selectedTab: "test-swipe-1",
-      producto_elaborado: {},
-      producto_elaborados: [],
-      producto_elaborados2: [],
+      //producto_elaborado: {},
+      //producto_elaborados: [],
+      //producto_elaborados2: [],
       bebida: {},
       bebidas: [],
       bebidas2: [],
+      insumo: {},
+      insumos: [],
+      insumos2: [],
       data: [],
       inicio: 0,
       final: 5,
@@ -215,19 +287,19 @@ export default {
       currentPage: 1
     };
   },
-  watch: {
-    idProv: function(val) {
+  //watch: {
+    idIns: function(val) {
       if (val != "N/A") {
-        this.nombreProv = "";
+        this.nombreIns = "";
       } else {
         this.$http
-          .get("http://localhost:8000/productos_elaborados/searchbyid/{_id}")
+          .get("http://localhost:8000/insumos/searchbyid/{_id}")
           .then(response => {
-            this.nombreProv = response.body.producto_elaborado.tipo;
+            this.nombreIns = response.body.insumo.nombre;
           });
       }
-    }
-  },
+    },
+  //},
   idBeb: function(val) {
     if (val != "N/A") {
       this.nombreBeb = "";
@@ -303,14 +375,23 @@ export default {
             }
           }
           console.log(_this.bebidas2);
+          
           var j;
-          var p1 = _this.producto_elaborados;
-          for (j = 0; j < p1.length; j++) {
+          var p2 = _this.insumos;
+            for (j = 0; j < p2.length; j++) {
+              if (value.idInsumo == p2[j]._id) {
+                _this.insumos2.push(p2[j].nombre);
+              }
+            }
+
+
+          //var p1 = _this.producto_elaborados;
+          /*for (j = 0; j < p1.length; j++) {
             if (value.idProducto_Elaborado == p1[j]._id) {
               _this.producto_elaborados2.push(p1[j].tipo);
             }
-          }
-          console.log(_this.producto_elaborados2);
+          }*/
+          //console.log(_this.producto_elaborados2);
         });
         this.data = this.productos.slice(this.inicio, this.final);
         if (this.productos.length % 5 == 0) {
@@ -320,31 +401,40 @@ export default {
         }
       });
     },
-    newproducto_elaborado(producto_elaborado_id) {
+    /*newproducto_elaborado(producto_elaborado_id) {
       this.idProv = producto_elaborado_id;
-    },
-    borrarproducto_elaborado() {
+    },*/
+    /*borrarproducto_elaborado() {
       this.idProv = "N/A";
-    },
+    },*/
     newBebida(bebida_id) {
       this.idBeb = bebida_id;
     },
     borrarBebida() {
       this.idBeb = "N/A";
     },
+    newInsumo(insumo_id) {
+      this.idIns = insumo_id;
+    },
+    borrarInsumo() {
+      this.idIns = "N/A";
+    },
     createproducto() {
       this.inicio = 0;
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
-      this.producto.idProducto_Elaborado = this.idProv;
+      //this.producto.idProducto_Elaborado = this.idProv;
       this.producto.idBebida = this.idBeb;
+      this.producto.idInsumo = this.idIns;
       this.$http
         .post("http://localhost:8000/productos/create", this.producto)
         .then(response => {
           this.loading = false;
           if (response.body.success) {
             this.producto = {};
+            //poner aca bebida
+            //this.insumo = {};
             sweetAlert(
               "Creado con exito!",
               "Los cambios estan en la tabla",
@@ -374,8 +464,9 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = producto._id;
       this.producto = producto;
-      this.idProv = producto.idproducto_elaborado;
+      //this.idProv = producto.idproducto_elaborado;
       this.idBeb = producto.idBebida;
+      this.idIns = insumo.idInsumo;
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
@@ -384,11 +475,13 @@ export default {
       if (this.idModificar != "") {
         Materialize.updateTextFields();
         this.producto.idBebida = this.idBeb;
-        this.producto.idproducto_elaborado = this.idProv;
+        this.insumo.idInsumo = this.idIns;
+        //this.producto.idproducto_elaborado = this.idProv;
         this.$http
           .put(
             "http://localhost:8000/productos/update/" + this.idModificar,
-            this.producto
+            this.producto,
+            this.insumo
           )
           .then(response => {
             if (response.body.success) {
@@ -452,26 +545,37 @@ export default {
         }
       );
     },
-    getproductos_elaborados() {
+    /*getproductos_elaborados() {
       this.$http
         .get("http://localhost:8000/productos_elaborados")
         .then(response => {
           console.log(response);
           this.producto_elaborados = response.body;
         });
-    },
+    },*/
     getBebidas() {
       this.$http.get("http://localhost:8000/bebidas").then(response => {
         console.log(response);
         this.bebidas = response.body;
       });
+    },
+
+    getInsumos() {
+      this.$http.get("http://localhost:8000/insumos").then(response => {
+        console.log(response);
+        this.insumos = response.body;
+      });
     }
+
   },
 
+
+
   beforeMount() {
-    this.getproductos_elaborados();
+    //this.getproductos_elaborados();
     this.getBebidas();
     this.getproducto();
+    this.getInsumos();
   },
   mounted() {
     $("ul.tabs").tabs();
