@@ -16,7 +16,6 @@
 					<th>Id Personal</th> 
 					<th>Id Ordenes</th>
 					<th>Usuario</th>
-          <th>Contrasena</th>
           <th>Nombre</th>
           <th>Telefono</th>
           <th>Scope</th>
@@ -29,7 +28,6 @@
 					<td >{{usuario.IdPersonal}}</td>
 					<td >{{usuario.idOrdenes}}</td>
 					<td >{{usuario.usuario}}</td>
-          <td >{{usuario.contrasena}}</td>
           <td >{{usuario.nombre}}</td>
 					<td >{{usuario.telefono}}</td>
           <td >{{usuario.scope}}</td>
@@ -179,9 +177,34 @@ export default {
         this.final = 5;
         this.currentPage = 1;
         this.loading=true;
+        var patt1 = /[0-9]/g;
+        var patt2 = /[a-z]/g;
+        console.log(this.usuario.telefono.match(patt1)+ " patron result patt1")
+        console.log(this.usuario.telefono.match(patt2)+ " patron result patt2")
         if(this.usuario.scope== undefined || this.usuario.nombre == undefined || this.usuario.telefono == undefined || this.usuario.usuario == undefined || this.usuario.contrasena == undefined || this.usuario.IdPersonal == undefined || this.usuario.idOrdenes == undefined){
           this.loading = false;
-          sweetAlert("Oops...", "Debe llenar todos los campos", "error");
+          sweetAlert("Oops...", "Hay un campo vacio", "error");
+        }else if(this.usuario.IdPersonal.length != 13){
+          this.loading = false;
+          sweetAlert("Oops...", "El Id personal debe tener 13 numeros", "error");
+        }else if(this.usuario.usuario.length < 3){
+          this.loading = false;
+          sweetAlert("Oops...", "El usuario debe tener por lo menos 3 caracteres ", "error");
+        }else if(this.usuario.contrasena.match(patt1) == null){
+          this.loading = false;
+          sweetAlert("Oops...", "La contraseña debe tener por lo menos un numero ", "error"); 
+        }else if(!((this.usuario.telefono).toLowerCase().match(patt2) == null)){
+          this.loading = false;
+          sweetAlert("Oops...", "El telefono contiene letras", "error"); 
+        }else if(this.usuario.telefono.length < 8){ 
+          this.loading = false;
+          sweetAlert("Oops...", "El teléfono debe tener por lo menos 8 caracteres", "error"); 
+        }else if(this.usuario.nombre.length < 3){
+          this.loading = false;
+          sweetAlert("Oops...", "El nombre debe tener por lo menos 3 caracteres ", "error");
+        }else if(!((this.usuario.IdPersonal).toLowerCase().match(patt2) == null)){
+          this.loading = false;
+          sweetAlert("Oops...", "El Id Personal contiene letras", "error"); 
         }else{
           this.$http.post('http://localhost:8000/usuarios/create',this.usuario)
 				.then((response)=>{
@@ -195,7 +218,10 @@ export default {
 					}
 				});
         }
-			},
+      },
+      probar(clave,num){
+        return ( clave.indexOf(num) != -1 ? false : true);
+      },
       tabControl(idTab){
         if(idTab === 'test-swipe-1'){
           this.idModificar = '';
