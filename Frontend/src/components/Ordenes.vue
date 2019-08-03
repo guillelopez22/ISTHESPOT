@@ -248,6 +248,9 @@ export default {
       loading: false,
       idModificar: "",
       idBeb: "N/A",
+      idMes: "N/A",
+      idEmp: "N/A",
+      idPro: "N/A",
       nombreBeb: "",
       nombreMes: "",
       nombreEmp: "",
@@ -449,8 +452,12 @@ export default {
       this.orden.idMesa = this.idMes;
       this.orden.idEmpleado = this.idEmp;
       this.orden.idProductos = this.idPro;
-
-      this.$http
+      console.log("hkjdshfdshjfhsdfhj")
+      if((this.orden.idCombos == undefined)  ||  (this.orden.idCombos.length < 4) || (this.idMes == "N/A") || (this.idEmp== "N/A")){
+        this.loading = false;
+        sweetAlert("Oops...", "Error al crear, datos invalidos", "error");
+      } else {
+        this.$http
         .post("http://localhost:8000/ordenes/create", this.orden)
         .then(response => {
           this.loading = false;
@@ -466,6 +473,9 @@ export default {
             sweetAlert("Oops...", "Error al crear", "error");
           }
         });
+      }
+
+      
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {
