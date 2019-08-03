@@ -178,8 +178,12 @@ export default {
         this.inicio = 0;
         this.final = 5;
         this.currentPage = 1;
-				this.loading=true;
-				this.$http.post('http://localhost:8000/usuarios/create',this.usuario)
+        this.loading=true;
+        if(this.usuario.scope== undefined || this.usuario.nombre == undefined || this.usuario.telefono == undefined || this.usuario.usuario == undefined || this.usuario.contrasena == undefined || this.usuario.IdPersonal == undefined || this.usuario.idOrdenes == undefined){
+          this.loading = false;
+          sweetAlert("Oops...", "Debe llenar todos los campos", "error");
+        }else{
+          this.$http.post('http://localhost:8000/usuarios/create',this.usuario)
 				.then((response)=>{
 					this.loading=false;
 					if(response.body.success){
@@ -190,6 +194,7 @@ export default {
 						sweetAlert("Oops...", "Error al crear", "error");
 					}
 				});
+        }
 			},
       tabControl(idTab){
         if(idTab === 'test-swipe-1'){
