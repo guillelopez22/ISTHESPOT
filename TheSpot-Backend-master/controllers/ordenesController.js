@@ -2,22 +2,22 @@ var orden = require('../schemas/orden.js');
 var mongoose = require('mongoose');
 
 exports.getOrdenes = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     var ordenes = orden.find({});
     reply(ordenes);
   }
 }
 exports.getOrdenesId = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     orden.findOne({'_id' : request.params._id}, function(err, Orden){
       if(!err && Orden){
@@ -31,11 +31,11 @@ exports.getOrdenesId = {
   }
 }
 exports.getOrdenesName = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     orden.find({'nombre' : request.params.nombre}, function(err, Ordenes){
       if(!err && Ordenes){
@@ -49,11 +49,11 @@ exports.getOrdenesName = {
   }
 }
 exports.getOrdenesIdCombos = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     orden.find({'idProveedor' : request.params.idCombos}, function(err, Ordenes){
       if(!err && Ordenes){
@@ -67,11 +67,11 @@ exports.getOrdenesIdCombos = {
   }
 }
 exports.getOrdenesProductos = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     orden.find({'idProductos' : request.params.idProductos}, function(err, Ordenes){
       if(!err && Ordenes){
@@ -85,11 +85,11 @@ exports.getOrdenesProductos = {
   }
 }
 exports.getOrdenesPromociones = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler : function(request, reply){
     orden.find({'idPromociones' : request.params.idPromociones}, function(err, Ordenes){
       if(!err && Ordenes){
@@ -103,11 +103,11 @@ exports.getOrdenesPromociones = {
   }
 }
 exports.getOrdenesMesa = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal']
-  },
+  },*/
   handler : function(request, reply){
     orden.find({'idMesa' : request.params.idMesa}, function(err, Ordenes){
       if(!err && Ordenes){
@@ -121,11 +121,11 @@ exports.getOrdenesMesa = {
   }
 }
 exports.getOrdenesFecha = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler : function(request, reply){
     orden.find({'fecha' : request.params.fecha}, function(err, Ordenes){
       if(!err && Ordenes){
@@ -139,11 +139,11 @@ exports.getOrdenesFecha = {
   }
 }
 exports.getOrdenPersonal = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler : function(request, reply){
     orden.find({'idPersonal' : request.params.idPersonal}, function(err, Ordenes){
       if(!err && Ordenes){
@@ -157,28 +157,22 @@ exports.getOrdenPersonal = {
   }
 }
 exports.modifyOrden = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal']
-  },
+  },*/
   handler: function(request, reply){
     orden.update(
       {'_id': request.params._id},
       {$set:
         {
-          idCombos: request.payload.idCombos,
-          idProductos: request.payload.idProductos,
-          idPromociones: request.payload.idPromociones,
-          idCliente: request.payload.idCliente,
-          nombreCliente: request.payload.nombreCliente,
-          idPersonal: request.payload.idPersonal,
-          idFacturas: request.payload.idFacturas,
           idMesa: request.payload.idMesa,
-          total: request.payload.total,
-          fecha : request.payload.fecha,
-          efectivo: request.payload.efectivo,
-          tarjeta: request.payload.tarjeta
+          idEmpleado: request.payload.idEmpleado,
+          idBebidas: request.payload.idBebidas,
+          idProductos: request.payload.idProductos,
+          idCombos: request.payload.idCombos
+          
         }
       }, function(err){
         if(err){
@@ -191,11 +185,11 @@ exports.modifyOrden = {
   }
 }
 exports.deleteOrden = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal']
-  },
+  },*/
   handler: function(request, reply){
     orden.findOne({'_id' : request.params._id}, function(err, Orden){
       if(err){
@@ -210,25 +204,18 @@ exports.deleteOrden = {
   }
 }
 exports.createOrden = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente', 'personal', 'cliente']
-  },
+  },*/
   handler: function(request, reply){
     var newOrden = new orden({
-      idCombos: request.payload.idCombos,
-      idProductos: request.payload.idProductos,
-      idPromociones: request.payload.idPromociones,
-      idCliente: request.payload.idCliente,
-      nombreCliente: request.payload.nombreCliente,
-      idPersonal: request.payload.idPersonal,
-      idFacturas: request.payload.idFacturas,
       idMesa: request.payload.idMesa,
-      total: request.payload.total,
-      fecha : request.payload.fecha,
-      efectivo: request.payload.efectivo,
-      tarjeta: request.payload.tarjeta
+          idEmpleado: request.payload.idEmpleado,
+          idBebidas: request.payload.idBebidas,
+          idProductos: request.payload.idProductos,
+          idCombos: request.payload.idCombos
     });
     newOrden.save(function(err){
       if(!err){

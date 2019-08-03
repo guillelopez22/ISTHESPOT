@@ -44,11 +44,6 @@ const router = new VueRouter({
       component: Menu
     },
     {
-      name: 'Ordenes',
-      path: "/ordenes",
-      component: Ordenes
-    },
-    {
       name: 'Register',
       path: "/registrar",
       component: Register
@@ -122,6 +117,11 @@ const router = new VueRouter({
           name: 'MesaMesero',
           path: "/mesamesero",
           component: MesaMesero
+        },
+        {
+          name: 'Ordenes',
+          path: "/ordenes",
+          component: Ordenes
         }
       ]
     }

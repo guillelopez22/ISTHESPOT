@@ -53,6 +53,11 @@
            MesaMesero
         </div>
       </router-link>
+      <router-link to="/ordenes">
+        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-1 -red">
+           Orden
+        </div>
+      </router-link>
     </div>
 
     <div class="routerContainer">
