@@ -28,16 +28,16 @@
            Proveedor
         </div>
       </router-link>
-      <router-link to="/productoelaborado">
+      <!--<router-link to="/productoelaborado">
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            Producto Elaborado
         </div>
-      </router-link>
-      <router-link to="/productoelaboradodetallado">
+      </router-link>-->
+      <!--<router-link to="/productoelaboradodetallado">
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            Producto Elaborado Detallado
         </div>
-      </router-link>
+      </router-link>-->
       <router-link to="/mesa">
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            Mesa

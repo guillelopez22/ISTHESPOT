@@ -48,14 +48,15 @@ exports.getProductoIdBebida = {
     });
   }
 }
-exports.getProductoidProducto_Elaborado = {
+
+exports.getProductoIdInsumo = {
   /*auth: {
     mode:'required',
     strategy:'session',
-    scope: ['admin', 'gerente']
+    scope: ['admin', 'gerente', 'personal', 'cliente']
   },*/
   handler : function(request, reply){
-    producto.find({'idProducto_Elaborado' : request.params.idProducto_Elaborado}, function(err, Productos){
+    producto.find({'idInsumo' : request.params.idInsumo}, function(err, Productos){
       if(!err && Productos){
         return reply(Productos);
       }else if(!err){
@@ -66,6 +67,26 @@ exports.getProductoidProducto_Elaborado = {
     });
   }
 }
+
+exports.getProductoTipo = {
+  /*auth: {
+    mode:'required',
+    strategy:'session',
+    scope: ['admin', 'gerente']
+  },*/
+  handler : function(request, reply){
+    producto.find({'tipo' : request.params.tipo}, function(err, Productos){
+      if(!err && Productos){
+        return reply(Productos);
+      }else if(!err){
+        return reply(boom.notFound());
+      }else if(err){
+        return reply(boom.wrap(err, 'Productos not found'));
+      }
+    });
+  }
+}
+
 exports.getProductoNombre = {
   /*auth: {
     mode:'required',
@@ -102,6 +123,27 @@ exports.getProductoPrecio = {
     });
   }
 }
+
+exports.getProductoCantidad = {
+  /*auth: {
+    mode:'required',
+    strategy:'session',
+    scope: ['admin', 'gerente', 'personal', 'cliente']
+  },*/
+  handler : function(request, reply){
+    producto.find({'cantidad' : request.params.cantidad}, function(err, Productos){
+      if(!err && Productos){
+        return reply(Productos);
+      }else if(!err){
+        return reply(boom.notFound());
+      }else if(err){
+        return reply(boom.wrap(err, 'Productos not found'));
+      }
+    });
+  }
+}
+
+
 exports.modifyProducto = {
   /*auth: {
     mode:'required',
@@ -113,10 +155,13 @@ exports.modifyProducto = {
       {'_id': request.params._id},
       {$set:
         {
-          idBebida : request.payload.idBebida,
-          idProducto_Elaborado : request.payload.idProducto_Elaborado,
+          //id : request.payload.id,
           nombre : request.payload.nombre,
+          tipo : request.payload.tipo,
           descripcion : request.payload.descripcion,
+          idBebida : request.payload.idBebida,
+          idInsumo : request.payload.idInsumo,
+          cantidad : request.payload.cantidad,
           precio : request.payload.precio
         }
       }, function(err){
@@ -156,11 +201,13 @@ exports.createProducto = {
   },*/
   handler: function(request, reply){
     var newProducto = new producto({
-      idBebida : request.payload.idBebida,
-      idProducto_Elaborado : request.payload.idProducto_Elaborado,
-      nombre : request.payload.nombre,
-      descripcion : request.payload.descripcion,
-      precio : request.payload.precio
+          nombre : request.payload.nombre,
+          tipo : request.payload.tipo,
+          descripcion : request.payload.descripcion,
+          idBebida : request.payload.idBebida,
+          idInsumo : request.payload.idInsumo,
+          cantidad : request.payload.cantidad,
+          precio : request.payload.precio
     });
     newProducto.save(function(err){
       if(!err){

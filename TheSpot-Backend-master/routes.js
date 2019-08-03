@@ -5,8 +5,8 @@ var insumosController = require('./controllers/insumosController');
 var mesasController = require('./controllers/mesasController');
 var ordenesController = require('./controllers/ordenesController');
 var personalController = require('./controllers/personalController');
-var prod_elaborado_detailController = require('./controllers/prod_elaborado_detailController');
-var productos_elaboradosController = require('./controllers/productos_elaboradosController');
+//var prod_elaborado_detailController = require('./controllers/prod_elaborado_detailController');
+//var productos_elaboradosController = require('./controllers/productos_elaboradosController');
 var productosController = require('./controllers/productosController');
 var promocionesController = require('./controllers/promocionesController');
 var proveedorController = require('./controllers/proveedorController');
@@ -331,7 +331,7 @@ exports.endpoints = [
 			path: '/personal/create',
 			config: personalController.createPersonal
  	},
-	{
+	/*{
 			method: 'GET',
 		 	path: '/prod_elaborado_detail',
 		 	config: prod_elaborado_detailController.getProd_elaborado_details
@@ -407,7 +407,7 @@ exports.endpoints = [
 			method: 'POST',
 			path: '/productos_elaborados/create',
 			config: productos_elaboradosController.createProducto_elaborado
- 	},
+ 	},*/
 	{
 			method: 'GET',
 		 	path: '/productos',
@@ -424,11 +424,11 @@ exports.endpoints = [
 			path: '/productos/searchbyBebida/{idBebida}',
 			config: productosController.getProductoIdBebida
  	},
-	{
-			method: 'GET',
-			path: '/productos/searchbyProd_Elaborado/{idProducto_Elaborado}',
-			config: productosController.getProductoidProducto_Elaborado
- 	},
+	//{
+	//		method: 'GET',
+	//		path: '/productos/searchbyProd_Elaborado/{idProducto_Elaborado}',
+	//		config: productosController.getProductoidProducto_Elaborado
+ 	//},
 	{
 			method: 'GET',
 			path: '/productos/searchbynombre/{nombre}',

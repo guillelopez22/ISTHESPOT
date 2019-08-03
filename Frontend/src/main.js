@@ -19,8 +19,8 @@ import Personal from './components/Personal.vue'
 import Producto from './components/Producto.vue'
 import Promocion from './components/Promocion.vue'
 import Proveedor from './components/Proveedor.vue'
-import ProductoElaboradoDetallado from './components/ProductoElaboradoDetallado.vue'
-import ProductoElaborado from './components/ProductoElaborado.vue'
+//import ProductoElaboradoDetallado from './components/ProductoElaboradoDetallado.vue'
+//import ProductoElaborado from './components/ProductoElaborado.vue'
 import Usuario from './components/Usuario.vue'
 import MesaMesero from './components/MesaMesero.vue'
 
@@ -103,7 +103,7 @@ const router = new VueRouter({
           path: "/proveedor",
           component: Proveedor
         },
-        {
+        /*{
           name: 'ProductoElaboradoDetallado',
           path: "/productoelaboradodetallado",
           component: ProductoElaboradoDetallado
@@ -112,7 +112,7 @@ const router = new VueRouter({
           name: 'ProductoElaborado',
           path: "/productoelaborado",
           component: ProductoElaborado
-        },
+        },*/
         {
           name: 'Usuario',
           path: "/usuario",
