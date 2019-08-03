@@ -34,7 +34,7 @@
           <td>{{empleados2[index]}}</td>
           <td>{{mesas2[index]}}</td>
           <td>{{bebidas2[index]}}</td>
-          <td>{{orden.idProductos}}</td>
+          <td>{{productos2[index]}}</td>
           <td>{{orden.idCombos}}</td>
           <td>
             <a
@@ -65,19 +65,6 @@
       </li>
     </ul>
 
-    <div class="row">
-      <div class="input-field col s12">
-        <input
-          v-on:input="orden.idProductos = $event.target.value"
-          type="text"
-          v-model="orden.idProductos"
-          :disabled="loading"
-          id="idProducto"
-        />
-        <label for="idProductos">idProductos</label>
-      </div>
-    </div>
-
     <div class="input-field col s12">
       <input
         v-on:input="orden.idCombos = $event.target.value"
@@ -100,8 +87,6 @@
             <li>
               <i class="material-icons left">pages</i>
               {{bebida.nombre}}
-              <br />
-              <br />
               <a
                 v-on:click="newBebida(bebida._id)"
                 class="btn-floating btn-small waves-effect waves-light black secondary-content"
@@ -136,8 +121,6 @@
             <li>
               <i class="material-icons left">pages</i>
               {{mesa.nombre}}
-              <br />
-              <br />
               <a
                 v-on:click="newMesa(mesa._id)"
                 class="btn-floating btn-small waves-effect waves-light black secondary-content"
@@ -162,7 +145,7 @@
     </div>
 
     <div class="row">
-      <!--Mesas-->
+      <!--Empleado-->
       <div class="row -white" id="contenedorTablaExterna">
         <div class="col s6">
           <h5>Seleccionar ID Empleado:</h5>
@@ -172,8 +155,6 @@
             <li>
               <i class="material-icons left">pages</i>
               {{empleado.nombre}}
-              <br />
-              <br />
               <a
                 v-on:click="newEmpleado(empleado._id)"
                 class="btn-floating btn-small waves-effect waves-light black secondary-content"
@@ -191,6 +172,40 @@
                 <i class="material-icons">delete</i>
               </a>
               {{idEmp}} {{nombreEmp}}
+            </h4>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!--Producto-->
+      <div class="row -white" id="contenedorTablaExterna">
+        <div class="col s6">
+          <h5>Seleccionar ID Producto:</h5>
+          <p>(hacer click en el nombre deseado)</p>
+          <hr />
+          <ul v-for="producto in productos">
+            <li>
+              <i class="material-icons left">pages</i>
+              {{producto.nombre}}
+              <a
+                v-on:click="newProducto(producto._id)"
+                class="btn-floating btn-small waves-effect waves-light black secondary-content"
+              >
+                <i class="material-icons">done</i>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div id="importance" class="input-field col s6 center">
+          <br />
+          <label id="idBebida">
+            <h4>
+              <a v-on:click="borrarProducto()" class="waves-effect waves-light">
+                <i class="material-icons">delete</i>
+              </a>
+              {{idPro}} {{nombrePro}}
             </h4>
           </label>
         </div>
@@ -234,6 +249,9 @@ export default {
       idModificar: "",
       idBeb: "N/A",
       nombreBeb: "",
+      nombreMes: "",
+      nombreEmp: "",
+      nombrePro: "",
       selectedTab: "test-swipe-1",
       bebida: {},
       bebidas: [],
@@ -244,6 +262,9 @@ export default {
       empleado: {},
       empleados: [],
       empleados2: [],
+      producto: {},
+      productos: [],
+      productos2: [],
       data: [],
       inicio: 0,
       final: 5,
@@ -262,31 +283,42 @@ export default {
             this.nombreBeb = response.body.bebida.nombre;
           });
       }
+    },
+    idMes: function(val) {
+      if (val != "N/A") {
+        this.nombreMes = "";
+      } else {
+        this.$http
+          .get("http://localhost:8000/mesas/searchbyid/{_id}")
+          .then(response => {
+            this.nombreMes = response.body.mesa.nombre;
+          });
+      }
+    },
+    idEmp: function(val) {
+      if (val != "N/A") {
+        this.nombreEmp = "";
+      } else {
+        this.$http
+          .get("http://localhost:8000/usuarios/searchbyid/{_id}")
+          .then(response => {
+            this.nombreEmp = response.body.empleado.nombre;
+          });
+      }
+    },
+    idPro: function(val) {
+      if (val != "N/A") {
+        this.nombrePro = "";
+      } else {
+        this.$http
+          .get("http://localhost:8000/productos/searchbyid/{_id}")
+          .then(response => {
+            this.nombrePro = response.body.producto.nombre;
+          });
+      }
     }
   },
 
-  idMes: function(val) {
-    if (val != "N/A") {
-      this.nombreMes = "";
-    } else {
-      this.$http
-        .get("http://localhost:8000/mesas/searchbyid/{_id}")
-        .then(response => {
-          this.nombreMes = response.body.mesa.nombre;
-        });
-    }
-  },
-  idEmp: function(val) {
-    if (val != "N/A") {
-      this.nombreEmp = "";
-    } else {
-      this.$http
-        .get("http://localhost:8000/usuarios/searchbyid/{_id}")
-        .then(response => {
-          this.nombreEmp = response.body.empleado.nombre;
-        });
-    }
-  },
   methods: {
     siguiente() {
       if (this.currentPage < this.size) {
@@ -366,6 +398,14 @@ export default {
               _this.empleados2.push(p2[k].nombre);
             }
           }
+
+          var l;
+          var p3 = _this.productos;
+          for (l = 0; l < p3.length; l++) {
+            if (value.idProductos == p3[l]._id) {
+              _this.productos2.push(p3[l].nombre);
+            }
+          }
         });
         this.data = this.ordenes.slice(this.inicio, this.final);
         if (this.ordenes.length % 5 == 0) {
@@ -393,6 +433,12 @@ export default {
     borrarEmpleado() {
       this.idEmp = "N/A";
     },
+    newProducto(producto_id) {
+      this.idPro = producto_id;
+    },
+    borrarProducto() {
+      this.idPro = "N/A";
+    },
     createorden() {
       this.inicio = 0;
       this.final = 5;
@@ -402,6 +448,7 @@ export default {
       this.orden.idBebidas = this.idBeb;
       this.orden.idMesa = this.idMes;
       this.orden.idEmpleado = this.idEmp;
+      this.orden.idProductos = this.idPro;
 
       this.$http
         .post("http://localhost:8000/ordenes/create", this.orden)
@@ -531,11 +578,18 @@ export default {
         console.log(response);
         this.empleados = response.body;
       });
+    },
+    getProductos() {
+      this.$http.get("http://localhost:8000/productos").then(response => {
+        console.log(response);
+        this.productos = response.body;
+      });
     }
   },
 
   beforeMount() {
     this.getBebidas();
+    this.getProductos();
     this.getMesas();
     this.getEmpleados();
     this.getorden();
