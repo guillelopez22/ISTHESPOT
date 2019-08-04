@@ -20,11 +20,10 @@
       <thead>
         <tr>
           <th>Nombre</th>
-          <!--<th>Producto Elaborado</th>-->
           <th>Bebida</th>
           <th>Insumo</th>
           <th>Tipo</th>
-          <th>Precio</th>
+          <th>Precio</th> <!-- > -1 -->
           <th>Cantidad</th>
           <th>Descripcion</th>
           <th>Modificar</th>
@@ -34,7 +33,6 @@
       <tbody>
         <tr v-for="(producto,index) in data">
           <td>{{producto.nombre}}</td>
-          <!--<td>{{producto_elaborados2[index]}}</td>-->
           <td>{{bebidas2[index]}}</td>
           <td>{{insumos2[index]}}</td>
           <td>{{producto.tipo}}</td>
@@ -119,38 +117,6 @@
         <label for="Cantidad">Cantidad</label>
       </div>
 
-      
-
-      <!--<div class="row -white" id="contenedorTablaExterna">
-        <div class="col s6">
-          <h5>Seleccionar ID Producto Elaborado:</h5>
-          <p>(hacer click en el nombre deseado)</p>
-          <hr>
-          <ul v-for="producto_elaborado in producto_elaborados">
-            <li>
-              <i class="material-icons left">pages</i>
-              {{producto_elaborado.tipo}}
-              <a
-                v-on:click="newproducto_elaborado(producto_elaborado._id)"
-                class="btn-floating btn-small waves-effect waves-light black secondary-content"
-              >
-                <i class="material-icons">done</i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="importance" class="input-field col s6 center">
-          <br>
-          <label id="idproducto_elaborado">
-            <h4>
-              <a v-on:click="borrarproducto_elaborado()" class="waves-effect waves-light">
-                <i class="material-icons">delete</i>
-              </a>
-              {{idProv}} {{nombreProv}}
-            </h4>
-          </label>
-        </div>
-      </div>-->
       <div class="row -white" id="contenedorTablaExterna">
         <div class="col s6">
           <h5>Seleccionar ID Bebida:</h5>
@@ -213,8 +179,6 @@
           </label>
         </div>
       </div>
-
-    -->
 
 
      <div class="input-field col s12">
@@ -384,14 +348,6 @@ export default {
               }
             }
 
-
-          //var p1 = _this.producto_elaborados;
-          /*for (j = 0; j < p1.length; j++) {
-            if (value.idProducto_Elaborado == p1[j]._id) {
-              _this.producto_elaborados2.push(p1[j].tipo);
-            }
-          }*/
-          //console.log(_this.producto_elaborados2);
         });
         this.data = this.productos.slice(this.inicio, this.final);
         if (this.productos.length % 5 == 0) {
@@ -401,12 +357,7 @@ export default {
         }
       });
     },
-    /*newproducto_elaborado(producto_elaborado_id) {
-      this.idProv = producto_elaborado_id;
-    },*/
-    /*borrarproducto_elaborado() {
-      this.idProv = "N/A";
-    },*/
+
     newBebida(bebida_id) {
       this.idBeb = bebida_id;
     },
@@ -420,13 +371,40 @@ export default {
       this.idIns = "N/A";
     },
     createproducto() {
+
       this.inicio = 0;
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
-      //this.producto.idProducto_Elaborado = this.idProv;
       this.producto.idBebida = this.idBeb;
       this.producto.idInsumo = this.idIns;
+
+      if( (this.producto.nombre == undefined) || (this.producto.descripcion == undefined) || (this.producto.tipo == undefined) || (this.producto.cantidad == undefined)  || (this.producto.precio == undefined) || (this.idBeb == "N/A") || (this.idIns == "N/A")){
+
+        this.loading = false;
+        sweetAlert("Oops...", "Falto seleccionar algo", "error");
+
+      }else if(this.producto.nombre.length < 3){
+          this.loading = false;
+          sweetAlert("Oops...", "El nombre debe producto tener +2 caracteres ", "error");
+
+      }else if(this.producto.descripcion.length < 5){
+          this.loading = false;
+          sweetAlert("Oops...", "La descrpicion debe ser mas larga a 5 caracteres ", "error");
+
+      }else if(this.producto.tipo.length < 3){
+          this.loading = false;
+          sweetAlert("Oops...", "El tipo debe ser mas larga a 3 caracteres", "error");
+
+      }else if(this.producto.cantidad < 0){
+          this.loading = false;
+          sweetAlert("Oops...", "No pueden haber cantidades negativas", "error");
+
+      }else if(this.producto.precio < 0){
+          this.loading = false;
+          sweetAlert("Oops...", "No pueden haber precios negativas", "error");
+
+      }else{
       this.$http
         .post("http://localhost:8000/productos/create", this.producto)
         .then(response => {
@@ -445,6 +423,7 @@ export default {
             sweetAlert("Oops...", "Error al crear", "error");
           }
         });
+      }
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {
