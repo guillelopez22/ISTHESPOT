@@ -95,6 +95,7 @@
         >
         <label for="Inventario">Inventario</label>
       </div>
+      
       <div class="row">
         <form class="col s12">
           <div class="row">
@@ -107,12 +108,23 @@
                 type="text"
                 class="materialize-textarea"
               ></textarea>
+              
               <label for="Descripcion">Descripción</label>
             </div>
           </div>
         </form>
       </div>
-      <div class="row -white" id="contenedorTablaExterna">
+
+      <label for="proveedor" >Seleccione el proveedor</label>
+      <div class="row">
+        <div class="input-field col s6">
+          <select style="color: black" class="browser-default" :disabled="loading"  id="idProveedor" v-on:input="bebida.idProveedor = $event.target.value" type="text" v-model="bebida.idProveedor">
+            <option v-for="p in proveedores" v-bind:key="p" :value="p._id">{{p.nombre}}</option>
+          </select>       
+        </div>
+      </div>
+      
+      <!--<div class="row -white" id="contenedorTablaExterna">
         <div class="col s6">
           <h5>Seleccionar ID Proveedor:</h5>
           <p>(hacer click en el nombre deseado)</p>
@@ -141,7 +153,8 @@
             </h4>
           </label>
         </div>
-      </div>
+      </div>-->
+      
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
@@ -287,7 +300,7 @@ export default {
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
-      this.bebida.idProveedor = this.idProv;
+      //this.bebida.idProveedor = this.idProv;
       this.$http
         .post("http://localhost:8000/bebidas/create", this.bebida)
         .then(response => {
@@ -372,15 +385,16 @@ export default {
           setTimeout(function() {
             if (inputValue) {
               //****************************************************** */
-              _this.loading = true;
+              _this.loading = false;
               _this.$http
                 .delete("http://localhost:8000/bebidas/delete/" + idBebida)
                 .then(response => {
-                  this.loading = false;
+                  _this.loading = false;
                   if (response.body.success) {
                     sweetAlert("Oops...", "Error al eliminar", "error");
                     _this.getBebida();
                   } else {
+                    _this.loading = false;
                     sweetAlert(
                       "Deleted!",
                       "Los cambios estan en la tabla",
@@ -390,6 +404,7 @@ export default {
                     _this.final = 5;
                     _this.currentPage = 1;
                     _this.getBebida();
+                    
                   }
                 });
               //****************************************************** */
