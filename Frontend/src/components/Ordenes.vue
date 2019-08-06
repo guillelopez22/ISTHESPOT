@@ -65,19 +65,96 @@
       </li>
     </ul>
 
-    <label for="idCombos" >Seleccione el tipo de usuario</label>
-    <div class="input-field col s6">
-          <select style="color: black" class="browser-default" v-on:input="orden.idCombos = $event.target.value" type="text" v-model="orden.idCombos" :disabled="loading"  id="idCombos">
-            <option value="Combo1">Combo1</option>
-            <option value="Combo2">Combo2</option>
-            <option value="Combo3">Combo3</option>
-            <option value="Combo4">Combo4</option>
-          </select>       
-    </div>
-    <br>
-
+    <label for="idCombos">Seleccione el tipo de usuario</label>
     <div class="row">
-      <!--Bebidas-->
+      <div class="input-field col s6">
+        <select
+          style="color: black"
+          class="browser-default"
+          v-on:input="orden.idCombos = $event.target.value"
+          type="text"
+          v-model="orden.idCombos"
+          :disabled="loading"
+          id="idCombos"
+        >
+          <option value="Combo1">Combo1</option>
+          <option value="Combo2">Combo2</option>
+          <option value="Combo3">Combo3</option>
+          <option value="Combo4">Combo4</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="bebida">Seleccione la bebida</label>
+    <div class="row">
+      <div class="input-field col s6">
+        <select
+          style="color: black"
+          class="browser-default"
+          :disabled="loading"
+          id="idBebidas"
+          v-on:input="orden.idBebidas = $event.target.value"
+          type="text"
+          v-model="orden.idBebidas"
+        >
+          <option v-for="b in bebidas" v-bind:key="b" :value="b._id">{{b.nombre}}</option>
+        </select>
+      </div>
+    </div>
+
+    <label for>Seleccione la mesa</label>
+    <div class="row">
+      <div class="input-field col s6">
+        <select
+          style="color: black"
+          class="browser-default"
+          :disabled="loading"
+          id="idMesa"
+          v-on:input="orden.idMesa = $event.target.value"
+          type="text"
+          v-model="orden.idMesa"
+        >
+          <option v-for="m in mesas" v-bind:key="m" :value="m._id">{{m.nombre}}</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="bebida">Seleccione el empleado</label>
+    <div class="row">
+      <div class="input-field col s6">
+        <select
+          style="color: black"
+          class="browser-default"
+          :disabled="loading"
+          id="idEmpleado"
+          v-on:input="bebida.idEmpleado = $event.target.value"
+          type="text"
+          v-model="orden.idEmpleado"
+        >
+          <option v-for="e in empleados" v-bind:key="e" :value="e._id">{{e.nombre}}</option>
+        </select>
+      </div>
+    </div>
+
+    <label for="producto">Seleccione el producto</label>
+    <div class="row">
+      <div class="input-field col s6">
+        <select
+          style="color: black"
+          class="browser-default"
+          :disabled="loading"
+          id="idProductos"
+          v-on:input="orden.idProductos = $event.target.value"
+          type="text"
+          v-model="orden.idProductos"
+        >
+          <option v-for="p in productos" v-bind:key="p" :value="p._id">{{p.nombre}}</option>
+        </select>
+      </div>
+    </div>
+    <!--
+    <div class="row">
+      
       <div class="row -white" id="contenedorTablaExterna">
         <div class="col s6">
           <h5>Seleccionar ID Bebida:</h5>
@@ -108,10 +185,11 @@
           </label>
         </div>
       </div>
-    </div>
+    </div>-->
 
+    <!--
     <div class="row">
-      <!--Mesas-->
+      
       <div class="row -white" id="contenedorTablaExterna">
         <div class="col s6">
           <h5>Seleccionar ID Mesa:</h5>
@@ -142,10 +220,11 @@
           </label>
         </div>
       </div>
-    </div>
+    </div>-->
 
+    <!--
     <div class="row">
-      <!--Empleado-->
+      
       <div class="row -white" id="contenedorTablaExterna">
         <div class="col s6">
           <h5>Seleccionar ID Empleado:</h5>
@@ -176,10 +255,10 @@
           </label>
         </div>
       </div>
-    </div>
+    </div>-->
 
+    <!--
     <div class="row">
-      <!--Producto-->
       <div class="row -white" id="contenedorTablaExterna">
         <div class="col s6">
           <h5>Seleccionar ID Producto:</h5>
@@ -210,7 +289,7 @@
           </label>
         </div>
       </div>
-    </div>
+    </div>-->
 
     <div id="test-swipe-1" class="col s12">
       <a
@@ -448,34 +527,32 @@ export default {
       this.currentPage = 1;
       this.loading = true;
 
-      this.orden.idBebidas = this.idBeb;
-      this.orden.idMesa = this.idMes;
-      this.orden.idEmpleado = this.idEmp;
-      this.orden.idProductos = this.idPro;
-      
-      if((this.orden.idCombos == undefined)  /*||  (this.orden.idCombos.length < 4)*/ || (this.idMes == "N/A") || (this.idEmp== "N/A")){
+      if (
+        this.orden.idCombos ==
+          undefined /*||  (this.orden.idCombos.length < 4)*/ ||
+        this.orden.idMesa == undefined ||
+        this.orden.idEmpleado == undefined
+      ) {
         this.loading = false;
         sweetAlert("Oops...", "Error al crear, datos invalidos", "error");
       } else {
         this.$http
-        .post("http://localhost:8000/ordenes/create", this.orden)
-        .then(response => {
-          this.loading = false;
-          if (response.body.success) {
-            this.orden = {};
-            sweetAlert(
-              "Creado con exito!",
-              "Los cambios estan en la tabla",
-              "success"
-            );
-            this.getorden();
-          } else {
-            sweetAlert("Oops...", "Error al crear", "error");
-          }
-        });
+          .post("http://localhost:8000/ordenes/create", this.orden)
+          .then(response => {
+            this.loading = false;
+            if (response.body.success) {
+              this.orden = {};
+              sweetAlert(
+                "Creado con exito!",
+                "Los cambios estan en la tabla",
+                "success"
+              );
+              this.getorden();
+            } else {
+              sweetAlert("Oops...", "Error al crear", "error");
+            }
+          });
       }
-
-      
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {
@@ -495,7 +572,11 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = orden._id;
       this.orden = orden;
-      this.idBeb = orden.idBebida;
+      this.orden.idBebidas = orden.idBebidas;
+      this.orden.idProductos = orden.idProductos;
+      this.orden.idCombos = orden.idCombos;
+      this.orden.idMesa = orden.idMesa;
+      this.idEmpleado = orden.idEmpleado;
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
@@ -503,7 +584,6 @@ export default {
       this.loading = true;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
-        this.orden.idBebida = this.idBeb;
         this.$http
           .put(
             "http://localhost:8000/ordenes/update/" + this.idModificar,
