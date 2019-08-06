@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 exports.getCombos = {
   handler: function(request, reply){
     var combos = combo.find({});
-    reply(combos);
+    return combos;
   }
 }
 exports.getComboId = {

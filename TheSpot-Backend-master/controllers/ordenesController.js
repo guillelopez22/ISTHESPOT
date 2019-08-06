@@ -9,7 +9,7 @@ exports.getOrdenes = {
   },*/
   handler: function(request, reply){
     var ordenes = orden.find({});
-    reply(ordenes);
+    return ordenes;
   }
 }
 exports.getOrdenesId = {

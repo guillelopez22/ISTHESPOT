@@ -23,15 +23,20 @@ exports.login = {
               console.log(err);
               return reply(boom.unauthorized('ERROR'));
             }
+            console.log("esto es el ReSSS:"+res);
             if(res){
               // console.log('before setting cookie', request.cookieAuth);
               request.cookieAuth.set({ usuario: usuario });
               // console.log('after setting cookie', request.cookieAuth);
               console.log(request.cookieAuth)
-              return reply({success : true});
+              const response =reply.response('entro heheheh');
+              response.type('text/plain');
+              return response;
               
             }else{
-              return reply(boom.unauthorized('Wrong contrasena'))
+              const response =reply.response('fallo');
+              response.type('text/plain');
+              return response;
             }
           });
         }

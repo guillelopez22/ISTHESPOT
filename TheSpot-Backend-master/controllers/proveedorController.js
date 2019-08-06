@@ -9,7 +9,7 @@ exports.getProveedores = {
   },*/
   handler: function(request, reply){
     var proveedores = proveedor.find({});
-    reply(proveedores);
+    return proveedores;
   }
 }
 exports.getProveedorId = {

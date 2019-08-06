@@ -9,7 +9,7 @@ exports.getProductos = {
   },*/
   handler: function(request, reply){
     var productos = producto.find({});
-    reply(productos);
+    return productos;
   }
 }
 exports.getProductoId = {
