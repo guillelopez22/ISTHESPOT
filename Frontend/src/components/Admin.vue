@@ -49,12 +49,12 @@
         </div>
       </router-link>
       <router-link to="/mesamesero">
-        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-1 -red">
+        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            MesaMesero
         </div>
       </router-link>
       <router-link to="/ordenes">
-        <div class="col s3 m3 l1 contain waves-effect waves-light z-depth-1 -red">
+        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
            Orden
         </div>
       </router-link>
