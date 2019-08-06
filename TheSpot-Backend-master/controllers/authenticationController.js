@@ -13,34 +13,41 @@ exports.login = {
       }
     },
     handler: function(request, reply) {
-      console.log('reply', reply)
+      console.log('reply', request.payload.usuario)
+      console.log('reply', request.payload.contrasena)
       usuario.find({usuario: request.payload.usuario}, function(err, usuario){
-        if(err)
-          return repl1y(boom.notAcceptable('Error Executing Query'));
+        if(err) {
+          console.log(err)
+          return reply(boom.notAcceptable('Error Executing Query'));
+        }
+        // console.log(usuario)
         if(usuario.length > 0) {
           bcrypt.compare(request.payload.contrasena, usuario[0].contrasena, function(err, res){
+            console.log("esto es el ReSSS:"+res);
             if(err) {
               console.log(err);
-              return reply(boom.unauthorized('ERROR'));
+              return reply.response(('ERROR')).code(401);
             }
-            console.log("esto es el ReSSS:"+res);
             if(res){
               // console.log('before setting cookie', request.cookieAuth);
               request.cookieAuth.set({ usuario: usuario });
               // console.log('after setting cookie', request.cookieAuth);
-              console.log(request.cookieAuth)
-              const response =reply.response('entro heheheh');
-              response.type('text/plain');
-              return response;
+              // console.log('cookie: ', request.cookieAuth)
+              // const response =reply.response('entro heheheh');
+              // response.type('text/plain');
+              return reply.response(usuario[0]).code(201);
               
             }else{
-              const response =reply.response('fallo');
-              response.type('text/plain');
-              return response;
+              return reply.response(('ERROR')).code(401);
             }
           });
+        } else {
+          return reply.response(('Usuario no existe')).code(401);
         }
       });
+      // if(usuario !== undefined)
+      // return reply.response({usuario: usuario[0].usuario, id: usuario[0]._id, nombre: usuario[0].nombre, scope: usuario[0].scope}).code(201);
+      return null;
     }
 };
 exports.logout = {
