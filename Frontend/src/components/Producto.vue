@@ -15,15 +15,15 @@
     <p>Pagina Actual: {{currentPage}}</p>
     <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
     <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
-    <br>
+    <br />
     <table class="table centered">
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Bebida</th>
-          <th>Insumo</th>
+          <th>Ingrediente</th>
           <th>Tipo</th>
-          <th>Precio</th> <!-- > -1 -->
+          <th>Precio</th>
+          <!-- > -1 --> 
           <th>Cantidad</th>
           <th>Descripcion</th>
           <th>Modificar</th>
@@ -33,7 +33,6 @@
       <tbody>
         <tr v-for="(producto,index) in data">
           <td>{{producto.nombre}}</td>
-          <td>{{bebidas2[index]}}</td>
           <td>{{insumos2[index]}}</td>
           <td>{{producto.tipo}}</td>
           <td>{{producto.precio}}</td>
@@ -58,7 +57,7 @@
         </tr>
       </tbody>
     </table>
-    <br>
+    <br />
     <ul id="tabs-swipe-demo" class="tabs">
       <li class="tab col s3">
         <a class="active" v-on:click="tabControl('test-swipe-1')" href="#test-swipe-1">Crear</a>
@@ -75,7 +74,7 @@
           v-model="producto.nombre"
           :disabled="loading"
           id="Nombre"
-        >
+        />
         <label for="Nombre">Nombre</label>
       </div>
       <div class="input-field col s6">
@@ -85,43 +84,62 @@
           v-model="producto.precio"
           :disabled="loading"
           id="Precio"
-        >
+        />
         <label for="Precio">Precio</label>
       </div>
+      <div class="input-field col s6">
+          <input
+            v-on:input="producto.cantidad = $event.target.value"
+            type="number"
+            v-model="producto.cantidad"
+            :disabled="loading"
+            id="Cantidad"
+          />
+          <label for="Cantidad">Cantidad</label>
+        </div>
       <div class="row">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s12">
-              <textarea
-                v-on:input="producto.descripcion = $event.target.value"
-                v-model="producto.descripcion"
-                :disabled="loading"
-                id="Descripcion"
-                type="text"
-                class="materialize-textarea"
-              ></textarea>
-              <label for="Descripcion">Descripción</label>
-            </div>
-          </div>
-        </form>
+        <div class="input-field col s12">
+          <textarea
+            v-on:input="producto.descripcion = $event.target.value"
+            v-model="producto.descripcion"
+            :disabled="loading"
+            id="Descripcion"
+            type="text"
+            class="materialize-textarea"
+          ></textarea>
+          <label for="Descripcion">Descripción</label>
+        </div>
+      </div>
+      <div class="row">
+        
+        <div class="input-field col s12">
+          <input
+            v-on:input="producto.tipo = $event.target.value"
+            type="text"
+            v-model="producto.tipo"
+            :disabled="loading"
+            id="Tipo"
+          />
+          <label for="Tipo">Tipo</label>
+        </div>
+      </div>
+    </div>
+
+    <label for="insumo" >Seleccione el ingrediente</label>
+      <div class="row">
+        <div class="input-field col s6">
+          <select style="color: black" class="browser-default" :disabled="loading"  id="idInsumo" v-on:input="producto.idInsumo = $event.target.value" type="text" v-model="producto.idInsumo">
+            <option v-for="i in insumos" v-bind:key="i" :value="i._id">{{i.nombre}}</option>
+          </select>       
+        </div>
       </div>
 
-      <div class="input-field col s12">
-        <input
-          v-on:input="producto.cantidad = $event.target.value"
-          type="number"
-          v-model="producto.cantidad"
-          :disabled="loading"
-          id="Cantidad"
-        >
-        <label for="Cantidad">Cantidad</label>
-      </div>
-
+    <!--
       <div class="row -white" id="contenedorTablaExterna">
         <div class="col s6">
           <h5>Seleccionar ID Bebida:</h5>
           <p>(hacer click en el nombre deseado)</p>
-          <hr>
+          <hr />
           <ul v-for="bebida in bebidas">
             <li>
               <i class="material-icons left">pages</i>
@@ -136,7 +154,7 @@
           </ul>
         </div>
         <div id="importance" class="input-field col s6 center">
-          <br>
+          <br />
           <label id="idBebida">
             <h4>
               <a v-on:click="borrarBebida()" class="waves-effect waves-light">
@@ -148,12 +166,11 @@
         </div>
       </div>
 
-      
       <div class="row -white" id="contenedorTablaExterna">
         <div class="col s6">
           <h5>Seleccionar ID Insumo:</h5>
           <p>(hacer click en el nombre deseado)</p>
-          <hr>
+          <hr />
           <ul v-for="insumo in insumos">
             <li>
               <i class="material-icons left">pages</i>
@@ -168,7 +185,7 @@
           </ul>
         </div>
         <div id="importance" class="input-field col s6 center">
-          <br>
+          <br />
           <label id="idInsumo">
             <h4>
               <a v-on:click="borrarInsumo()" class="waves-effect waves-light">
@@ -179,20 +196,8 @@
           </label>
         </div>
       </div>
+    -->
 
-
-     <div class="input-field col s12">
-        <input
-          v-on:input="producto.tipo = $event.target.value"
-          type="text"
-          v-model="producto.tipo"
-          :disabled="loading"
-          id="Tipo"
-        >
-        <label for="Tipo">Tipo</label>
-      </div>
-
-    </div>
     <div id="test-swipe-1" class="col s12">
       <a
         class="waves-effect waves-light btn-large"
@@ -228,19 +233,12 @@ export default {
       producto: {},
       loading: false,
       idModificar: "",
-      idProv: "N/A",
-      idBeb: "N/A",
       idIns: "N/A",
-      nombreBeb: "",
       nombreIns: "",
-      nombreProv: "",
       selectedTab: "test-swipe-1",
       //producto_elaborado: {},
       //producto_elaborados: [],
       //producto_elaborados2: [],
-      bebida: {},
-      bebidas: [],
-      bebidas2: [],
       insumo: {},
       insumos: [],
       insumos2: [],
@@ -252,29 +250,19 @@ export default {
     };
   },
   //watch: {
-    idIns: function(val) {
-      if (val != "N/A") {
-        this.nombreIns = "";
-      } else {
-        this.$http
-          .get("http://localhost:8000/insumos/searchbyid/{_id}")
-          .then(response => {
-            this.nombreIns = response.body.insumo.nombre;
-          });
-      }
-    },
-  //},
-  idBeb: function(val) {
+  idIns: function(val) {
     if (val != "N/A") {
-      this.nombreBeb = "";
+      this.nombreIns = "";
     } else {
       this.$http
-        .get("http://localhost:8000/bebidas/searchbyid/{_id}")
+        .get("http://localhost:8000/insumos/searchbyid/{_id}")
         .then(response => {
-          this.nombreBeb = response.body.bebida.nombre;
+          this.nombreIns = response.body.insumo.nombre;
         });
     }
   },
+  //},
+  
   methods: {
     siguiente() {
       if (this.currentPage < this.size) {
@@ -331,23 +319,13 @@ export default {
       this.$http.get("http://localhost:8000/productos").then(response => {
         this.productos = response.body;
         response.body.map(function(value, key) {
-          var i;
-          var p = _this.bebidas;
-          for (i = 0; i < p.length; i++) {
-            if (value.idBebida == p[i]._id) {
-              _this.bebidas2.push(p[i].nombre);
-            }
-          }
-          console.log(_this.bebidas2);
-          
           var j;
           var p2 = _this.insumos;
-            for (j = 0; j < p2.length; j++) {
-              if (value.idInsumo == p2[j]._id) {
-                _this.insumos2.push(p2[j].nombre);
-              }
+          for (j = 0; j < p2.length; j++) {
+            if (value.idInsumo == p2[j]._id) {
+              _this.insumos2.push(p2[j].nombre);
             }
-
+          }
         });
         this.data = this.productos.slice(this.inicio, this.final);
         if (this.productos.length % 5 == 0) {
@@ -358,12 +336,7 @@ export default {
       });
     },
 
-    newBebida(bebida_id) {
-      this.idBeb = bebida_id;
-    },
-    borrarBebida() {
-      this.idBeb = "N/A";
-    },
+    
     newInsumo(insumo_id) {
       this.idIns = insumo_id;
     },
@@ -371,58 +344,68 @@ export default {
       this.idIns = "N/A";
     },
     createproducto() {
-
       this.inicio = 0;
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
-      this.producto.idBebida = this.idBeb;
-      this.producto.idInsumo = this.idIns;
+      //this.producto.idInsumo = this.idIns;
 
-      if( (this.producto.nombre == undefined) || (this.producto.descripcion == undefined) || (this.producto.tipo == undefined) || (this.producto.cantidad == undefined)  || (this.producto.precio == undefined) || (this.idBeb == "N/A") || (this.idIns == "N/A")){
-
+      if (
+        this.producto.nombre == undefined ||
+        this.producto.descripcion == undefined ||
+        this.producto.tipo == undefined ||
+        this.producto.cantidad == undefined ||
+        this.producto.precio == undefined 
+        //this.idIns == "N/A"
+      ) {
         this.loading = false;
         sweetAlert("Oops...", "Falto seleccionar algo", "error");
-
-      }else if(this.producto.nombre.length < 3){
-          this.loading = false;
-          sweetAlert("Oops...", "El nombre debe producto tener +2 caracteres ", "error");
-
-      }else if(this.producto.descripcion.length < 5){
-          this.loading = false;
-          sweetAlert("Oops...", "La descrpicion debe ser mas larga a 5 caracteres ", "error");
-
-      }else if(this.producto.tipo.length < 3){
-          this.loading = false;
-          sweetAlert("Oops...", "El tipo debe ser mas larga a 3 caracteres", "error");
-
-      }else if(this.producto.cantidad < 0){
-          this.loading = false;
-          sweetAlert("Oops...", "No pueden haber cantidades negativas", "error");
-
-      }else if(this.producto.precio < 0){
-          this.loading = false;
-          sweetAlert("Oops...", "No pueden haber precios negativas", "error");
-
-      }else{
-      this.$http
-        .post("http://localhost:8000/productos/create", this.producto)
-        .then(response => {
-          this.loading = false;
-          if (response.body.success) {
-            this.producto = {};
-            //poner aca bebida
-            //this.insumo = {};
-            sweetAlert(
-              "Creado con exito!",
-              "Los cambios estan en la tabla",
-              "success"
-            );
-            this.getproducto();
-          } else {
-            sweetAlert("Oops...", "Error al crear", "error");
-          }
-        });
+      } else if (this.producto.nombre.length < 3) {
+        this.loading = false;
+        sweetAlert(
+          "Oops...",
+          "El nombre debe producto tener +2 caracteres ",
+          "error"
+        );
+      } else if (this.producto.descripcion.length < 5) {
+        this.loading = false;
+        sweetAlert(
+          "Oops...",
+          "La descrpicion debe ser mas larga a 5 caracteres ",
+          "error"
+        );
+      } else if (this.producto.tipo.length < 3) {
+        this.loading = false;
+        sweetAlert(
+          "Oops...",
+          "El tipo debe ser mas larga a 3 caracteres",
+          "error"
+        );
+      } else if (this.producto.cantidad < 0) {
+        this.loading = false;
+        sweetAlert("Oops...", "No pueden haber cantidades negativas", "error");
+      } else if (this.producto.precio < 0) {
+        this.loading = false;
+        sweetAlert("Oops...", "No pueden haber precios negativas", "error");
+      } else {
+        this.$http
+          .post("http://localhost:8000/productos/create", this.producto)
+          .then(response => {
+            this.loading = false;
+            if (response.body.success) {
+              this.producto = {};
+              //poner aca bebida
+              //this.insumo = {};
+              sweetAlert(
+                "Creado con exito!",
+                "Los cambios estan en la tabla",
+                "success"
+              );
+              this.getproducto();
+            } else {
+              sweetAlert("Oops...", "Error al crear", "error");
+            }
+          });
       }
     },
     tabControl(idTab) {
@@ -444,7 +427,6 @@ export default {
       this.idModificar = producto._id;
       this.producto = producto;
       //this.idProv = producto.idproducto_elaborado;
-      this.idBeb = producto.idBebida;
       this.idIns = insumo.idInsumo;
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
@@ -453,7 +435,6 @@ export default {
       this.loading = true;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
-        this.producto.idBebida = this.idBeb;
         this.insumo.idInsumo = this.idIns;
         //this.producto.idproducto_elaborado = this.idProv;
         this.$http
@@ -532,12 +513,7 @@ export default {
           this.producto_elaborados = response.body;
         });
     },*/
-    getBebidas() {
-      this.$http.get("http://localhost:8000/bebidas").then(response => {
-        console.log(response);
-        this.bebidas = response.body;
-      });
-    },
+    
 
     getInsumos() {
       this.$http.get("http://localhost:8000/insumos").then(response => {
@@ -545,14 +521,10 @@ export default {
         this.insumos = response.body;
       });
     }
-
   },
-
-
 
   beforeMount() {
     //this.getproductos_elaborados();
-    this.getBebidas();
     this.getproducto();
     this.getInsumos();
   },

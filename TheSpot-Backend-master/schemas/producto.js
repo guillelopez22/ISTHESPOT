@@ -5,7 +5,7 @@ var ProductoSchema = new mongoose.Schema({
   nombre : String,
   tipo : String,
   descripcion : String,
-  idBebida: String,
+  //idBebida: String,
   idInsumo: String,
   cantidad: Number,
   precio : Number

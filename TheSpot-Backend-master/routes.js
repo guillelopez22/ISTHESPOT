@@ -419,11 +419,11 @@ exports.endpoints = [
 			path: '/productos/searchbyid/{_id}',
 			config: productosController.getProductoId
  	},
-	{
-			method: 'GET',
-			path: '/productos/searchbyBebida/{idBebida}',
-			config: productosController.getProductoIdBebida
- 	},
+	//{
+	//		method: 'GET',
+	//		path: '/productos/searchbyBebida/{idBebida}',
+	//		config: productosController.getProductoIdBebida
+ 	//},
 	//{
 	//		method: 'GET',
 	//		path: '/productos/searchbyProd_Elaborado/{idProducto_Elaborado}',
