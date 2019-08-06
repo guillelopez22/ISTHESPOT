@@ -1,0 +1,58 @@
+<br><br>
+<div class="card" style="width: 500px; display: block;margin-left: auto; margin-right: auto;">
+  <div class="card-body" >
+      <h2 class="text-center">Editar Producto Elaborado Detallado</h2>
+      <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  
+        <div class="form-group">
+          <label>Id Producto Elaborado:</label>
+          <select class="form-control" formControlName="idProducto_Elaborado" [(ngModel)]="productos_elaborados.idProducto_Elaborado" [ngClass]="{ 'is-invalid': submitted && f.idProducto_Elaborado.errors }">
+            <option *ngFor="let producto_elaborado of productos_elaborados">
+              {{producto_elaborado._id}}
+            </option>
+          </select>
+          <div *ngIf="submitted && f.idBebida.errors">
+              <div *ngIf="f.idBebida.errors.required">El id bebida es requerido</div>
+            </div>
+        </div>
+  
+        <div class="form-group">
+          <label>Id Bebida:</label>
+          <select class="form-control" formControlName="idBebida" [(ngModel)]="bebidas.idBebida" [ngClass]="{ 'is-invalid': submitted && f.idBebida.errors }" >
+            <option *ngFor="let bebida of bebidas" [value]="bebida.nombre">
+              {{bebida._id}} - {{bebida.nombre}}
+            </option>
+          </select>
+          <div *ngIf="submitted && f.idBebida.errors">
+              <div *ngIf="f.idBebida.errors.required">El id bebida es requerido</div>
+            </div>
+        </div>
+  
+        <div class="form-group">
+          <label>Id Insumo:</label>
+          <select class="form-control" formControlName="idInsumo" [(ngModel)]="insumos.idInsumo" [ngClass]="{ 'is-invalid': submitted && f.idInsumo.errors }" >
+            <option *ngFor="let insumo of insumos" [value]="insumo.nombre">
+              {{insumo._id}} - {{insumo.nombre}}
+            </option>
+          </select>
+          <div *ngIf="submitted && f.idInsumo.errors">
+              <div *ngIf="f.idInsumo.errors.required">El id insumo es requerido</div>
+          </div>
+        </div>
+    
+        <div class="form-group">
+            <label>Cantidad:</label>
+            <input type="text" formControlName="cantidad" placeholder="Introduzca la cantidad" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.cantidad.errors }">
+            <div *ngIf="submitted && f.cantidad.errors">
+              <div *ngIf="f.cantidad.errors.required">La cantidad es requerida</div>
+            </div>
+        </div>
+    
+        <button type="submit"  class="btn btn-info">Actualizar</button>
+      </form>
+
+  </div>
+    
+  </div>
+  
+  

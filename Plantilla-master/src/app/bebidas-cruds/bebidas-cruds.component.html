@@ -1,0 +1,199 @@
+<div class="container">
+  <!--En esta parte se agrega al usuario-->
+  <br>
+  <h2 class="text-center">Lista de Bebidas</h2>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Agregar Bebida
+</button>
+<br><br>
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Agregar Bebida</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body --> 
+      <div class="modal-body">
+          <div class="container">  
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <label for="name" class="control-label col-sm-2">
+                    Nombre
+                  </label>
+                  <input required type="text" class="form-control" id="name" 
+                    [(ngModel)] = "usuario.name" name="name"
+                    placeholder="Ingrese el nombre">
+                </div>
+                
+                <div class="form-group">
+                  <label for="tipo" class="control-label col-sm-2">
+                    Tipo
+                  </label>
+                  <select class="form-control" id="tipo" name="tipo" [(ngModel)]="usuario.tipo">
+                      <option>Alcoholica</option>
+                      <option>Sin Alcohol</option>
+                    </select>
+              </div>
+                  <div class="form-group">
+                      <label for="imagen" class="control-label col-sm-2">
+                        Imagen
+                      </label>
+                      <div class="form-group">
+                        <input type="file" class="form-control-file border" name="file">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="precio" class="control-label col-sm-8">
+                          Precio
+                        </label>
+                        <input required type="text" class="form-control" id="precio" 
+                        [(ngModel)] = "usuario.precio" name="precio"
+                          placeholder="Ingrese el precio">
+                      </div>
+                  <div class="form-group">
+                      <label for="rol" class="control-label col-sm-2">
+                        Disponibilidad
+                      </label>
+                      <select class="form-control" id="disponibilidad" name="disponibilidad" [(ngModel)]="usuario.disponibilidad">
+                          <option>Disponible</option>
+                          <option>No disponible</option>
+                        </select>
+                  </div>
+                  <div class="form-group">
+                      <label for="descripcion" class="control-label col-sm-2">
+                        Descripcion
+                      </label>
+                      <input required type="text" class="form-control" id="descripcion" 
+                      [(ngModel)] = "usuario.descripcion" name="descripcion"
+                        placeholder="Descripcion">
+                    </div>
+                
+              </form>
+            </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+            <button type="submit" (click)="onSubmit()" data-dismiss="modal" class="btn btn-success" >Save</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!--En esta parte se muestra el usuario-->
+
+  <div style="overflow-x:auto;">
+      <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Tipo</th>
+              <th>Precio</th>
+              <th>Disponibilidad</th>
+              <th>Descripcion</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>John</td>
+              <td>Doe</td>
+              <td>john@example.com</td>
+              <td>John</td>
+              <td>Doe</td>
+              
+              <td><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2">Editar</button></td>
+              <td><button class="btn btn-danger">Eliminar</button></td>
+            </tr>
+          </tbody>
+        </table>
+  </div>
+
+  <div class="modal" id="myModal2">
+      <div class="modal-dialog">
+        <div class="modal-content">
+    
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Modificar Bebida</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+    
+          <!-- Modal body -->
+          <div class="modal-body">
+              <div class="container">  
+                  <form class="form-horizontal">
+                    <div class="form-group">
+                      <label for="name" class="control-label col-sm-2">
+                        Nombre
+                      </label>
+                      <input required type="text" class="form-control" id="name" 
+                        [(ngModel)] = "usuario.name" name="name"
+                        placeholder="Ingrese el nombre">
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="tipo" class="control-label col-sm-2">
+                        Tipo
+                      </label>
+                      <select class="form-control" id="tipo" name="tipo" [(ngModel)]="usuario.tipo">
+                          <option>Alcoholica</option>
+                          <option>Sin Alcohol</option>
+                        </select>
+                  </div>
+                      <div class="form-group">
+                          <label for="imagen" class="control-label col-sm-2">
+                            Imagen
+                          </label>
+                          <div class="form-group">
+                            <input type="file" class="form-control-file border" name="file">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="precio" class="control-label col-sm-8">
+                              Precio
+                            </label>
+                            <input required type="text" class="form-control" id="precio" 
+                            [(ngModel)] = "usuario.precio" name="precio"
+                              placeholder="Ingrese el precio">
+                          </div>
+                      <div class="form-group">
+                          <label for="rol" class="control-label col-sm-2">
+                            Disponibilidad
+                          </label>
+                          <select class="form-control" id="disponibilidad" name="disponibilidad" [(ngModel)]="usuario.disponibilidad">
+                              <option>Disponible</option>
+                              <option>No disponible</option>
+                            </select>
+                      </div>
+                      <div class="form-group">
+                          <label for="descripcion" class="control-label col-sm-2">
+                            Descripcion
+                          </label>
+                          <input required type="text" class="form-control" id="descripcion" 
+                          [(ngModel)] = "usuario.descripcion" name="descripcion"
+                            placeholder="Descripcion">
+                        </div>
+                    
+                  </form>
+                </div>
+          </div>
+    
+          <!-- Modal footer -->
+          <div class="modal-footer">
+                <button type="submit" (click)="onSubmit()" data-dismiss="modal" class="btn btn-success" >Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+    
+        </div>
+      </div>
+    </div>
+</div>
