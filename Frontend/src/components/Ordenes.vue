@@ -65,16 +65,16 @@
       </li>
     </ul>
 
-    <div class="input-field col s12">
-      <input
-        v-on:input="orden.idCombos = $event.target.value"
-        type="text"
-        v-model="orden.idCombos"
-        :disabled="loading"
-        id="idCombos"
-      />
-      <label for="idCombos">idCombos</label>
+    <label for="idCombos" >Seleccione el tipo de usuario</label>
+    <div class="input-field col s6">
+          <select style="color: black" class="browser-default" v-on:input="orden.idCombos = $event.target.value" type="text" v-model="orden.idCombos" :disabled="loading"  id="idCombos">
+            <option value="Combo1">Combo1</option>
+            <option value="Combo2">Combo2</option>
+            <option value="Combo3">Combo3</option>
+            <option value="Combo4">Combo4</option>
+          </select>       
     </div>
+    <br>
 
     <div class="row">
       <!--Bebidas-->
@@ -452,8 +452,8 @@ export default {
       this.orden.idMesa = this.idMes;
       this.orden.idEmpleado = this.idEmp;
       this.orden.idProductos = this.idPro;
-      console.log("hkjdshfdshjfhsdfhj")
-      if((this.orden.idCombos == undefined)  ||  (this.orden.idCombos.length < 4) || (this.idMes == "N/A") || (this.idEmp== "N/A")){
+      
+      if((this.orden.idCombos == undefined)  /*||  (this.orden.idCombos.length < 4)*/ || (this.idMes == "N/A") || (this.idEmp== "N/A")){
         this.loading = false;
         sweetAlert("Oops...", "Error al crear, datos invalidos", "error");
       } else {
