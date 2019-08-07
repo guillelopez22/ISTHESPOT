@@ -133,12 +133,7 @@
         >{{ proveedor.nombre }}</option>
       </select>
     </div>
-    <ul id="example-1">
-      <li v-for="proveedor in proveedores">
-        <input type="radio" id="one" v-bind:value="proveedor.value" v-model="pick">
-        <label for="one">{{ proveedor.nombre }}</label>
-      </li>
-    </ul>
+    
   </div>
 </template>
 
