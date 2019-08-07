@@ -81,7 +81,15 @@
         <label for="Inventario">Inventario</label>
       </div>
     </div>
-    <div class="row -white" id="contenedorTablaExterna">
+    <label for="proveedor" >Seleccione el proveedor</label>
+      <div class="row">
+        <div class="input-field col s6">
+          <select style="color: black" class="browser-default" :disabled="loading"  id="idProveedor" v-on:input="insumo.idProveedor = $event.target.value" type="text" v-model="insumo.idProveedor">
+            <option v-for="p in proveedores" v-bind:key="p" :value="p._id">{{p.nombre}}</option>
+          </select>       
+        </div>
+      </div>
+    <!--<div class="row -white" id="contenedorTablaExterna">
       <div class="col s6">
         <h5>Seleccionar ID Proveedor:</h5>
         <p>(hacer click en el nombre deseado)</p>
@@ -110,7 +118,7 @@
           </h4>
         </label>
       </div>
-    </div>
+    </div>-->
     <div id="test-swipe-1" class="col s12">
       <a
         class="waves-effect waves-light btn-large"
@@ -243,7 +251,7 @@ export default {
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
-      this.insumo.idProveedor = this.idProv;
+      //this.insumo.idProveedor = this.idProv;
       this.$http
         .post("http://localhost:8000/insumos/create", this.insumo)
         .then(response => {
@@ -281,7 +289,7 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = insumo._id;
       this.insumo = insumo;
-      this.idProv = insumo.idProveedor;
+      this.insumo.idProveedor = insumo.idProveedor;
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
@@ -289,7 +297,7 @@ export default {
       this.loading = true;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
-        this.insumo.idProveedor = this.idProv;
+        //this.insumo.idProveedor = this.idProv;
         this.$http
           .put(
             "http://localhost:8000/insumos/update/" + this.idModificar,
@@ -297,17 +305,16 @@ export default {
           )
           .then(response => {
             if (response.body.success) {
+              this.getInsumo();
               this.loading = false;
               sweetAlert("Oops...", "Error al modificar", "error");
-
-              this.insumo = {};
             } else {
               sweetAlert(
                 "Modificado con exito!",
                 "Los cambios estan en la tabla",
                 "success"
               );
-              this.getInsumo();
+              this.insumo = {};
               this.loading = false;
             }
           });

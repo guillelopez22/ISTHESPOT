@@ -150,7 +150,7 @@
         >
           <option v-for="p in productos" v-bind:key="p" :value="p._id">{{p.nombre}}</option>
         </select>
-      </div>
+      </div> 
     </div>
     <!--
     <div class="row">

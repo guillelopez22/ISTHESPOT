@@ -336,7 +336,7 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = bebida._id;
       this.bebida = bebida;
-      this.idProv = bebida.idProveedor;
+      this.bebida.idProveedor = bebida.idProveedor      
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
@@ -344,7 +344,6 @@ export default {
       this.loading = true;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
-        this.bebida.idProveedor = this.idProv;
         this.$http
           .put(
             "http://localhost:8000/bebidas/update/" + this.idModificar,
@@ -366,6 +365,7 @@ export default {
             }
           });
       }
+      this.loading = true
     },
 
     deleteBebida(idBebida) {
@@ -389,7 +389,7 @@ export default {
               _this.$http
                 .delete("http://localhost:8000/bebidas/delete/" + idBebida)
                 .then(response => {
-                  _this.loading = false;
+                  this.loading = false;
                   if (response.body.success) {
                     sweetAlert("Oops...", "Error al eliminar", "error");
                     _this.getBebida();
