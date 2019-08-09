@@ -11,6 +11,8 @@ var productosController = require('./controllers/productosController');
 var promocionesController = require('./controllers/promocionesController');
 var proveedorController = require('./controllers/proveedorController');
 var usuariosController = require('./controllers/usuariosController');
+var productosinsumosController = require('./controllers/productosinsumosController');
+var productosordenesController = require('./controllers/productosordenesController');
 var authenticationController = require('./controllers/authenticationController');
 exports.endpoints = [
 	{
@@ -594,18 +596,56 @@ exports.endpoints = [
 			config: usuariosController.createUsuario
  	},
 	{
-		method: 'POST',
-		path: '/register',
-		config: usuariosController.createUsuario
+			method: 'POST',
+			path: '/register',
+			config: usuariosController.createUsuario
 	},
-	{method: 'POST',
-	 path: '/login',
-	 config: authenticationController.login
- },
 	{
-		method: 'GET',
-		path: '/logout',
-		config: authenticationController.logout
-	}
+			method: 'POST',
+	 		path: '/login',
+	 		config: authenticationController.login
+ 	},
+	{
+			method: 'GET',
+			path: '/logout',
+			config: authenticationController.logout
+	},
+	{
+			method: 'GET',
+			path: '/productosinsumos',
+			config: productosinsumosController.getProductosInsumos
+	},
+	{
+			method: 'GET',
+			path: '/productosinsumos/searchbyid/{_id}',
+			config: productosinsumosController.getProductoInsumoId
+	},
+	{
+			method: 'GET',
+			path: '/productosinsumos/searchbyidPersonal/{idProducto}',
+			config: productosinsumosController.getPoductoInsumoProducto
+ 	},
+	{
+			method: 'GET',
+			path: '/productosinsumos/searchbyidInsumo/{idInsumo}',
+			config: productosinsumosController.getPoductoInsumoInsumo
+	},
+	{
+			method: 'PUT',
+			path: '/productosinsumos/update/{_id}',
+			config: productosinsumosController.modifyProductoInsumo
+
+	},
+	{
+	   		method: 'DELETE',
+	   		path: '/productosinsumos/delete/{_id}',
+	   		config: productosinsumosController.deleteProductoInsumo
+	},
+	{
+		   	method: 'POST',
+			path: '/productosinsumos/create',
+	        config: productosinsumosController.createProductoInsumo
+	},
+
 
 ];
