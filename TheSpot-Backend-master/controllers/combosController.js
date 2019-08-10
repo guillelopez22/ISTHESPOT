@@ -67,7 +67,6 @@ exports.modifyCombo = {
       {'_id': request.params._id},
       {$set:
         {
-          idProductos : request.payload.idProductos,
           nombre : request.payload.nombre,
           descripcion : request.payload.descripcion,
           precio : request.payload.precio
@@ -109,7 +108,6 @@ exports.createCombo = {
   },
   handler: function(request, reply){
     var newCombo = new combo({
-      idProductos : request.payload.idProductos,
       nombre : request.payload.nombre,
       descripcion : request.payload.descripcion,
       precio : request.payload.precio
