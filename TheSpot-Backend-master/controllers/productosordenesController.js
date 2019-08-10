@@ -38,7 +38,7 @@ exports.getProductoOrdenProducto = {
   }
 }
 
-exports.getProductoOrdenProducto = {
+exports.getProductoOrdenOrden = {
   
     handler : function(request, reply){
       productoorden.find({'idOrden' : request.params.idOrden}, function(err, ProductosOrdenes){
