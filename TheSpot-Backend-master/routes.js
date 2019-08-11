@@ -15,6 +15,7 @@ var productosinsumosController = require('./controllers/productosinsumosControll
 var productosordenesController = require('./controllers/productosordenesController');
 var combosproductosController = require('./controllers/combosproductosController');
 var ordenesbebidasController = require('./controllers/ordenesbebidasController');
+var ordenescombosController = require('./controllers/ordenescombosController');
 var authenticationController = require('./controllers/authenticationController');
 exports.endpoints = [
 	{
@@ -756,5 +757,41 @@ exports.endpoints = [
 		path: '/ordenesbebidas/create',
 		config: ordenesbebidasController.createOrdenBebida
 	},//aqui termina orden bebida
+	{
+		method: 'GET',
+		path: '/ordenescombos',
+		config: ordenescombosController.getOrdenesCombos
+	},
+	{
+		method: 'GET',
+		path: '/ordenescombos/searchbyid/{_id}',
+		config: ordenescombosController.getOrdenComboId
+	},
+	{
+		method: 'GET',
+		path: '/ordenescombos/searchbyidOrden/{idOrden}',
+		config: ordenescombosController.getOrdenComboOrden
+	},
+	{
+		method: 'GET',
+		path: '/ordenescombos/searchbyidCombo/{idCombo}',
+		config: ordenescombosController.getOrdenComboCombo
+	},
+	{
+		method: 'PUT',
+		path: '/ordenescombos/update/{_id}',
+		config: ordenescombosController.modifyOrdenCombo
+
+	},
+	{
+		method: 'DELETE',
+		path: '/ordenescombos/delete/{_id}',
+		config: ordenescombosController.deleteOrdenCombo
+	},
+	{
+		method: 'POST',
+		path: '/ordenescombos/create',
+		config: ordenescombosController.createOrdenCombo
+	},//aqui termina orden combo
 
 ];
