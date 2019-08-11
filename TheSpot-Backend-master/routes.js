@@ -17,6 +17,8 @@ var combosproductosController = require('./controllers/combosproductosController
 var ordenesbebidasController = require('./controllers/ordenesbebidasController');
 var ordenescombosController = require('./controllers/ordenescombosController');
 var authenticationController = require('./controllers/authenticationController');
+var cuentasordenesController = require('./controllers/cuentasordenesController');
+var cuentasController = require('./controllers/cuentasController');
 exports.endpoints = [
 	{
 		method: 'GET',
@@ -793,5 +795,68 @@ exports.endpoints = [
 		path: '/ordenescombos/create',
 		config: ordenescombosController.createOrdenCombo
 	},//aqui termina orden combo
+	{
+		method: 'GET',
+		path: '/cuentasordenes',
+		config: cuentasordenesController.getCuentaOrden
+	},
+	{
+		method: 'GET',
+		path: '/cuentasordenes/searchbyid/{_id}',
+		config: cuentasordenesController.getCuentaOrdenId
+	},
+	{
+		method: 'GET',
+		path: '/cuentasordenes/searchbyidOrden/{idOrden}',
+		config: cuentasordenesController.getCuentaOrdenOrden
+	},
+	{
+		method: 'GET',
+		path: '/cuentasordenes/searchbyidCuenta/{idCuenta}',
+		config: cuentasordenesController.getCuentaOrdenCuenta
+	},
+	{
+		method: 'PUT',
+		path: '/cuentasordenes/update/{_id}',
+		config: cuentasordenesController.modifyCuentaOrden
+
+	},
+	{
+		method: 'DELETE',
+		path: '/cuentasordenes/delete/{_id}',
+		config: cuentasordenesController.deleteCuentaOrden
+	},
+	{
+		method: 'POST',
+		path: '/cuentasordenes/create',
+		config: cuentasordenesController.createCuentaOrden
+	},//aqui termina cuenta orden
+	{
+		method: 'GET',
+		path: '/cuentas',
+		config: cuentasController.getCuentas
+	},
+	{
+		method: 'GET',
+		path: '/cuentas/searchbyid/{_id}',
+		config: cuentasController.getCuentaId
+	},
+	{
+		method: 'PUT',
+		path: '/cuentas/update/{_id}',
+		config: cuentasController.modifyCuenta
+
+	},
+	{
+		method: 'DELETE',
+		path: '/cuentas/delete/{_id}',
+		config: cuentasController.deleteCuenta
+	},
+	{
+		method: 'POST',
+		path: '/cuentas/create',
+		config: cuentasController.createCuenta
+	},//aqui termina cuenta 
+	
 
 ];
