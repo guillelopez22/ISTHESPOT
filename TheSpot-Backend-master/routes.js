@@ -18,6 +18,7 @@ var ordenesbebidasController = require('./controllers/ordenesbebidasController')
 var ordenescombosController = require('./controllers/ordenescombosController');
 var authenticationController = require('./controllers/authenticationController');
 var cuentasordenesController = require('./controllers/cuentasordenesController');
+var insumosproveedoresController = require('./controllers/insumosproveedoresController');
 var cuentasController = require('./controllers/cuentasController');
 exports.endpoints = [
 	{
@@ -857,6 +858,41 @@ exports.endpoints = [
 		path: '/cuentas/create',
 		config: cuentasController.createCuenta
 	},//aqui termina cuenta 
-	
+	{
+		method: 'GET',
+		path: '/insumosproveedores',
+		config: insumosproveedoresController.getInsumosProveedores
+	},
+	{
+		method: 'GET',
+		path: '/insumosproveedores/searchbyid/{_id}',
+		config: insumosproveedoresController.getInsumoProveedorId
+	},
+	{
+		method: 'GET',
+		path: '/insumosproveedores/searchbyidInsumo/{idInsumo}',
+		config: insumosproveedoresController.getInsumoProveedorInsumo
+	},
+	{
+		method: 'GET',
+		path: '/insumosproveedores/searchbyidProveedor/{idProveedor}',
+		config: insumosproveedoresController.getInsumoProveedorProveedor
+	},
+	{
+		method: 'PUT',
+		path: '/insumosproveedores/update/{_id}',
+		config: insumosproveedoresController.modifyInsumoProveedor
+
+	},
+	{
+		method: 'DELETE',
+		path: '/insumosproveedores/delete/{_id}',
+		config: insumosproveedoresController.deleteInsumoProveedor
+	},
+	{
+		method: 'POST',
+		path: '/insumosproveedores/create',
+		config: insumosproveedoresController.createInsumoProveedor
+	},//aqui termina cuenta orden
 
 ];
