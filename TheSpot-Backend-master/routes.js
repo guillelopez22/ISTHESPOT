@@ -13,6 +13,8 @@ var proveedorController = require('./controllers/proveedorController');
 var usuariosController = require('./controllers/usuariosController');
 var productosinsumosController = require('./controllers/productosinsumosController');
 var productosordenesController = require('./controllers/productosordenesController');
+var combosproductosController = require('./controllers/combosproductosController');
+var ordenesbebidasController = require('./controllers/ordenesbebidasController');
 var authenticationController = require('./controllers/authenticationController');
 exports.endpoints = [
 	{
@@ -682,6 +684,77 @@ exports.endpoints = [
 		path: '/productosordenes/create',
 		config: productosordenesController.createProductoOrden
 	},//aqui termina producto orden
+	{
+		method: 'GET',
+		path: '/combosproductos',
+		config: combosproductosController.getCombosProductos
+	},
+	{
+		method: 'GET',
+		path: '/combosproductos/searchbyid/{_id}',
+		config: combosproductosController.getComboProductoId
+	},
+	{
+		method: 'GET',
+		path: '/combosproductos/searchbyidProducto/{idProducto}',
+		config: combosproductosController.getComboProductoProducto
+	},
+	{
+		method: 'GET',
+		path: '/combosproductos/searchbyidOrden/{idCombo}',
+		config: combosproductosController.getComboProductoCombo
+	},
+	{
+		method: 'PUT',
+		path: '/combosproductos/update/{_id}',
+		config: combosproductosController.modifyComboProducto
 
+	},
+	{
+		method: 'DELETE',
+		path: '/combosproductos/delete/{_id}',
+		config: combosproductosController.deleteComboProducto
+	},
+	{
+		method: 'POST',
+		path: '/combosproductos/create',
+		config: combosproductosController.createComboProducto
+	},//aqui termina combo producto
+	{
+		method: 'GET',
+		path: '/ordenesbebidas',
+		config: ordenesbebidasController.getOrdenesBebidas
+	},
+	{
+		method: 'GET',
+		path: '/ordenesbebidas/searchbyid/{_id}',
+		config: ordenesbebidasController.getOrdenBebidaId
+	},
+	{
+		method: 'GET',
+		path: '/ordenesbebidas/searchbyidOrden/{idOrden}',
+		config: ordenesbebidasController.getOrdenBebidaOrden
+	},
+	{
+		method: 'GET',
+		path: '/ordenesbebidas/searchbyidBebida/{idBebida}',
+		config: ordenesbebidasController.getOrdenBebidaBebida
+	},
+	{
+		method: 'PUT',
+		path: '/ordenesbebidas/update/{_id}',
+		config: ordenesbebidasController.modifyOrdenBebida
+
+	},
+	{
+		method: 'DELETE',
+		path: '/ordenesbebidas/delete/{_id}',
+		config: ordenesbebidasController.deleteOrdenBebida
+	},
+	{
+		method: 'POST',
+		path: '/ordenesbebidas/create',
+		config: ordenesbebidasController.createOrdenBebida
+	},//aqui termina orden bebida
 
 ];

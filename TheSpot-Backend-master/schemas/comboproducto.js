@@ -5,4 +5,4 @@ var ComboProductoSchema = new mongoose.Schema({
   idProducto : String
 });
 
-module.exports = mongoose.model('combo', ComboProductoSchema);
+module.exports = mongoose.model('comboproducto', ComboProductoSchema);

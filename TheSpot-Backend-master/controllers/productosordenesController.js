@@ -62,7 +62,6 @@ exports.modifyProductoOrden = {
         {
           idProducto : request.payload.idProducto,
           idOrden : request.payload.idOrden,
-          tipo : request.payload.tipo,
         }
       }, function(err){
         if(err){
