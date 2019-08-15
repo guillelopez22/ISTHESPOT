@@ -21,6 +21,8 @@ var cuentasordenesController = require('./controllers/cuentasordenesController')
 var insumosproveedoresController = require('./controllers/insumosproveedoresController');
 var cuentasController = require('./controllers/cuentasController');
 var mesasempleadosController = require('./controllers/mesasempleadosController');
+var combosbebidasController = require('./controllers/combosbebidasController');
+
 exports.endpoints = [
 	{
 		method: 'GET',
@@ -931,5 +933,41 @@ exports.endpoints = [
 		path: '/mesasempleados/create',
 		config: mesasempleadosController.createMesaEmpleado
 	},//aqui termina mesa empleado
+	{
+		method: 'GET',
+		path: '/combosbebidas',
+		config: combosbebidasController.getCombosBebidas
+	},
+	{
+		method: 'GET',
+		path: '/combosbebidas/searchbyid/{_id}',
+		config: combosbebidasController.getComboBebidaId
+	},
+	{
+		method: 'GET',
+		path: '/combosbebidas/searchbyidCombo/{idCombo}',
+		config: combosbebidasController.getComboBebidaCombo
+	},
+	{
+		method: 'GET',
+		path: '/combosbebidas/searchbyidBebida/{idBebida}',
+		config: combosbebidasController.getComboBebidaBebida
+	},
+	{
+		method: 'PUT',
+		path: '/combosbebidas/update/{_id}',
+		config: combosbebidasController.modifyComboBebida
+
+	},
+	{
+		method: 'DELETE',
+		path: '/combosbebidas/delete/{_id}',
+		config: combosbebidasController.deleteComboBebida
+	},
+	{
+		method: 'POST',
+		path: '/combosbebidas/create',
+		config: combosbebidasController.createComboBebida
+	},//aqui termina combo bebida
 
 ];
