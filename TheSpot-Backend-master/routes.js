@@ -20,6 +20,7 @@ var authenticationController = require('./controllers/authenticationController')
 var cuentasordenesController = require('./controllers/cuentasordenesController');
 var insumosproveedoresController = require('./controllers/insumosproveedoresController');
 var cuentasController = require('./controllers/cuentasController');
+var mesasempleadosController = require('./controllers/mesasempleadosController');
 exports.endpoints = [
 	{
 		method: 'GET',
@@ -894,5 +895,41 @@ exports.endpoints = [
 		path: '/insumosproveedores/create',
 		config: insumosproveedoresController.createInsumoProveedor
 	},//aqui termina cuenta orden
+	{
+		method: 'GET',
+		path: '/mesasempleados',
+		config: mesasempleadosController.getMesasEmpleados
+	},
+	{
+		method: 'GET',
+		path: '/mesasempleados/searchbyid/{_id}',
+		config: mesasempleadosController.getMesaEmpleadoId
+	},
+	{
+		method: 'GET',
+		path: '/mesasempleados/searchbyidMesa/{idMesa}',
+		config: mesasempleadosController.getMesaEmpleadoMesa
+	},
+	{
+		method: 'GET',
+		path: '/mesasempleados/searchbyidEmpleado/{idEmpleado}',
+		config: mesasempleadosController.getMesaEmpleadoEmpleado
+	},
+	{
+		method: 'PUT',
+		path: '/mesasempleados/update/{_id}',
+		config: mesasempleadosController.modifyMesaEmpleado
+
+	},
+	{
+		method: 'DELETE',
+		path: '/mesasempleados/delete/{_id}',
+		config: mesasempleadosController.deleteMesaEmpleado
+	},
+	{
+		method: 'POST',
+		path: '/mesasempleados/create',
+		config: mesasempleadosController.createMesaEmpleado
+	},//aqui termina mesa empleado
 
 ];
