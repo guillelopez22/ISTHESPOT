@@ -1,5 +1,5 @@
 <template>
-  <div id="root"> 
+  <div id="root">
     <h2>
       Insumo
       <a
@@ -15,7 +15,7 @@
     <p>Pagina Actual: {{currentPage}}</p>
     <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
     <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
-    <br>
+    <br />
     <table class="table centered">
       <thead>
         <tr>
@@ -50,7 +50,7 @@
         </tr>
       </tbody>
     </table>
-    <br>
+    <br />
     <ul id="tabs-swipe-demo" class="tabs">
       <li class="tab col s3">
         <a class="active" v-on:click="tabControl('test-swipe-1')" href="#test-swipe-1">Crear</a>
@@ -67,7 +67,7 @@
           v-model="insumo.nombre"
           :disabled="loading"
           id="Nombre"
-        >
+        />
         <label for="Nombre">Nombre</label>
       </div>
       <div class="input-field col s6" id="contenedorTablaExterna">
@@ -77,18 +77,29 @@
           v-model="insumo.inventario"
           :disabled="loading"
           id="Inventario"
-        >
+        />
         <label for="Inventario">Inventario</label>
       </div>
     </div>
-    <label for="proveedor" >Seleccione el proveedor</label>
-      <div class="row">
-        <div class="input-field col s6">
-          <select style="color: black" class="browser-default" :disabled="loading"  id="idProveedor" v-on:input="insumo.idProveedor = $event.target.value" type="text" v-model="insumo.idProveedor">
-            <option v-for="p in proveedores" v-bind:key="p" :value="p._id">{{p.nombre}}</option>
-          </select>       
-        </div>
+
+    <button v-on:click="agregarProveedores()" class="waves-effect waves-light btn-large">Agregar</button>
+
+    <label for="proveedor">Seleccione el proveedor</label>
+    <div class="row">
+      <div class="input-field col s6">
+        <select
+          style="color: black"
+          class="browser-default"
+          :disabled="loading"
+          id="idProveedor"
+          v-on:click="proveedor_a = $event.target.value"
+          type="text"
+          v-model="proveedor_a"
+        >
+          <option v-for="p in proveedores" v-bind:key="p" :value="p._id">{{p.nombre}}</option>
+        </select>
       </div>
+    </div>
     <!--<div class="row -white" id="contenedorTablaExterna">
       <div class="col s6">
         <h5>Seleccionar ID Proveedor:</h5>
@@ -164,7 +175,10 @@ export default {
       inicio: 0,
       final: 5,
       currentPage: 1,
-      size: 1
+      size: 1,
+      proveedores_a: [],
+      proveedor_a: "",
+      prv: {}
     };
   },
   watch: {
@@ -181,43 +195,59 @@ export default {
     }
   },
   methods: {
-    siguiente(){
-      if(this.currentPage < this.size){
+    siguiente() {
+      if (this.currentPage < this.size) {
         this.currentPage = this.currentPage + 1;
-        if(this.insumos.length % 5 == 0){
-          this.inicio = this.inicio + 5
-          this.final = this.final + 5
-          this.data = this.insumos.slice(this.inicio, this.final)
-        }else if((this.insumos.length % 5 != 0) && (this.currentPage == this.size)){
-          this.inicio = this.inicio + 5
-          this.final = this.final + (this.insumos.length%5)
-          this.data = this.insumos.slice(this.inicio, this.final)
-        }else if((this.insumos.length % 5 != 0) && (this.currentPage < this.size)){
-          this.inicio = this.inicio + 5
-          this.final = this.final + 5
-          this.data = this.insumos.slice(this.inicio, this.final)
+        if (this.insumos.length % 5 == 0) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + 5;
+          this.data = this.insumos.slice(this.inicio, this.final);
+        } else if (
+          this.insumos.length % 5 != 0 &&
+          this.currentPage == this.size
+        ) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + (this.insumos.length % 5);
+          this.data = this.insumos.slice(this.inicio, this.final);
+        } else if (
+          this.insumos.length % 5 != 0 &&
+          this.currentPage < this.size
+        ) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + 5;
+          this.data = this.insumos.slice(this.inicio, this.final);
         }
       }
     },
-    anterior(){
-      if(this.currentPage > 1){
+    anterior() {
+      if (this.currentPage > 1) {
         this.currentPage = this.currentPage - 1;
-        if(this.currentPage < this.size){
-          if(this.insumos.length % 5 == 0){
-            this.inicio = this.inicio - 5
-            this.final = this.final - 5
-            this.data = this.insumos.slice(this.inicio, this.final)
-          }else if((this.insumos.length % 5 != 0) && (this.currentPage == this.size-1)){
-            this.inicio = this.inicio - 5
-            this.final = this.final - (this.insumos.length%5)
-            this.data = this.insumos.slice(this.inicio, this.final)
-          }else if((this.insumos.length % 5 != 0) && (this.currentPage < this.size)){
-            this.inicio = this.inicio - 5
-            this.final = this.final - 5
-            this.data = this.insumos.slice(this.inicio, this.final)
+        if (this.currentPage < this.size) {
+          if (this.insumos.length % 5 == 0) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - 5;
+            this.data = this.insumos.slice(this.inicio, this.final);
+          } else if (
+            this.insumos.length % 5 != 0 &&
+            this.currentPage == this.size - 1
+          ) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - (this.insumos.length % 5);
+            this.data = this.insumos.slice(this.inicio, this.final);
+          } else if (
+            this.insumos.length % 5 != 0 &&
+            this.currentPage < this.size
+          ) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - 5;
+            this.data = this.insumos.slice(this.inicio, this.final);
           }
         }
       }
+    },
+    agregarProveedores() {
+      this.proveedores_a.push(this.proveedor_a);
+      console.log("Están los proveedores: ", this.proveedores_a);
     },
     getInsumo() {
       let _this = this;
@@ -232,11 +262,11 @@ export default {
             }
           }
         });
-        this.data = this.insumos.slice(this.inicio,this.final)
-        if(this.insumos.length % 5 == 0){
-          this.size = this.insumos.length/5
-        }else{
-          this.size = parseInt(this.insumos.length/5)+1
+        this.data = this.insumos.slice(this.inicio, this.final);
+        if (this.insumos.length % 5 == 0) {
+          this.size = this.insumos.length / 5;
+        } else {
+          this.size = parseInt(this.insumos.length / 5) + 1;
         }
       });
     },
@@ -247,6 +277,7 @@ export default {
       this.idProv = "N/A";
     },
     createInsumo() {
+      let _this = this;
       this.inicio = 0;
       this.final = 5;
       this.currentPage = 1;
@@ -270,6 +301,27 @@ export default {
             this.getInsumo();
           }
         });
+
+      setTimeout(function() {
+        var i;
+        for (i = 0; i < _this.proveedores_a.length; i++) {
+          _this.prv = {};
+          _this.prv.idProveedor = _this.proveedores_a[i];
+          _this.prv.idInsumo = _this.insumos[_this.insumos.length - 1]._id;
+          _this.$http
+            .post("http://localhost:8000/insumosproveedores/create", _this.prv)
+            .then(response => {
+              _this.loading = false;
+              if (response.body.success) {
+                _this.prv = {};
+                console.log("agregó");
+              } else {
+                console.log("tronó");
+              }
+            });
+        }
+        _this.proveedores_a = [];
+      }, 1000);
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {
@@ -321,7 +373,7 @@ export default {
       }
     },
     deleteInsumo(idInsumo) {
-      let _this = this 
+      let _this = this;
       sweetAlert(
         {
           title: "¿Estás seguro?",
@@ -338,8 +390,9 @@ export default {
             if (inputValue) {
               //****************************************************** */
               _this.loading = true;
-              _this.$http.delete("http://localhost:8000/insumos/delete/" + idInsumo).then(
-                response => {
+              _this.$http
+                .delete("http://localhost:8000/insumos/delete/" + idInsumo)
+                .then(response => {
                   this.loading = false;
                   if (response.body.success) {
                     sweetAlert("Oops...", "Error al eliminar", "error");
@@ -355,11 +408,10 @@ export default {
                     _this.currentPage = 1;
                     _this.getInsumo();
                   }
-                }
-              );
+                });
               //****************************************************** */
             } else {
-              sweetAlert("Cancelado","Tus datos están a salvo", "info");
+              sweetAlert("Cancelado", "Tus datos están a salvo", "info");
             }
           }, 500);
         }
@@ -452,7 +504,7 @@ th {
   color: #06152f;
 }
 .-white {
-  background-color: #F4F0EA;
+  background-color: #f4f0ea;
   color: black;
 }
 .-lightblue {

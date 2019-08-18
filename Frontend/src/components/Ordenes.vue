@@ -65,7 +65,9 @@
       </li>
     </ul>
 
-    <label for="idCombos">Seleccione el tipo de usuario</label>
+    <button v-on:click="agregarCombos()" class="waves-effect waves-light btn-large">Agregar</button>
+
+    <label for="idCombos">Seleccione el combo</label>
     <div class="row">
       <div class="input-field col s6">
         <select
@@ -85,6 +87,8 @@
       </div>
     </div>
 
+    <button v-on:click="agregarBebidas()" class="waves-effect waves-light btn-large">Agregar</button>
+
     <label for="bebida">Seleccione la bebida</label>
     <div class="row">
       <div class="input-field col s6">
@@ -93,9 +97,9 @@
           class="browser-default"
           :disabled="loading"
           id="idBebidas"
-          v-on:input="orden.idBebidas = $event.target.value"
+          v-on:input="bebida_a = $event.target.value"
           type="text"
-          v-model="orden.idBebidas"
+          v-model="bebida_a"
         >
           <option v-for="b in bebidas" v-bind:key="b" :value="b._id">{{b.nombre}}</option>
         </select>
@@ -136,6 +140,8 @@
       </div>
     </div>
 
+    <button v-on:click="agregarProductos()" class="waves-effect waves-light btn-large">Agregar</button>
+
     <label for="producto">Seleccione el producto</label>
     <div class="row">
       <div class="input-field col s6">
@@ -144,13 +150,13 @@
           class="browser-default"
           :disabled="loading"
           id="idProductos"
-          v-on:input="orden.idProductos = $event.target.value"
+          v-on:input="producto_a = $event.target.value"
           type="text"
-          v-model="orden.idProductos"
+          v-model="producto_a"
         >
           <option v-for="p in productos" v-bind:key="p" :value="p._id">{{p.nombre}}</option>
         </select>
-      </div> 
+      </div>
     </div>
     <!--
     <div class="row">
@@ -351,7 +357,19 @@ export default {
       inicio: 0,
       final: 5,
       size: 1,
-      currentPage: 1
+      currentPage: 1,
+      //
+      bebidas_a: [],
+      bebida_a: "",
+      beb: {},
+      //
+      combos_a: [],
+      combo_a: "",
+      cmb: {},
+      //
+      productos_a: [],
+      producto_a: "",
+      pro: {}
     };
   },
   watch: {
@@ -452,6 +470,20 @@ export default {
         }
       }
     },
+
+    agregarCombos() {
+      this.combos_a.push(this.combo_a);
+      console.log("Están los combos: ", this.combos_a);
+    },
+    agregarProductos() {
+      this.productos_a.push(this.producto_a);
+      console.log("Están los productos: ", this.productos_a);
+    },
+    agregarBebidas() {
+      this.bebidas_a.push(this.bebida_a);
+      console.log("Están los bebidas: ", this.bebidas_a);
+    },
+
     getorden() {
       let _this = this;
       this.$http.get("http://localhost:8000/ordenes").then(response => {
@@ -522,6 +554,7 @@ export default {
       this.idPro = "N/A";
     },
     createorden() {
+      let _this = this;
       this.inicio = 0;
       this.final = 5;
       this.currentPage = 1;
@@ -552,8 +585,77 @@ export default {
               sweetAlert("Oops...", "Error al crear", "error");
             }
           });
+        // combos
+        setTimeout(function() {
+          var i;
+          for (i = 0; i < _this.combos_a.length; i++) {
+            _this.cmb = {};
+            _this.cmb.idCombo = _this.combos_a[i];
+            _this.cmb.idOrden = _this.ordenes[_this.ordenes.length - 1]._id;
+            _this.$http
+              .post("http://localhost:8000/ordenescombos/create", _this.cmb)
+              .then(response => {
+                _this.loading = false;
+                if (response.body.success) {
+                  _this.cmb = {};
+                  console.log("agregó");
+                } else {
+                  console.log("tronó");
+                }
+              });
+          }
+          _this.combos_a = [];
+        }, 1000);
+
+        // bebidas
+        setTimeout(function() {
+          var i;
+          for (i = 0; i < _this.bebidas_a.length; i++) {
+            _this.beb = {};
+            _this.beb.idBebida = _this.bebidas_a[i];
+            _this.beb.idOrden = _this.ordenes[_this.ordenes.length - 1]._id;
+            _this.$http
+              .post("http://localhost:8000/ordenesbebidas/create", _this.beb)
+              .then(response => {
+                _this.loading = false;
+                if (response.body.success) {
+                  _this.beb = {};
+                  console.log("agregó");
+                } else {
+                  console.log("tronó");
+                }
+              });
+          }
+          _this.bebidas_a = [];
+        }, 1000);
+        // productos
+        setTimeout(function() {
+          var i;
+          for (i = 0; i < _this.productos_a.length; i++) {
+            _this.pro = {};
+            _this.pro.idProducto = _this.productos_a[i];
+            _this.pro.idOrden = _this.ordenes[_this.ordenes.length - 1]._id;
+            _this.$http
+              .post(
+                "http://localhost:8000/productosordenes/create",
+                _this.pro
+              )
+              .then(response => {
+                _this.loading = false;
+                if (response.body.success) {
+                  _this.pro = {};
+                  console.log("agregó");
+                } else {
+                  console.log("tronó");
+                }
+              });
+          }
+          _this.productos_a = [];
+        }, 1000);
+        //
       }
     },
+
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {
         this.idModificar = "";
