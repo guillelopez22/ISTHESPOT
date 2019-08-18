@@ -15,7 +15,7 @@
     <p>Pagina Actual: {{currentPage}}</p>
     <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
     <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
-    <br>
+    <br />
     <table class="table centered">
       <thead>
         <tr>
@@ -59,7 +59,7 @@
         </tr>
       </tbody>
     </table>
-    <br>
+    <br />
     <ul id="tabs-swipe-demo" class="tabs">
       <li class="tab col s3">
         <a class="active" v-on:click="tabControl('test-swipe-1')" href="#test-swipe-1">Crear</a>
@@ -76,7 +76,7 @@
           v-model="mesa.nombre"
           :disabled="loading"
           id="Nombre"
-        >
+        />
         <label for="Nombre">Nombre</label>
       </div>
 
@@ -87,8 +87,27 @@
           v-model="mesa.numero"
           :disabled="loading"
           id="Numero"
-        >
+        />
         <label for="Numero">Numero</label>
+      </div>
+
+      <button v-on:click="agregarEmpleados()" class="waves-effect waves-light btn-large">Agregar</button>
+
+      <label for="bebida">Seleccione el empleado</label>
+      <div class="row">
+        <div class="input-field col s6">
+          <select
+            style="color: black"
+            class="browser-default"
+            :disabled="loading"
+            id="idEmpleado"
+            v-on:input="empleado = $event.target.value"
+            type="text"
+            v-model="empleado"
+          >
+            <option v-for="e in empleados2" v-bind:key="e" :value="e._id">{{e.nombre}}</option>
+          </select>
+        </div>
       </div>
     </div>
     <div id="test-swipe-1" class="col s12">
@@ -135,7 +154,11 @@ export default {
       inicio: 0,
       final: 5,
       currentPage: 1,
-      size: 1
+      size: 1,
+      empleados: [],
+      empleado: "",
+      mesaxempleado: {},
+      empleados2: [],
     };
   },
   watch: {
@@ -152,6 +175,9 @@ export default {
     }
   },
   methods: {
+    agregarEmpleados() {
+      this.empleados.push(this.empleado);
+    },
     siguiente() {
       if (this.currentPage < this.size) {
         this.currentPage = this.currentPage + 1;
@@ -209,6 +235,17 @@ export default {
           this.size = parseInt(this.mesas.length / 5) + 1;
         }
       });
+
+      this.$http.get("http://localhost:8000/usuarios").then(response => {
+        console.log(response);
+        this.empleados2 = response.body;
+      });
+    },
+    getEmpleados() {
+      this.$http.get("http://localhost:8000/usuarios").then(response => {
+        console.log(response);
+        this.empleados2 = response.body;
+      });
     },
     revisarMesa(idMesa) {
       if ((this.mesa.idOrden = this.idMesa && this.mesa.i)) {
@@ -225,14 +262,12 @@ export default {
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
+      let _this = this;
 
-      if(this.mesa.nombre== undefined || this.mesa.numero== undefined){
-        
+      if (this.mesa.nombre == undefined || this.mesa.numero == undefined) {
         this.loading = false;
         sweetAlert("Oops...", "Error al crear,esta vacio :(", "error");
-        
-      }else{
-      
+      } else {
         this.$http
           .get("http://localhost:8000/mesas/searchbyname/" + this.mesa.nombre)
           .then(response => {
@@ -246,7 +281,7 @@ export default {
                 .then(response => {
                   if (response.body.length == 0) {
                     /*mirar si es el mismo numero*/
-                    
+
                     this.$http
                       .post("http://localhost:8000/mesas/create", this.mesa)
                       .then(response => {
@@ -274,7 +309,6 @@ export default {
                     this.loading = false;
                   }
                 });
-            
             } else {
               //ya existe mesa con ese nombre
               sweetAlert(
@@ -287,8 +321,31 @@ export default {
               console.log("Ya existe la mesa y el numero");
               console.log(response.body.length);
             }
-          });}
-       
+          });
+
+        setTimeout(function() {
+        var i;
+        for (i = 0; i < _this.empleados.length; i++) {
+          _this.mesaxempleado = {};
+          _this.mesaxempleado.idMesa = _this.mesas[_this.mesas.length - 1]._id;
+          _this.mesaxempleado.idEmpleado = _this.empleados[i];
+          
+          console.log(_this.productoxinsumo);
+          _this.$http
+            .post("http://localhost:8000/mesasempleados/create", _this.mesaxempleado)
+            .then(response => {
+              _this.loading = false;
+              if (response.body.success) {
+                _this.mesaxempleado = {};
+                console.log("agregó");
+              } else {
+                console.log("tronó");
+              }
+            });
+        }
+        _this.empleados = [];
+      }, 1000);
+      }
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {
@@ -315,7 +372,6 @@ export default {
     modifyMesa() {
       this.loading = true;
       if (this.idModificar != "") {
-        
         this.$http
           .put(
             "http://localhost:8000/mesas/update/" + this.idModificar,

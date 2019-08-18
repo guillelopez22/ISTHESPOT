@@ -24,7 +24,7 @@ exports.getProductoInsumoId = {
 }
 exports.getPoductoInsumoInsumo = {
     handler: function (request, reply) {
-        bebida.find({ 'idInsumo': request.params.idInsumo }, function (err, ProductosInsumos) {
+        productoinsumo.find({ 'idInsumo': request.params.idInsumo }, function (err, ProductosInsumos) {
             if (!err && ProductosInsumos) {
                 return reply(ProductosInsumos);
             } else if (!err) {
@@ -93,7 +93,7 @@ exports.createProductoInsumo = {
             idProducto: request.payload.idProducto,
             idInsumo: request.payload.idInsumo,
         });
-        newBebida.save(function (err) {
+        newProductoInsumo.save(function (err) {
             if (!err) {
                 return reply({
                     success: true

@@ -23,7 +23,7 @@
           <th>Ingrediente</th>
           <th>Tipo</th>
           <th>Precio</th>
-          <!-- > -1 --> 
+          <!-- > -1 -->
           <th>Cantidad</th>
           <th>Descripcion</th>
           <th>Modificar</th>
@@ -88,15 +88,15 @@
         <label for="Precio">Precio</label>
       </div>
       <div class="input-field col s6">
-          <input
-            v-on:input="producto.cantidad = $event.target.value"
-            type="number"
-            v-model="producto.cantidad"
-            :disabled="loading"
-            id="Cantidad"
-          />
-          <label for="Cantidad">Cantidad</label>
-        </div>
+        <input
+          v-on:input="producto.cantidad = $event.target.value"
+          type="number"
+          v-model="producto.cantidad"
+          :disabled="loading"
+          id="Cantidad"
+        />
+        <label for="Cantidad">Cantidad</label>
+      </div>
       <div class="row">
         <div class="input-field col s12">
           <textarea
@@ -111,7 +111,6 @@
         </div>
       </div>
       <div class="row">
-        
         <div class="input-field col s12">
           <input
             v-on:input="producto.tipo = $event.target.value"
@@ -125,14 +124,24 @@
       </div>
     </div>
 
-    <label for="insumo" >Seleccione el ingrediente</label>
-      <div class="row">
-        <div class="input-field col s6">
-          <select style="color: black" class="browser-default" :disabled="loading"  id="idInsumo" v-on:input="producto.idInsumo = $event.target.value" type="text" v-model="producto.idInsumo">
-            <option v-for="i in insumos" v-bind:key="i" :value="i._id">{{i.nombre}}</option>
-          </select>       
-        </div>
+    <button v-on:click="agregarInsumos()" class="waves-effect waves-light btn-large">Agregar</button>
+
+    <label for="insumo">Seleccione el ingrediente</label>
+    <div class="row">
+      <div class="input-field col s6">
+        <select
+          style="color: black"
+          class="browser-default"
+          :disabled="loading"
+          id="idInsumo"
+          v-on:input="ingrediente = $event.target.value"
+          type="text"
+          v-model="ingrediente"
+        >
+          <option v-for="i in insumos" v-bind:key="i" :value="i._id">{{i.nombre}}</option>
+        </select>
       </div>
+    </div>
 
     <!--
       <div class="row -white" id="contenedorTablaExterna">
@@ -246,7 +255,10 @@ export default {
       inicio: 0,
       final: 5,
       size: 1,
-      currentPage: 1
+      currentPage: 1,
+      ingredientes: [],
+      ingrediente: "",
+      productoxinsumo: {}
     };
   },
   //watch: {
@@ -262,8 +274,11 @@ export default {
     }
   },
   //},
-  
+
   methods: {
+    agregarInsumos() {
+      this.ingredientes.push(this.ingrediente);
+    },
     siguiente() {
       if (this.currentPage < this.size) {
         this.currentPage = this.currentPage + 1;
@@ -336,7 +351,6 @@ export default {
       });
     },
 
-    
     newInsumo(insumo_id) {
       this.idIns = insumo_id;
     },
@@ -344,6 +358,7 @@ export default {
       this.idIns = "N/A";
     },
     createproducto() {
+      let _this = this;
       this.inicio = 0;
       this.final = 5;
       this.currentPage = 1;
@@ -355,7 +370,7 @@ export default {
         this.producto.descripcion == undefined ||
         this.producto.tipo == undefined ||
         this.producto.cantidad == undefined ||
-        this.producto.precio == undefined 
+        this.producto.precio == undefined
         //this.idIns == "N/A"
       ) {
         this.loading = false;
@@ -406,6 +421,30 @@ export default {
               sweetAlert("Oops...", "Error al crear", "error");
             }
           });
+        //agregar producto x insumo
+        setTimeout(function() {
+        var i;
+        for (i = 0; i < _this.ingredientes.length; i++) {
+          _this.productoxinsumo = {};
+          _this.productoxinsumo.idProducto = _this.productos[_this.productos.length - 1]._id;
+          _this.productoxinsumo.idInsumo = _this.ingredientes[i];
+          
+          console.log(_this.productoxinsumo);
+          _this.$http
+            .post("http://localhost:8000/productosinsumos/create", _this.productoxinsumo)
+            .then(response => {
+              _this.loading = false;
+              if (response.body.success) {
+                _this.productoxinsumo = {};
+                console.log("agregó");
+              } else {
+                console.log("tronó");
+              }
+            });
+        }
+        _this.ingredientes = [];
+      }, 1000);
+        
       }
     },
     tabControl(idTab) {
@@ -481,7 +520,7 @@ export default {
               _this.$http
                 .delete("http://localhost:8000/productos/delete/" + idProducto)
                 .then(response => {
-                  this.loading = false;
+                  _this.loading = false;
                   if (response.body.success) {
                     sweetAlert("Oops...", "Error al eliminar", "error");
                     _this.getproducto();
@@ -513,7 +552,6 @@ export default {
           this.producto_elaborados = response.body;
         });
     },*/
-    
 
     getInsumos() {
       this.$http.get("http://localhost:8000/insumos").then(response => {
