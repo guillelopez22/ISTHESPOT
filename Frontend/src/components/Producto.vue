@@ -33,7 +33,9 @@
       <tbody>
         <tr v-for="(producto,index) in data">
           <td>{{producto.nombre}}</td>
-          <td>{{insumos2[index]}}</td>
+          <td>
+            <button v-on:click="getIngredientes(producto)" class="waves-effect waves-light btn">Mostrar</button>
+          </td>
           <td>{{producto.tipo}}</td>
           <td>{{producto.precio}}</td>
           <td>{{producto.cantidad}}</td>
@@ -258,7 +260,9 @@ export default {
       currentPage: 1,
       ingredientes: [],
       ingrediente: "",
-      productoxinsumo: {}
+      productoxinsumo: {},
+      ingrtemp: [],
+      ingr: [],
     };
   },
   //watch: {
@@ -276,8 +280,41 @@ export default {
   //},
 
   methods: {
+    getIngredientes(producto){
+      var acum = "";
+      this.$http
+        .get("http://localhost:8000/productosinsumos")
+        .then(response => {
+          this.ingr = response.body;
+          var i = 0;
+          for (i = 0; i < this.ingr.length; i++) {
+            if (producto._id == this.ingr[i].idProducto) {
+              this.ingrtemp.push(this.ingr[i].idInsumo);
+            }
+          }
+          var j = 0;
+          for (j = 0; j < this.insumos.length; j++){
+            for (i = 0; i<this.ingrtemp.length;i++){
+              if(this.insumos[j]._id == this.ingrtemp[i]){
+                acum += this.insumos[j].nombre+"\n";
+              }
+            }
+          }
+          
+          sweetAlert(
+            "Ingredientes",
+            acum
+          );
+          acum = "";
+        });
+        acum = "";
+        this.ingr = [];
+        this.ingrtemp= [];
+
+    },
     agregarInsumos() {
       this.ingredientes.push(this.ingrediente);
+      sweetAlert("Listo!","Insumo Agregado","success");
     },
     siguiente() {
       if (this.currentPage < this.size) {
@@ -520,7 +557,7 @@ export default {
               _this.$http
                 .delete("http://localhost:8000/productos/delete/" + idProducto)
                 .then(response => {
-                  _this.loading = false;
+                  
                   if (response.body.success) {
                     sweetAlert("Oops...", "Error al eliminar", "error");
                     _this.getproducto();
@@ -530,6 +567,7 @@ export default {
                       "Los cambios estan en la tabla",
                       "success"
                     );
+                    _this.loading = false;
                     _this.inicio = 0;
                     _this.final = 5;
                     _this.currentPage = 1;

@@ -31,7 +31,7 @@
           <td>{{insumo.nombre}}</td>
           <td>{{insumo.inventario}}</td>
           <td>
-            <button v-on:click="getPrv(insumo)" class="waves-effect waves-light btn">TOCAR</button>
+            <button v-on:click="getPrv(insumo)" class="waves-effect waves-light btn">Mostrar</button>
           </td>
           <td>
             <a
@@ -257,7 +257,6 @@ export default {
     },
     getPrv(insumo) {
       this.acum = "";
-      console.log("primer acum: ",this.acum)
       let _this = this;
       this.$http
         .get("http://localhost:8000/insumosproveedores")
@@ -287,7 +286,6 @@ export default {
         this.acum = "";
         this.prvs = [];
         this.prvstemp= [];
-        console.log("ultimo acum: ",this.acum);
     },
     getInsumo() {
       let _this = this;
