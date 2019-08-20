@@ -33,9 +33,9 @@
         <tr v-for="(orden, index) in data">
           <td>{{empleados2[index]}}</td>
           <td>{{mesas2[index]}}</td>
-          <td>{{bebidas2[index]}}</td>
-          <td>{{productos2[index]}}</td>
-          <td>{{orden.idCombos}}</td>
+          <td><button v-on:click="getBeb(orden)" class="waves-effect waves-light btn">Mostrar</button></td>
+          <td><button v-on:click="getPro(orden)" class="waves-effect waves-light btn">Mostrar</button></td>
+          <td><button v-on:click="getCom(orden)" class="waves-effect waves-light btn">Mostrar</button></td>
           <td>
             <a
               v-on:click="startToModifyorden(orden)"
@@ -353,6 +353,8 @@ export default {
       producto: {},
       productos: [],
       productos2: [],
+      combo: {},
+      combos: [],
       data: [],
       inicio: 0,
       final: 5,
@@ -360,14 +362,20 @@ export default {
       currentPage: 1,
       //
       bebidas_a: [],
+      bebs: [],
+      bebstemp: [],
       bebida_a: "",
       beb: {},
       //
       combos_a: [],
+      cmbs: [],
+      combstemp: [],
       combo_a: "",
       cmb: {},
       //
       productos_a: [],
+      prds: [],
+      prdstemp: [],
       producto_a: "",
       pro: {}
     };
@@ -474,14 +482,122 @@ export default {
     agregarCombos() {
       this.combos_a.push(this.combo_a);
       console.log("Están los combos: ", this.combos_a);
+      sweetAlert("¡Listo!", "Combo agregado", "success");
     },
     agregarProductos() {
       this.productos_a.push(this.producto_a);
       console.log("Están los productos: ", this.productos_a);
+      sweetAlert("¡Listo!", "Producto agregado", "success");
     },
     agregarBebidas() {
       this.bebidas_a.push(this.bebida_a);
-      console.log("Están los bebidas: ", this.bebidas_a);
+      console.log("Están las bebidas: ", this.bebidas_a);
+      sweetAlert("¡Listo!", "Bebida agregada", "success");
+    },
+
+    getBeb(orden) {
+      var acum = "";
+      //console.log("primer acum: ",acum)
+      let _this = this;
+      this.$http
+        .get("http://localhost:8000/ordenesbebidas")
+        .then(response => {
+          this.bebs = response.body;
+          var i = 0;
+          for (i = 0; i < this.bebs.length; i++) {
+            if (orden._id == this.bebs[i].idOrden) {
+              this.bebstemp.push(this.bebs[i].idBebida);
+            }
+          }
+          var j = 0;
+          for (j = 0; j < this.bebidas.length; j++){
+            for (i = 0; i<this.bebstemp.length;i++){
+              if(this.bebidas[j]._id == this.bebstemp[i]){
+                acum += this.bebidas[j].nombre+"\n";
+              }
+            }
+          }
+          
+          sweetAlert(
+            "Bebidas",
+             acum
+          );
+          acum = "";
+        });
+        acum = "";
+        this.bebs = [];
+        this.bebstemp= [];
+        //console.log("ultimo acum: ",acum);
+    },
+
+    getPro(orden) {
+      var acum = "";
+      //console.log("primer acum: ",acum)
+      let _this = this;
+      this.$http
+        .get("http://localhost:8000/productosordenes")
+        .then(response => {
+          this.prds = response.body;
+          var i = 0;
+          for (i = 0; i < this.prds.length; i++) {
+            if (orden._id == this.prds[i].idOrden) {
+              this.prdstemp.push(this.prds[i].idProducto);
+            }
+          }
+          var j = 0;
+          for (j = 0; j < this.productos.length; j++){
+            for (i = 0; i<this.prdstemp.length;i++){
+              if(this.productos[j]._id == this.prdstemp[i]){
+                acum += this.productos[j].nombre+"\n";
+              }
+            }
+          }
+          
+          sweetAlert(
+            "Productos",
+            acum
+          );
+          acum = "";
+        });
+        acum = "";
+        this.prds = [];
+        this.prdstemp= [];
+        //console.log("ultimo acum: ",acum);
+    },
+
+    getCom(orden) {
+      var acum = "";
+      //console.log("primer acum: ",acum)
+      let _this = this;
+      this.$http
+        .get("http://localhost:8000/ordenescombos")
+        .then(response => {
+          this.cmbs = response.body;
+          var i = 0;
+          for (i = 0; i < this.cmbs.length; i++) {
+            if (orden._id == this.cmbs[i].idOrden) {
+              this.combstemp.push(this.cmbs[i].idCombo);
+            }
+          }
+          var j = 0;
+          for (j = 0; j < this.combos.length; j++){
+            for (i = 0; i<this.combstemp.length;i++){
+              if(this.combos[j]._id == this.combstemp[i]){
+                acum += this.combos[j].nombre+"\n";
+              }
+            }
+          }
+          
+          sweetAlert(
+            "Combos",
+            acum
+          );
+          acum = "";
+        });
+        acum = "";
+        this.cmbs = [];
+        this.combstemp= [];
+        //console.log("ultimo acum: ",acum);
     },
 
     getorden() {
