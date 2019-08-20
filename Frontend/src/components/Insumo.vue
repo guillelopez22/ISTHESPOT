@@ -184,6 +184,7 @@ export default {
       prvs: [],
       prvstemp: [],
       acum: "",
+      productosinsumos: []
     };
   },
   watch: {
@@ -269,23 +270,20 @@ export default {
             }
           }
           var j = 0;
-          for (j = 0; j < this.proveedores.length; j++){
-            for (i = 0; i<this.prvstemp.length;i++){
-              if(this.proveedores[j]._id == this.prvstemp[i]){
-                this.acum += this.proveedores[j].nombre+"\n";
+          for (j = 0; j < this.proveedores.length; j++) {
+            for (i = 0; i < this.prvstemp.length; i++) {
+              if (this.proveedores[j]._id == this.prvstemp[i]) {
+                this.acum += this.proveedores[j].nombre + "\n";
               }
             }
           }
-          
-          sweetAlert(
-            "Proveedores",
-            this.acum
-          );
+
+          sweetAlert("Proveedores", this.acum);
           this.acum = "";
         });
-        this.acum = "";
-        this.prvs = [];
-        this.prvstemp= [];
+      this.acum = "";
+      this.prvs = [];
+      this.prvstemp = [];
     },
     getInsumo() {
       let _this = this;
@@ -412,59 +410,81 @@ export default {
     },
     deleteInsumo(idInsumo) {
       let _this = this;
-      sweetAlert(
-        {
-          title: "¿Estás seguro?",
-          text: "No podrás revertir los cambios",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Eliminar",
-          cancelButtonText: "Cancelar",
-          showCloseButton: true,
-          showLoaderOnConfirm: true
-        },
-        function(inputValue) {
-          setTimeout(function() {
-            if (inputValue) {
-              //****************************************************** */
-              _this.loading = true;
-              _this.$http
-                .delete("http://localhost:8000/insumos/delete/" + idInsumo)
-                .then(response => {
-                  this.loading = false;
-                  if (response.body.success) {
-                    sweetAlert("Oops...", "Error al eliminar", "error");
-                    _this.getInsumo();
-                  } else {
-                    sweetAlert(
-                      "Deleted!",
-                      "Los cambios estan en la tabla",
-                      "success"
-                    );
-                    _this.inicio = 0;
-                    _this.final = 5;
-                    _this.currentPage = 1;
-                    _this.getInsumo();
-                  }
-                });
-              //****************************************************** */
-            } else {
-              sweetAlert("Cancelado", "Tus datos están a salvo", "info");
-            }
-          }, 500);
+      var entrar = true;
+      for (let i = 0; i < _this.productosinsumos.length; i++) {
+        const element = _this.productosinsumos[i];
+        if (element.idInsumo == idInsumo) {
+          entrar = false;
         }
-      );
+      }
+      if (entrar) {
+        sweetAlert(
+          {
+            title: "¿Estás seguro?",
+            text: "No podrás revertir los cambios",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            showCloseButton: true,
+            showLoaderOnConfirm: true
+          },
+          function(inputValue) {
+            setTimeout(function() {
+              if (inputValue) {
+                //****************************************************** */
+                _this.loading = true;
+                _this.$http
+                  .delete("http://localhost:8000/insumos/delete/" + idInsumo)
+                  .then(response => {
+                    this.loading = false;
+                    if (response.body.success) {
+                      sweetAlert("Oops...", "Error al eliminar", "error");
+                      _this.getInsumo();
+                    } else {
+                      sweetAlert(
+                        "Deleted!",
+                        "Los cambios estan en la tabla",
+                        "success"
+                      );
+                      _this.inicio = 0;
+                      _this.final = 5;
+                      _this.currentPage = 1;
+                      _this.getInsumo();
+                    }
+                  });
+                //****************************************************** */
+              } else {
+                sweetAlert("Cancelado", "Tus datos están a salvo", "info");
+              }
+            }, 500);
+          }
+        );
+      } else {
+        sweetAlert(
+          "Eliminación Bloqueada",
+          "El registro se encuentra relacionado con otra tabla",
+          "warning"
+        );
+      }
     },
     getProveedores() {
       this.$http.get("http://localhost:8000/proveedores").then(response => {
         console.log(response);
         this.proveedores = response.body;
       });
+    },
+    getProductosInsumos() {
+      this.$http.get("http://localhost:8000/productosinsumos").then(response => {
+        console.log(response);
+        this.productosinsumos = response.body;
+      });
     }
   },
   beforeMount() {
     this.getProveedores();
     this.getInsumo();
+    this.getProductosInsumos();
   },
   mounted() {
     $("ul.tabs").tabs();

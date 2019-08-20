@@ -406,15 +406,14 @@ export default {
     },
     deleteMesa(idMesa) {
       let _this = this;
-      console.log(this.mesa.orden_id);
-      this.$http
-        .get(
-          "http://localhost:8000/mesas/searchbyIdOrden/" + this.mesa.orden_id,
-          this.mesa._id
-        )
-        .then(response => {
-          console.log(response.body);
-        });
+      var entrar = true;
+      for (let i = 0; i < _this.ordenes.length; i++) {
+        const element = _this.ordenes[i];
+        if (element.idMesa == idMesa) {
+          entrar = false;
+        }
+      }
+      if (entrar) {
       sweetAlert(
         {
           title: "¿Estás seguro?",
@@ -457,6 +456,13 @@ export default {
           }, 500);
         }
       );
+       } else {
+        sweetAlert(
+          "Eliminación Bloqueada",
+          "El registro se encuentra relacionado con otra tabla",
+          "warning"
+        );
+      }
     },
     getOrdenes() {
       this.$http.get("http://localhost:8000/ordenes").then(response => {

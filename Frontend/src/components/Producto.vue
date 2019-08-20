@@ -23,7 +23,6 @@
           <th>Ingrediente</th>
           <th>Tipo</th>
           <th>Precio</th>
-          <!-- > -1 -->
           <th>Cantidad</th>
           <th>Descripcion</th>
           <th>Modificar</th>
@@ -144,71 +143,6 @@
         </select>
       </div>
     </div>
-
-    <!--
-      <div class="row -white" id="contenedorTablaExterna">
-        <div class="col s6">
-          <h5>Seleccionar ID Bebida:</h5>
-          <p>(hacer click en el nombre deseado)</p>
-          <hr />
-          <ul v-for="bebida in bebidas">
-            <li>
-              <i class="material-icons left">pages</i>
-              {{bebida.nombre}}
-              <a
-                v-on:click="newBebida(bebida._id)"
-                class="btn-floating btn-small waves-effect waves-light black secondary-content"
-              >
-                <i class="material-icons">done</i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="importance" class="input-field col s6 center">
-          <br />
-          <label id="idBebida">
-            <h4>
-              <a v-on:click="borrarBebida()" class="waves-effect waves-light">
-                <i class="material-icons">delete</i>
-              </a>
-              {{idBeb}} {{nombreBeb}}
-            </h4>
-          </label>
-        </div>
-      </div>
-
-      <div class="row -white" id="contenedorTablaExterna">
-        <div class="col s6">
-          <h5>Seleccionar ID Insumo:</h5>
-          <p>(hacer click en el nombre deseado)</p>
-          <hr />
-          <ul v-for="insumo in insumos">
-            <li>
-              <i class="material-icons left">pages</i>
-              {{insumo.nombre}}
-              <a
-                v-on:click="newInsumo(insumo._id)"
-                class="btn-floating btn-small waves-effect waves-light black secondary-content"
-              >
-                <i class="material-icons">done</i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="importance" class="input-field col s6 center">
-          <br />
-          <label id="idInsumo">
-            <h4>
-              <a v-on:click="borrarInsumo()" class="waves-effect waves-light">
-                <i class="material-icons">delete</i>
-              </a>
-              {{idIns}} {{nombreIns}}
-            </h4>
-          </label>
-        </div>
-      </div>
-    -->
-
     <div id="test-swipe-1" class="col s12">
       <a
         class="waves-effect waves-light btn-large"
@@ -247,9 +181,6 @@ export default {
       idIns: "N/A",
       nombreIns: "",
       selectedTab: "test-swipe-1",
-      //producto_elaborado: {},
-      //producto_elaborados: [],
-      //producto_elaborados2: [],
       insumo: {},
       insumos: [],
       insumos2: [],
@@ -263,9 +194,9 @@ export default {
       productoxinsumo: {},
       ingrtemp: [],
       ingr: [],
+      productosordenes: []
     };
   },
-  //watch: {
   idIns: function(val) {
     if (val != "N/A") {
       this.nombreIns = "";
@@ -277,8 +208,6 @@ export default {
         });
     }
   },
-  //},
-
   methods: {
     getIngredientes(producto){
       var acum = "";
@@ -300,7 +229,6 @@ export default {
               }
             }
           }
-          
           sweetAlert(
             "Ingredientes",
             acum
@@ -310,7 +238,6 @@ export default {
         acum = "";
         this.ingr = [];
         this.ingrtemp= [];
-
     },
     agregarInsumos() {
       this.ingredientes.push(this.ingrediente);
@@ -538,6 +465,14 @@ export default {
     },
     deleteproducto(idProducto) {
       let _this = this;
+      var entrar = true;
+      for (let i = 0; i < _this.productosordenes.length; i++) {
+        const element = _this.productosordenes[i];
+        if (element.idProducto == idProducto) {
+          entrar = false;
+        }
+      }
+      if (entrar) {
       sweetAlert(
         {
           title: "¿Estás seguro?",
@@ -581,28 +516,32 @@ export default {
           }, 500);
         }
       );
+      } else {
+        sweetAlert(
+          "Eliminación Bloqueada",
+          "El registro se encuentra relacionado con otra tabla",
+          "warning"
+        );
+      }
     },
-    /*getproductos_elaborados() {
-      this.$http
-        .get("http://localhost:8000/productos_elaborados")
-        .then(response => {
-          console.log(response);
-          this.producto_elaborados = response.body;
-        });
-    },*/
-
     getInsumos() {
       this.$http.get("http://localhost:8000/insumos").then(response => {
         console.log(response);
         this.insumos = response.body;
       });
+    },
+    getProductosOrdenes() {
+      this.$http.get("http://localhost:8000/productosordenes").then(response => {
+        console.log(response);
+        this.productosordenes = response.body;
+      });
     }
   },
 
   beforeMount() {
-    //this.getproductos_elaborados();
     this.getproducto();
     this.getInsumos();
+    this.getProductosOrdenes();
   },
   mounted() {
     $("ul.tabs").tabs();

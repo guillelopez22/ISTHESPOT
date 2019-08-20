@@ -2,10 +2,10 @@
   <div id="root">
     <h2>Proveedor</h2>
     <p>Pagina Actual: {{currentPage}}</p>
-  <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
+    <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
     <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
-    <br>
-    <table class="table centered"> 
+    <br />
+    <table class="table centered">
       <thead>
         <tr>
           <th>Nombre</th>
@@ -45,7 +45,7 @@
         </tr>
       </tbody>
     </table>
-    <br>
+    <br />
 
     <ul id="tabs-swipe-demo" class="tabs">
       <li class="tab col s3">
@@ -63,15 +63,15 @@
           id="Nombre"
           type="text"
           class="validate"
-        >
+        />
         <label for="Nombre">Nombre</label>
       </div>
       <div class="input-field col s6">
-        <input v-model="proveedor.pais" :disabled="loading" id="Pais" type="text" class="validate">
+        <input v-model="proveedor.pais" :disabled="loading" id="Pais" type="text" class="validate" />
         <label for="Pais">Pais</label>
       </div>
       <div class="input-field col s6">
-        <input type="number" v-model="proveedor.telefono" :disabled="loading" id="Telefono">
+        <input type="number" v-model="proveedor.telefono" :disabled="loading" id="Telefono" />
         <label for="Telefono">Telefono</label>
       </div>
       <div class="input-field col s6">
@@ -81,7 +81,7 @@
           id="Contacto"
           type="text"
           class="validate"
-        >
+        />
         <label for="Contacto">Contacto</label>
       </div>
       <div class="input-field col s6">
@@ -91,7 +91,7 @@
           id="Email"
           type="text"
           class="validate"
-        >
+        />
         <label for="Email">Email</label>
       </div>
       <div class="input-field col s6">
@@ -101,7 +101,7 @@
           id="Direccion"
           type="text"
           class="validate"
-        >
+        />
         <label for="Direccion">Direccion</label>
       </div>
     </div>
@@ -133,7 +133,6 @@
         >{{ proveedor.nombre }}</option>
       </select>
     </div>
-    
   </div>
 </template>
 
@@ -149,7 +148,9 @@ export default {
       inicio: 0,
       final: 5,
       currentPage: 1,
-      size: 1
+      size: 1,
+      bebidas: [],
+      insumosproveedores: []
     };
   },
   directives: {
@@ -176,40 +177,52 @@ export default {
     }
   },
   methods: {
-    siguiente(){
-      if(this.currentPage < this.size){
+    siguiente() {
+      if (this.currentPage < this.size) {
         this.currentPage = this.currentPage + 1;
-        if(this.proveedores.length % 5 == 0){
-          this.inicio = this.inicio + 5
-          this.final = this.final + 5
-          this.data = this.proveedores.slice(this.inicio, this.final)
-        }else if((this.proveedores.length % 5 != 0) && (this.currentPage == this.size)){
-          this.inicio = this.inicio + 5
-          this.final = this.final + (this.proveedores.length%5)
-          this.data = this.proveedores.slice(this.inicio, this.final)
-        }else if((this.proveedores.length % 5 != 0) && (this.currentPage < this.size)){
-          this.inicio = this.inicio + 5
-          this.final = this.final + 5
-          this.data = this.proveedores.slice(this.inicio, this.final)
+        if (this.proveedores.length % 5 == 0) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + 5;
+          this.data = this.proveedores.slice(this.inicio, this.final);
+        } else if (
+          this.proveedores.length % 5 != 0 &&
+          this.currentPage == this.size
+        ) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + (this.proveedores.length % 5);
+          this.data = this.proveedores.slice(this.inicio, this.final);
+        } else if (
+          this.proveedores.length % 5 != 0 &&
+          this.currentPage < this.size
+        ) {
+          this.inicio = this.inicio + 5;
+          this.final = this.final + 5;
+          this.data = this.proveedores.slice(this.inicio, this.final);
         }
       }
     },
-    anterior(){
-      if(this.currentPage > 1){
+    anterior() {
+      if (this.currentPage > 1) {
         this.currentPage = this.currentPage - 1;
-        if(this.currentPage < this.size){
-          if(this.proveedores.length % 5 == 0){
-            this.inicio = this.inicio - 5
-            this.final = this.final - 5
-            this.data = this.proveedores.slice(this.inicio, this.final)
-          }else if((this.proveedores.length % 5 != 0) && (this.currentPage == this.size-1)){
-            this.inicio = this.inicio - 5
-            this.final = this.final - (this.proveedores.length%5)
-            this.data = this.proveedores.slice(this.inicio, this.final)
-          }else if((this.proveedores.length % 5 != 0) && (this.currentPage < this.size)){
-            this.inicio = this.inicio - 5
-            this.final = this.final - 5
-            this.data = this.proveedores.slice(this.inicio, this.final)
+        if (this.currentPage < this.size) {
+          if (this.proveedores.length % 5 == 0) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - 5;
+            this.data = this.proveedores.slice(this.inicio, this.final);
+          } else if (
+            this.proveedores.length % 5 != 0 &&
+            this.currentPage == this.size - 1
+          ) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - (this.proveedores.length % 5);
+            this.data = this.proveedores.slice(this.inicio, this.final);
+          } else if (
+            this.proveedores.length % 5 != 0 &&
+            this.currentPage < this.size
+          ) {
+            this.inicio = this.inicio - 5;
+            this.final = this.final - 5;
+            this.data = this.proveedores.slice(this.inicio, this.final);
           }
         }
       }
@@ -217,11 +230,11 @@ export default {
     getProveedor() {
       this.$http.get("http://localhost:8000/proveedores").then(response => {
         this.proveedores = response.body;
-        this.data = this.proveedores.slice(this.inicio,this.final)
-        if(this.proveedores.length % 5 == 0){
-          this.size = this.proveedores.length/5
-        }else{
-          this.size = parseInt(this.proveedores.length/5)+1
+        this.data = this.proveedores.slice(this.inicio, this.final);
+        if (this.proveedores.length % 5 == 0) {
+          this.size = this.proveedores.length / 5;
+        } else {
+          this.size = parseInt(this.proveedores.length / 5) + 1;
         }
       });
     },
@@ -293,53 +306,90 @@ export default {
       }
     },
     deleteProveedor(idProveedor) {
-      let _this = this 
-      sweetAlert(
-        {
-          title: "¿Estás seguro?",
-          text: "No podrás revertir los cambios",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Eliminar",
-          cancelButtonText: "Cancelar",
-          showCloseButton: true,
-          showLoaderOnConfirm: true
-        },
-        function(inputValue) {
-          setTimeout(function() {
-            if (inputValue) {
-              //****************************************************** */
-              _this.loading = true;
-              _this.$http.delete("http://localhost:8000/proveedor/delete/" + idProveedor).then(
-                response => {
-                  this.loading = false;
-                  if (response.body.success) {
-                    sweetAlert("Oops...", "Error al eliminar", "error");
-                    _this.getProveedor();
-                  } else {
-                    sweetAlert(
-                      "Deleted!",
-                      "Los cambios estan en la tabla",
-                      "success"
-                    );
-                    _this.inicio = 0;
-                    _this.final = 5;
-                    _this.currentPage = 1;
-                    _this.getProveedor();
-                  }
-                }
-              );
-              //****************************************************** */
-            } else {
-              sweetAlert("Cancelado","Tus datos están a salvo", "info");
-            }
-          }, 500);
+      let _this = this;
+      var entrar = true;
+      for (let i = 0; i < _this.bebidas.length; i++) {
+        const element = _this.bebidas[i];
+        if (element.idProveedor == idProveedor) {
+          entrar = false;
         }
-      );
+      }
+      for (let i = 0; i < _this.insumosproveedores.length; i++) {
+        const element = _this.insumosproveedores[i];
+        if (element.idProveedor == idProveedor) {
+          entrar = false;
+        }
+      }
+      if (entrar) {
+        sweetAlert(
+          {
+            title: "¿Estás seguro?",
+            text: "No podrás revertir los cambios",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            showCloseButton: true,
+            showLoaderOnConfirm: true
+          },
+          function(inputValue) {
+            setTimeout(function() {
+              if (inputValue) {
+                //****************************************************** */
+                _this.loading = true;
+                _this.$http
+                  .delete(
+                    "http://localhost:8000/proveedor/delete/" + idProveedor
+                  )
+                  .then(response => {
+                    this.loading = false;
+                    if (response.body.success) {
+                      sweetAlert("Oops...", "Error al eliminar", "error");
+                      _this.getProveedor();
+                    } else {
+                      sweetAlert(
+                        "Deleted!",
+                        "Los cambios estan en la tabla",
+                        "success"
+                      );
+                      _this.inicio = 0;
+                      _this.final = 5;
+                      _this.currentPage = 1;
+                      _this.getProveedor();
+                    }
+                  });
+                //****************************************************** */
+              } else {
+                sweetAlert("Cancelado", "Tus datos están a salvo", "info");
+              }
+            }, 500);
+          }
+        );
+      } else {
+        sweetAlert(
+          "Eliminación Bloqueada",
+          "El registro se encuentra relacionado con otra tabla",
+          "warning"
+        );
+      }
     },
+    getBebidas() {
+      this.$http.get("http://localhost:8000/bebidas").then(response => {
+        console.log(response);
+        this.bebidas = response.body;
+      });
+    },
+    getInsumosProveedores() {
+      this.$http.get("http://localhost:8000/insumosproveedores").then(response => {
+        console.log(response);
+        this.insumosproveedores = response.body;
+      });
+    }
   },
   beforeMount() {
     this.getProveedor();
+    this.getBebidas();
+    this.getInsumosProveedores();
   },
   mounted() {
     $("ul.tabs").tabs();

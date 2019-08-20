@@ -15,7 +15,7 @@
     <p>Pagina Actual: {{currentPage}}</p>
     <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
     <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
-    <br>
+    <br />
     <table class="table centered">
       <thead>
         <tr>
@@ -54,7 +54,7 @@
         </tr>
       </tbody>
     </table>
-    <br>
+    <br />
     <ul id="tabs-swipe-demo" class="tabs">
       <li class="tab col s3">
         <a class="active" v-on:click="tabControl('test-swipe-1')" href="#test-swipe-1">Crear</a>
@@ -71,7 +71,7 @@
           v-model="bebida.nombre"
           :disabled="loading"
           id="Nombre"
-        >
+        />
         <label for="Nombre">Nombre</label>
       </div>
       <div class="input-field col s6">
@@ -82,7 +82,7 @@
           id="Tipo"
           type="text"
           class="validate"
-        >
+        />
         <label for="Tipo">Tipo</label>
       </div>
       <div class="input-field col s6">
@@ -92,10 +92,10 @@
           v-model="bebida.inventario"
           :disabled="loading"
           id="Inventario"
-        >
+        />
         <label for="Inventario">Inventario</label>
       </div>
-      
+
       <div class="row">
         <form class="col s12">
           <div class="row">
@@ -108,22 +108,30 @@
                 type="text"
                 class="materialize-textarea"
               ></textarea>
-              
+
               <label for="Descripcion">Descripción</label>
             </div>
           </div>
         </form>
       </div>
 
-      <label for="proveedor" >Seleccione el proveedor</label>
+      <label for="proveedor">Seleccione el proveedor</label>
       <div class="row">
         <div class="input-field col s6">
-          <select style="color: black" class="browser-default" :disabled="loading"  id="idProveedor" v-on:input="bebida.idProveedor = $event.target.value" type="text" v-model="bebida.idProveedor">
+          <select
+            style="color: black"
+            class="browser-default"
+            :disabled="loading"
+            id="idProveedor"
+            v-on:input="bebida.idProveedor = $event.target.value"
+            type="text"
+            v-model="bebida.idProveedor"
+          >
             <option v-for="p in proveedores" v-bind:key="p" :value="p._id">{{p.nombre}}</option>
-          </select>       
+          </select>
         </div>
       </div>
-      
+
       <!--<div class="row -white" id="contenedorTablaExterna">
         <div class="col s6">
           <h5>Seleccionar ID Proveedor:</h5>
@@ -154,7 +162,6 @@
           </label>
         </div>
       </div>-->
-      
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
@@ -201,7 +208,8 @@ export default {
       inicio: 0,
       final: 5,
       currentPage: 1,
-      size: 1
+      size: 1,
+      ordenesbebidas: []
     };
   },
   watch: {
@@ -336,7 +344,7 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = bebida._id;
       this.bebida = bebida;
-      this.bebida.idProveedor = bebida.idProveedor      
+      this.bebida.idProveedor = bebida.idProveedor;
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
@@ -365,67 +373,86 @@ export default {
             }
           });
       }
-      this.loading = true
+      this.loading = true;
     },
-
     deleteBebida(idBebida) {
       let _this = this;
-      sweetAlert(
-        {
-          title: "¿Estás seguro?",
-          text: "No podrás revertir los cambios",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Eliminar",
-          cancelButtonText: "Cancelar",
-          showCloseButton: true,
-          showLoaderOnConfirm: true
-        },
-        function(inputValue) {
-          setTimeout(function() {
-            if (inputValue) {
-              //****************************************************** */
-              _this.loading = false;
-              _this.$http
-                .delete("http://localhost:8000/bebidas/delete/" + idBebida)
-                .then(response => {
-                  this.loading = false;
-                  if (response.body.success) {
-                    sweetAlert("Oops...", "Error al eliminar", "error");
-                    _this.getBebida();
-                  } else {
-                    _this.loading = false;
-                    sweetAlert(
-                      "Deleted!",
-                      "Los cambios estan en la tabla",
-                      "success"
-                    );
-                    _this.inicio = 0;
-                    _this.final = 5;
-                    _this.currentPage = 1;
-                    _this.getBebida();
-                    
-                  }
-                });
-              //****************************************************** */
-            } else {
-              sweetAlert("Cancelado", "Tus datos están a salvo", "info");
-            }
-          }, 500);
+      var entrar = true;
+      for (let i = 0; i < _this.ordenesbebidas.length; i++) {
+        const element = _this.ordenesbebidas[i];
+        if (element.idBebida == idBebida) {
+          entrar = false;
         }
-      );
+      }
+      if (entrar) {
+        sweetAlert(
+          {
+            title: "¿Estás seguro?",
+            text: "No podrás revertir los cambios",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            showCloseButton: true,
+            showLoaderOnConfirm: true
+          },
+          function(inputValue) {
+            setTimeout(function() {
+              if (inputValue) {
+                //****************************************************** */
+                _this.loading = false;
+                _this.$http
+                  .delete("http://localhost:8000/bebidas/delete/" + idBebida)
+                  .then(response => {
+                    this.loading = false;
+                    if (response.body.success) {
+                      sweetAlert("Oops...", "Error al eliminar", "error");
+                      _this.getBebida();
+                    } else {
+                      _this.loading = false;
+                      sweetAlert(
+                        "Deleted!",
+                        "Los cambios estan en la tabla",
+                        "success"
+                      );
+                      _this.inicio = 0;
+                      _this.final = 5;
+                      _this.currentPage = 1;
+                      _this.getBebida();
+                    }
+                  });
+                //****************************************************** */
+              } else {
+                sweetAlert("Cancelado", "Tus datos están a salvo", "info");
+              }
+            }, 500);
+          }
+        );
+      } else {
+        sweetAlert(
+          "Eliminación Bloqueada",
+          "El registro se encuentra relacionado con otra tabla",
+          "warning"
+        );
+      }
     },
-
     getProveedores() {
       this.$http.get("http://localhost:8000/proveedores").then(response => {
         console.log(response);
         this.proveedores = response.body;
+      });
+    },
+    getOrdenesBebidas() {
+      this.$http.get("http://localhost:8000/ordenesbebidas").then(response => {
+        console.log(response);
+        this.ordenesbebidas = response.body;
       });
     }
   },
   beforeMount() {
     this.getProveedores();
     this.getBebida();
+    this.getOrdenesBebidas();
   },
   mounted() {
     $("ul.tabs").tabs();
