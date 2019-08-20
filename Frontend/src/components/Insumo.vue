@@ -30,7 +30,9 @@
         <tr v-for="(insumo,index) in data">
           <td>{{insumo.nombre}}</td>
           <td>{{insumo.inventario}}</td>
-          <td>{{proveedores2[index]}}</td>
+          <td>
+            <button v-on:click="getPrv(insumo)" class="waves-effect waves-light btn">TOCAR</button>
+          </td>
           <td>
             <a
               v-on:click="startToModifyInsumo(insumo)"
@@ -178,7 +180,10 @@ export default {
       size: 1,
       proveedores_a: [],
       proveedor_a: "",
-      prv: {}
+      prv: {},
+      prvs: [],
+      prvstemp: [],
+      acum: "",
     };
   },
   watch: {
@@ -248,6 +253,41 @@ export default {
     agregarProveedores() {
       this.proveedores_a.push(this.proveedor_a);
       console.log("Están los proveedores: ", this.proveedores_a);
+      sweetAlert("¡Listo!", "Proveedor agregado", "success");
+    },
+    getPrv(insumo) {
+      this.acum = "";
+      console.log("primer acum: ",this.acum)
+      let _this = this;
+      this.$http
+        .get("http://localhost:8000/insumosproveedores")
+        .then(response => {
+          this.prvs = response.body;
+          var i = 0;
+          for (i = 0; i < this.prvs.length; i++) {
+            if (insumo._id == this.prvs[i].idInsumo) {
+              this.prvstemp.push(this.prvs[i].idProveedor);
+            }
+          }
+          var j = 0;
+          for (j = 0; j < this.proveedores.length; j++){
+            for (i = 0; i<this.prvstemp.length;i++){
+              if(this.proveedores[j]._id == this.prvstemp[i]){
+                this.acum += this.proveedores[j].nombre+"\n";
+              }
+            }
+          }
+          
+          sweetAlert(
+            "Proveedores",
+            this.acum
+          );
+          this.acum = "";
+        });
+        this.acum = "";
+        this.prvs = [];
+        this.prvstemp= [];
+        console.log("ultimo acum: ",this.acum);
     },
     getInsumo() {
       let _this = this;
