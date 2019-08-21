@@ -830,12 +830,12 @@ export default {
         function(inputValue) {
           setTimeout(function() {
             if (inputValue) {
-              //****************************************************** */
+              //******************************************************
               _this.loading = true;
               _this.$http
                 .delete("http://localhost:8000/ordenes/delete/" + idOrden)
                 .then(response => {
-                  this.loading = false;
+                  _this.loading = false;
                   if (response.body.success) {
                     sweetAlert("Oops...", "Error al eliminar", "error");
                     _this.getorden();
@@ -886,7 +886,7 @@ export default {
                     console.log("simon");
                   }
                 });
-              //****************************************************** */
+              //******************************************************
             } else {
               sweetAlert("Cancelado", "Tus datos están a salvo", "info");
             }
