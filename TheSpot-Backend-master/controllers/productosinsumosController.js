@@ -74,11 +74,11 @@ exports.modifyProductoInsumo = {
 exports.deleteProductoInsumo = {
 
     handler: function (request, reply) {
-        productoinsumo.findOne({ '_id': request.params._id }, function (err, ProductoInsumo) {
+        productoinsumo.deleteMany({ 'idProducto': request.params._id }, function (err, ProductoInsumo) {
             if (err) {
                 return reply(boom.badRequest("Could not delete productoinsumo"));
             } else if (!err && ProductoInsumo) {
-                ProductoInsumo.remove();
+                //ProductoInsumo.remove();
                 return reply('productoinsumo deleted succesfully');
             } else if (!err) {
                 return reply(boom.notFound());

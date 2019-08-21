@@ -20,17 +20,17 @@
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>IdOrden</th>
+          <!--<th>IdOrden</th>-->
           <th>Numero</th>
           <th>Modificar</th>
           <th>Borrar</th>
-          <th>AgregarOrden</th>
+          <!--<th>AgregarOrden</th>-->
         </tr>
       </thead>
       <tbody>
         <tr v-for="mesa in data" v-bind:key="mesa">
           <td>{{mesa.nombre}}</td>
-          <td>{{mesa.idOrden}}</td>
+          <!--<td>{{mesa.idOrden}}</td>-->
           <td>{{mesa.numero}}</td>
           <td>
             <a
@@ -48,14 +48,14 @@
               <i class="material-icons">delete</i>
             </a>
           </td>
-          <td>
+          <!--<td>
             <a
               v-on:click="deleteMesa(mesa._id)"
               class="btn-floating btn-small waves-effect waves-light blue"
             >
               <i class="material-icons">add</i>
             </a>
-          </td>
+          </td>-->
         </tr>
       </tbody>
     </table>

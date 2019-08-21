@@ -33,7 +33,10 @@
         <tr v-for="(producto,index) in data">
           <td>{{producto.nombre}}</td>
           <td>
-            <button v-on:click="getIngredientes(producto)" class="waves-effect waves-light btn">Mostrar</button>
+            <button
+              v-on:click="getIngredientes(producto)"
+              class="waves-effect waves-light btn"
+            >Mostrar</button>
           </td>
           <td>{{producto.tipo}}</td>
           <td>{{producto.precio}}</td>
@@ -209,7 +212,7 @@ export default {
     }
   },
   methods: {
-    getIngredientes(producto){
+    getIngredientes(producto) {
       var acum = "";
       this.$http
         .get("http://localhost:8000/productosinsumos")
@@ -222,26 +225,23 @@ export default {
             }
           }
           var j = 0;
-          for (j = 0; j < this.insumos.length; j++){
-            for (i = 0; i<this.ingrtemp.length;i++){
-              if(this.insumos[j]._id == this.ingrtemp[i]){
-                acum += this.insumos[j].nombre+"\n";
+          for (j = 0; j < this.insumos.length; j++) {
+            for (i = 0; i < this.ingrtemp.length; i++) {
+              if (this.insumos[j]._id == this.ingrtemp[i]) {
+                acum += this.insumos[j].nombre + "\n";
               }
             }
           }
-          sweetAlert(
-            "Ingredientes",
-            acum
-          );
+          sweetAlert("Ingredientes", acum);
           acum = "";
         });
-        acum = "";
-        this.ingr = [];
-        this.ingrtemp= [];
+      acum = "";
+      this.ingr = [];
+      this.ingrtemp = [];
     },
     agregarInsumos() {
       this.ingredientes.push(this.ingrediente);
-      sweetAlert("Listo!","Insumo Agregado","success");
+      sweetAlert("Listo!", "Insumo Agregado", "success");
     },
     siguiente() {
       if (this.currentPage < this.size) {
@@ -383,32 +383,34 @@ export default {
               this.getproducto();
             } else {
               sweetAlert("Oops...", "Error al crear", "error");
+              this.getproducto();
             }
           });
         //agregar producto x insumo
         setTimeout(function() {
-        var i;
-        for (i = 0; i < _this.ingredientes.length; i++) {
-          _this.productoxinsumo = {};
-          _this.productoxinsumo.idProducto = _this.productos[_this.productos.length - 1]._id;
-          _this.productoxinsumo.idInsumo = _this.ingredientes[i];
-          
-          console.log(_this.productoxinsumo);
-          _this.$http
-            .post("http://localhost:8000/productosinsumos/create", _this.productoxinsumo)
-            .then(response => {
-              _this.loading = false;
-              if (response.body.success) {
-                _this.productoxinsumo = {};
-                console.log("agregó");
-              } else {
-                console.log("tronó");
-              }
-            });
-        }
-        _this.ingredientes = [];
-      }, 1000);
-        
+          var i;
+          for (i = 0; i < _this.ingredientes.length; i++) {
+            _this.productoxinsumo = {};
+            _this.productoxinsumo.idInsumo = _this.ingredientes[i];
+            _this.productoxinsumo.idProducto = _this.productos[_this.productos.length - 1]._id;
+            console.log(_this.productoxinsumo);
+            _this.$http
+              .post(
+                "http://localhost:8000/productosinsumos/create",
+                _this.productoxinsumo
+              )
+              .then(response => {
+                _this.loading = false;
+                if (response.body.success) {
+                  _this.productoxinsumo = {};
+                  console.log("agregó");  
+                } else {
+                  console.log("tronó");
+                }
+              });
+          }
+          _this.ingredientes = [];
+        }, 2000);
       }
     },
     tabControl(idTab) {
@@ -473,49 +475,62 @@ export default {
         }
       }
       if (entrar) {
-      sweetAlert(
-        {
-          title: "¿Estás seguro?",
-          text: "No podrás revertir los cambios",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Eliminar",
-          cancelButtonText: "Cancelar",
-          showCloseButton: true,
-          showLoaderOnConfirm: true
-        },
-        function(inputValue) {
-          setTimeout(function() {
-            if (inputValue) {
-              //****************************************************** */
-              _this.loading = true;
-              _this.$http
-                .delete("http://localhost:8000/productos/delete/" + idProducto)
-                .then(response => {
-                  
-                  if (response.body.success) {
-                    sweetAlert("Oops...", "Error al eliminar", "error");
-                    _this.getproducto();
-                  } else {
-                    sweetAlert(
-                      "Deleted!",
-                      "Los cambios estan en la tabla",
-                      "success"
-                    );
-                    _this.loading = false;
-                    _this.inicio = 0;
-                    _this.final = 5;
-                    _this.currentPage = 1;
-                    _this.getproducto();
-                  }
-                });
-              //****************************************************** */
-            } else {
-              sweetAlert("Cancelado", "Tus datos están a salvo", "info");
-            }
-          }, 500);
-        }
-      );
+        sweetAlert(
+          {
+            title: "¿Estás seguro?",
+            text: "No podrás revertir los cambios",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            showCloseButton: true,
+            showLoaderOnConfirm: true
+          },
+          function(inputValue) {
+            setTimeout(function() {
+              if (inputValue) {
+                //****************************************************** */
+                _this.loading = true;
+                _this.$http
+                  .delete(
+                    "http://localhost:8000/productos/delete/" + idProducto
+                  )
+                  .then(response => {
+                    if (response.body.success) {
+                      sweetAlert("Oops...", "Error al eliminar", "error");
+                      _this.getproducto();
+                    } else {
+                      sweetAlert(
+                        "Deleted!",
+                        "Los cambios estan en la tabla",
+                        "success"
+                      );
+                      _this.loading = false;
+                      _this.inicio = 0;
+                      _this.final = 5;
+                      _this.currentPage = 1;
+                      _this.getproducto();
+                    }
+                  });
+
+                _this.$http
+                  .delete(
+                    "http://localhost:8000/productosinsumos/delete/"+idProducto)
+                  .then(response => {
+                    if (response.body.success) {
+                      console.log("nel");
+                    } else {
+                      console.log("simon");
+                    }
+                  });
+
+                //****************************************************** */
+              } else {
+                sweetAlert("Cancelado", "Tus datos están a salvo", "info");
+              }
+            }, 500);
+          }
+        );
       } else {
         sweetAlert(
           "Eliminación Bloqueada",
@@ -531,10 +546,12 @@ export default {
       });
     },
     getProductosOrdenes() {
-      this.$http.get("http://localhost:8000/productosordenes").then(response => {
-        console.log(response);
-        this.productosordenes = response.body;
-      });
+      this.$http
+        .get("http://localhost:8000/productosordenes")
+        .then(response => {
+          console.log(response);
+          this.productosordenes = response.body;
+        });
     }
   },
 
