@@ -119,6 +119,7 @@
                     v-on:click="newUsuario"
                     :disabled="loading"
                   >Registrarse</a>
+                  <router-link to="/"><a style="color: white"></a></router-link>
                 </div>
               </center>
             </form>
@@ -148,11 +149,11 @@ export default {
       this.loading = true;
       this.usuario.scope = 'cliente';
       if (this.contrasena === this.contrasena2) {
-        this.loading = false;
+        //this.loading = false;
         console.log(this.usuario);
         this.$http.post('http://localhost:8000/usuarios/create',this.usuario)
 				.then((response)=>{
-					this.loading=false;
+          this.loading=false;
 					if(response.body.success){
             this.usuario= {};
             this.contrasena = "";

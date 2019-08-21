@@ -1,6 +1,6 @@
 var joi = require('joi');
 var boom = require('boom');
-var usuario = require('../schemas/usuario');
+var usuario = require('../schemas/usuario.js');
 var bcrypt = require('bcrypt');
 
 
@@ -15,12 +15,13 @@ exports.login = {
     handler: function(request, reply) {
       console.log('reply', request.payload.usuario)
       console.log('reply', request.payload.contrasena)
+      
       usuario.find({usuario: request.payload.usuario}, function(err, usuario){
         if(err) {
           console.log(err)
-          return reply(boom.notAcceptable('Error Executing Query'));
+          return reply.response(boom.notAcceptable('Error Executing Query'));
         }
-        // console.log(usuario)
+        console.log(usuario);
         if(usuario.length > 0) {
           bcrypt.compare(request.payload.contrasena, usuario[0].contrasena, function(err, res){
             console.log("esto es el ReSSS:"+res);
@@ -29,13 +30,21 @@ exports.login = {
               return reply.response(('ERROR')).code(401);
             }
             if(res){
+              
+              console.log("entro al if");
               // console.log('before setting cookie', request.cookieAuth);
               request.cookieAuth.set({ usuario: usuario });
+              
               // console.log('after setting cookie', request.cookieAuth);
-              // console.log('cookie: ', request.cookieAuth)
+              //console.log('cookie: ', request.cookieAuth)
               // const response =reply.response('entro heheheh');
               // response.type('text/plain');
-              return reply.response(usuario[0]).code(201);
+              
+              const enviar={...usuario[0],success:true};
+              console.log("aqui esta el coso que envia las mergas: \n",enviar);
+              
+              return enviar;
+              
               
             }else{
               return reply.response(('ERROR')).code(401);

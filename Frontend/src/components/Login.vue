@@ -20,8 +20,8 @@
               </div>
               <div class='row'>
                 <div class='input-field col s12'>
-                  <input class="validate" v-model="usuario.contrasena" type="password" id="contrasena" />
-                  <label for='password'>Contraseña</label>
+                  <input class="input" v-model="usuario.contrasena" :disable="loading" type="password" id="contrasena" v-once/>
+                  <label for='contrasena'>Contraseña</label>
                 </div>
                 <label style='float: right;'>
                   <a class='registro'><router-link to="/registrar"><b>Crear cuenta nueva</b></router-link></a>
@@ -59,13 +59,14 @@ export default {
   methods: {
     loginUsuario() {
       this.loading = true;
-      console.log(this.usuario)
       if (this.contrasena !== undefined || this.usuario !== undefined) {
         this.loading = false;
-        console.log(this.usuario);
+        console.log("este es el usuario "+this.usuario);
+        console.log("este es el contrasena  "+this.contrasena);
         this.$http.post('http://localhost:8000/login', this.usuario)
 				.then((response)=>{
-					this.loading=false;
+          this.loading=false;
+          console.log("aqui esta el response"+JSON.stringify(response));
 					if(response.body.success){
             this.usuario= {};
 						sweetAlert("Creado con exito!", "Autenticación exitosa", "success");

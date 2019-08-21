@@ -15,15 +15,6 @@ var server = new hapi.Server({
     }
   }
 });
-// server.connection({
-//     port: ~~process.env.PORT || 8000,
-//     routes: {
-//       cors: { //cross origin request service: permite rquests de afuera del server
-//         credentials: true,
-//         origin: ["*"]
-//       }
-//     }
-// });
 
 mongoose.connect('mongodb://admin:admin@ds123361.mlab.com:23361/thespot', { useNewUrlParser: true });
 
@@ -33,11 +24,13 @@ db.once('open', function callback() {
   console.log("Connection with database succeeded.");
 });
 
-async function vamos() {
+async function start() {
   console.log("aqui entra");
-  await server.register(require('hapi-auth-cookie', (er) => { }));
+   await server.register({
+     plugin: require ('hapi-auth-cookie')
+   });
 
-  await server.auth.strategy('session', 'cookie', {
+   server.auth.strategy('session', 'cookie', {
 
     cookie: {
       name: 'angular-scaffold-cookie',
@@ -47,9 +40,15 @@ async function vamos() {
     }// only allow HS256 algorithm 
   });
   server.route(routes.endpoints);
-  await server.start((err) => {
-    console.log('Server running at:', server.info.uri);
-  });
+  try {
+    await server.start((err) => {
+      console.log('Server running at:', server.info.uri);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+  
+  
+};
+start();
 
-}
-vamos();

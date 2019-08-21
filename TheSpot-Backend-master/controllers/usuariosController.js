@@ -126,7 +126,7 @@ exports.deleteUsuario = {
         return reply(boom.badRequest("Could not delete Usuario"));
       }else if(!err && Usuario){
         Usuario.remove();
-        return reply('Usuario deleted succesfully');
+        return ('Usuario deleted succesfully');
       }else if(!err){
         return reply(boom.notFound());
       }
@@ -157,11 +157,11 @@ exports.createUsuario = {
     console.log(newUsuario);
     newUsuario.save(function(err){
       if(!err){
-        return reply({
+        return ({
           success: true
         });
       }else{
-        return reply({
+        return ({
           success: false
         })
       }
