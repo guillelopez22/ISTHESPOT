@@ -437,7 +437,7 @@ export default {
                 _this.$http
                   .delete("http://localhost:8000/insumos/delete/" + idInsumo)
                   .then(response => {
-                    this.loading = false;
+                    _this.loading = false;
                     if (response.body.success) {
                       sweetAlert("Oops...", "Error al eliminar", "error");
                       _this.getInsumo();
@@ -453,6 +453,15 @@ export default {
                       _this.getInsumo();
                     }
                   });
+                  _this.$http
+                      .delete("http://localhost:8000/insumosproveedores/delete/"+idInsumo)
+                      .then(response => {
+                        if (response.body.success) {
+                          console.log("nel");
+                        } else {
+                          console.log("simon");
+                        }
+                      });
                 //****************************************************** */
               } else {
                 sweetAlert("Cancelado", "Tus datos están a salvo", "info");

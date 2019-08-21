@@ -77,11 +77,11 @@ exports.modifyInsumoProveedor = {
 exports.deleteInsumoProveedor = {
 
     handler: function (request, reply) {
-        insumoproveedor.findOne({ '_id': request.params._id }, function (err, InsumoProveedor) {
+        insumoproveedor.deleteMany({ 'idInsumo': request.params._id }, function (err, InsumoProveedor) {
             if (err) {
                 return reply(boom.badRequest("Could not delete InsumoProveedor"));
             } else if (!err && InsumoProveedor) {
-                InsumoProveedor.remove();
+                //InsumoProveedor.remove();
                 return reply('InsumoProveedor deleted succesfully');
             } else if (!err) {
                 return reply(boom.notFound());
