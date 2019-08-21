@@ -8,7 +8,7 @@
           <li><router-link to="/admin"><a style="color: white">MENU</a></router-link></li>
           <li>
             <nav>
-              <div class="nav-wrapper -white" id="busqueda">
+              <div class="nav-wrapper -red" id="busqueda">
                 <form>
                   <div class="input-field">
                     <input id="search" type="search" required>
