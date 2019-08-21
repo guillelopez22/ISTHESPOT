@@ -76,11 +76,11 @@ exports.modifyProductoOrden = {
 exports.deleteProductoOrden = {
   
   handler: function(request, reply){
-    productoorden.findOne({'_id' : request.params._id}, function(err, ProductoOrden){
+    productoorden.deleteMany({'idOrden' : request.params._id}, function(err, ProductoOrden){
       if(err){
         return reply(boom.badRequest("Could not delete producto orden"));
       }else if(!err && ProductoOrden){
-        ProductoOrden.remove();
+        //ProductoOrden.remove();
         return reply('producto orden deleted succesfully');
       }else if(!err){
         return reply(boom.notFound());

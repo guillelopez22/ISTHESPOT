@@ -76,11 +76,11 @@ exports.modifyOrdenBebida = {
 exports.deleteOrdenBebida = {
   
   handler: function(request, reply){
-    ordenbebida.findOne({'_id' : request.params._id}, function(err, OrdenBebida){
+    ordenbebida.deleteMany({'idOrden' : request.params._id}, function(err, OrdenBebida){
       if(err){
         return reply(boom.badRequest("Could not delete OrdenBebida"));
       }else if(!err && OrdenBebida){
-        OrdenBebida.remove();
+        //OrdenBebida.remove();
         return reply('OrdenBebida deleted succesfully');
       }else if(!err){
         return reply(boom.notFound());

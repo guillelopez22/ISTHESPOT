@@ -76,11 +76,11 @@ exports.modifyOrdenCombo = {
 exports.deleteOrdenCombo = {
   
   handler: function(request, reply){
-    ordencombo.findOne({'_id' : request.params._id}, function(err, OrdenCombo){
+    ordencombo.deleteMany({'idOrden' : request.params._id}, function(err, OrdenCombo){
       if(err){
         return reply(boom.badRequest("Could not delete OrdenCombo"));
       }else if(!err && OrdenCombo){
-        OrdenBebida.remove();
+        //OrdenBebida.remove();
         return reply('OrdenCombo deleted succesfully');
       }else if(!err){
         return reply(boom.notFound());
