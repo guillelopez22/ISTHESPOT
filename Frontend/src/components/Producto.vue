@@ -145,6 +145,39 @@
           <option v-for="i in insumos" v-bind:key="i" :value="i._id">{{i.nombre}}</option>
         </select>
       </div>
+      <div class="col s6">
+        <div class="input-field col s6">
+        <input
+          v-on:input="cantidad_insumo = $event.target.value"
+          type="number"
+          v-model="cantidad_insumo"
+          :disabled="loading"
+          id="cantidad_insumo"
+        />
+        <label for="cantidad_insumo">Cantidad Insumo</label>
+      </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Insumos</th>
+              <th>Cantidad</th>
+              <th>Borrar</th>
+            </tr>
+            </thead>  
+            <tbody>
+            <tr v-for="i in ingredientes_n" v-bind:key="i">
+              <td>{{i.nombre}}</td>
+              <td>{{i.cantidad}}</td>
+              <td>
+                <a v-on:click="eliminarInsumo(i.index)" class="btn-floating btn-small waves-effect waves-light red">
+                  <i class="material-icons">delete</i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+          
+        </table>
+      </div>  
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
@@ -197,7 +230,10 @@ export default {
       productoxinsumo: {},
       ingrtemp: [],
       ingr: [],
-      productosordenes: []
+      productosordenes: [],
+      ingredientes_n: [],
+      cantidad_insumo: 1,
+      cantidad_insumos: []
     };
   },
   idIns: function(val) {
@@ -239,8 +275,28 @@ export default {
       this.ingr = [];
       this.ingrtemp = [];
     },
+    eliminarInsumo(index){
+      var i;
+      this.ingredientes.splice(index,1);
+      this.ingredientes_n.splice(index,1);
+      for(i = index; i < this.ingredientes_n.length; i++){
+        this.ingredientes_n[i].index = this.ingredientes_n[i].index-1;
+      }
+    },
     agregarInsumos() {
       this.ingredientes.push(this.ingrediente);
+      this.cantidad_insumos.push(this.cantidad_insumo);
+      var i;
+      for (i = 0; i < this.insumos.length; i++){
+        if(this.ingrediente == this.insumos[i]._id){
+          var t = {};
+          t.nombre = this.insumos[i].nombre;
+          t.index = this.ingredientes_n.length;
+          t.cantidad = this.cantidad_insumo;
+          this.ingredientes_n.push(t);
+        }
+      }
+      console.log("nombres: ",this.ingredientes_n);
       sweetAlert("Listo!", "Insumo Agregado", "success");
     },
     siguiente() {
@@ -393,6 +449,7 @@ export default {
             _this.productoxinsumo = {};
             _this.productoxinsumo.idInsumo = _this.ingredientes[i];
             _this.productoxinsumo.idProducto = _this.productos[_this.productos.length - 1]._id;
+            _this.productoxinsumo.cantidad_insumo = _this.ingredientes_n[i].cantidad;
             console.log(_this.productoxinsumo);
             _this.$http
               .post(
@@ -410,6 +467,7 @@ export default {
               });
           }
           _this.ingredientes = [];
+          _this.ingredientes_n = [];
         }, 2000);
       }
     },

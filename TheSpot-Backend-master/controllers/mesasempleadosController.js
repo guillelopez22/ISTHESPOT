@@ -72,11 +72,11 @@ exports.modifyMesaEmpleado = {
 exports.deleteMesaEmpleado = {
   
   handler: function(request, reply){
-    mesaempleado.findOne({'_id' : request.params._id}, function(err, MesaEmpleado){
+    mesaempleado.deleteMany({'idMesa' : request.params._id}, function(err, MesaEmpleado){
       if(err){
         return reply(boom.badRequest("Could not delete MesaEmpleado"));
       }else if(!err && MesaEmpleado){
-        MesaEmpleado.remove();
+        //MesaEmpleado.remove();
         return reply('MesaEmpleado deleted succesfully');
       }else if(!err){
         return reply(boom.notFound());

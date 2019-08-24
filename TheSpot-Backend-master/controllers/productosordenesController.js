@@ -94,6 +94,7 @@ exports.createProductoOrden = {
     var newProductoOrden = new productoorden({
       idProducto : request.payload.idProducto,
       idOrden : request.payload.idOrden,
+      cantidad_producto : request.payload.cantidad_producto
     });
     newProductoOrden.save(function(err){
       if(!err){

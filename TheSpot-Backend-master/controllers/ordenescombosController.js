@@ -62,6 +62,7 @@ exports.modifyOrdenCombo = {
         {
           idOrden : request.payload.idOrden,
           idCombo : request.payload.idCombo,
+          cantidad_combo : request.payload.cantidad_combo
         }
       }, function(err){
         if(err){
@@ -94,6 +95,7 @@ exports.createOrdenCombo = {
     var newOrdenCombo = new ordencombo({
         idOrden : request.payload.idOrden,
         idCombo : request.payload.idCombo,
+        cantidad_combo : request.payload.cantidad_combo
     });
     newOrdenCombo.save(function(err){
       if(!err){

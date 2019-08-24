@@ -60,6 +60,7 @@ exports.modifyProductoInsumo = {
                 {
                     idProducto: request.payload.idProducto,
                     idInsumo: request.payload.idInsumo,
+                    cantidad_insumo: request.payload.cantidad_insumo
                 }
             }, function (err) {
                 if (err) {
@@ -92,6 +93,7 @@ exports.createProductoInsumo = {
         var newProductoInsumo = new productoinsumo({
             idProducto: request.payload.idProducto,
             idInsumo: request.payload.idInsumo,
+            cantidad_insumo: request.payload.cantidad_insumo
         });
         newProductoInsumo.save(function (err) {
             if (!err) {

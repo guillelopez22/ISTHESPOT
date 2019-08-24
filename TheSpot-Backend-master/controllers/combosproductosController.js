@@ -60,6 +60,7 @@ exports.modifyComboProducto = {
                 {
                     idCombo: request.payload.idCombo,
                     idProducto: request.payload.idProducto,
+                    cantidad_producto: request.payload.cantidad_producto
                 }
             }, function (err) {
                 if (err) {
@@ -74,11 +75,11 @@ exports.modifyComboProducto = {
 exports.deleteComboProducto = {
 
     handler: function (request, reply) {
-        comboproducto.findOne({ '_id': request.params._id }, function (err, ComboProducto) {
+        comboproducto.deleteMany({ 'idCombo': request.params._id }, function (err, ComboProducto) {
             if (err) {
                 return reply(boom.badRequest("Could not delete combo producto"));
             } else if (!err && ComboProducto) {
-                ComboProducto.remove();
+                //ComboProducto.remove();
                 return reply('combo producto deleted succesfully');
             } else if (!err) {
                 return reply(boom.notFound());
@@ -92,6 +93,7 @@ exports.createComboProducto = {
         var newComboProducto = new comboproducto({
             idCombo: request.payload.idCombo,
             idProducto: request.payload.idProducto,
+            cantidad_producto: request.payload.cantidad_producto
         });
         newComboProducto.save(function (err) {
             if (!err) {

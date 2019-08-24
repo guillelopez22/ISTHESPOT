@@ -86,11 +86,11 @@ exports.modifyCuentaOrden = {
 exports.deleteCuentaOrden = {
   
   handler: function(request, reply){
-    cuentaorden.findOne({'_id' : request.params._id}, function(err, CuentaOrden){
+    cuentaorden.deleteMany({'idCuenta' : request.params._id}, function(err, CuentaOrden){
       if(err){
         return reply(boom.badRequest("Could not delete CuentaOrden"));
       }else if(!err && CuentaOrden){
-        CuentaOrden.remove();
+        //CuentaOrden.remove();
         return reply('CuentaOrden deleted succesfully');
       }else if(!err){
         return reply(boom.notFound());

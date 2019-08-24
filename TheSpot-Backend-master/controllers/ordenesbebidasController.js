@@ -62,6 +62,7 @@ exports.modifyOrdenBebida = {
         {
           idOrden : request.payload.idOrden,
           idBebida : request.payload.idBebida,
+          cantidad_bebida : request.payload.cantidad_bebida
         }
       }, function(err){
         if(err){
@@ -94,6 +95,7 @@ exports.createOrdenBebida = {
     var newOrdenBebida = new ordenbebida({
         idOrden : request.payload.idOrden,
         idBebida : request.payload.idBebida,
+        cantidad_bebida : request.payload.cantidad_bebida
     });
     newOrdenBebida.save(function(err){
       if(!err){

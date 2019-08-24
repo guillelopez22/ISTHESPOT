@@ -21,11 +21,11 @@ exports.getComboId = {
   }
 }
 exports.getComboName = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler : function(request, reply){
     combo.find({'nombre' : request.params.nombre}, function(err, Combos){
       if(!err && Combos){
@@ -39,11 +39,11 @@ exports.getComboName = {
   }
 }
 exports.getComboPrecio = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler : function(request, reply){
     combo.find({'precio' : request.params.precio}, function(err, Combos){
       if(!err && Combos){
@@ -57,11 +57,11 @@ exports.getComboPrecio = {
   }
 }
 exports.modifyCombo = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     combo.update(
       {'_id': request.params._id},
@@ -82,11 +82,11 @@ exports.modifyCombo = {
   }
 }
 exports.deleteCombo = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     combo.findOne({'_id' : request.params._id}, function(err, Combo){
       if(err){
@@ -101,11 +101,11 @@ exports.deleteCombo = {
   }
 }
 exports.createCombo = {
-  auth: {
+  /*auth: {
     mode:'required',
     strategy:'session',
     scope: ['admin', 'gerente']
-  },
+  },*/
   handler: function(request, reply){
     var newCombo = new combo({
       nombre : request.payload.nombre,

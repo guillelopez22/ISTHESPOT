@@ -63,6 +63,7 @@ exports.modifyComboBebida = {
                 {
                     idCombo: request.payload.idCombo,
                     idBebida: request.payload.idBebida,
+                    cantidad_bebida: request.payload.cantidad_bebida
                 }
             }, function (err) {
                 if (err) {
@@ -77,11 +78,11 @@ exports.modifyComboBebida = {
 exports.deleteComboBebida = {
 
     handler: function (request, reply) {
-        combobebida.findOne({ '_id': request.params._id }, function (err, ComboBebida) {
+        combobebida.deleteMany({ 'idCombo': request.params._id }, function (err, ComboBebida) {
             if (err) {
                 return reply(boom.badRequest("Could not delete ComboBebida"));
             } else if (!err && ComboBebida) {
-                ComboBebida.remove();
+                //ComboBebida.remove();
                 return reply('ComboBebida deleted succesfully');
             } else if (!err) {
                 return reply(boom.notFound());
@@ -95,6 +96,7 @@ exports.createComboBebida = {
         var newComboBebida = new combobebida({
             idCombo: request.payload.idCombo,
             idBebida: request.payload.idBebida,
+            cantidad_bebida: request.payload.cantidad_bebida
         });
         newComboBebida.save(function (err) {
             if (!err) {

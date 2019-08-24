@@ -101,37 +101,32 @@
           <option v-for="p in proveedores" v-bind:key="p" :value="p._id">{{p.nombre}}</option>
         </select>
       </div>
-    </div>
-    <!--<div class="row -white" id="contenedorTablaExterna">
+
       <div class="col s6">
-        <h5>Seleccionar ID Proveedor:</h5>
-        <p>(hacer click en el nombre deseado)</p>
-        <hr>
-        <ul v-for="proveedor in proveedores">
-          <li>
-            <i class="material-icons left">pages</i>
-            {{proveedor.nombre}}
-            <a
-              v-on:click="newProveedor(proveedor._id)"
-              class="btn-floating btn-small waves-effect waves-light black secondary-content"
-            >
-              <i class="material-icons">done</i>
-            </a>
-          </li>
-        </ul>
+        <table>
+          <thead>
+            <tr>
+              <th>Proveedor</th>
+              <th>Borrar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="i in proveedores_n" v-bind:key="i">
+              <td>{{i.nombre}}</td>
+              <td>
+                <a
+                  v-on:click="eliminarProveedor(i.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
+                  <i class="material-icons">delete</i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-      <div id="importance" class="input-field col s6 center">
-        <br>
-        <label id="idProveedor">
-          <h4>
-            <a v-on:click="borrarProveedor()" class="waves-effect waves-light">
-              <i class="material-icons">delete</i>
-            </a>
-            {{idProv}} {{nombreProv}}
-          </h4>
-        </label>
-      </div>
-    </div>-->
+    </div>
+
     <div id="test-swipe-1" class="col s12">
       <a
         class="waves-effect waves-light btn-large"
@@ -180,6 +175,7 @@ export default {
       size: 1,
       proveedores_a: [],
       proveedor_a: "",
+      proveedores_n: [],
       prv: {},
       prvs: [],
       prvstemp: [],
@@ -253,8 +249,28 @@ export default {
     },
     agregarProveedores() {
       this.proveedores_a.push(this.proveedor_a);
+      var i;
+      for(i = 0; i < this.proveedores.length; i++){
+        if(this.proveedor_a == this.proveedores[i]._id){
+          var t = {};
+          t.nombre = this.proveedores[i].nombre;
+          t.index = this.proveedores_n.length;
+          this.proveedores_n.push(t);
+        }
+      }
       console.log("Están los proveedores: ", this.proveedores_a);
+      console.log("Los nombres son: ", this.proveedores_n)
       sweetAlert("¡Listo!", "Proveedor agregado", "success");
+    },
+    eliminarProveedor(index){
+      var i;
+      this.proveedores_a.splice(index,1);
+      this.proveedores_n.splice(index,1);
+      for(i = index; i < this.proveedores_n.length; i++){
+        this.proveedores_n[i].index = this.proveedores_n[i].index-1;
+      }
+      console.log("Proveedores borrado: ", this.proveedores_a);
+      console.log("Nombres borrado: ", this.proveedores_n);
     },
     getPrv(insumo) {
       this.acum = "";
@@ -357,6 +373,7 @@ export default {
             });
         }
         _this.proveedores_a = [];
+        _this.proveedores_n = [];
       }, 1000);
     },
     tabControl(idTab) {
@@ -453,15 +470,18 @@ export default {
                       _this.getInsumo();
                     }
                   });
-                  _this.$http
-                      .delete("http://localhost:8000/insumosproveedores/delete/"+idInsumo)
-                      .then(response => {
-                        if (response.body.success) {
-                          console.log("nel");
-                        } else {
-                          console.log("simon");
-                        }
-                      });
+                _this.$http
+                  .delete(
+                    "http://localhost:8000/insumosproveedores/delete/" +
+                      idInsumo
+                  )
+                  .then(response => {
+                    if (response.body.success) {
+                      console.log("nel");
+                    } else {
+                      console.log("simon");
+                    }
+                  });
                 //****************************************************** */
               } else {
                 sweetAlert("Cancelado", "Tus datos están a salvo", "info");
@@ -484,10 +504,12 @@ export default {
       });
     },
     getProductosInsumos() {
-      this.$http.get("http://localhost:8000/productosinsumos").then(response => {
-        console.log(response);
-        this.productosinsumos = response.body;
-      });
+      this.$http
+        .get("http://localhost:8000/productosinsumos")
+        .then(response => {
+          console.log(response);
+          this.productosinsumos = response.body;
+        });
     }
   },
   beforeMount() {
