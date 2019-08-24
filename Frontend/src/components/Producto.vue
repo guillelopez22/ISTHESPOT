@@ -161,6 +161,8 @@
             <tr>
               <th>Insumos</th>
               <th>Cantidad</th>
+              <th>Sumar</th>
+              <th>Restar</th>
               <th>Borrar</th>
             </tr>
             </thead>  
@@ -168,6 +170,17 @@
             <tr v-for="i in ingredientes_n" v-bind:key="i">
               <td>{{i.nombre}}</td>
               <td>{{i.cantidad}}</td>
+              
+              <td>
+                <a v-on:click="aumentarInsumo(i.index)" class="btn-floating btn-small waves-effect waves-light red">
+                  <i class="material-icons">exposure_plus_1</i>
+                </a>
+              </td>
+              <td>
+                <a v-on:click="decrementarInsumo(i.index)" class="btn-floating btn-small waves-effect waves-light red">
+                  <i class="material-icons">exposure_neg_1</i>
+                </a>
+              </td>
               <td>
                 <a v-on:click="eliminarInsumo(i.index)" class="btn-floating btn-small waves-effect waves-light red">
                   <i class="material-icons">delete</i>
@@ -298,6 +311,14 @@ export default {
       }
       console.log("nombres: ",this.ingredientes_n);
       sweetAlert("Listo!", "Insumo Agregado", "success");
+    },
+    aumentarInsumo(index){
+      this.ingredientes_n[index].cantidad++;
+    },
+    decrementarInsumo(index){
+      if(this.ingredientes_n[index].cantidad-1 > 0){
+        this.ingredientes_n[index].cantidad--;
+      }
     },
     siguiente() {
       if (this.currentPage < this.size) {

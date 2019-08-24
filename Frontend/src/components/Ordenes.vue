@@ -79,17 +79,69 @@
         <select
           style="color: black"
           class="browser-default"
-          v-on:input="orden.idCombos = $event.target.value"
+          v-on:input="combo_a = $event.target.value"
           type="text"
-          v-model="orden.idCombos"
+          v-model="combo_a"
           :disabled="loading"
           id="idCombos"
         >
-          <option value="Combo1">Combo1</option>
-          <option value="Combo2">Combo2</option>
-          <option value="Combo3">Combo3</option>
-          <option value="Combo4">Combo4</option>
+          <option v-for="c in combos" v-bind:key="c" :value="c._id">{{c.nombre}}</option>
         </select>
+      </div>
+      <div class="col s6">
+        <div class="input-field col s6">
+          <input
+            v-on:input="cantidad_combo = $event.target.value"
+            type="number"
+            v-model="cantidad_combo"
+            :disabled="loading"
+            id="cantidad_combo"
+          />
+          <label for="cantidad_combo">Cantidad Combo</label>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Combos</th>
+              <th>Cantidad</th>
+              <th>Sumar</th>
+              <th>Restar</th>
+              <th>Borrar</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="c in combos_n" v-bind:key="c">
+              <td>{{c.nombre}}</td>
+              <td>{{c.cantidad_combo}}</td>
+              
+              <td>
+                <a
+                  v-on:click="aumentarCombo(c.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
+                  <i class="material-icons">exposure_plus_1</i>
+                </a>
+              </td>
+              <td>
+                <a
+                  v-on:click="decrementarCombo(c.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
+                  <i class="material-icons">exposure_neg_1</i>
+                </a>
+              </td>
+              <td>
+                <a
+                  v-on:click="eliminarCombo(c.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
+                  <i class="material-icons">delete</i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -109,6 +161,60 @@
         >
           <option v-for="b in bebidas" v-bind:key="b" :value="b._id">{{b.nombre}}</option>
         </select>
+      </div>
+      <div class="col s6">
+        <div class="input-field col s6">
+          <input
+            v-on:input="cantidad_bebida = $event.target.value"
+            type="number"
+            v-model="cantidad_bebida"
+            :disabled="loading"
+            id="cantidad_bebida"
+          />
+          <label for="cantidad_bebida">Cantidad Bebida</label>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Bebidas</th>
+              <th>Cantidad</th>
+              <th>Sumar</th>
+              <th>Restar</th>
+              <th>Borrar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="b in bebidas_n" v-bind:key="b">
+              <td>{{b.nombre}}</td>
+              <td>{{b.cantidad_bebida}}</td>
+              
+              <td>
+                <a
+                  v-on:click="aumentarBebida(b.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
+                  <i class="material-icons">exposure_plus_1</i>
+                </a>
+              </td>
+              <td>
+                <a
+                  v-on:click="decrementarBebida(b.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
+                  <i class="material-icons">exposure_neg_1</i>
+                </a>
+              </td>
+              <td>
+                <a
+                  v-on:click="eliminarBebida(b.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
+                  <i class="material-icons">delete</i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
@@ -163,145 +269,65 @@
           <option v-for="p in productos" v-bind:key="p" :value="p._id">{{p.nombre}}</option>
         </select>
       </div>
+      <div class="col s6">
+        <div class="input-field col s6">
+          <input
+            v-on:input="cantidad_producto = $event.target.value"
+            type="number"
+            v-model="cantidad_producto"
+            :disabled="loading"
+            id="cantidad_producto"
+          />
+          <label for="cantidad_producto">Cantidad Producto</label>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Productos</th>
+              <th>Cantidad</th>
+              <th>Sumar</th>
+              <th>Restar</th>
+              <th>Borrar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="p in productos_n" v-bind:key="p">
+              <td>{{p.nombre}}</td>
+              <td>{{p.cantidad_producto}}</td>
+              
+
+              <td>
+                <a
+                  v-on:click="aumentarProducto(p.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
+                  <i class="material-icons">exposure_plus_1</i>
+                </a>
+              </td>
+
+              <td>
+                <a
+                  v-on:click="decrementarProducto(p.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
+                  <i class="material-icons">exposure_neg_1</i>
+                </a>
+              </td>
+
+              <td>
+                <a
+                  v-on:click="eliminarProducto(p.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
+                  <i class="material-icons">delete</i>
+                </a>
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <!--
-    <div class="row">
-      
-      <div class="row -white" id="contenedorTablaExterna">
-        <div class="col s6">
-          <h5>Seleccionar ID Bebida:</h5>
-          <p>(hacer click en el nombre deseado)</p>
-          <hr />
-          <ul v-for="bebida in bebidas">
-            <li>
-              <i class="material-icons left">pages</i>
-              {{bebida.nombre}}
-              <a
-                v-on:click="newBebida(bebida._id)"
-                class="btn-floating btn-small waves-effect waves-light black secondary-content"
-              >
-                <i class="material-icons">done</i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="importance" class="input-field col s6 center">
-          <br />
-          <label id="idBebida">
-            <h4>
-              <a v-on:click="borrarBebida()" class="waves-effect waves-light">
-                <i class="material-icons">delete</i>
-              </a>
-              {{idBeb}} {{nombreBeb}}
-            </h4>
-          </label>
-        </div>
-      </div>
-    </div>-->
-
-    <!--
-    <div class="row">
-      
-      <div class="row -white" id="contenedorTablaExterna">
-        <div class="col s6">
-          <h5>Seleccionar ID Mesa:</h5>
-          <p>(hacer click en el nombre deseado)</p>
-          <hr />
-          <ul v-for="mesa in mesas">
-            <li>
-              <i class="material-icons left">pages</i>
-              {{mesa.nombre}}
-              <a
-                v-on:click="newMesa(mesa._id)"
-                class="btn-floating btn-small waves-effect waves-light black secondary-content"
-              >
-                <i class="material-icons">done</i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="importance" class="input-field col s6 center">
-          <br />
-          <label id="idBebida">
-            <h4>
-              <a v-on:click="borrarMesa()" class="waves-effect waves-light">
-                <i class="material-icons">delete</i>
-              </a>
-              {{idMes}} {{nombreMes}}
-            </h4>
-          </label>
-        </div>
-      </div>
-    </div>-->
-
-    <!--
-    <div class="row">
-      
-      <div class="row -white" id="contenedorTablaExterna">
-        <div class="col s6">
-          <h5>Seleccionar ID Empleado:</h5>
-          <p>(hacer click en el nombre deseado)</p>
-          <hr />
-          <ul v-for="empleado in empleados">
-            <li>
-              <i class="material-icons left">pages</i>
-              {{empleado.nombre}}
-              <a
-                v-on:click="newEmpleado(empleado._id)"
-                class="btn-floating btn-small waves-effect waves-light black secondary-content"
-              >
-                <i class="material-icons">done</i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="importance" class="input-field col s6 center">
-          <br />
-          <label id="idBebida">
-            <h4>
-              <a v-on:click="borrarEmpleado()" class="waves-effect waves-light">
-                <i class="material-icons">delete</i>
-              </a>
-              {{idEmp}} {{nombreEmp}}
-            </h4>
-          </label>
-        </div>
-      </div>
-    </div>-->
-
-    <!--
-    <div class="row">
-      <div class="row -white" id="contenedorTablaExterna">
-        <div class="col s6">
-          <h5>Seleccionar ID Producto:</h5>
-          <p>(hacer click en el nombre deseado)</p>
-          <hr />
-          <ul v-for="producto in productos">
-            <li>
-              <i class="material-icons left">pages</i>
-              {{producto.nombre}}
-              <a
-                v-on:click="newProducto(producto._id)"
-                class="btn-floating btn-small waves-effect waves-light black secondary-content"
-              >
-                <i class="material-icons">done</i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="importance" class="input-field col s6 center">
-          <br />
-          <label id="idBebida">
-            <h4>
-              <a v-on:click="borrarProducto()" class="waves-effect waves-light">
-                <i class="material-icons">delete</i>
-              </a>
-              {{idPro}} {{nombrePro}}
-            </h4>
-          </label>
-        </div>
-      </div>
-    </div>-->
 
     <div id="test-swipe-1" class="col s12">
       <a
@@ -372,18 +398,27 @@ export default {
       bebstemp: [],
       bebida_a: "",
       beb: {},
+      bebidas_n: [],
+      cantidad_bebida: 1,
+      cantidad_bebidas: [],
       //
       combos_a: [],
       cmbs: [],
       combstemp: [],
       combo_a: "",
       cmb: {},
+      combos_n: [],
+      cantidad_combo: 1,
+      cantidad_combos: [],
       //
       productos_a: [],
       prds: [],
       prdstemp: [],
       producto_a: "",
-      pro: {}
+      pro: {},
+      productos_n: [],
+      cantidad_producto: 1,
+      cantidad_productos: []
     };
   },
   watch: {
@@ -487,18 +522,102 @@ export default {
 
     agregarCombos() {
       this.combos_a.push(this.combo_a);
+      this.cantidad_combos.push(this.cantidad_combo);
+      var i;
+      for (i = 0; i < this.combos.length; i++) {
+        if (this.combo_a == this.combos[i]._id) {
+          var t = {};
+          t.nombre = this.combos[i].nombre;
+          t.index = this.combos_n.length;
+          t.cantidad_combo = this.cantidad_combo;
+          this.combos_n.push(t);
+        }
+      }
+      console.log("nombres: ", this.combos_n);
       console.log("Están los combos: ", this.combos_a);
       sweetAlert("¡Listo!", "Combo agregado", "success");
     },
+    eliminarCombo(index) {
+      var i;
+      this.combos_a.splice(index, 1);
+      this.combos_n.splice(index, 1);
+      for (i = index; i < this.combos_n.length; i++) {
+        this.combos_n[i].index = this.combos_n[i].index - 1;
+      }
+    },
+    aumentarCombo(index){
+      this.combos_n[index].cantidad_combo++;
+    },
+    decrementarCombo(index){
+      if(this.combos_n[index].cantidad_combo-1 > 0){
+        this.combos_n[index].cantidad_combo--;
+      }
+    },
     agregarProductos() {
       this.productos_a.push(this.producto_a);
+      this.cantidad_productos.push(this.cantidad_producto);
+      var i;
+      for (i = 0; i < this.productos.length; i++) {
+        if (this.producto_a == this.productos[i]._id) {
+          var t = {};
+          t.nombre = this.productos[i].nombre;
+          t.index = this.productos_n.length;
+          t.cantidad_producto = this.cantidad_producto;
+          this.productos_n.push(t);
+        }
+      }
+      console.log("nombres: ", this.productos_n);
       console.log("Están los productos: ", this.productos_a);
       sweetAlert("¡Listo!", "Producto agregado", "success");
     },
+    eliminarProducto(index) {
+      var i;
+      this.productos_a.splice(index, 1);
+      this.productos_n.splice(index, 1);
+      for (i = index; i < this.productos_n.length; i++) {
+        this.productos_n[i].index = this.productos_n[i].index - 1;
+      }
+    },
+    aumentarProducto(index){
+      this.productos_n[index].cantidad_producto++; 
+    },
+    decrementarProducto(index){
+      if(this.productos_n[index].cantidad_producto-1 > 0){
+        this.productos_n[index].cantidad_producto--;
+      }
+    },
     agregarBebidas() {
       this.bebidas_a.push(this.bebida_a);
+      this.cantidad_bebidas.push(this.cantidad_bebida);
+      var i;
+      for (i = 0; i < this.bebidas.length; i++){
+        if(this.bebida_a == this.bebidas[i]._id){
+          var t = {};
+          t.nombre = this.bebidas[i].nombre;
+          t.index = this.bebidas_n.length;
+          t.cantidad_bebida = this.cantidad_bebida;
+          this.bebidas_n.push(t);
+        }
+      }
+      console.log("nombres: ",this.bebidas_n);
       console.log("Están las bebidas: ", this.bebidas_a);
       sweetAlert("¡Listo!", "Bebida agregada", "success");
+    },
+    eliminarBebida(index) {
+      var i;
+      this.bebidas_a.splice(index, 1);
+      this.bebidas_n.splice(index, 1);
+      for (i = index; i < this.bebidas_n.length; i++) {
+        this.bebidas_n[i].index = this.bebidas_n[i].index - 1;
+      }
+    },
+    aumentarBebida(index){
+      this.bebidas_n[index].cantidad_bebida++; 
+    },
+    decrementarBebida(index){
+      if(this.bebidas_n[index].cantidad_bebida-1 > 0){
+        this.bebidas_n[index].cantidad_bebida--;
+      }
     },
 
     getBeb(orden) {
@@ -669,9 +788,7 @@ export default {
       this.currentPage = 1;
       this.loading = true;
 
-      if (
-        this.orden.idCombos ==
-          undefined /*||  (this.orden.idCombos.length < 4)*/ ||
+      if (  
         this.orden.idMesa == undefined ||
         this.orden.idEmpleado == undefined
       ) {
@@ -701,6 +818,7 @@ export default {
             _this.cmb = {};
             _this.cmb.idCombo = _this.combos_a[i];
             _this.cmb.idOrden = _this.ordenes[_this.ordenes.length - 1]._id;
+            _this.cmb.cantidad_combo = _this.combos_n[i].cantidad_combo;
             _this.$http
               .post("http://localhost:8000/ordenescombos/create", _this.cmb)
               .then(response => {
@@ -714,6 +832,7 @@ export default {
               });
           }
           _this.combos_a = [];
+          _this.combos_n = [];
         }, 1000);
 
         // bebidas
@@ -723,6 +842,7 @@ export default {
             _this.beb = {};
             _this.beb.idBebida = _this.bebidas_a[i];
             _this.beb.idOrden = _this.ordenes[_this.ordenes.length - 1]._id;
+            _this.beb.cantidad_bebida = _this.bebidas_n[i].cantidad_bebida;
             _this.$http
               .post("http://localhost:8000/ordenesbebidas/create", _this.beb)
               .then(response => {
@@ -736,6 +856,7 @@ export default {
               });
           }
           _this.bebidas_a = [];
+          _this.bebidas_n = [];
         }, 1000);
         // productos
         setTimeout(function() {
@@ -744,6 +865,7 @@ export default {
             _this.pro = {};
             _this.pro.idProducto = _this.productos_a[i];
             _this.pro.idOrden = _this.ordenes[_this.ordenes.length - 1]._id;
+            _this.pro.cantidad_producto = _this.productos_n[i].cantidad_producto;
             _this.$http
               .post("http://localhost:8000/productosordenes/create", _this.pro)
               .then(response => {
@@ -757,6 +879,7 @@ export default {
               });
           }
           _this.productos_a = [];
+          _this.productos_n = [];
         }, 1000);
         //
       }
@@ -863,10 +986,8 @@ export default {
                   }
                 });
 
-                _this.$http
-                .delete(
-                  "http://localhost:8000/ordenescombos/delete/" + idOrden
-                )
+              _this.$http
+                .delete("http://localhost:8000/ordenescombos/delete/" + idOrden)
                 .then(response => {
                   if (response.body.success) {
                     console.log("nel");
@@ -875,7 +996,7 @@ export default {
                   }
                 });
 
-                _this.$http
+              _this.$http
                 .delete(
                   "http://localhost:8000/productosordenes/delete/" + idOrden
                 )
@@ -886,7 +1007,7 @@ export default {
                     console.log("simon");
                   }
                 });
-              //******************************************************
+              //*******************************************************
             } else {
               sweetAlert("Cancelado", "Tus datos están a salvo", "info");
             }
@@ -917,6 +1038,12 @@ export default {
         console.log(response);
         this.productos = response.body;
       });
+    },
+    getCombos() {
+      this.$http.get("http://localhost:8000/combos").then(response => {
+        console.log(response);
+        this.combos = response.body;
+      });
     }
   },
 
@@ -926,6 +1053,7 @@ export default {
     this.getMesas();
     this.getEmpleados();
     this.getorden();
+    this.getCombos();
   },
   mounted() {
     $("ul.tabs").tabs();

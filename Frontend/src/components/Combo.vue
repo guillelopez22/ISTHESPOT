@@ -138,6 +138,8 @@
             <tr>
               <th>Producto</th>
               <th>Cantidad</th>
+              <th>Sumar</th>
+              <th>Restar</th>
               <th>Borrar</th>
             </tr>
           </thead>
@@ -145,6 +147,17 @@
             <tr v-for="i in productosTemp" v-bind:key="i">
               <td>{{i.nombre}}</td>
               <td>{{i.cantidad_producto}}</td>
+              
+              <td>
+                <a v-on:click="aumentarProducto(i.index)" class="btn-floating btn-small waves-effect waves-light red">
+                  <i class="material-icons">exposure_plus_1</i>
+                </a>
+              </td>
+              <td>
+                <a v-on:click="decrementarProducto(i.index)" class="btn-floating btn-small waves-effect waves-light red">
+                  <i class="material-icons">exposure_neg_1</i>
+                </a>
+              </td>
               <td>
                 <a v-on:click="eliminarProducto(i.index)" class="btn-floating btn-small waves-effect waves-light red">
                   <i class="material-icons">delete</i>
@@ -190,6 +203,8 @@
             <tr>
               <th>Bebida</th>
               <th>Cantidad</th>
+              <th>Sumar</th>
+              <th>Restar</th>
               <th>Borrar</th>
             </tr>
           </thead>
@@ -197,6 +212,16 @@
             <tr v-for="i in bebidasTemp" v-bind:key="i">
               <td>{{i.nombre}}</td>
               <td>{{i.cantidad_bebida}}</td>
+              <td>
+                <a v-on:click="aumentarBebida(i.index)" class="btn-floating btn-small waves-effect waves-light red">
+                  <i class="material-icons">exposure_plus_1</i>
+                </a>
+              </td>
+              <td>
+                <a v-on:click="decrementarBebida(i.index)" class="btn-floating btn-small waves-effect waves-light red">
+                  <i class="material-icons">exposure_neg_1</i>
+                </a>
+              </td>
               <td>
                 <a v-on:click="eliminarBebida(i.index)" class="btn-floating btn-small waves-effect waves-light red">
                   <i class="material-icons">delete</i>
@@ -353,6 +378,14 @@ export default {
         this.productosTemp[i].index = this.productosTemp[i].index-1;
       }
     },
+     aumentarProducto(index){
+      this.productosTemp[index].cantidad_producto++;
+    },
+    decrementarProducto(index){
+      if(this.productosTemp[index].cantidad_producto-1 > 0){
+        this.productosTemp[index].cantidad_producto--;
+      }
+    },
     agregarBebida() {
       console.log("La bebida: ",this.comboxbebida);
       if(this.comboxbebida.cantidad_bebida != undefined && this.comboxbebida.cantidad_bebida >= 1){
@@ -380,6 +413,14 @@ export default {
       this.bebidasTemp.splice(index,1);
       for(i = index; i < this.bebidasTemp.length; i++){
         this.bebidasTemp[i].index = this.bebidasTemp[i].index-1;
+      }
+    },
+     aumentarBebida(index){
+      this.bebidasTemp[index].cantidad_bebida++;
+    },
+    decrementarBebida(index){
+      if(this.bebidasTemp[index].cantidad_bebida-1 > 0){
+        this.bebidasTemp[index].cantidad_bebida--;
       }
     },
     getProducto(combo) {
