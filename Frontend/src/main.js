@@ -64,11 +64,6 @@ const router = new VueRouter({
           component: Bebida
         },
         {
-          name: 'Combo',
-          path: "/combo",
-          component: Combo
-        },
-        {
           name: 'Insumo',
           path: "/insumo",
           component: Insumo
@@ -122,6 +117,11 @@ const router = new VueRouter({
           name: 'Ordenes',
           path: "/ordenes",
           component: Ordenes
+        },
+        {
+          name:'combo',
+          path: '/combo',
+          component: Combo
         }
       ]
     }
