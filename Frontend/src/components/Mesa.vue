@@ -13,8 +13,8 @@
       </a>
     </h2>
     <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
-    <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
+    <button v-on:click="anterior()" class="waves-effect waves-teal btn-large">Anterior</button>
+    <button v-on:click="siguiente()" class="waves-effect waves-teal btn-large">Siguiente</button>
     <br />
     <table class="table centered">
       <thead>
@@ -35,7 +35,7 @@
           <td>
             <a
               v-on:click="startToModifyMesa(mesa)"
-              class="btn-floating btn-small waves-effect waves-light green"
+              class="btn-floating btn-small waves-effect waves-green green"
             >
               <i class="material-icons">update</i>
             </a>
@@ -43,7 +43,7 @@
           <td>
             <a
               v-on:click="deleteMesa(mesa._id)"
-              class="btn-floating btn-small waves-effect waves-light red"
+              class="btn-floating btn-small waves-effect waves-red red"
             >
               <i class="material-icons">delete</i>
             </a>
@@ -91,7 +91,7 @@
         <label for="Numero">Numero</label>
       </div>
 
-      <button v-on:click="agregarEmpleados()" class="waves-effect waves-light btn-large">Agregar</button>
+      <button v-on:click="agregarEmpleados()" class="waves-effect waves-teal btn-large">Agregar</button>
 
       <label for="bebida">Seleccione el empleado</label>
       <div class="row">
@@ -112,7 +112,7 @@
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
-        class="waves-effect waves-light btn-large"
+        class="waves-effect waves-teal btn-large"
         v-on:click="createMesa"
         :disabled="loading"
         id="boton"
@@ -125,7 +125,7 @@
         class="card"
       >Atención: Los cambios realizados no se guardan hasta que haga click en el botón de update.</div>
       <a
-        class="waves-effect waves-light btn-large"
+        class="waves-effect waves-teal btn-large"
         v-on:click="modifyMesa"
         :disabled="loading"
         id="boton"

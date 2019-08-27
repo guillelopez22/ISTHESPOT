@@ -14,8 +14,8 @@
       </a>
     </h2>
     <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
-    <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
+    <button v-on:click="anterior()" class="waves-effect waves-teal btn-large">Anterior</button>
+    <button v-on:click="siguiente()" class="waves-effect waves-teal btn-large">Siguiente</button>
     <br />
     <table class="table centered">
       <thead>
@@ -34,18 +34,18 @@
           <td>{{empleados2[index]}}</td>
           <td>{{mesas2[index]}}</td>
           <td>
-            <button v-on:click="getBeb(orden)" class="waves-effect waves-light btn">Mostrar</button>
+            <button v-on:click="getBeb(orden)" class="waves-effect waves-teal btn">Mostrar</button>
           </td>
           <td>
-            <button v-on:click="getPro(orden)" class="waves-effect waves-light btn">Mostrar</button>
+            <button v-on:click="getPro(orden)" class="waves-effect waves-teal btn">Mostrar</button>
           </td>
           <td>
-            <button v-on:click="getCom(orden)" class="waves-effect waves-light btn">Mostrar</button>
+            <button v-on:click="getCom(orden)" class="waves-effect waves-teal btn">Mostrar</button>
           </td>
           <td>
             <a
               v-on:click="startToModifyorden(orden)"
-              class="btn-floating btn-small waves-effect waves-light green"
+              class="btn-floating btn-small waves-effect waves-green green"
             >
               <i class="material-icons">update</i>
             </a>
@@ -53,7 +53,7 @@
           <td>
             <a
               v-on:click="deleteorden(orden._id)"
-              class="btn-floating btn-small waves-effect waves-light red"
+              class="btn-floating btn-small waves-effect waves-red red"
             >
               <i class="material-icons">delete</i>
             </a>
@@ -71,7 +71,7 @@
       </li>
     </ul>
 
-    <button v-on:click="agregarCombos()" class="waves-effect waves-light btn-large">Agregar</button>
+    <button v-on:click="agregarCombos()" class="waves-effect waves-teal btn-large">Agregar</button>
 
     <label for="idCombos">Seleccione el combo</label>
     <div class="row">
@@ -117,7 +117,7 @@
               <td>
                 <a
                   v-on:click="aumentarCombo(c.index)"
-                  class="btn-floating btn-small waves-effect waves-light red"
+                  class="btn-floating btn-small waves-effect waves-red red"
                 >
                   <i class="material-icons">exposure_plus_1</i>
                 </a>
@@ -125,7 +125,7 @@
               <td>
                 <a
                   v-on:click="decrementarCombo(c.index)"
-                  class="btn-floating btn-small waves-effect waves-light red"
+                  class="btn-floating btn-small waves-effect waves-red red"
                 >
                   <i class="material-icons">exposure_neg_1</i>
                 </a>
@@ -133,7 +133,7 @@
               <td>
                 <a
                   v-on:click="eliminarCombo(c.index)"
-                  class="btn-floating btn-small waves-effect waves-light red"
+                  class="btn-floating btn-small waves-effect waves-red red"
                 >
                   <i class="material-icons">delete</i>
                 </a>
@@ -144,7 +144,7 @@
       </div>
     </div>
 
-    <button v-on:click="agregarBebidas()" class="waves-effect waves-light btn-large">Agregar</button>
+    <button v-on:click="agregarBebidas()" class="waves-effect waves-teal btn-large">Agregar</button>
 
     <label for="bebida">Seleccione la bebida</label>
     <div class="row">
@@ -190,7 +190,7 @@
               <td>
                 <a
                   v-on:click="aumentarBebida(b.index)"
-                  class="btn-floating btn-small waves-effect waves-light red"
+                  class="btn-floating btn-small waves-effect waves-red red"
                 >
                   <i class="material-icons">exposure_plus_1</i>
                 </a>
@@ -198,7 +198,7 @@
               <td>
                 <a
                   v-on:click="decrementarBebida(b.index)"
-                  class="btn-floating btn-small waves-effect waves-light red"
+                  class="btn-floating btn-small waves-effect waves-red red"
                 >
                   <i class="material-icons">exposure_neg_1</i>
                 </a>
@@ -206,7 +206,7 @@
               <td>
                 <a
                   v-on:click="eliminarBebida(b.index)"
-                  class="btn-floating btn-small waves-effect waves-light red"
+                  class="btn-floating btn-small waves-effect waves-red red"
                 >
                   <i class="material-icons">delete</i>
                 </a>
@@ -251,7 +251,7 @@
       </div>
     </div>
 
-    <button v-on:click="agregarProductos()" class="waves-effect waves-light btn-large">Agregar</button>
+    <button v-on:click="agregarProductos()" class="waves-effect waves-teal btn-large">Agregar</button>
 
     <label for="producto">Seleccione el producto</label>
     <div class="row">
@@ -297,7 +297,7 @@
               <td>
                 <a
                   v-on:click="aumentarProducto(p.index)"
-                  class="btn-floating btn-small waves-effect waves-light red"
+                  class="btn-floating btn-small waves-effect waves-red red"
                 >
                   <i class="material-icons">exposure_plus_1</i>
                 </a>
@@ -306,7 +306,7 @@
               <td>
                 <a
                   v-on:click="decrementarProducto(p.index)"
-                  class="btn-floating btn-small waves-effect waves-light red"
+                  class="btn-floating btn-small waves-effect waves-red red"
                 >
                   <i class="material-icons">exposure_neg_1</i>
                 </a>
@@ -315,7 +315,7 @@
               <td>
                 <a
                   v-on:click="eliminarProducto(p.index)"
-                  class="btn-floating btn-small waves-effect waves-light red"
+                  class="btn-floating btn-small waves-effect waves-red red"
                 >
                   <i class="material-icons">delete</i>
                 </a>
@@ -328,7 +328,7 @@
 
     <div id="test-swipe-1" class="col s12">
       <a
-        class="waves-effect waves-light btn-large"
+        class="waves-effect waves-teal btn-large"
         v-on:click="createorden"
         :disabled="loading"
         id="boton"
@@ -341,7 +341,7 @@
         class="card"
       >Atención: Los cambios realizados no se guardan hasta que haga click en el botón de update.</div>
       <a
-        class="waves-effect waves-light btn-large"
+        class="waves-effect waves-teal btn-large"
         v-on:click="modifyorden"
         :disabled="loading"
         id="boton"
