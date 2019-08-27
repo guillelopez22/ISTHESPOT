@@ -13,8 +13,8 @@
       </a>
     </h2>
     <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
-    <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
+    <button v-on:click="anterior()" class="waves-effect waves-teal btn-large pulse" >Anterior</button>
+    <button v-on:click="siguiente()" class="waves-effect waves-teal btn-large">Siguiente</button>
     <br />
     <table class="table centered">
       <thead>
@@ -31,12 +31,12 @@
           <td>{{insumo.nombre}}</td>
           <td>{{insumo.inventario}}</td>
           <td>
-            <button v-on:click="getPrv(insumo)" class="waves-effect waves-light btn">Mostrar</button>
+            <button v-on:click="getPrv(insumo)" class="waves-effect waves-teal btn">Mostrar</button>
           </td>
           <td>
             <a
               v-on:click="startToModifyInsumo(insumo)"
-              class="btn-floating btn-small waves-effect waves-light green"
+              class="btn-floating btn-small waves-effect waves-green green"
             >
               <i class="material-icons">update</i>
             </a>
@@ -44,7 +44,7 @@
           <td>
             <a
               v-on:click="deleteInsumo(insumo._id)"
-              class="btn-floating btn-small waves-effect waves-light red"
+              class="btn-floating btn-small waves-effect waves-red red"
             >
               <i class="material-icons">delete</i>
             </a>
@@ -84,7 +84,7 @@
       </div>
     </div>
 
-    <button v-on:click="agregarProveedores()" class="waves-effect waves-light btn-large">Agregar</button>
+    <button v-on:click="agregarProveedores()" class="waves-effect waves-teal btn-large">Agregar</button>
 
     <label for="proveedor">Seleccione el proveedor</label>
     <div class="row">
@@ -116,7 +116,7 @@
               <td>
                 <a
                   v-on:click="eliminarProveedor(i.index)"
-                  class="btn-floating btn-small waves-effect waves-light red"
+                  class="btn-floating btn-small waves-effect waves-red red"
                 >
                   <i class="material-icons">delete</i>
                 </a>
@@ -129,7 +129,7 @@
 
     <div id="test-swipe-1" class="col s12">
       <a
-        class="waves-effect waves-light btn-large"
+        class="waves-effect waves-teal btn-large"
         v-on:click="createInsumo"
         :disabled="loading"
         id="boton"

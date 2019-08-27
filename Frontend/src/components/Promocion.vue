@@ -2,8 +2,8 @@
   <div id="root"> 
     <h2>Promocion</h2>
     <p>Pagina Actual: {{currentPage}}</p>
-  <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
-    <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
+  <button v-on:click="anterior()" class="waves-effect waves-teal btn-large">Anterior</button>
+    <button v-on:click="siguiente()" class="waves-effect waves-teal btn-large">Siguiente</button>
     <br>
     <table class="table centered">
 			<thead>
@@ -27,12 +27,12 @@
 					<td>{{promocion.hora_inicio}}</td>
 					<td>{{promocion.hora_final}}</td>
           <td>
-						<a v-on:click="startToModifyPromocion(promocion)" class="btn-floating btn-small waves-effect waves-light green"
+						<a v-on:click="startToModifyPromocion(promocion)" class="btn-floating btn-small waves-effect waves-grean green"
             >
               <i class="material-icons">update</i></a>
 					</td>
 					<td>
-						<a v-on:click="deletePromocion(promocion._id)" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
+						<a v-on:click="deletePromocion(promocion._id)" class="btn-floating btn-small waves-effect waves-red red"><i class="material-icons">delete</i></a>
 					</td>
 				</tr>
 			</tbody>
@@ -72,14 +72,14 @@
 
 
   	  <div id="test-swipe-1" class="col s12">
-        <a class="waves-effect waves-light btn-large" v-on:click="createPromocion" :disabled="loading" id="boton">
+        <a class="waves-effect waves-teal btn-large" v-on:click="createPromocion" :disabled="loading" id="boton">
           <i class="material-icons left">create</i>Crear
         </a>
         </div>
   	  <div id="test-swipe-2" class="col s12">
 
 
-  				<a class="waves-effect waves-light btn-large" v-on:click="createPromocion" :disabled="loading" id="boton">
+  				<a class="waves-effect waves-teal btn-large" v-on:click="createPromocion" :disabled="loading" id="boton">
   					<i class="material-icons left">update</i>Update
           </a>
           <span>Selected: {{ selected }}</span>

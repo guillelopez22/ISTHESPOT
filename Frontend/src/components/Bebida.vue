@@ -13,8 +13,8 @@
       </a>
     </h2>
     <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()" class="waves-effect waves-light btn-large">Anterior</button>
-    <button v-on:click="siguiente()" class="waves-effect waves-light btn-large">Siguiente</button>
+    <button v-on:click="anterior()" class="waves-effect waves-teal btn-large pulse" >Anterior</button>
+    <button v-on:click="siguiente()" class="waves-effect waves-teal btn-large">Siguiente</button>
     <br />
     <table class="table centered">
       <thead>
@@ -38,7 +38,7 @@
           <td>
             <a
               v-on:click="startToModifyBebida(bebida)"
-              class="btn-floating btn-small waves-effect waves-light green"
+              class="btn-floating btn-small waves-effect waves-green green"
             >
               <i class="material-icons">update</i>
             </a>
@@ -46,7 +46,7 @@
           <td>
             <a
               v-on:click="deleteBebida(bebida._id)"
-              class="btn-floating btn-small waves-effect waves-light red"
+              class="btn-floating btn-small waves-effect waves-red red"
             >
               <i class="material-icons">delete</i>
             </a>
@@ -165,7 +165,7 @@
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
-        class="waves-effect waves-light btn-large"
+        class="waves-effect waves-teal btn-large"
         v-on:click="createBebida"
         :disabled="loading"
         id="boton"
@@ -178,7 +178,7 @@
         class="card"
       >Atención: Los cambios realizados no se guardan hasta que haga click en el botón de update.</div>
       <a
-        class="waves-effect waves-light btn-large"
+        class="waves-effect waves-light-green btn-large"
         v-on:click="modifyBebida"
         :disabled="loading"
         id="boton"
