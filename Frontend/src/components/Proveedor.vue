@@ -58,6 +58,7 @@
     <div class="row">
       <div class="input-field col s6">
         <input
+          v-on:input="proveedor.nombre = $event.target.value"
           v-model="proveedor.nombre"
           :disabled="loading"
           id="Nombre"
@@ -67,15 +68,29 @@
         <label for="Nombre">Nombre</label>
       </div>
       <div class="input-field col s6">
-        <input v-model="proveedor.pais" :disabled="loading" id="Pais" type="text" class="validate" />
+        <input
+          v-on:input="proveedor.pais = $event.target.value"
+          v-model="proveedor.pais"
+          :disabled="loading"
+          id="Pais"
+          type="text"
+          class="validate"
+        />
         <label for="Pais">Pais</label>
       </div>
       <div class="input-field col s6">
-        <input type="number" v-model="proveedor.telefono" :disabled="loading" id="Telefono" />
+        <input
+          v-on:input="proveedor.telefono = $event.target.value"
+          type="number"
+          v-model="proveedor.telefono"
+          :disabled="loading"
+          id="Telefono"
+        />
         <label for="Telefono">Telefono</label>
       </div>
       <div class="input-field col s6">
         <input
+          v-on:input="proveedor.contacto = $event.target.value"
           v-model="proveedor.contacto"
           :disabled="loading"
           id="Contacto"
@@ -86,6 +101,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          v-on:input="proveedor.email = $event.target.value"
           v-model="proveedor.email"
           :disabled="loading"
           id="Email"
@@ -96,6 +112,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          v-on:input="proveedor.direccion = $event.target.value"
           v-model="proveedor.direccion"
           :disabled="loading"
           id="Direccion"
@@ -125,13 +142,6 @@
       >
         <i class="material-icons left">update</i>Update
       </a>
-      <span>Selected: {{ selected }}</span>
-      <select v-model="selected">
-        <option
-          v-for="proveedor in proveedores"
-          v-bind:value="proveedor.value"
-        >{{ proveedor.nombre }}</option>
-      </select>
     </div>
   </div>
 </template>
@@ -243,21 +253,35 @@ export default {
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
-      this.$http
-        .post("http://localhost:8000/proveedor/create", this.proveedor)
-        .then(response => {
-          this.loading = false;
-          if (response.body.success) {
-            sweetAlert(
-              "Creado con exito!",
-              "Los cambios estan en la tabla",
-              "success"
-            );
-            this.getProveedor();
-          } else {
-            sweetAlert("Oops...", "Error al crear", "error");
-          }
-        });
+      if (
+        this.proveedor.nombre == undefined ||
+        this.proveedor.pais == undefined ||
+        this.proveedor.telefono == undefined ||
+        this.proveedor.contacto == undefined ||
+        this.proveedor.email == undefined ||
+        this.proveedor.direccion == undefined
+      ) {
+        this.loading = false;
+        this.getProveedor();
+        sweetAlert("Oops...", "Faltó seleccionar algo", "error");
+      } else {
+        this.$http
+          .post("http://localhost:8000/proveedor/create", this.proveedor)
+          .then(response => {
+            this.loading = false;
+            if (response.body.success) {
+              sweetAlert(
+                "Creado con exito!",
+                "Los cambios estan en la tabla",
+                "success"
+              );
+              this.getProveedor();
+            } else {
+              sweetAlert("Oops...", "Error al crear", "error");
+            }
+          });
+          this.proveedor = {};
+      }
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {
@@ -342,7 +366,7 @@ export default {
                     "http://localhost:8000/proveedor/delete/" + idProveedor
                   )
                   .then(response => {
-                    this.loading = false;
+                    _this.loading = false;
                     if (response.body.success) {
                       sweetAlert("Oops...", "Error al eliminar", "error");
                       _this.getProveedor();
@@ -380,10 +404,12 @@ export default {
       });
     },
     getInsumosProveedores() {
-      this.$http.get("http://localhost:8000/insumosproveedores").then(response => {
-        console.log(response);
-        this.insumosproveedores = response.body;
-      });
+      this.$http
+        .get("http://localhost:8000/insumosproveedores")
+        .then(response => {
+          console.log(response);
+          this.insumosproveedores = response.body;
+        });
     }
   },
   beforeMount() {

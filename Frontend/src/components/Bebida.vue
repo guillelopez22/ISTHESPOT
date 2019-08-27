@@ -13,7 +13,7 @@
       </a>
     </h2>
     <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()" class="waves-effect waves-teal btn-large pulse" >Anterior</button>
+    <button v-on:click="anterior()" class="waves-effect waves-teal btn-large pulse">Anterior</button>
     <button v-on:click="siguiente()" class="waves-effect waves-teal btn-large">Siguiente</button>
     <br />
     <table class="table centered">
@@ -309,22 +309,34 @@ export default {
       this.currentPage = 1;
       this.loading = true;
       //this.bebida.idProveedor = this.idProv;
-      this.$http
-        .post("http://localhost:8000/bebidas/create", this.bebida)
-        .then(response => {
-          this.loading = false;
-          if (response.body.success) {
-            this.bebida = {};
-            sweetAlert(
-              "Creado con exito!",
-              "Los cambios estan en la tabla",
-              "success"
-            );
-            this.getBebida();
-          } else {
-            sweetAlert("Oops...", "Error al crear", "error");
-          }
-        });
+      if (
+        this.bebida.nombre == undefined ||
+        this.bebida.tipo == undefined ||
+        this.bebida.inventario == undefined ||
+        this.bebida.descripcion == undefined ||
+        this.bebida.idProveedor == undefined
+      ) {
+        this.loading = false;
+        this.getBebida();
+        sweetAlert("Oops...", "Faltó seleccionar algo", "error");
+      } else {
+        this.$http
+          .post("http://localhost:8000/bebidas/create", this.bebida)
+          .then(response => {
+            this.loading = false;
+            if (response.body.success) {
+              this.bebida = {};
+              sweetAlert(
+                "Creado con exito!",
+                "Los cambios estan en la tabla",
+                "success"
+              );
+              this.getBebida();
+            } else {
+              sweetAlert("Oops...", "Error al crear", "error");
+            }
+          });
+      }
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {
