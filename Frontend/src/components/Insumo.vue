@@ -248,26 +248,45 @@ export default {
       }
     },
     agregarProveedores() {
-      this.proveedores_a.push(this.proveedor_a);
-      var i;
-      for(i = 0; i < this.proveedores.length; i++){
-        if(this.proveedor_a == this.proveedores[i]._id){
-          var t = {};
-          t.nombre = this.proveedores[i].nombre;
-          t.index = this.proveedores_n.length;
-          this.proveedores_n.push(t);
+      if (this.proveedor_a != "") {
+        var j;
+        var exist = false;
+        for (j = 0; j < this.proveedores_a.length; j++) {
+          if (this.proveedores_a[j] == this.proveedor_a) {
+            exist = true;
+          }
         }
+        if (!exist) {
+          this.proveedores_a.push(this.proveedor_a);
+          var i;
+          for (i = 0; i < this.proveedores.length; i++) {
+            if (this.proveedor_a == this.proveedores[i]._id) {
+              var t = {};
+              t.nombre = this.proveedores[i].nombre;
+              t.index = this.proveedores_n.length;
+              this.proveedores_n.push(t);
+            }
+          }
+          //console.log("Están los proveedores: ", this.proveedores_a);
+          //console.log("Los nombres son: ", this.proveedores_n)
+          sweetAlert("¡Listo!", "Proveedor agregado", "success");
+        } else {
+          sweetAlert(
+            "Oops",
+            "Proveedor invalido, ya fué seleccionado",
+            "warning"
+          );
+        }
+      } else {
+        sweetAlert("Oops", "Proveedor invalido, seleccione uno", "warning");
       }
-      console.log("Están los proveedores: ", this.proveedores_a);
-      console.log("Los nombres son: ", this.proveedores_n)
-      sweetAlert("¡Listo!", "Proveedor agregado", "success");
     },
-    eliminarProveedor(index){
+    eliminarProveedor(index) {
       var i;
-      this.proveedores_a.splice(index,1);
-      this.proveedores_n.splice(index,1);
-      for(i = index; i < this.proveedores_n.length; i++){
-        this.proveedores_n[i].index = this.proveedores_n[i].index-1;
+      this.proveedores_a.splice(index, 1);
+      this.proveedores_n.splice(index, 1);
+      for (i = index; i < this.proveedores_n.length; i++) {
+        this.proveedores_n[i].index = this.proveedores_n[i].index - 1;
       }
       console.log("Proveedores borrado: ", this.proveedores_a);
       console.log("Nombres borrado: ", this.proveedores_n);
@@ -335,46 +354,54 @@ export default {
       this.currentPage = 1;
       this.loading = true;
       //this.insumo.idProveedor = this.idProv;
-      this.$http
-        .post("http://localhost:8000/insumos/create", this.insumo)
-        .then(response => {
-          this.loading = false;
-          if (response.body.success) {
-            this.insumo = {};
-            sweetAlert(
-              "Creado con exito!",
-              "Los cambios estan en la tabla",
-              "success"
-            );
+      if (this.insumo.nombre == undefined || this.proveedores_a.length == 0) {
+        sweetAlert("Oops", "Hay un campo vacio", "error");
+        this.loading = false;
+      } else {
+        this.$http
+          .post("http://localhost:8000/insumos/create", this.insumo)
+          .then(response => {
+            this.loading = false;
+            if (response.body.success) {
+              this.insumo = {};
+              sweetAlert(
+                "Creado con exito!",
+                "Los cambios estan en la tabla",
+                "success"
+              );
 
-            this.getInsumo();
-          } else {
-            sweetAlert("Oops...", "Error al crear", "error");
-            this.getInsumo();
+              this.getInsumo();
+            } else {
+              sweetAlert("Oops...", "Error al crear", "error");
+              this.getInsumo();
+            }
+          });
+
+        setTimeout(function() {
+          var i;
+          for (i = 0; i < _this.proveedores_a.length; i++) {
+            _this.prv = {};
+            _this.prv.idProveedor = _this.proveedores_a[i];
+            _this.prv.idInsumo = _this.insumos[_this.insumos.length - 1]._id;
+            _this.$http
+              .post(
+                "http://localhost:8000/insumosproveedores/create",
+                _this.prv
+              )
+              .then(response => {
+                _this.loading = false;
+                if (response.body.success) {
+                  _this.prv = {};
+                  console.log("agregó");
+                } else {
+                  console.log("tronó");
+                }
+              });
           }
-        });
-
-      setTimeout(function() {
-        var i;
-        for (i = 0; i < _this.proveedores_a.length; i++) {
-          _this.prv = {};
-          _this.prv.idProveedor = _this.proveedores_a[i];
-          _this.prv.idInsumo = _this.insumos[_this.insumos.length - 1]._id;
-          _this.$http
-            .post("http://localhost:8000/insumosproveedores/create", _this.prv)
-            .then(response => {
-              _this.loading = false;
-              if (response.body.success) {
-                _this.prv = {};
-                console.log("agregó");
-              } else {
-                console.log("tronó");
-              }
-            });
-        }
-        _this.proveedores_a = [];
-        _this.proveedores_n = [];
-      }, 1000);
+          _this.proveedores_a = [];
+          _this.proveedores_n = [];
+        }, 1000);
+      }
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {

@@ -147,15 +147,15 @@
       </div>
       <div class="col s6">
         <div class="input-field col s6">
-        <input
-          v-on:input="cantidad_insumo = $event.target.value"
-          type="number"
-          v-model="cantidad_insumo"
-          :disabled="loading"
-          id="cantidad_insumo"
-        />
-        <label for="cantidad_insumo">Cantidad Insumo</label>
-      </div>
+          <input
+            v-on:input="cantidad_insumo = $event.target.value"
+            type="number"
+            v-model="cantidad_insumo"
+            :disabled="loading"
+            id="cantidad_insumo"
+          />
+          <label for="cantidad_insumo">Cantidad Insumo</label>
+        </div>
         <table>
           <thead>
             <tr>
@@ -165,32 +165,40 @@
               <th>Restar</th>
               <th>Borrar</th>
             </tr>
-            </thead>  
-            <tbody>
+          </thead>
+          <tbody>
             <tr v-for="i in ingredientes_n" v-bind:key="i">
               <td>{{i.nombre}}</td>
               <td>{{i.cantidad}}</td>
-              
+
               <td>
-                <a v-on:click="aumentarInsumo(i.index)" class="btn-floating btn-small waves-effect waves-light red">
+                <a
+                  v-on:click="aumentarInsumo(i.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
                   <i class="material-icons">exposure_plus_1</i>
                 </a>
               </td>
               <td>
-                <a v-on:click="decrementarInsumo(i.index)" class="btn-floating btn-small waves-effect waves-light red">
+                <a
+                  v-on:click="decrementarInsumo(i.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
                   <i class="material-icons">exposure_neg_1</i>
                 </a>
               </td>
               <td>
-                <a v-on:click="eliminarInsumo(i.index)" class="btn-floating btn-small waves-effect waves-light red">
+                <a
+                  v-on:click="eliminarInsumo(i.index)"
+                  class="btn-floating btn-small waves-effect waves-light red"
+                >
                   <i class="material-icons">delete</i>
                 </a>
               </td>
             </tr>
           </tbody>
-          
         </table>
-      </div>  
+      </div>
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
@@ -288,35 +296,55 @@ export default {
       this.ingr = [];
       this.ingrtemp = [];
     },
-    eliminarInsumo(index){
+    eliminarInsumo(index) {
       var i;
-      this.ingredientes.splice(index,1);
-      this.ingredientes_n.splice(index,1);
-      for(i = index; i < this.ingredientes_n.length; i++){
-        this.ingredientes_n[i].index = this.ingredientes_n[i].index-1;
+      this.ingredientes.splice(index, 1);
+      this.ingredientes_n.splice(index, 1);
+      for (i = index; i < this.ingredientes_n.length; i++) {
+        this.ingredientes_n[i].index = this.ingredientes_n[i].index - 1;
       }
     },
     agregarInsumos() {
-      this.ingredientes.push(this.ingrediente);
-      this.cantidad_insumos.push(this.cantidad_insumo);
-      var i;
-      for (i = 0; i < this.insumos.length; i++){
-        if(this.ingrediente == this.insumos[i]._id){
-          var t = {};
-          t.nombre = this.insumos[i].nombre;
-          t.index = this.ingredientes_n.length;
-          t.cantidad = this.cantidad_insumo;
-          this.ingredientes_n.push(t);
+      if (this.cantidad_insumo != undefined && this.cantidad_insumo >= 1) {
+        var j;
+        var exist = false;
+        if (this.ingrediente != "") {
+          for (j = 0; j < this.ingredientes.length; j++) {
+            if (this.ingredientes[j] == this.ingrediente) {
+              exist = true;
+            }
+          }
+          if (!exist) {
+            this.ingredientes.push(this.ingrediente);
+            this.cantidad_insumos.push(this.cantidad_insumo);
+            var i;
+            for (i = 0; i < this.insumos.length; i++) {
+              if (this.ingrediente == this.insumos[i]._id) {
+                var t = {};
+                t.nombre = this.insumos[i].nombre;
+                t.index = this.ingredientes_n.length;
+                t.cantidad = this.cantidad_insumo;
+                this.ingredientes_n.push(t);
+              }
+            }
+            this.cantidad_insumo = 1;
+            console.log("nombres: ", this.ingredientes_n);
+            sweetAlert("Listo!", "Insumo Agregado", "success");
+          } else {
+            sweetAlert("Oops", "Insumo invalido, ya fué seleccionado", "warning");
+          }
+        } else {
+          sweetAlert("Oops", "Insumo invalido, seleccione uno", "warning");
         }
+      } else {
+        sweetAlert("Oops", "Cantidad del producto invalida", "warning");
       }
-      console.log("nombres: ",this.ingredientes_n);
-      sweetAlert("Listo!", "Insumo Agregado", "success");
     },
-    aumentarInsumo(index){
+    aumentarInsumo(index) {
       this.ingredientes_n[index].cantidad++;
     },
-    decrementarInsumo(index){
-      if(this.ingredientes_n[index].cantidad-1 > 0){
+    decrementarInsumo(index) {
+      if (this.ingredientes_n[index].cantidad - 1 > 0) {
         this.ingredientes_n[index].cantidad--;
       }
     },
@@ -411,7 +439,8 @@ export default {
         this.producto.descripcion == undefined ||
         this.producto.tipo == undefined ||
         this.producto.cantidad == undefined ||
-        this.producto.precio == undefined
+        this.producto.precio == undefined || 
+        this.ingredientes.length == 0
         //this.idIns == "N/A"
       ) {
         this.loading = false;
@@ -469,8 +498,10 @@ export default {
           for (i = 0; i < _this.ingredientes.length; i++) {
             _this.productoxinsumo = {};
             _this.productoxinsumo.idInsumo = _this.ingredientes[i];
-            _this.productoxinsumo.idProducto = _this.productos[_this.productos.length - 1]._id;
-            _this.productoxinsumo.cantidad_insumo = _this.ingredientes_n[i].cantidad;
+            _this.productoxinsumo.idProducto =
+              _this.productos[_this.productos.length - 1]._id;
+            _this.productoxinsumo.cantidad_insumo =
+              _this.ingredientes_n[i].cantidad;
             console.log(_this.productoxinsumo);
             _this.$http
               .post(
@@ -481,7 +512,7 @@ export default {
                 _this.loading = false;
                 if (response.body.success) {
                   _this.productoxinsumo = {};
-                  console.log("agregó");  
+                  console.log("agregó");
                 } else {
                   console.log("tronó");
                 }
@@ -594,7 +625,9 @@ export default {
 
                 _this.$http
                   .delete(
-                    "http://localhost:8000/productosinsumos/delete/"+idProducto)
+                    "http://localhost:8000/productosinsumos/delete/" +
+                      idProducto
+                  )
                   .then(response => {
                     if (response.body.success) {
                       console.log("nel");

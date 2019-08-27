@@ -107,14 +107,13 @@
               <th>Sumar</th>
               <th>Restar</th>
               <th>Borrar</th>
-
             </tr>
           </thead>
           <tbody>
             <tr v-for="c in combos_n" v-bind:key="c">
               <td>{{c.nombre}}</td>
               <td>{{c.cantidad_combo}}</td>
-              
+
               <td>
                 <a
                   v-on:click="aumentarCombo(c.index)"
@@ -187,7 +186,7 @@
             <tr v-for="b in bebidas_n" v-bind:key="b">
               <td>{{b.nombre}}</td>
               <td>{{b.cantidad_bebida}}</td>
-              
+
               <td>
                 <a
                   v-on:click="aumentarBebida(b.index)"
@@ -294,7 +293,6 @@
             <tr v-for="p in productos_n" v-bind:key="p">
               <td>{{p.nombre}}</td>
               <td>{{p.cantidad_producto}}</td>
-              
 
               <td>
                 <a
@@ -322,7 +320,6 @@
                   <i class="material-icons">delete</i>
                 </a>
               </td>
-
             </tr>
           </tbody>
         </table>
@@ -521,21 +518,42 @@ export default {
     },
 
     agregarCombos() {
-      this.combos_a.push(this.combo_a);
-      this.cantidad_combos.push(this.cantidad_combo);
-      var i;
-      for (i = 0; i < this.combos.length; i++) {
-        if (this.combo_a == this.combos[i]._id) {
-          var t = {};
-          t.nombre = this.combos[i].nombre;
-          t.index = this.combos_n.length;
-          t.cantidad_combo = this.cantidad_combo;
-          this.combos_n.push(t);
+      if (this.cantidad_combo != undefined && this.cantidad_combo >= 1) {
+        if (this.combo_a != "") {
+          var j;
+          var exist;
+          for (j = 0; j < this.combos_a.length; j++) {
+            if (this.combos_a[j] == this.combo_a) {
+              exist = true;
+            }
+          }
+          if (!exist) {
+            this.combos_a.push(this.combo_a);
+            this.cantidad_combos.push(this.cantidad_combo);
+            var i;
+            for (i = 0; i < this.combos.length; i++) {
+              if (this.combo_a == this.combos[i]._id) {
+                var t = {};
+                t.nombre = this.combos[i].nombre;
+                t.index = this.combos_n.length;
+                t.cantidad_combo = this.cantidad_combo;
+                this.combos_n.push(t);
+              }
+            }
+            sweetAlert("¡Listo!", "Combo agregado", "success");
+          } else {
+            sweetAlert(
+              "Oops",
+              "Insumo invalido, ya fué seleccionado",
+              "warning"
+            );
+          }
+        } else {
+          sweetAlert("Oops", "Combo invalido, seleccione uno", "warning");
         }
+      } else {
+        sweetAlert("Oops", "Cantidad combo invalida", "warning");
       }
-      console.log("nombres: ", this.combos_n);
-      console.log("Están los combos: ", this.combos_a);
-      sweetAlert("¡Listo!", "Combo agregado", "success");
     },
     eliminarCombo(index) {
       var i;
@@ -545,30 +563,51 @@ export default {
         this.combos_n[i].index = this.combos_n[i].index - 1;
       }
     },
-    aumentarCombo(index){
+    aumentarCombo(index) {
       this.combos_n[index].cantidad_combo++;
     },
-    decrementarCombo(index){
-      if(this.combos_n[index].cantidad_combo-1 > 0){
+    decrementarCombo(index) {
+      if (this.combos_n[index].cantidad_combo - 1 > 0) {
         this.combos_n[index].cantidad_combo--;
       }
     },
     agregarProductos() {
-      this.productos_a.push(this.producto_a);
-      this.cantidad_productos.push(this.cantidad_producto);
-      var i;
-      for (i = 0; i < this.productos.length; i++) {
-        if (this.producto_a == this.productos[i]._id) {
-          var t = {};
-          t.nombre = this.productos[i].nombre;
-          t.index = this.productos_n.length;
-          t.cantidad_producto = this.cantidad_producto;
-          this.productos_n.push(t);
+      if (this.cantidad_producto != undefined && this.cantidad_producto >= 1) {
+        var j;
+        var exist;
+        for (j = 0; j < this.productos_a.length; j++) {
+          if (this.productos_a[j] == this.producto_a) {
+            exist = true;
+          }
         }
+        if (this.producto_a != "") {
+          if (!exist) {
+            this.productos_a.push(this.producto_a);
+            this.cantidad_productos.push(this.cantidad_producto);
+            var i;
+            for (i = 0; i < this.productos.length; i++) {
+              if (this.producto_a == this.productos[i]._id) {
+                var t = {};
+                t.nombre = this.productos[i].nombre;
+                t.index = this.productos_n.length;
+                t.cantidad_producto = this.cantidad_producto;
+                this.productos_n.push(t);
+              }
+            }
+            sweetAlert("¡Listo!", "Producto agregado", "success");
+          } else {
+            sweetAlert(
+              "Oops",
+              "Producto invalido, ya fué seleccionado",
+              "warning"
+            );
+          }
+        } else {
+          sweetAlert("Oops", "Producto invalido, seleccione uno", "warning");
+        }
+      } else {
+        sweetAlert("Oops", "Cantidad del producto invalida", "warning");
       }
-      console.log("nombres: ", this.productos_n);
-      console.log("Están los productos: ", this.productos_a);
-      sweetAlert("¡Listo!", "Producto agregado", "success");
     },
     eliminarProducto(index) {
       var i;
@@ -578,30 +617,47 @@ export default {
         this.productos_n[i].index = this.productos_n[i].index - 1;
       }
     },
-    aumentarProducto(index){
-      this.productos_n[index].cantidad_producto++; 
+    aumentarProducto(index) {
+      this.productos_n[index].cantidad_producto++;
     },
-    decrementarProducto(index){
-      if(this.productos_n[index].cantidad_producto-1 > 0){
+    decrementarProducto(index) {
+      if (this.productos_n[index].cantidad_producto - 1 > 0) {
         this.productos_n[index].cantidad_producto--;
       }
     },
     agregarBebidas() {
-      this.bebidas_a.push(this.bebida_a);
-      this.cantidad_bebidas.push(this.cantidad_bebida);
-      var i;
-      for (i = 0; i < this.bebidas.length; i++){
-        if(this.bebida_a == this.bebidas[i]._id){
-          var t = {};
-          t.nombre = this.bebidas[i].nombre;
-          t.index = this.bebidas_n.length;
-          t.cantidad_bebida = this.cantidad_bebida;
-          this.bebidas_n.push(t);
+      if (this.cantidad_bebida != undefined && this.cantidad_bebida >= 1) {
+        if (this.bebida_a != "") {
+          var j;
+          var exist = false;
+          for (j = 0; j < this.bebidas_a.length; j++) {
+            if (this.bebidas_a[j] == this.bebida_a) {
+              exist = true;
+            }
+          }
+          if (!exist) {
+            this.bebidas_a.push(this.bebida_a);
+          this.cantidad_bebidas.push(this.cantidad_bebida);
+          var i;
+          for (i = 0; i < this.bebidas.length; i++) {
+            if (this.bebida_a == this.bebidas[i]._id) {
+              var t = {};
+              t.nombre = this.bebidas[i].nombre;
+              t.index = this.bebidas_n.length;
+              t.cantidad_bebida = this.cantidad_bebida;
+              this.bebidas_n.push(t);
+            }
+          }
+          sweetAlert("¡Listo!", "Bebida agregada", "success");
+          } else {
+            sweetAlert("Oops", "Bebida invalida, ya fué seleccionada", "warning");
+          }
+        } else {
+          sweetAlert("Oops", "Bebida invalida, seleccione una", "warning");
         }
+      } else {
+        sweetAlert("Oops", "Cantidad de bebida invalida", "warning");
       }
-      console.log("nombres: ",this.bebidas_n);
-      console.log("Están las bebidas: ", this.bebidas_a);
-      sweetAlert("¡Listo!", "Bebida agregada", "success");
     },
     eliminarBebida(index) {
       var i;
@@ -611,11 +667,11 @@ export default {
         this.bebidas_n[i].index = this.bebidas_n[i].index - 1;
       }
     },
-    aumentarBebida(index){
-      this.bebidas_n[index].cantidad_bebida++; 
+    aumentarBebida(index) {
+      this.bebidas_n[index].cantidad_bebida++;
     },
-    decrementarBebida(index){
-      if(this.bebidas_n[index].cantidad_bebida-1 > 0){
+    decrementarBebida(index) {
+      if (this.bebidas_n[index].cantidad_bebida - 1 > 0) {
         this.bebidas_n[index].cantidad_bebida--;
       }
     },
@@ -788,7 +844,7 @@ export default {
       this.currentPage = 1;
       this.loading = true;
 
-      if (  
+      if (
         this.orden.idMesa == undefined ||
         this.orden.idEmpleado == undefined
       ) {
@@ -865,7 +921,8 @@ export default {
             _this.pro = {};
             _this.pro.idProducto = _this.productos_a[i];
             _this.pro.idOrden = _this.ordenes[_this.ordenes.length - 1]._id;
-            _this.pro.cantidad_producto = _this.productos_n[i].cantidad_producto;
+            _this.pro.cantidad_producto =
+              _this.productos_n[i].cantidad_producto;
             _this.$http
               .post("http://localhost:8000/productosordenes/create", _this.pro)
               .then(response => {
