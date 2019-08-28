@@ -71,8 +71,41 @@
       </li>
     </ul>
 
-    <button v-on:click="agregarCombos()" class="waves-effect waves-teal btn-large">Agregar</button>
+    <label for>Seleccione la mesa</label>
+    <div class="row">
+      <div class="input-field col s6">
+        <select
+          style="color: black"
+          class="browser-default"
+          :disabled="loading"
+          id="idMesa"
+          v-on:input="orden.idMesa = $event.target.value"
+          type="text"
+          v-model="orden.idMesa"
+        >
+          <option v-for="m in mesas" v-bind:key="m" :value="m._id">{{m.nombre}}</option>
+        </select>
+      </div>
+    </div>
 
+    <label for="bebida">Seleccione el empleado</label>
+    <div class="row">
+      <div class="input-field col s6">
+        <select
+          style="color: black"
+          class="browser-default"
+          :disabled="loading"
+          id="idEmpleado"
+          v-on:input="bebida.idEmpleado = $event.target.value"
+          type="text"
+          v-model="orden.idEmpleado"
+        >
+          <option v-for="e in empleados" v-bind:key="e" :value="e._id">{{e.nombre}}</option>
+        </select>
+      </div>
+    </div>
+
+    <button v-on:click="agregarCombos()" class="waves-effect waves-teal btn-large">Agregar</button>
     <label for="idCombos">Seleccione el combo</label>
     <div class="row">
       <div class="input-field col s6">
@@ -217,39 +250,7 @@
       </div>
     </div>
 
-    <label for>Seleccione la mesa</label>
-    <div class="row">
-      <div class="input-field col s6">
-        <select
-          style="color: black"
-          class="browser-default"
-          :disabled="loading"
-          id="idMesa"
-          v-on:input="orden.idMesa = $event.target.value"
-          type="text"
-          v-model="orden.idMesa"
-        >
-          <option v-for="m in mesas" v-bind:key="m" :value="m._id">{{m.nombre}}</option>
-        </select>
-      </div>
-    </div>
-
-    <label for="bebida">Seleccione el empleado</label>
-    <div class="row">
-      <div class="input-field col s6">
-        <select
-          style="color: black"
-          class="browser-default"
-          :disabled="loading"
-          id="idEmpleado"
-          v-on:input="bebida.idEmpleado = $event.target.value"
-          type="text"
-          v-model="orden.idEmpleado"
-        >
-          <option v-for="e in empleados" v-bind:key="e" :value="e._id">{{e.nombre}}</option>
-        </select>
-      </div>
-    </div>
+    
 
     <button v-on:click="agregarProductos()" class="waves-effect waves-teal btn-large">Agregar</button>
 
