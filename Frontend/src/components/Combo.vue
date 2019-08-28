@@ -114,9 +114,9 @@
           class="browser-default"
           :disabled="loading"
           id="idProducto"
-          v-on:click="comboxproducto.idProducto = $event.target.value"
+          v-on:click="comboxproducto = $event.target.value"
           type="text"
-          v-model="comboxproducto.idProducto"
+          v-model="comboxproducto"
         >
           <option v-for="p in productos" v-bind:key="p" :value="p._id">{{p.nombre}}</option>
         </select>
@@ -124,15 +124,15 @@
 
       <div class="col s6">
         <div class="input-field col s6">
-        <input
-          v-on:input="comboxproducto.cantidad_producto = $event.target.value"
-          type="number"
-          v-model="comboxproducto.cantidad_producto"
-          :disabled="loading"
-          id="cantidad_producto"
-        />
-        <label for="cantidad_producto">Cantidad Producto</label>
-      </div>
+          <input
+            v-on:input="cantidad_producto = $event.target.value"
+            type="number"
+            v-model="cantidad_producto"
+            :disabled="loading"
+            id="cantidad_producto"
+          />
+          <label for="cantidad_producto">Cantidad Producto</label>
+        </div>
         <table>
           <thead>
             <tr>
@@ -147,19 +147,28 @@
             <tr v-for="i in productosTemp" v-bind:key="i">
               <td>{{i.nombre}}</td>
               <td>{{i.cantidad_producto}}</td>
-              
+
               <td>
-                <a v-on:click="aumentarProducto(i.index)" class="btn-floating btn-small waves-effect waves-red red">
+                <a
+                  v-on:click="aumentarProducto(i.index)"
+                  class="btn-floating btn-small waves-effect waves-red red"
+                >
                   <i class="material-icons">exposure_plus_1</i>
                 </a>
               </td>
               <td>
-                <a v-on:click="decrementarProducto(i.index)" class="btn-floating btn-small waves-effect waves-red red">
+                <a
+                  v-on:click="decrementarProducto(i.index)"
+                  class="btn-floating btn-small waves-effect waves-red red"
+                >
                   <i class="material-icons">exposure_neg_1</i>
                 </a>
               </td>
               <td>
-                <a v-on:click="eliminarProducto(i.index)" class="btn-floating btn-small waves-effect waves-red red">
+                <a
+                  v-on:click="eliminarProducto(i.index)"
+                  class="btn-floating btn-small waves-effect waves-red red"
+                >
                   <i class="material-icons">delete</i>
                 </a>
               </td>
@@ -179,9 +188,9 @@
           class="browser-default"
           :disabled="loading"
           id="idBebida"
-          v-on:click="comboxbebida.idBebida = $event.target.value"
+          v-on:click="comboxbebida = $event.target.value"
           type="text"
-          v-model="comboxbebida.idBebida"
+          v-model="comboxbebida"
         >
           <option v-for="b in bebidas" v-bind:key="b" v-bind:value="b._id">{{b.nombre}}</option>
         </select>
@@ -189,15 +198,15 @@
 
       <div class="col s6">
         <div class="input-field col s6">
-        <input
-          v-on:input="comboxbebida.cantidad_bebida = $event.target.value"
-          type="number"
-          v-model="comboxbebida.cantidad_bebida"
-          :disabled="loading"
-          id="cantidad_bebida"
-        />
-        <label for="cantidad_bebida">Cantidad Bebida</label>
-      </div>
+          <input
+            v-on:input="cantidad_bebida = $event.target.value"
+            type="number"
+            v-model="cantidad_bebida"
+            :disabled="loading"
+            id="cantidad_bebida"
+          />
+          <label for="cantidad_bebida">Cantidad Bebida</label>
+        </div>
         <table>
           <thead>
             <tr>
@@ -213,17 +222,26 @@
               <td>{{i.nombre}}</td>
               <td>{{i.cantidad_bebida}}</td>
               <td>
-                <a v-on:click="aumentarBebida(i.index)" class="btn-floating btn-small waves-effect waves-red red">
+                <a
+                  v-on:click="aumentarBebida(i.index)"
+                  class="btn-floating btn-small waves-effect waves-red red"
+                >
                   <i class="material-icons">exposure_plus_1</i>
                 </a>
               </td>
               <td>
-                <a v-on:click="decrementarBebida(i.index)" class="btn-floating btn-small waves-effect waves-red red">
+                <a
+                  v-on:click="decrementarBebida(i.index)"
+                  class="btn-floating btn-small waves-effect waves-red red"
+                >
                   <i class="material-icons">exposure_neg_1</i>
                 </a>
               </td>
               <td>
-                <a v-on:click="eliminarBebida(i.index)" class="btn-floating btn-small waves-effect waves-red red">
+                <a
+                  v-on:click="eliminarBebida(i.index)"
+                  class="btn-floating btn-small waves-effect waves-red red"
+                >
                   <i class="material-icons">delete</i>
                 </a>
               </td>
@@ -278,13 +296,17 @@ export default {
       final: 5,
       currentPage: 1,
       size: 1,
-      comboxproducto: {},
+      comboxproducto: "",
       combosxproductos: [],
       productosTemp: [],
-      comboxbebida: {},
+      comboxbebida: "",
       combosxbebidas: [],
       bebidasTemp: [],
       combosordenes: [],
+      //
+      cantidad_producto: 1,
+      cantidad_bebida: 1,
+
     };
   },
   watch: {
@@ -352,74 +374,118 @@ export default {
       }
     },
     agregarProducto() {
-      if(this.comboxproducto.cantidad_producto != undefined && this.comboxproducto.cantidad_producto >= 1){
-        this.combosxproductos.push(this.comboxproducto);
-        var i;
-        for(i = 0; i < this.productos.length; i++){
-          if(this.comboxproducto.idProducto == this.productos[i]._id){
-            var t = {};
-            t.nombre = this.productos[i].nombre;
-            t.cantidad_producto = this.comboxproducto.cantidad_producto;
-            t.index = this.productosTemp.length;
-            this.productosTemp.push(t);
+      if (
+        this.cantidad_producto != undefined &&
+        this.cantidad_producto >= 1
+      ) {
+        var j;
+        var exist = false;
+        for (j = 0; j < this.combosxproductos.length; j++) {
+          if (this.combosxproductos[j] == this.comboxproducto) {
+            exist = true;
           }
         }
-        sweetAlert("¡Listo!", "Producto agregado", "success");
-      }else{
+        if (this.comboxproducto != "") {
+          if (!exist) {
+            this.combosxproductos.push(this.comboxproducto);
+            var i;
+            for (i = 0; i < this.productos.length; i++) {
+              if (this.comboxproducto == this.productos[i]._id) {
+                var t = {};
+                t.nombre = this.productos[i].nombre;
+                t.cantidad_producto = this.cantidad_producto;
+                t.index = this.productosTemp.length;
+                this.productosTemp.push(t);
+              }
+            }
+            sweetAlert("¡Listo!", "Producto agregado", "success");
+            this.cantidad_producto = 1;
+          } else {
+            sweetAlert(
+              "Oops",
+              "Producto invalido, ya fué seleccionado",
+              "warning"
+            );
+          }
+        } else {
+          sweetAlert("Oops", "Producto invalido, seleccione uno", "warning");
+        }
+      } else {
         sweetAlert("Oops", "Cantidad del producto invalida", "warning");
       }
-      this.comboxproducto = {};
     },
-    eliminarProducto(index){
+    eliminarProducto(index) {
       var i;
-      this.combosxproductos.splice(index,1);
-      this.productosTemp.splice(index,1);
-      for(i = index; i < this.productosTemp.length; i++){
-        this.productosTemp[i].index = this.productosTemp[i].index-1;
+      this.combosxproductos.splice(index, 1);
+      this.productosTemp.splice(index, 1);
+      for (i = index; i < this.productosTemp.length; i++) {
+        this.productosTemp[i].index = this.productosTemp[i].index - 1;
       }
     },
-     aumentarProducto(index){
+    aumentarProducto(index) {
       this.productosTemp[index].cantidad_producto++;
     },
-    decrementarProducto(index){
-      if(this.productosTemp[index].cantidad_producto-1 > 0){
+    decrementarProducto(index) {
+      if (this.productosTemp[index].cantidad_producto - 1 > 0) {
         this.productosTemp[index].cantidad_producto--;
       }
     },
     agregarBebida() {
-      console.log("La bebida: ",this.comboxbebida);
-      if(this.comboxbebida.cantidad_bebida != undefined && this.comboxbebida.cantidad_bebida >= 1){
-        this.combosxbebidas.push(this.comboxbebida);
-        var i;
-        for(i = 0; i < this.bebidas.length; i++){
-          if(this.comboxbebida.idBebida == this.bebidas[i]._id){
-            var t = {};
-            t.nombre = this.bebidas[i].nombre;
-            t.cantidad_bebida = this.comboxbebida.cantidad_bebida;
-            t.index = this.bebidasTemp.length;
-            this.bebidasTemp.push(t);
+      //console.log("La bebida: ", this.comboxbebida);
+      if (
+        this.cantidad_bebida != undefined &&
+        this.cantidad_bebida >= 1
+      ) {
+        if (this.comboxbebida != "") {
+          var j;
+          var exist = false;
+          for (j = 0; j < this.combosxbebidas.length; j++) {
+            if (this.combosxbebidas[j] == this.comboxbebida) {
+              exist = true;
+            }
           }
+          if (!exist) {
+            this.combosxbebidas.push(this.comboxbebida);
+            var i;
+            for (i = 0; i < this.bebidas.length; i++) {
+              if (this.comboxbebida == this.bebidas[i]._id) {
+                var t = {};
+                t.nombre = this.bebidas[i].nombre;
+                t.cantidad_bebida = this.cantidad_bebida;
+                t.index = this.bebidasTemp.length;
+                this.bebidasTemp.push(t);
+              }
+            }
+            sweetAlert("¡Listo!", "Bebida agregada", "success");
+            this.cantidad_bebida = 1;
+          } else {
+            sweetAlert(
+              "Oops",
+              "Insumo invalido, ya fué seleccionado",
+              "warning"
+            );
+          }
+        } else {
+          sweetAlert("Oops", "Bebida invalida, seleccione una", "warning");
         }
-        sweetAlert("¡Listo!", "Bebida agregada", "success");
-        console.log("bebidas en agregar: ",this.combosxbebidas);
-      }else{
+      } else {
         sweetAlert("Oops", "Cantidad del producto invalida", "warning");
       }
-      this.comboxbebida = {};
+      
     },
-    eliminarBebida(index){
+    eliminarBebida(index) {
       var i;
-      this.combosxbebidas.splice(index,1);
-      this.bebidasTemp.splice(index,1);
-      for(i = index; i < this.bebidasTemp.length; i++){
-        this.bebidasTemp[i].index = this.bebidasTemp[i].index-1;
+      this.combosxbebidas.splice(index, 1);
+      this.bebidasTemp.splice(index, 1);
+      for (i = index; i < this.bebidasTemp.length; i++) {
+        this.bebidasTemp[i].index = this.bebidasTemp[i].index - 1;
       }
     },
-     aumentarBebida(index){
+    aumentarBebida(index) {
       this.bebidasTemp[index].cantidad_bebida++;
     },
-    decrementarBebida(index){
-      if(this.bebidasTemp[index].cantidad_bebida-1 > 0){
+    decrementarBebida(index) {
+      if (this.bebidasTemp[index].cantidad_bebida - 1 > 0) {
         this.bebidasTemp[index].cantidad_bebida--;
       }
     },
@@ -428,62 +494,66 @@ export default {
       let _this = this;
       var prod;
       var prodtemp;
-      this.$http
-        .get("http://localhost:8000/combosproductos")
-        .then(response => {
-          prod = response.body;
-          var i = 0;
-          for (i = 0; i < prod.length; i++) {
-            if (combo._id == prod[i].idCombo) {
-              var t = {}
-              t.idProducto = prod[i].idProducto;
-              t.cantidad_producto = prod[i].cantidad_producto;
-              prodtemp.push(t);
+      this.$http.get("http://localhost:8000/combosproductos").then(response => {
+        prod = response.body;
+        var i = 0;
+        for (i = 0; i < prod.length; i++) {
+          if (combo._id == prod[i].idCombo) {
+            var t = {};
+            t.idProducto = prod[i].idProducto;
+            t.cantidad_producto = prod[i].cantidad_producto;
+            prodtemp.push(t);
+          }
+        }
+        var j = 0;
+        for (j = 0; j < this.productos.length; j++) {
+          for (i = 0; i < prodtemp.length; i++) {
+            if (this.productos[j]._id == prodtemp[i].idProducto) {
+              acum +=
+                prodtemp[i].cantidad_producto +
+                " " +
+                this.productos[j].nombre +
+                "\n";
             }
           }
-          var j = 0;
-          for (j = 0; j < this.productos.length; j++) {
-            for (i = 0; i < prodtemp.length; i++) {
-              if (this.productos[j]._id == prodtemp[i].idProducto) {
-                acum += prodtemp[i].cantidad_producto +" "+ this.productos[j].nombre +"\n";
-              }
-            }
-          }
-          sweetAlert("Productos", acum);
-        });
-      acum = ""
+        }
+        sweetAlert("Productos", acum);
+      });
+      acum = "";
       prod = [];
       prodtemp = [];
     },
-    getBebida(combo){
+    getBebida(combo) {
       var acum = "";
       let _this = this;
       var beb;
       var bebtemp;
-      this.$http
-        .get("http://localhost:8000/combosbebidas")
-        .then(response => {
-          beb = response.body;
-          var i = 0;
-          for (i = 0; i < beb.length; i++) {
-            if (combo._id == beb[i].idCombo) {
-              var t = {};
-              t.idBebida = beb[i].idBebida;
-              t.cantidad_bebida = beb[i].cantidad_bebida;
-              bebtemp.push(t);
+      this.$http.get("http://localhost:8000/combosbebidas").then(response => {
+        beb = response.body;
+        var i = 0;
+        for (i = 0; i < beb.length; i++) {
+          if (combo._id == beb[i].idCombo) {
+            var t = {};
+            t.idBebida = beb[i].idBebida;
+            t.cantidad_bebida = beb[i].cantidad_bebida;
+            bebtemp.push(t);
+          }
+        }
+        var j = 0;
+        for (j = 0; j < this.bebidas.length; j++) {
+          for (i = 0; i < bebtemp.length; i++) {
+            if (this.bebidas[j]._id == bebtemp[i].idBebida) {
+              acum +=
+                bebtemp[i].cantidad_bebida +
+                " " +
+                this.bebidas[j].nombre +
+                "\n";
             }
           }
-          var j = 0;
-          for (j = 0; j < this.bebidas.length; j++) {
-            for (i = 0; i < bebtemp.length; i++) {
-              if (this.bebidas[j]._id == bebtemp[i].idBebida) {
-                acum += bebtemp[i].cantidad_bebida+" "+this.bebidas[j].nombre +"\n";
-              }
-            }
-          }
-          sweetAlert("Bebidas", acum);
-        });
-      acum = ""
+        }
+        sweetAlert("Bebidas", acum);
+      });
+      acum = "";
       beb = [];
       bebtemp = [];
     },
@@ -504,10 +574,16 @@ export default {
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
-      if(this.combo.nombre == undefined || this.combo.precio == undefined || this.combo.descripcion == undefined || this.combosxproductos.length == 0 || this.combosxbebidas.length == 0 ){
-        sweetAlert("Oops", "Hay un campo vacio","error");
+      if (
+        this.combo.nombre == undefined ||
+        this.combo.precio == undefined ||
+        this.combo.descripcion == undefined ||
+        this.combosxproductos.length == 0 ||
+        this.combosxbebidas.length == 0
+      ) {
+        sweetAlert("Oops", "Hay un campo vacio", "error");
         this.loading = false;
-      }else{
+      } else {
         this.$http
           .post("http://localhost:8000/combos/create", this.combo)
           .then(response => {
@@ -532,8 +608,8 @@ export default {
           var prod;
           for (i = 0; i < _this.combosxproductos.length; i++) {
             prod = {};
-            prod.idProducto = _this.combosxproductos[i].idProducto;
-            prod.cantidad_producto = _this.combosxproductos[i].cantidad_producto;
+            prod.idProducto = _this.combosxproductos[i];
+            prod.cantidad_producto = _this.productosTemp[i].cantidad_producto;
             prod.idCombo = _this.combos[_this.combos.length - 1]._id;
             _this.$http
               .post("http://localhost:8000/combosproductos/create", prod)
@@ -549,11 +625,11 @@ export default {
           }
 
           var beb;
-          console.log("bebidas en create: ",_this.combosxbebidas);
+          //console.log("bebidas en create: ", _this.combosxbebidas);
           for (i = 0; i < _this.combosxbebidas.length; i++) {
             beb = {};
-            beb.idBebida = _this.combosxbebidas[i].idBebida;
-            beb.cantidad_bebida = _this.combosxbebidas[i].cantidad_bebida;
+            beb.idBebida = _this.combosxbebidas[i];
+            beb.cantidad_bebida = _this.bebidasTemp[i].cantidad_bebida;
             beb.idCombo = _this.combos[_this.combos.length - 1]._id;
             _this.$http
               .post("http://localhost:8000/combosbebidas/create", beb)
@@ -571,8 +647,8 @@ export default {
           _this.combosxbebidas = [];
           _this.bebidasTemp = [];
           _this.productosTemp = [];
-          _this.comboxproducto = {};
-          _this.comboxbebida = {};
+          _this.comboxproducto = "";
+          _this.comboxbebida = "";
         }, 1000);
         this.getCombo();
       }
@@ -671,7 +747,10 @@ export default {
                       _this.getCombos();
                     }
                   });
-                _this.$http.delete("http://localhost:8000/combosproductos/delete/" +idCombo)
+                _this.$http
+                  .delete(
+                    "http://localhost:8000/combosproductos/delete/" + idCombo
+                  )
                   .then(response => {
                     if (response.body.success) {
                       console.log("nel");
@@ -680,7 +759,10 @@ export default {
                     }
                   });
 
-                  _this.$http.delete("http://localhost:8000/combosbebidas/delete/" +idCombo)
+                _this.$http
+                  .delete(
+                    "http://localhost:8000/combosbebidas/delete/" + idCombo
+                  )
                   .then(response => {
                     if (response.body.success) {
                       console.log("nel");
@@ -710,12 +792,10 @@ export default {
       });
     },
     getBebidas() {
-      this.$http
-        .get("http://localhost:8000/bebidas")
-        .then(response => {
-          console.log(response);
-          this.bebidas = response.body;
-        });
+      this.$http.get("http://localhost:8000/bebidas").then(response => {
+        console.log(response);
+        this.bebidas = response.body;
+      });
     }
   },
   beforeMount() {

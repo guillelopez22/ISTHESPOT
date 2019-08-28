@@ -541,6 +541,7 @@ export default {
               }
             }
             sweetAlert("¡Listo!", "Combo agregado", "success");
+            this.cantidad_combo = 1;
           } else {
             sweetAlert(
               "Oops",
