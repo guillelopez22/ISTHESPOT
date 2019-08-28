@@ -103,7 +103,7 @@
       </div>
 
       <div class="col s6">
-        <table>
+        <table class = "table2">
           <thead>
             <tr>
               <th>Proveedor</th>
@@ -607,6 +607,31 @@ th {
   width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite;
+}
+.table2 {
+  color: black;
+  font-family: "Spectral", serif;
+  font-size: 20px;
+  background: white;
+  border-radius: 3px;
+  border-collapse: collapse;
+  height: 320px;
+  padding: 5px;
+  width: 100%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  animation: float 5s infinite;
+}
+.table2 th{
+    color: white;
+    background: #989fa1;
+    border-bottom: 2px solid #9ea7af;
+    border-right: 1px solid #343a45;
+    font-size: 15px;
+    font-weight: 100;
+    padding: 24px;
+    text-align: left;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    vertical-align: middle;   
 }
 
 #homeCard {
