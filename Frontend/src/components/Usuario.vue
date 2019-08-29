@@ -106,7 +106,10 @@
           <input v-on:input="usuario.scope = $event.target.value" type="text" v-model="usuario.scope" :disabled="loading"  id="scope">
           <label for="scope">Scope</label>
       </div>-->
-      <label for="scope">Seleccione el tipo de usuario:</label>
+    </div>
+    <label for="scope">Seleccione el tipo de usuario:</label>
+    <div class="row">
+      <div class="input-field col s6">
         <select
           style="color: black"
           class="browser-default"
@@ -121,7 +124,9 @@
           <option value="Cajero">Cajero</option>
           <option value="Mesero">Mesero</option>
         </select>
+      </div>
     </div>
+
     <div id="test-swipe-1" class="col s12">
       <a
         class="waves-effect waves-teal btn-large"
@@ -371,48 +376,48 @@ export default {
         }
       }
       if (entrar) {
-      sweetAlert(
-        {
-          title: "¿Estás seguro?",
-          text: "No podrás revertir los cambios",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Eliminar",
-          cancelButtonText: "Cancelar",
-          showCloseButton: true,
-          showLoaderOnConfirm: true
-        },
-        function(inputValue) {
-          setTimeout(function() {
-            if (inputValue) {
-              //****************************************************** */
-              _this.loading = true;
-              _this.$http
-                .delete("http://localhost:8000/usuarios/delete/" + idUsuario)
-                .then(response => {
-                  this.loading = false;
-                  if (response.body.success) {
-                    sweetAlert("Oops...", "Error al eliminar", "error");
-                    _this.getUsuario();
-                  } else {
-                    sweetAlert(
-                      "Deleted!",
-                      "Los cambios estan en la tabla",
-                      "success"
-                    );
-                    _this.inicio = 0;
-                    _this.final = 5;
-                    _this.currentPage = 1;
-                    _this.getUsuario();
-                  }
-                });
-              //****************************************************** */
-            } else {
-              sweetAlert("Cancelado", "Tus datos están a salvo", "info");
-            }
-          }, 500);
-        }
-      );
+        sweetAlert(
+          {
+            title: "¿Estás seguro?",
+            text: "No podrás revertir los cambios",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            showCloseButton: true,
+            showLoaderOnConfirm: true
+          },
+          function(inputValue) {
+            setTimeout(function() {
+              if (inputValue) {
+                //****************************************************** */
+                _this.loading = true;
+                _this.$http
+                  .delete("http://localhost:8000/usuarios/delete/" + idUsuario)
+                  .then(response => {
+                    this.loading = false;
+                    if (response.body.success) {
+                      sweetAlert("Oops...", "Error al eliminar", "error");
+                      _this.getUsuario();
+                    } else {
+                      sweetAlert(
+                        "Deleted!",
+                        "Los cambios estan en la tabla",
+                        "success"
+                      );
+                      _this.inicio = 0;
+                      _this.final = 5;
+                      _this.currentPage = 1;
+                      _this.getUsuario();
+                    }
+                  });
+                //****************************************************** */
+              } else {
+                sweetAlert("Cancelado", "Tus datos están a salvo", "info");
+              }
+            }, 500);
+          }
+        );
       } else {
         sweetAlert(
           "Eliminación Bloqueada",

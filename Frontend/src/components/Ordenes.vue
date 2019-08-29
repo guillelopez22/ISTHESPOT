@@ -20,11 +20,11 @@
     <table class="table centered">
       <thead>
         <tr>
-          <th>idEmpleado</th>
-          <th>idMesa</th>
-          <th>idBebidas</th>
-          <th>idProducto</th>
-          <th>idCombos</th>
+          <th>Empleado</th>
+          <th>Mesa</th>
+          <th>Bebidas</th>
+          <th>Productos</th>
+          <th>Combos</th>
           <th>Modificar</th>
           <th>Borrar</th>
         </tr>
@@ -61,7 +61,6 @@
         </tr>
       </tbody>
     </table>
-    <br />
     <ul id="tabs-swipe-demo" class="tabs">
       <li class="tab col s3">
         <a class="active" v-on:click="tabControl('test-swipe-1')" href="#test-swipe-1">Crear</a>
@@ -70,10 +69,13 @@
         <a v-on:click="tabControl('test-swipe-2')" href="#test-swipe-2">Modificar</a>
       </li>
     </ul>
-
-    <label for>Seleccione la mesa</label>
+    <br />
     <div class="row">
+
       <div class="input-field col s6">
+    <label for>Seleccione la mesa</label>
+<br />
+<br />
         <select
           style="color: black"
           class="browser-default"
@@ -86,11 +88,11 @@
           <option v-for="m in mesas" v-bind:key="m" :value="m._id">{{m.nombre}}</option>
         </select>
       </div>
-    </div>
 
-    <label for="bebida">Seleccione el empleado</label>
-    <div class="row">
       <div class="input-field col s6">
+    <label for="bebida">Seleccione el empleado</label>
+<br />
+<br />
         <select
           style="color: black"
           class="browser-default"
@@ -104,7 +106,7 @@
         </select>
       </div>
     </div>
-
+<br />
     <button v-on:click="agregarCombos()" class="waves-effect waves-teal btn-large">Agregar</button>
     <label for="idCombos">Seleccione el combo</label>
     <div class="row">
@@ -132,13 +134,13 @@
           />
           <label for="cantidad_combo">Cantidad Combo</label>
         </div>
-        <table class = "table2">
+        <table class="table2">
           <thead>
             <tr>
               <th>Combos</th>
               <th>Cantidad</th>
-              <th>Sumar</th>
-              <th>Restar</th>
+              <th>Agregar</th>
+              <th>Disminuir</th>
               <th>Borrar</th>
             </tr>
           </thead>
@@ -205,13 +207,13 @@
           />
           <label for="cantidad_bebida">Cantidad Bebida</label>
         </div>
-        <table class = "table2">
+        <table class="table2">
           <thead>
             <tr>
               <th>Bebidas</th>
               <th>Cantidad</th>
-              <th>Sumar</th>
-              <th>Restar</th>
+              <th>Agregar</th>
+              <th>Disminuir</th>
               <th>Borrar</th>
             </tr>
           </thead>
@@ -250,8 +252,6 @@
       </div>
     </div>
 
-    
-
     <button v-on:click="agregarProductos()" class="waves-effect waves-teal btn-large">Agregar</button>
 
     <label for="producto">Seleccione el producto</label>
@@ -280,13 +280,13 @@
           />
           <label for="cantidad_producto">Cantidad Producto</label>
         </div>
-        <table class = "table2">
+        <table class="table2">
           <thead>
             <tr>
               <th>Productos</th>
               <th>Cantidad</th>
-              <th>Sumar</th>
-              <th>Restar</th>
+              <th>Agregar</th>
+              <th>Disminuir</th>
               <th>Borrar</th>
             </tr>
           </thead>
@@ -639,20 +639,24 @@ export default {
           }
           if (!exist) {
             this.bebidas_a.push(this.bebida_a);
-          this.cantidad_bebidas.push(this.cantidad_bebida);
-          var i;
-          for (i = 0; i < this.bebidas.length; i++) {
-            if (this.bebida_a == this.bebidas[i]._id) {
-              var t = {};
-              t.nombre = this.bebidas[i].nombre;
-              t.index = this.bebidas_n.length;
-              t.cantidad_bebida = this.cantidad_bebida;
-              this.bebidas_n.push(t);
+            this.cantidad_bebidas.push(this.cantidad_bebida);
+            var i;
+            for (i = 0; i < this.bebidas.length; i++) {
+              if (this.bebida_a == this.bebidas[i]._id) {
+                var t = {};
+                t.nombre = this.bebidas[i].nombre;
+                t.index = this.bebidas_n.length;
+                t.cantidad_bebida = this.cantidad_bebida;
+                this.bebidas_n.push(t);
+              }
             }
-          }
-          sweetAlert("¡Listo!", "Bebida agregada", "success");
+            sweetAlert("¡Listo!", "Bebida agregada", "success");
           } else {
-            sweetAlert("Oops", "Bebida invalida, ya fué seleccionada", "warning");
+            sweetAlert(
+              "Oops",
+              "Bebida invalida, ya fué seleccionada",
+              "warning"
+            );
           }
         } else {
           sweetAlert("Oops", "Bebida invalida, seleccione una", "warning");
@@ -687,14 +691,21 @@ export default {
         var i = 0;
         for (i = 0; i < this.bebs.length; i++) {
           if (orden._id == this.bebs[i].idOrden) {
-            this.bebstemp.push(this.bebs[i].idBebida);
+            var t = {};
+            t.idBebida = this.bebs[i].idBebida;
+            t.cantidad_bebida = this.bebs[i].cantidad_bebida;
+            this.bebstemp.push(t);
           }
         }
         var j = 0;
         for (j = 0; j < this.bebidas.length; j++) {
           for (i = 0; i < this.bebstemp.length; i++) {
-            if (this.bebidas[j]._id == this.bebstemp[i]) {
-              acum += this.bebidas[j].nombre + "\n";
+            if (this.bebidas[j]._id == this.bebstemp[i].idBebida) {
+              acum +=
+                this.bebidas[j].nombre +
+                " (" +
+                this.bebstemp[i].cantidad_bebida +
+                ")\n";
             }
           }
         }
@@ -719,14 +730,21 @@ export default {
           var i = 0;
           for (i = 0; i < this.prds.length; i++) {
             if (orden._id == this.prds[i].idOrden) {
-              this.prdstemp.push(this.prds[i].idProducto);
+              var t = {};
+              t.idProducto = this.prds[i].idProducto;
+              t.cantidad_producto = this.prds[i].cantidad_producto;
+              this.prdstemp.push(t);
             }
           }
           var j = 0;
           for (j = 0; j < this.productos.length; j++) {
             for (i = 0; i < this.prdstemp.length; i++) {
-              if (this.productos[j]._id == this.prdstemp[i]) {
-                acum += this.productos[j].nombre + "\n";
+              if (this.productos[j]._id == this.prdstemp[i].idProducto) {
+                acum +=
+                  this.productos[j].nombre +
+                  " (" +
+                  this.prdstemp[i].cantidad_producto +
+                  ")\n";
               }
             }
           }
@@ -749,14 +767,21 @@ export default {
         var i = 0;
         for (i = 0; i < this.cmbs.length; i++) {
           if (orden._id == this.cmbs[i].idOrden) {
-            this.combstemp.push(this.cmbs[i].idCombo);
+            var t = {};
+            t.idCombo = this.cmbs[i].idCombo;
+            t.cantidad_combo = this.cmbs[i].cantidad_combo;
+            this.combstemp.push(t);
           }
         }
         var j = 0;
         for (j = 0; j < this.combos.length; j++) {
           for (i = 0; i < this.combstemp.length; i++) {
-            if (this.combos[j]._id == this.combstemp[i]) {
-              acum += this.combos[j].nombre + "\n";
+            if (this.combos[j]._id == this.combstemp[i].idCombo) {
+              acum +=
+                this.combos[j].nombre +
+                " (" +
+                this.combstemp[i].cantidad_combo +
+                ")\n";
             }
           }
         }
@@ -1178,30 +1203,28 @@ th {
   animation: float 5s infinite;
 }
 .table2 {
-  color: black;
+  color: white;
   font-family: "Spectral", serif;
-  font-size: 20px;
-  background: white;
+  font-size: 15;
   border-radius: 3px;
   border-collapse: collapse;
-  height: 320px;
+  height: 20px;
   padding: 5px;
   width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite;
 }
-.table2 th{
-    color: white;
-    background: #989fa1;
-    border-bottom: 2px solid #9ea7af;
-    border-right: 1px solid #343a45;
-    font-size: 15px;
-    font-weight: 100;
-    padding: 24px;
-    text-align: left;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    vertical-align: middle;
-   
+.table2 th {
+  color: white;
+  background: rgb(16, 175, 167);
+  border-bottom: 2px solid #9ea7af;
+  border-right: 1px solid #343a45;
+  font-size: 20px;
+  font-weight: 100;
+  padding: 12px;
+  text-align: left;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  vertical-align: middle;
 }
 
 #homeCard {

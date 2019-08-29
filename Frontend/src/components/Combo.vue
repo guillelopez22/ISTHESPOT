@@ -129,13 +129,13 @@
           />
           <label for="cantidad_producto">Cantidad Producto</label>
         </div>
-        <table class = "table2">
+        <table class="table2">
           <thead>
             <tr>
               <th>Producto</th>
               <th>Cantidad</th>
-              <th>Sumar</th>
-              <th>Restar</th>
+              <th>Agregar</th>
+              <th>Disminuir</th>
               <th>Borrar</th>
             </tr>
           </thead>
@@ -203,13 +203,13 @@
           />
           <label for="cantidad_bebida">Cantidad Bebida</label>
         </div>
-        <table class = "table2">
+        <table class="table2">
           <thead>
             <tr>
               <th>Bebida</th>
               <th>Cantidad</th>
-              <th>Sumar</th>
-              <th>Restar</th>
+              <th>Agregar</th>
+              <th>Disminuir</th>
               <th>Borrar</th>
             </tr>
           </thead>
@@ -301,8 +301,7 @@ export default {
       combosordenes: [],
       //
       cantidad_producto: 1,
-      cantidad_bebida: 1,
-
+      cantidad_bebida: 1
     };
   },
   watch: {
@@ -370,10 +369,7 @@ export default {
       }
     },
     agregarProducto() {
-      if (
-        this.cantidad_producto != undefined &&
-        this.cantidad_producto >= 1
-      ) {
+      if (this.cantidad_producto != undefined && this.cantidad_producto >= 1) {
         var j;
         var exist = false;
         for (j = 0; j < this.combosxproductos.length; j++) {
@@ -428,10 +424,7 @@ export default {
     },
     agregarBebida() {
       //console.log("La bebida: ", this.comboxbebida);
-      if (
-        this.cantidad_bebida != undefined &&
-        this.cantidad_bebida >= 1
-      ) {
+      if (this.cantidad_bebida != undefined && this.cantidad_bebida >= 1) {
         if (this.comboxbebida != "") {
           var j;
           var exist = false;
@@ -467,7 +460,6 @@ export default {
       } else {
         sweetAlert("Oops", "Cantidad del producto invalida", "warning");
       }
-      
     },
     eliminarBebida(index) {
       var i;
@@ -506,10 +498,10 @@ export default {
           for (i = 0; i < prodtemp.length; i++) {
             if (this.productos[j]._id == prodtemp[i].idProducto) {
               acum +=
-                prodtemp[i].cantidad_producto +
-                " " +
                 this.productos[j].nombre +
-                "\n";
+                " (" +
+                prodtemp[i].cantidad_producto +
+                ")\n";
             }
           }
         }
@@ -864,29 +856,28 @@ th {
   animation: float 5s infinite;
 }
 .table2 {
-  color: black;
+  color: white;
   font-family: "Spectral", serif;
-  font-size: 20px;
-  background: white;
+  font-size: 15;
   border-radius: 3px;
   border-collapse: collapse;
-  height: 320px;
+  height: 20px;
   padding: 5px;
   width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite;
 }
-.table2 th{
-    color: white;
-    background: #989fa1;
-    border-bottom: 2px solid #9ea7af;
-    border-right: 1px solid #343a45;
-    font-size: 15px;
-    font-weight: 100;
-    padding: 24px;
-    text-align: left;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    vertical-align: middle;   
+.table2 th {
+  color: white;
+  background: rgb(16, 175, 167);
+  border-bottom: 2px solid #9ea7af;
+  border-right: 1px solid #343a45;
+  font-size: 20px;
+  font-weight: 100;
+  padding: 12px;
+  text-align: left;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  vertical-align: middle;
 }
 
 #homeCard {

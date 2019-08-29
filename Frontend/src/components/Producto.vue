@@ -278,14 +278,22 @@ export default {
           var i = 0;
           for (i = 0; i < this.ingr.length; i++) {
             if (producto._id == this.ingr[i].idProducto) {
-              this.ingrtemp.push(this.ingr[i].idInsumo);
+              var t = {};
+              t.idInsumo = this.ingr[i].idInsumo;
+              t.cantidad_insumo = this.ingr[i].cantidad_insumo;
+              this.ingrtemp.push(t);
             }
           }
+          console.log(this.ingrtemp);
           var j = 0;
           for (j = 0; j < this.insumos.length; j++) {
             for (i = 0; i < this.ingrtemp.length; i++) {
-              if (this.insumos[j]._id == this.ingrtemp[i]) {
-                acum += this.insumos[j].nombre + "\n";
+              if (this.insumos[j]._id == this.ingrtemp[i].idInsumo) {
+                acum +=
+                this.insumos[j].nombre +
+                " (" +
+                this.ingrtemp[i].cantidad_insumo +
+                ")\n";
               }
             }
           }
