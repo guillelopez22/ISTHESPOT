@@ -13,7 +13,7 @@
       </a>
     </h2>
     <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()" class="waves-effect waves-teal btn-large pulse" >Anterior</button>
+    <button v-on:click="anterior()" class="waves-effect waves-teal btn-large pulse">Anterior</button>
     <button v-on:click="siguiente()" class="waves-effect waves-teal btn-large">Siguiente</button>
     <br />
     <table class="table centered">
@@ -156,7 +156,7 @@
           />
           <label for="cantidad_insumo">Cantidad Insumo</label>
         </div>
-        <table class = "table2">
+        <table class="table2">
           <thead>
             <tr>
               <th>Insumos</th>
@@ -290,10 +290,10 @@ export default {
             for (i = 0; i < this.ingrtemp.length; i++) {
               if (this.insumos[j]._id == this.ingrtemp[i].idInsumo) {
                 acum +=
-                this.insumos[j].nombre +
-                " (" +
-                this.ingrtemp[i].cantidad_insumo +
-                ")\n";
+                  this.insumos[j].nombre +
+                  " (" +
+                  this.ingrtemp[i].cantidad_insumo +
+                  ")\n";
               }
             }
           }
@@ -339,7 +339,11 @@ export default {
             console.log("nombres: ", this.ingredientes_n);
             sweetAlert("Listo!", "Insumo Agregado", "success");
           } else {
-            sweetAlert("Oops", "Insumo invalido, ya fué seleccionado", "warning");
+            sweetAlert(
+              "Oops",
+              "Insumo invalido, ya fué seleccionado",
+              "warning"
+            );
           }
         } else {
           sweetAlert("Oops", "Insumo invalido, seleccione uno", "warning");
@@ -447,7 +451,7 @@ export default {
         this.producto.descripcion == undefined ||
         this.producto.tipo == undefined ||
         this.producto.cantidad == undefined ||
-        this.producto.precio == undefined || 
+        this.producto.precio == undefined ||
         this.ingredientes.length == 0
         //this.idIns == "N/A"
       ) {
@@ -509,7 +513,7 @@ export default {
             _this.productoxinsumo.idProducto =
               _this.productos[_this.productos.length - 1]._id;
             _this.productoxinsumo.cantidad_insumo =
-              _this.ingredientes_n[i].cantidad;
+               parseInt(_this.ingredientes_n[i].cantidad);
             console.log(_this.productoxinsumo);
             _this.$http
               .post(
@@ -550,15 +554,39 @@ export default {
       this.idModificar = producto._id;
       this.producto = producto;
       //this.idProv = producto.idproducto_elaborado;
-      this.idIns = insumo.idInsumo;
+      //this.idIns = insumo.idInsumo;
+
+      this.$http
+        .get("http://localhost:8000/productosinsumos")
+        .then(response => {
+          this.ingr = response.body;
+          var i = 0;
+          var j;
+          for (j = 0; j < this.ingr.length; j++) {
+            if (this.ingr[j].idProducto == this.idModificar) {
+              for (i = 0; i < this.insumos.length; i++) {
+                if (this.ingr[j].idInsumo == this.insumos[i]._id) {
+                  var t = {};
+                  t.nombre = this.insumos[i].nombre;
+                  t.index = this.ingredientes_n.length;
+                  t.cantidad = this.ingr[j].cantidad_insumo;
+                  this.ingredientes_n.push(t);
+                  this.ingredientes.push(this.ingr[j].idInsumo);
+                }
+              }
+            }
+          }
+        });
+      this.ingr = [];
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
     modifyproducto() {
       this.loading = true;
+      let _this = this;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
-        this.insumo.idInsumo = this.idIns;
+        //this.insumo.idInsumo = this.idIns;
         //this.producto.idproducto_elaborado = this.idProv;
         this.$http
           .put(
@@ -572,6 +600,48 @@ export default {
               this.loading = false;
               sweetAlert("Oops...", "Error al modificar", "error");
             } else {
+              //agregar nuevos
+              setTimeout(function() {
+                _this.$http
+                  .delete(
+                    "http://localhost:8000/productosinsumos/delete/" +
+                      _this.idModificar
+                  )
+                  .then(response => {
+                    if (response.body.success) {
+                      console.log("nel");
+                    } else {
+                      console.log("simon");
+                    }
+                  });
+
+                var i;
+                console.log("Cantidad: "+ _this.ingredientes.length)
+                for (i = 0; i < _this.ingredientes.length; i++) {
+                  _this.productoxinsumo = {};
+                  _this.productoxinsumo.idInsumo = _this.ingredientes[i];
+                  _this.productoxinsumo.idProducto =_this.productos[_this.productos.length - 1]._id;
+                  _this.productoxinsumo.cantidad_insumo = _this.ingredientes_n[i].cantidad;
+                  console.log(_this.productoxinsumo);
+                  _this.$http
+                    .post(
+                      "http://localhost:8000/productosinsumos/create",
+                      _this.productoxinsumo
+                    )
+                    .then(response => {
+                      _this.loading = false;
+                      if (response.body.success) {
+                        _this.productoxinsumo = {};
+                        console.log("agregó");
+                      } else {
+                        console.log("tronó");
+                      }
+                    });
+                }
+                _this.ingredientes = [];
+                _this.ingredientes_n = [];
+              }, 2000);
+
               sweetAlert(
                 "Modificado con exito!",
                 "Los cambios estan en la tabla",
@@ -755,17 +825,17 @@ th {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite;
 }
-.table2 th{
-    color: white;
-    background: rgb(16, 175, 167);
-    border-bottom: 2px solid #9ea7af;
-    border-right: 1px solid #343a45;
-    font-size: 20px;
-    font-weight: 100;
-    padding: 12px;
-    text-align: left;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    vertical-align: middle;   
+.table2 th {
+  color: white;
+  background: rgb(16, 175, 167);
+  border-bottom: 2px solid #9ea7af;
+  border-right: 1px solid #343a45;
+  font-size: 20px;
+  font-weight: 100;
+  padding: 12px;
+  text-align: left;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  vertical-align: middle;
 }
 #homeCard {
   height: 230px;
