@@ -1,6 +1,6 @@
 <template>
   <div id="root"> 
-    <h2>Promocion</h2>
+    <h2>Promoción</h2>
     <p>Pagina Actual: {{currentPage}}</p>
   <button v-on:click="anterior()" class="waves-effect waves-teal btn-large">Anterior</button>
     <button v-on:click="siguiente()" class="waves-effect waves-teal btn-large">Siguiente</button>
@@ -9,9 +9,9 @@
 			<thead>
 				<tr>
 					<th>Nombre</th>
-					<th>descripcion</th>
-					<th>cantidad</th>
-					<th>descuento</th>
+					<th>Descripción</th>
+					<th>Cantidad</th>
+					<th>Descuento</th>
 					<th>Hora Inicio</th>
 					<th>Hora Final</th>
           <th>Modificar</th>
@@ -50,7 +50,7 @@
         </div>
         <div class="input-field col s6">
           <input v-model="promocion.descripcion" :disabled="loading"  id="Descripcion" type="text" class="validate">
-          <label for="Descripcion">Descripcion</label>
+          <label for="Descripcion">Descripción</label>
         </div>
         <div class="input-field col s6">
           <input type="number" v-model="promocion.cantidad" :disabled="loading"  id="Cantidad">
@@ -88,16 +88,7 @@
               {{ promocion.nombre }}
             </option>
           </select>
-
   		</div>
-      <ul id="example-1">
-        <li v-for="promocion in promociones">
-          <input type="radio" id="one" v-bind:value="promocion.value" v-model="pick" >
-          <label for="one">{{ promocion.nombre }}</label>
-        </li>
-      </ul>
-
-
   </div>
 </template>
 

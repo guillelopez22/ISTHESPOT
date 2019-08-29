@@ -609,13 +609,12 @@ th {
   animation: float 5s infinite;
 }
 .table2 {
-  color: black;
+  color: white;
   font-family: "Spectral", serif;
-  font-size: 20px;
-  background: white;
+  font-size: 15;
   border-radius: 3px;
   border-collapse: collapse;
-  height: 320px;
+  height: 20px;
   padding: 5px;
   width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
@@ -623,12 +622,12 @@ th {
 }
 .table2 th{
     color: white;
-    background: #989fa1;
+    background: rgb(16, 175, 167);
     border-bottom: 2px solid #9ea7af;
     border-right: 1px solid #343a45;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 100;
-    padding: 24px;
+    padding: 12px;
     text-align: left;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     vertical-align: middle;   

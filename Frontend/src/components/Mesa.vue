@@ -91,24 +91,6 @@
         <label for="Numero">Numero</label>
       </div>
 
-      <button v-on:click="agregarEmpleados()" class="waves-effect waves-teal btn-large">Agregar</button>
-
-      <label for="bebida">Seleccione el empleado</label>
-      <div class="row">
-        <div class="input-field col s6">
-          <select
-            style="color: black"
-            class="browser-default"
-            :disabled="loading"
-            id="idEmpleado"
-            v-on:input="empleado = $event.target.value"
-            type="text"
-            v-model="empleado"
-          >
-            <option v-for="e in empleados2" v-bind:key="e" :value="e._id">{{e.nombre}}</option>
-          </select>
-        </div>
-      </div>
     </div>
     <div id="test-swipe-1" class="col s12">
       <a

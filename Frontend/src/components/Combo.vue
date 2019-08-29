@@ -68,7 +68,7 @@
       </li>
     </ul>
     <div class="row">
-      <div class="input-field col s6" id="contenedorTablaExterna">
+      <div class="input-field col s6">
         <input
           v-on:input="combo.nombre = $event.target.value"
           type="text"
@@ -78,9 +78,7 @@
         />
         <label for="nombre">Nombre</label>
       </div>
-    </div>
-    <div class="row">
-      <div class="input-field col s6" id="contenedorTablaExterna">
+      <div class="input-field col s6">
         <input
           v-on:input="combo.precio = $event.target.value"
           type="number"
@@ -90,9 +88,7 @@
         />
         <label for="precio">Precio</label>
       </div>
-    </div>
-    <div class="row">
-      <div class="input-field col s6" id="contenedorTablaExterna">
+      <div class="input-field col s12">
         <input
           v-on:input="combo.descripcion = $event.target.value"
           type="text"

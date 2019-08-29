@@ -132,36 +132,6 @@
         </div>
       </div>
 
-      <!--<div class="row -white" id="contenedorTablaExterna">
-        <div class="col s6">
-          <h5>Seleccionar ID Proveedor:</h5>
-          <p>(hacer click en el nombre deseado)</p>
-          <hr>
-          <ul v-for="proveedor in proveedores">
-            <li>
-              <i class="material-icons left">pages</i>
-              {{proveedor.nombre}}
-              <a
-                v-on:click="newProveedor(proveedor._id)"
-                class="btn-floating btn-small waves-effect waves-light black secondary-content"
-              >
-                <i class="material-icons">done</i>
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="importance" class="input-field col s6 center">
-          <br>
-          <label id="idProveedor">
-            <h4>
-              <a v-on:click="borrarProveedor()" class="waves-effect waves-light">
-                <i class="material-icons">delete</i>
-              </a>
-              {{idProv}} {{nombreProv}}
-            </h4>
-          </label>
-        </div>
-      </div>-->
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
@@ -280,6 +250,7 @@ export default {
       let _this = this;
       this.$http.get("http://localhost:8000/bebidas").then(response => {
         this.bebidas = response.body;
+        //await(1);
         response.body.map(function(value, key) {
           var i;
           var p = _this.proveedores;

@@ -19,8 +19,6 @@
     <table class="table centered">
       <thead>
         <tr>
-          <th>Id Personal</th>
-          <th>Id Ordenes</th>
           <th>Usuario</th>
           <th>Nombre</th>
           <th>Telefono</th>
@@ -31,8 +29,6 @@
       </thead>
       <tbody>
         <tr v-for="usuario in data" v-bind:key="usuario">
-          <td>{{usuario.IdPersonal}}</td>
-          <td>{{usuario.idOrdenes}}</td>
           <td>{{usuario.usuario}}</td>
           <td>{{usuario.nombre}}</td>
           <td>{{usuario.telefono}}</td>
@@ -66,27 +62,6 @@
       </li>
     </ul>
     <div class="row">
-      <div class="input-field col s12">
-        <input
-          v-on:input="usuario.IdPersonal = $event.target.value"
-          type="text"
-          v-model="usuario.IdPersonal"
-          :disabled="loading"
-          id="IdPersonal"
-        />
-        <label for="IdPersonal">Id Personal</label>
-      </div>
-      <div class="input-field col s6">
-        <input
-          v-on:input="usuario.idOrdenes = $event.target.value"
-          v-model="usuario.idOrdenes"
-          :disabled="loading"
-          id="idOrdenes"
-          type="text"
-          class="validate"
-        />
-        <label for="idOrdenes">idOrdenes</label>
-      </div>
       <div class="input-field col s6">
         <input
           v-on:input="usuario.usuario = $event.target.value"
@@ -105,7 +80,7 @@
           :disabled="loading"
           id="contrasena"
         />
-        <label for="contrasena">Contrasena</label>
+        <label for="contrasena">Contraseña</label>
       </div>
       <div class="input-field col s6">
         <input
@@ -131,8 +106,7 @@
           <input v-on:input="usuario.scope = $event.target.value" type="text" v-model="usuario.scope" :disabled="loading"  id="scope">
           <label for="scope">Scope</label>
       </div>-->
-      <label for="scope">Seleccione el tipo de usuario</label>
-      <div class="input-field col s6">
+      <label for="scope">Seleccione el tipo de usuario:</label>
         <select
           style="color: black"
           class="browser-default"
@@ -147,7 +121,6 @@
           <option value="Cajero">Cajero</option>
           <option value="Mesero">Mesero</option>
         </select>
-      </div>
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
