@@ -156,7 +156,7 @@ export default {
             this.usuario= {};
             this.contrasena = "";
             this.contrasena2 = "";
-						sweetAlert("Creado con exito!", "Los cambios estan en la tabla", "success");
+						sweetAlert("Creado con exito!", "Bienvenido Al Servicio de The Spots", "success");
 						this.getUsuario();
 					}else{
 						sweetAlert("Oops...", "Error al crear", "error");
