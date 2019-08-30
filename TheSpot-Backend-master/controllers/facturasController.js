@@ -9,7 +9,7 @@ exports.getFacturas = {
   },
   handler: function(request, reply){
     var facturas = factura.find({});
-    reply(facturas);
+    return(facturas);
   }
 }
 exports.getFacturaId = {

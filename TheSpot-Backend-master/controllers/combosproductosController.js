@@ -5,7 +5,7 @@ exports.getCombosProductos = {
 
     handler: function (request, reply) {
         var combosproductos = comboproducto.find({});
-        reply(combosproductos);
+        return(combosproductos);
     }
 }
 exports.getComboProductoId = {

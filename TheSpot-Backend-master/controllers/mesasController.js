@@ -11,7 +11,7 @@ exports.getMesas = {
   */
   handler: function(request, reply){
     var Mesas = mesa.find({});
-    reply(Mesas);
+    return(Mesas);
   }
 }
 exports.getMesaId = {

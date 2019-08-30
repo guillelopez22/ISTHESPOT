@@ -5,7 +5,7 @@ exports.getProductosInsumos = {
 
     handler: function (request, reply) {
         var productosinsumos = productoinsumo.find({});
-        reply(productosinsumos);
+        return(productosinsumos);
     }
 }
 exports.getProductoInsumoId = {

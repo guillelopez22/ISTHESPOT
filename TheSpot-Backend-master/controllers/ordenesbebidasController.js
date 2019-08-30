@@ -5,7 +5,7 @@ exports.getOrdenesBebidas = {
   
   handler: function(request, reply){
     var ordenesbebidas = ordenbebida.find({});
-    reply(ordenesbebidas);
+    return(ordenesbebidas);
   }
 }
 exports.getOrdenBebidaId = {

@@ -5,7 +5,7 @@ exports.getMesasEmpleados = {
   
   handler: function(request, reply){
     var mesasempleados = mesaempleado.find({});
-    reply(mesasempleados);
+    return(mesasempleados);
   }
 }
 exports.getMesaEmpleadoId = {

@@ -9,7 +9,7 @@ exports.getPromociones = {
   },*/
   handler: function(request, reply){
     var promociones = promocion.find({});
-    reply(promociones);
+    return(promociones);
   }
 }
 exports.getPromocionId = {

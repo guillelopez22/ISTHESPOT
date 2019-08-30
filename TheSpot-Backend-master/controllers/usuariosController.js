@@ -9,7 +9,7 @@ exports.getUsuarios = {
   },*/
   handler: function(request, reply){
     var usuarios = usuario.find({});
-    reply(usuarios);
+    return(usuarios);
   }
 }
 exports.getUsuarioId = {

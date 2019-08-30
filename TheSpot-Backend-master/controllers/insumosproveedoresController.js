@@ -5,7 +5,7 @@ exports.getInsumosProveedores = {
 
     handler: function (request, reply) {
         var insumosproveedores = insumoproveedor.find({});
-        reply(insumosproveedores);
+        return(insumosproveedores);
     }
 }
 exports.getInsumoProveedorId = {

@@ -9,7 +9,7 @@ exports.getPersonal = {
   },
   handler: function(request, reply){
     var _personal = personal.find({});
-    reply(_personal);
+    return(_personal);
   }
 }
 exports.getPersonalId = {

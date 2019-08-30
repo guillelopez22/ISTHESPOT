@@ -5,7 +5,7 @@ exports.getCombosBebidas = {
 
     handler: function (request, reply) {
         var combosbebidas = combobebida.find({});
-        reply(combosbebidas);
+        return(combosbebidas);
     }
 }
 exports.getComboBebidaId = {

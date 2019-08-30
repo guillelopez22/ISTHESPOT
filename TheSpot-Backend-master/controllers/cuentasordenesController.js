@@ -5,7 +5,7 @@ exports.getCuentaOrden = {
   
   handler: function(request, reply){
     var cuentasordenes = cuentaorden.find({});
-    reply(cuentasordenes);
+    return(cuentasordenes);
   }
 }
 exports.getCuentaOrdenId = {

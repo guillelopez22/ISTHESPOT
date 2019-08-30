@@ -5,7 +5,7 @@ exports.getCuentas = {
   
   handler: function(request, reply){
     var cuentas = cuenta.find({});
-    reply(cuentas);
+    return(cuentas);
   }
 }
 exports.getCuentaId = {

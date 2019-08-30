@@ -9,7 +9,7 @@ exports.getInsumos = {
   },*/
   handler: function(request, reply){
     var insumos = insumo.find({});
-    reply(insumos);
+    return(insumos);
   }
 }
 exports.getInsumoId = {

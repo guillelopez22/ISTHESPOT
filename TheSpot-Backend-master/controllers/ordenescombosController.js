@@ -5,7 +5,7 @@ exports.getOrdenesCombos = {
   
   handler: function(request, reply){
     var ordenescombos = ordencombo.find({});
-    reply(ordenescombos);
+    return(ordenescombos);
   }
 }
 exports.getOrdenComboId = {

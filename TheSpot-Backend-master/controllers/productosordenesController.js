@@ -5,7 +5,7 @@ exports.getProductosOrdenes = {
   
   handler: function(request, reply){
     var productosordenes = productoorden.find({});
-    reply(productosordenes);
+    return(productosordenes);
   }
 }
 exports.getProductoOrdenId = {
