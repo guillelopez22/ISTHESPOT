@@ -30,6 +30,7 @@ async function start() {
   console.log("aqui entra");
   await server.register({
     plugin: require('hapi-auth-cookie')
+    
   });
 
   server.auth.strategy('session', 'cookie', {
@@ -41,6 +42,7 @@ async function start() {
       isSecure: true
     },// only allow HS256 algorithm 
     redirectTo: '/login',
+    
 
     validateFunc: async (request, session) => {
 

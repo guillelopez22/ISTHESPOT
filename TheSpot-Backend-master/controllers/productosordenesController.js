@@ -13,11 +13,11 @@ exports.getProductoOrdenId = {
   handler : function(request, reply){
     productoorden.findOne({'_id' : request.params._id}, function(err, ProductoOrden){
       if(!err && ProductoOrden){
-        return reply(ProductoOrden);
+        return (ProductoOrden);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'ProductoOrden not found'));
+        return (boom.wrap(err, 'ProductoOrden not found'));
       }
     });
   }
@@ -28,11 +28,11 @@ exports.getProductoOrdenProducto = {
   handler : function(request, reply){
     productoorden.find({'idProducto' : request.params.idProducto}, function(err, ProductosOrdenes){
       if(!err && ProductosOrdenes){
-        return reply(ProductosOrdenes);
+        return (ProductosOrdenes);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'id producto not found'));
+        return (boom.wrap(err, 'id producto not found'));
       }
     });
   }
@@ -43,11 +43,11 @@ exports.getProductoOrdenOrden = {
     handler : function(request, reply){
       productoorden.find({'idOrden' : request.params.idOrden}, function(err, ProductosOrdenes){
         if(!err && ProductosOrdenes){
-          return reply(ProductosOrdenes);
+          return (ProductosOrdenes);
         }else if(!err){
-          return reply(boom.notFound());
+          return (boom.notFound());
         }else if(err){
-          return reply(boom.wrap(err, 'id orden not found'));
+          return (boom.wrap(err, 'id orden not found'));
         }
       });
     }
@@ -65,9 +65,9 @@ exports.modifyProductoOrden = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'ProductoOrden not found'));
+          return (boom.wrap(err, 'ProductoOrden not found'));
         }else{
-          return reply('updated succesfully');
+          return ('updated succesfully');
         }
       }
     );
@@ -78,12 +78,12 @@ exports.deleteProductoOrden = {
   handler: function(request, reply){
     productoorden.deleteMany({'idOrden' : request.params._id}, function(err, ProductoOrden){
       if(err){
-        return reply(boom.badRequest("Could not delete producto orden"));
+        return (boom.badRequest("Could not delete producto orden"));
       }else if(!err && ProductoOrden){
         //ProductoOrden.remove();
-        return reply('producto orden deleted succesfully');
+        return ('producto orden deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }
     });
   }
@@ -98,11 +98,11 @@ exports.createProductoOrden = {
     });
     newProductoOrden.save(function(err){
       if(!err){
-        return reply({
+        return ({
           success: true
         });
       }else{
-        return reply({
+        return ({
           success: false
         })
       }

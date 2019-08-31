@@ -21,11 +21,11 @@ exports.getInsumoId = {
   handler : function(request, reply){
     insumo.findOne({'_id' : request.params._id}, function(err, Insumo){
       if(!err && Insumo){
-        return reply(Insumo);
+        return (Insumo);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Insumo not found'));
+        return (boom.wrap(err, 'Insumo not found'));
       }
     });
   }
@@ -39,11 +39,11 @@ exports.getInsumoName = {
   handler : function(request, reply){
     insumo.find({'nombre' : request.params.nombre}, function(err, Insumos){
       if(!err && Insumos){
-        return reply(Insumos);
+        return (Insumos);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Insumos not found'));
+        return (boom.wrap(err, 'Insumos not found'));
       }
     });
   }
@@ -57,11 +57,11 @@ exports.getInsumoProveedor = {
   handler : function(request, reply){
     insumo.find({'idProveedor' : request.params.idProveedor}, function(err, Insumos){
       if(!err && Insumos){
-        return reply(Insumos);
+        return (Insumos);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Insumos not found'));
+        return (boom.wrap(err, 'Insumos not found'));
       }
     });
   }
@@ -75,11 +75,11 @@ exports.getInsumoInventario = {
   handler : function(request, reply){
     insumo.find({'inventario' : request.params.inventario}, function(err, Insumos){
       if(!err && Insumos){
-        return reply(Insumos);
+        return (Insumos);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Insumos not found'));
+        return (boom.wrap(err, 'Insumos not found'));
       }
     });
   }
@@ -101,9 +101,9 @@ exports.modifyInsumo = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'Insumo not found'));
+          return (boom.wrap(err, 'Insumo not found'));
         }else{
-          return reply('updated succesfully');
+          return ('updated succesfully');
         }
       }
     );
@@ -118,12 +118,12 @@ exports.deleteInsumo = {
   handler: function(request, reply){
     insumo.findOne({'_id' : request.params._id}, function(err, Insumo){
       if(err){
-        return reply(boom.badRequest("Could not delete insumo"));
+        return (boom.badRequest("Could not delete insumo"));
       }else if(!err && Insumo){
         Insumo.remove();
-        return reply('Insumo deleted succesfully');
+        return ('Insumo deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }
     });
   }
@@ -142,11 +142,11 @@ exports.createInsumo = {
     });
     newInsumo.save(function(err){
       if(!err){
-        return reply({
+        return ({
           success: true
         });
       }else{
-        return reply({
+        return ({
           success: false
         })
       }

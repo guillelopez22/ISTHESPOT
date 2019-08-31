@@ -13,11 +13,11 @@ exports.getInsumoProveedorId = {
     handler: function (request, reply) {
         insumoproveedor.findOne({ '_id': request.params._id }, function (err, InsumoProveedor) {
             if (!err && InsumoProveedor) {
-                return reply(InsumoProveedor);
+                return (InsumoProveedor);
             } else if (!err) {
-                return reply(boom.notFound());
+                return (boom.notFound());
             } else if (err) {
-                return reply(boom.wrap(err, 'InsumoProveedor not found'));
+                return (boom.wrap(err, 'InsumoProveedor not found'));
             }
         });
     }
@@ -28,11 +28,11 @@ exports.getInsumoProveedorInsumo = {
     handler: function (request, reply) {
         insumoproveedor.find({ 'idInsumo': request.params.idInsumo }, function (err, InsumosProveedores) {
             if (!err && InsumosProveedores) {
-                return reply(InsumosProveedores);
+                return (InsumosProveedores);
             } else if (!err) {
-                return reply(boom.notFound());
+                return (boom.notFound());
             } else if (err) {
-                return reply(boom.wrap(err, 'InsumosProveedores not found'));
+                return (boom.wrap(err, 'InsumosProveedores not found'));
             }
         });
     }
@@ -43,11 +43,11 @@ exports.getInsumoProveedorProveedor = {
     handler: function (request, reply) {
         insumoproveedor.find({ 'idProveedor': request.params.idProveedor }, function (err, InsumosProveedores) {
             if (!err && InsumosProveedores) {
-                return reply(InsumosProveedores);
+                return (InsumosProveedores);
             } else if (!err) {
-                return reply(boom.notFound());
+                return (boom.notFound());
             } else if (err) {
-                return reply(boom.wrap(err, 'InsumosProveedores not found'));
+                return (boom.wrap(err, 'InsumosProveedores not found'));
             }
         });
     }
@@ -66,9 +66,9 @@ exports.modifyInsumoProveedor = {
                 }
             }, function (err) {
                 if (err) {
-                    return reply(boom.wrap(err, 'InsumoProveedor not found'));
+                    return (boom.wrap(err, 'InsumoProveedor not found'));
                 } else {
-                    return reply('updated succesfully');
+                    return ('updated succesfully');
                 }
             }
         );
@@ -79,12 +79,12 @@ exports.deleteInsumoProveedor = {
     handler: function (request, reply) {
         insumoproveedor.deleteMany({ 'idInsumo': request.params._id }, function (err, InsumoProveedor) {
             if (err) {
-                return reply(boom.badRequest("Could not delete InsumoProveedor"));
+                return (boom.badRequest("Could not delete InsumoProveedor"));
             } else if (!err && InsumoProveedor) {
                 //InsumoProveedor.remove();
-                return reply('InsumoProveedor deleted succesfully');
+                return ('InsumoProveedor deleted succesfully');
             } else if (!err) {
-                return reply(boom.notFound());
+                return (boom.notFound());
             }
         });
     }
@@ -98,11 +98,11 @@ exports.createInsumoProveedor = {
         });
         newInsumoProveedor.save(function (err) {
             if (!err) {
-                return reply({
+                return ({
                     success: true
                 });
             } else {
-                return reply({
+                return ({
                     success: false
                 })
             }

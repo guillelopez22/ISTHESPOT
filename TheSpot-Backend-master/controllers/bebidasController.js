@@ -1,70 +1,75 @@
 var bebida = require('../schemas/bebida.js');
 var mongoose = require('mongoose');
 
+
 exports.getBebidas = {
   
-  handler: function(request, reply){
+  handler: async function(request, reply){
     var bebidas = bebida.find({});
     return bebidas;
   }
 }
 exports.getBebidaId = {
   
-  handler : function(request, reply){
+  handler : async function(request, reply){
     bebida.findOne({'_id' : request.params._id}, function(err, Bebida){
       if(!err && Bebida){
-        return reply(Bebida);
+        return (Bebida);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Bebida not found'));
+        return (boom.wrap(err, 'Bebida not found'));
       }
     });
+    return (Bebida);
   }
 }
 exports.getBebidaName = {
-  handler : function(request, reply){
+  handler : async function(request, reply){
     bebida.find({'nombre' : request.params.nombre}, function(err, Bebidas){
       if(!err && Bebidas){
-        return reply(Bebidas);
+        return (Bebidas);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Bebidas not found'));
+        return (boom.wrap(err, 'Bebidas not found'));
       }
     });
+    return (Bebidas);
   }
 }
 exports.getBebidaProveedor = {
   
-  handler : function(request, reply){
+  handler : async function(request, reply){
     bebida.find({'idProveedor' : request.params.idProveedor}, function(err, Bebidas){
       if(!err && Bebidas){
-        return reply(Bebidas);
+        return (Bebidas);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Bebidas not found'));
+        return (boom.wrap(err, 'Bebidas not found'));
       }
     });
+    return (Bebidas);
   }
 }
 exports.getBebidaTipo = {
-  handler : function(request, reply){
+  handler : async function(request, reply){
     bebida.find({'tipo' : request.params.tipo}, function(err, Bebidas){
       if(!err && Bebidas){
-        return reply(Bebidas);
+        return (Bebidas);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Bebidas not found'));
+        return (boom.wrap(err, 'Bebidas not found'));
       }
     });
+    return (Bebidas);
   }
 }
 exports.modifyBebida = {
   
-  handler: function(request, reply){
+  handler: async function(request, reply){
     bebida.update(
       {'_id': request.params._id},
       {$set:
@@ -77,32 +82,36 @@ exports.modifyBebida = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'Bebida not found'));
+          return (boom.wrap(err, 'Bebida not found'));
         }else{
-          return reply('updated succesfully');
+          return ('updated succesfully');
         }
       }
     );
+    return ('updated succesfully');
   }
 }
 exports.deleteBebida = {
   
-  handler: function(request, reply){
+  handler: async(request, reply) =>{
     bebida.findOne({'_id' : request.params._id}, function(err, Bebida){
       if(err){
-        return reply(boom.badRequest("Could not delete bebida"));
+        return (boom.badRequest("Could not delete bebida"));
       }else if(!err && Bebida){
         Bebida.remove();
-        return reply('Bebida deleted succesfully');
+         return ('Bebida deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }
     });
+    return ('Bebida deleted succesfully');
   }
+  //AQUI SE DEBERIA DE RETORNAR EsVerdadero
 }
 exports.createBebida = {
   
-  handler: function(request, reply){
+  handler: async function(request, reply){
+    var EsVerdadero=false;
     var newBebida = new bebida({
       nombre : request.payload.nombre,
       idProveedor : request.payload.idProveedor,
@@ -110,16 +119,20 @@ exports.createBebida = {
       inventario : request.payload.inventario,
       descripcion : request.payload.descripcion
     });
-    newBebida.save(function(err){
+     newBebida.save(function(err){
       if(!err){
-        return reply({
-          success: true
-        });
+        EsVerdadero=Boolean(true);
+        console.log("entro a lo de new bebid",EsVerdadero)
+        return true;
+        
       }else{
-        return reply({
+        
+        return ({
           success: false
         })
+        
       }
     });
+    return true;
   }
 }

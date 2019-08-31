@@ -13,11 +13,11 @@ exports.getOrdenBebidaId = {
   handler : function(request, reply){
     ordenbebida.findOne({'_id' : request.params._id}, function(err, OrdenBebida){
       if(!err && OrdenBebida){
-        return reply(OrdenBebida);
+        return (OrdenBebida);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'OrdenBebida not found'));
+        return (boom.wrap(err, 'OrdenBebida not found'));
       }
     });
   }
@@ -28,11 +28,11 @@ exports.getOrdenBebidaOrden = {
   handler : function(request, reply){
     ordenbebida.find({'idOrden' : request.params.idOrden}, function(err, OrdenesBebidas){
       if(!err && OrdenesBebidas){
-        return reply(OrdenesBebidas);
+        return (OrdenesBebidas);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'OrdenesBebidas not found'));
+        return (boom.wrap(err, 'OrdenesBebidas not found'));
       }
     });
   }
@@ -43,11 +43,11 @@ exports.getOrdenBebidaBebida = {
     handler : function(request, reply){
       ordenbebida.find({'idBebida' : request.params.idBebida}, function(err, OrdenesBebidas){
         if(!err && OrdenesBebidas){
-          return reply(OrdenesBebidas);
+          return (OrdenesBebidas);
         }else if(!err){
-          return reply(boom.notFound());
+          return (boom.notFound());
         }else if(err){
-          return reply(boom.wrap(err, 'OrdenesBebidas not found'));
+          return (boom.wrap(err, 'OrdenesBebidas not found'));
         }
       });
     }
@@ -66,9 +66,9 @@ exports.modifyOrdenBebida = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'OrdenBebida not found'));
+          return (boom.wrap(err, 'OrdenBebida not found'));
         }else{
-          return reply('updated succesfully');
+          return ('updated succesfully');
         }
       }
     );
@@ -79,12 +79,12 @@ exports.deleteOrdenBebida = {
   handler: function(request, reply){
     ordenbebida.deleteMany({'idOrden' : request.params._id}, function(err, OrdenBebida){
       if(err){
-        return reply(boom.badRequest("Could not delete OrdenBebida"));
+        return (boom.badRequest("Could not delete OrdenBebida"));
       }else if(!err && OrdenBebida){
         //OrdenBebida.remove();
-        return reply('OrdenBebida deleted succesfully');
+        return ('OrdenBebida deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }
     });
   }
@@ -99,11 +99,11 @@ exports.createOrdenBebida = {
     });
     newOrdenBebida.save(function(err){
       if(!err){
-        return reply({
+        return ({
           success: true
         });
       }else{
-        return reply({
+        return ({
           success: false
         })
       }

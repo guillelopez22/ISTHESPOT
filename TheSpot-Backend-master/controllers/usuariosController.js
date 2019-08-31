@@ -75,11 +75,11 @@ exports.getUsuarioName = {
   handler : function(request, reply){
     usuario.findOne({'nombre' : request.params.nombre}, function(err, Usuario){
       if(!err && Usuario){
-        return reply(Usuario);
+        return (Usuario);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Usuario not found'));
+        return (boom.wrap(err, 'Usuario not found'));
       }
     });
   }
@@ -105,9 +105,9 @@ exports.modifyUsuario = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'Usuario not found'));
+          return (boom.wrap(err, 'Usuario not found'));
         }else{
-          return reply('updated succesfully');
+          return ('updated succesfully');
         }
       }
     );
@@ -122,12 +122,12 @@ exports.deleteUsuario = {
   handler: function(request, reply){
     usuario.findOne({'_id' : request.params._id}, function(err, Usuario){
       if(err){
-        return reply(boom.badRequest("Could not delete Usuario"));
+        return (boom.badRequest("Could not delete Usuario"));
       }else if(!err && Usuario){
         Usuario.remove();
-        return reply('Usuario deleted succesfully');
+        return ('Usuario deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }
     });
   }
@@ -145,11 +145,11 @@ exports.createUsuario = {
     });
     newUsuario.save(function(err){
       if(!err){
-        return reply({
+        return ({
           success: true
         });
       }else{
-        return reply({
+        return ({
           success: false
         })
       }

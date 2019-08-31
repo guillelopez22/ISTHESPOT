@@ -21,11 +21,11 @@ exports.getFacturaId = {
   handler : function(request, reply){
     factura.findOne({'_id' : request.params._id}, function(err, Factura){
       if(!err && Factura){
-        return reply(Factura);
+        return (Factura);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Factura not found'));
+        return (boom.wrap(err, 'Factura not found'));
       }
     });
   }
@@ -39,11 +39,11 @@ exports.getFacturaName = {
   handler : function(request, reply){
     factura.find({'nombre' : request.params.nombre}, function(err, Facturas){
       if(!err && Facturas){
-        return reply(Facturas);
+        return (Facturas);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Facturas not found'));
+        return (boom.wrap(err, 'Facturas not found'));
       }
     });
   }
@@ -57,11 +57,11 @@ exports.getFacturaIdOrden = {
   handler : function(request, reply){
     factura.find({'idOrden' : request.params.idOrden}, function(err, Facturas){
       if(!err && Facturas){
-        return reply(Facturas);
+        return (Facturas);
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Factura not found'));
+        return (boom.wrap(err, 'Factura not found'));
       }
     });
   }
@@ -87,9 +87,9 @@ exports.modifyFactura = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'Factura not found'));
+          return (boom.wrap(err, 'Factura not found'));
         }else{
-          return reply('updated succesfully');
+          return ('updated succesfully');
         }
       }
     );
@@ -104,12 +104,12 @@ exports.deleteFactura = {
   handler: function(request, reply){
     factura.findOne({'_id' : request.params._id}, function(err, Facturas){
       if(err){
-        return reply(boom.badRequest("Could not delete factura"));
+        return (boom.badRequest("Could not delete factura"));
       }else if(!err && Facturas){
         Facturas.remove();
-        return reply('Factura deleted succesfully');
+        return ('Factura deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        return (boom.notFound());
       }
     });
   }
@@ -132,11 +132,11 @@ exports.createFactura = {
     });
     newFactura.save(function(err){
       if(!err){
-        return reply({
+        return ({
           success: true
         });
       }else{
-        return reply({
+        return ({
           success: false
         })
       }
