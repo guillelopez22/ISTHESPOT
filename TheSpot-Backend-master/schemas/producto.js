@@ -8,7 +8,8 @@ var ProductoSchema = new mongoose.Schema({
   //idBebida: String,
   idInsumo: String,
   cantidad: Number,
-  precio : Number
+  precio : Number,
+  Imagen: String
 });
 
 module.exports = mongoose.model('producto', ProductoSchema);
