@@ -71,10 +71,11 @@
     </ul>
     <br />
     <div class="row">
+
       <div class="input-field col s6">
-        <label for>Seleccione la mesa</label>
-        <br />
-        <br />
+    <label for>Seleccione la mesa</label>
+<br />
+<br />
         <select
           style="color: black"
           class="browser-default"
@@ -89,9 +90,9 @@
       </div>
 
       <div class="input-field col s6">
-        <label for="bebida">Seleccione el empleado</label>
-        <br />
-        <br />
+    <label for="bebida">Seleccione el empleado</label>
+<br />
+<br />
         <select
           style="color: black"
           class="browser-default"
@@ -105,7 +106,7 @@
         </select>
       </div>
     </div>
-    <br />
+<br />
     <button v-on:click="agregarCombos()" class="waves-effect waves-teal btn-large">Agregar</button>
     <label for="idCombos">Seleccione el combo</label>
     <div class="row">
@@ -991,75 +992,10 @@ export default {
       this.orden.idCombos = orden.idCombos;
       this.orden.idMesa = orden.idMesa;
       this.idEmpleado = orden.idEmpleado;
-
-      var prods;
-      this.$http
-        .get("http://localhost:8000/productosordenes")
-        .then(response => {
-          prods = response.body;
-          var i = 0;
-          var j;
-          for (j = 0; j < prods.length; j++) {
-            if (prods[j].idOrden == this.idModificar) {
-              for (i = 0; i < this.productos.length; i++) {
-                if (prods[j].idProducto == this.productos[i]._id) {
-                  var t = {};
-                  t.nombre = this.productos[i].nombre;
-                  t.index = this.productos_n.length;
-                  t.cantidad_producto = prods[j].cantidad_producto;
-                  this.productos_n.push(t);
-                  this.productos_a.push(prods[j].idProducto);
-                }
-              }
-            }
-          }
-        });
-      var bebs;
-      this.$http.get("http://localhost:8000/ordenesbebidas").then(response => {
-        bebs = response.body;
-        var i = 0;
-        var j;
-        for (j = 0; j < bebs.length; j++) {
-          if (bebs[j].idOrden == this.idModificar) {
-            for (i = 0; i < this.bebidas.length; i++) {
-              if (bebs[j].idBebida == this.bebidas[i]._id) {
-                var t = {};
-                t.nombre = this.bebidas[i].nombre;
-                t.index = this.bebidas_n.length;
-                t.cantidad_bebida = bebs[j].cantidad_bebida;
-                this.bebidas_n.push(t);
-                this.bebidas_a.push(bebs[j].idBebida);
-              }
-            }
-          }
-        }
-      });
-      var combs;
-      this.$http.get("http://localhost:8000/ordenescombos").then(response => {
-        combs = response.body;
-        var i = 0;
-        var j;
-        for (j = 0; j < combs.length; j++) {
-          if (combs[j].idOrden == this.idModificar) {
-            for (i = 0; i < this.combos.length; i++) {
-              if (combs[j].idCombo == this.combos[i]._id) {
-                var t = {};
-                t.nombre = this.combos[i].nombre;
-                t.index = this.combos_n.length;
-                t.cantidad_combo = combs[j].cantidad_combo;
-                this.combos_n.push(t);
-                this.combos_a.push(combs[j].idCombo);
-              }
-            }
-          }
-        }
-      });
-
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
     modifyorden() {
-      let _this = this;
       this.loading = true;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
@@ -1074,130 +1010,6 @@ export default {
               this.loading = false;
               sweetAlert("Oops...", "Error al modificar", "error");
             } else {
-              //agregar
-              setTimeout(function() {
-                _this.$http
-                  .delete(
-                    "http://localhost:8000/ordenescombos/delete/" +
-                      _this.idModificar
-                  )
-                  .then(response => {
-                    if (response.body.success) {
-                      console.log("nel");
-                    } else {
-                      console.log("simon");
-                    }
-                  });
-                  _this.$http
-                  .delete(
-                    "http://localhost:8000/ordenesbebidas/delete/" +
-                      _this.idModificar
-                  )
-                  .then(response => {
-                    if (response.body.success) {
-                      console.log("nel");
-                    } else {
-                      console.log("simon");
-                    }
-                  });
-                  _this.$http
-                  .delete(
-                    "http://localhost:8000/productosordenes/delete/" +
-                      _this.idModificar
-                  )
-                  .then(response => {
-                    if (response.body.success) {
-                      console.log("nel");
-                    } else {
-                      console.log("simon");
-                    }
-                  });
-                //combos
-                var i;
-                //console.log("Cantidad: " + _this.ingredientes.length);
-                for (i = 0; i < _this.combos_a.length; i++) {
-                  _this.cmb = {};
-                  _this.cmb.idCombo = _this.combos_a[i];
-                  _this.cmb.idOrden =
-                    _this.ordenes[_this.ordenes.length - 1]._id;
-                  _this.cmb.cantidad_combo =
-                    _this.combos_n[i].cantidad_combo;
-                  //console.log(_this.productoxinsumo);
-                  _this.$http
-                    .post(
-                      "http://localhost:8000/ordenescombos/create",
-                      _this.cmb
-                    )
-                    .then(response => {
-                      _this.loading = false;
-                      if (response.body.success) {
-                        _this.cmb = {};
-                        console.log("agregó");
-                      } else {
-                        console.log("tronó");
-                      }
-                    });
-                }
-                _this.combos_a = [];
-                _this.combos_n = [];
-                //bebidas
-                var i;
-                //console.log("Cantidad: " + _this.ingredientes.length);
-                for (i = 0; i < _this.bebidas_a.length; i++) {
-                  _this.beb = {};
-                  _this.beb.idBebida = _this.bebidas_a[i];
-                  _this.beb.idOrden =
-                    _this.ordenes[_this.ordenes.length - 1]._id;
-                  _this.beb.cantidad_bebida =
-                    _this.bebidas_n[i].cantidad_bebida;
-                  //console.log(_this.productoxinsumo);
-                  _this.$http
-                    .post(
-                      "http://localhost:8000/ordenesbebidas/create",
-                      _this.beb
-                    )
-                    .then(response => {
-                      _this.loading = false;
-                      if (response.body.success) {
-                        _this.beb = {};
-                        console.log("agregó");
-                      } else {
-                        console.log("tronó");
-                      }
-                    });
-                }
-                _this.bebidas_a = [];
-                _this.bebidas_n = [];
-                //productos
-                var i;
-                //console.log("Cantidad: " + _this.ingredientes.length);
-                for (i = 0; i < _this.productos_a.length; i++) {
-                  _this.pro = {};
-                  _this.pro.idProducto = _this.productos_a[i];
-                  _this.pro.idOrden =
-                    _this.ordenes[_this.ordenes.length - 1]._id;
-                  _this.pro.cantidad_producto =
-                    _this.productos_n[i].cantidad_producto;
-                  //console.log(_this.productoxinsumo);
-                  _this.$http
-                    .post(
-                      "http://localhost:8000/productosordenes/create",
-                      _this.pro
-                    )
-                    .then(response => {
-                      _this.loading = false;
-                      if (response.body.success) {
-                        _this.pro = {};
-                        console.log("agregó");
-                      } else {
-                        console.log("tronó");
-                      }
-                    });
-                }
-                _this.productos_a = [];
-                _this.productos_n = [];
-              }, 2000);
-
               sweetAlert(
                 "Modificado con exito!",
                 "Los cambios estan en la tabla",
