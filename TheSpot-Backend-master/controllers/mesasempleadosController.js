@@ -13,11 +13,11 @@ exports.getMesaEmpleadoId = {
   handler : function(request, reply){
     mesaempleado.findOne({'_id' : request.params._id}, function(err, MesaEmpleado){
       if(!err && MesaEmpleado){
-        return (MesaEmpleado);
+        return reply(MesaEmpleado);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'mesa empleado not found'));
+        return reply(boom.wrap(err, 'mesa empleado not found'));
       }
     });
   }
@@ -26,11 +26,11 @@ exports.getMesaEmpleadoMesa = {
   handler : function(request, reply){
     mesaempleado.find({'idMesa' : request.params.idMesa}, function(err, MesaEmpleado){
       if(!err && MesaEmpleado){
-        return (MesaEmpleado);
+        return reply(MesaEmpleado);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'mesa not found'));
+        return reply(boom.wrap(err, 'mesa not found'));
       }
     });
   }
@@ -40,11 +40,11 @@ exports.getMesaEmpleadoEmpleado = {
   handler : function(request, reply){
     mesaempleado.find({'idEmpleado' : request.params.idEmpleado}, function(err, MesaEmpleado){
       if(!err && MesaEmpleado){
-        return (MesaEmpleado);
+        return reply(MesaEmpleado);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'empleado not found'));
+        return reply(boom.wrap(err, 'empleado not found'));
       }
     });
   }
@@ -61,9 +61,9 @@ exports.modifyMesaEmpleado = {
         }
       }, function(err){
         if(err){
-          return (boom.wrap(err, 'mesa empleado not found'));
+          return reply(boom.wrap(err, 'mesa empleado not found'));
         }else{
-          return ('updated succesfully');
+          return reply('updated succesfully');
         }
       }
     );
@@ -74,12 +74,12 @@ exports.deleteMesaEmpleado = {
   handler: function(request, reply){
     mesaempleado.deleteMany({'idMesa' : request.params._id}, function(err, MesaEmpleado){
       if(err){
-        return (boom.badRequest("Could not delete MesaEmpleado"));
+        return reply(boom.badRequest("Could not delete MesaEmpleado"));
       }else if(!err && MesaEmpleado){
         //MesaEmpleado.remove();
-        return ('MesaEmpleado deleted succesfully');
+        return reply('MesaEmpleado deleted succesfully');
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }
     });
   }
@@ -93,11 +93,11 @@ exports.createMesaEmpleado = {
     });
     newMesaEmpleado.save(function(err){
       if(!err){
-        return ({
+        return reply({
           success: true
         });
       }else{
-        return ({
+        return reply({
           success: false
         })
       }

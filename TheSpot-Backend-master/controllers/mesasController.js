@@ -25,11 +25,11 @@ exports.getMesaId = {
   handler : function(request, reply){
     mesa.findOne({'_id' : request.params._id}, function(err, Mesa){
       if(!err && Mesa){
-        return (Mesa);
+        return reply(Mesa);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Mesa not found'));
+        return reply(boom.wrap(err, 'Mesa not found'));
       }
     });
   }
@@ -45,11 +45,11 @@ exports.getMesaName = {
   handler : function(request, reply){
     mesa.find({'nombre' : request.params.nombre}, function(err, Mesas){
       if(!err && Mesas){
-        return (Mesas);
+        return reply(Mesas);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Mesas not found'));
+        return reply(boom.wrap(err, 'Mesas not found'));
       }
     });
   }
@@ -65,11 +65,11 @@ exports.getMesaNumero = {
   handler : function(request, reply){
     mesa.find({'numero' : request.params.numero}, function(err, Mesas){
       if(!err && Mesas){
-        return (Mesas);
+        return reply(Mesas);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Mesas not found'));
+        return reply(boom.wrap(err, 'Mesas not found'));
       }
     });
   }
@@ -85,11 +85,11 @@ exports.getMesaIdOrdenes = {
   handler : function(request, reply){
     mesa.find({'IdOrden' : request.params.IdOrden}, function(err, Mesas){
       if(!err && Mesas){
-        return (Mesas);
+        return reply(Mesas);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Mesas not found'));
+        return reply(boom.wrap(err, 'Mesas not found'));
       }
     });
   }
@@ -113,9 +113,9 @@ exports.modifyMesa = {
         }
       }, function(err){
         if(err){
-          return (boom.wrap(err, 'mesa not found'));
+          return reply(boom.wrap(err, 'mesa not found'));
         }else{
-          return ('updated succesfully');
+          return reply('updated succesfully');
         }
       }
     );
@@ -133,12 +133,12 @@ exports.deleteMesa = {
   handler: function(request, reply){
     mesa.findOne({'_id' : request.params._id}, function(err, mesa){
       if(err){
-        return (boom.badRequest("Could not delete mesa"));
+        return reply(boom.badRequest("Could not delete mesa"));
       }else if(!err && mesa){
         mesa.remove();
-        return ('Mesa deleted succesfully');
+        return reply('Mesa deleted succesfully');
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }
     });
   }
@@ -159,11 +159,11 @@ exports.createMesa = {
     });
     newMesa.save(function(err){
       if(!err){
-        return ({
+        return reply({
           success: true
         });
       }else{
-        return ({
+        return reply({
           success: false
         })
       }

@@ -13,25 +13,24 @@ exports.getCuentaId = {
   handler : function(request, reply){
     cuenta.findOne({'_id' : request.params._id}, function(err, Cuenta){
       if(!err && Cuenta){
-        return (Cuenta);
+        return reply(Cuenta);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Cuenta not found'));
+        return reply(boom.wrap(err, 'Cuenta not found'));
       }
     });
-    
   }
 }
 exports.getCuentaUsuario = {
   handler : function(request, reply){
     cuenta.find({'idUsuario' : request.params.idUsuario}, function(err, Usuarios){
       if(!err && Usuarios){
-        return (Usuarios);
+        return reply(Usuarios);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Usuario not found'));
+        return reply(boom.wrap(err, 'Usuario not found'));
       }
     });
   }
@@ -41,11 +40,11 @@ exports.getCuentaTotal = {
   handler : function(request, reply){
     cuenta.find({'total' : request.params.total}, function(err, Cuentas){
       if(!err && Cuentas){
-        return (Cuentas);
+        return reply(Cuentas);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'total not found'));
+        return reply(boom.wrap(err, 'total not found'));
       }
     });
   }
@@ -54,11 +53,11 @@ exports.getCuentaEstado = {
   handler : function(request, reply){
     cuenta.find({'estado' : request.params.estado}, function(err, Cuentas){
       if(!err && Cuentas){
-        return (Cuentas);
+        return reply(Cuentas);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'estado not found'));
+        return reply(boom.wrap(err, 'estado not found'));
       }
     });
   }
@@ -76,9 +75,9 @@ exports.modifyCuenta = {
         }
       }, function(err){
         if(err){
-          return (boom.wrap(err, 'cuenta not found'));
+          return reply(boom.wrap(err, 'cuenta not found'));
         }else{
-          return ('updated succesfully');
+          return reply('updated succesfully');
         }
       }
     );
@@ -89,12 +88,12 @@ exports.deleteCuenta = {
   handler: function(request, reply){
     cuenta.findOne({'_id' : request.params._id}, function(err, Cuenta){
       if(err){
-        return (boom.badRequest("Could not delete cuenta"));
+        return reply(boom.badRequest("Could not delete cuenta"));
       }else if(!err && Cuenta){
         Cuenta.remove();
-        return ('cuenta deleted succesfully');
+        return reply('cuenta deleted succesfully');
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }
     });
   }
@@ -109,11 +108,11 @@ exports.createCuenta = {
     });
     newCuenta.save(function(err){
       if(!err){
-        return ({
+        return reply({
           success: true
         });
       }else{
-        return ({
+        return reply({
           success: false
         })
       }

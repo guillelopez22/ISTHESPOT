@@ -13,14 +13,13 @@ exports.getComboBebidaId = {
     handler: function (request, reply) {
         combobebida.findOne({ '_id': request.params._id }, function (err, ComboBebida) {
             if (!err && ComboBebida) {
-                return (ComboBebida);
+                return reply(ComboBebida);
             } else if (!err) {
-                return (boom.notFound());
+                return reply(boom.notFound());
             } else if (err) {
-                return (boom.wrap(err, 'ComboBebida not found'));
+                return reply(boom.wrap(err, 'ComboBebida not found'));
             }
         });
-        
     }
 }
 
@@ -29,11 +28,11 @@ exports.getComboBebidaCombo = {
     handler: function (request, reply) {
         combobebida.find({ 'idCombo': request.params.idCombo }, function (err, CombosBebidas) {
             if (!err && CombosBebidas) {
-                return (CombosBebidas);
+                return reply(CombosBebidas);
             } else if (!err) {
-                return (boom.notFound());
+                return reply(boom.notFound());
             } else if (err) {
-                return (boom.wrap(err, 'CombosBebidas not found'));
+                return reply(boom.wrap(err, 'CombosBebidas not found'));
             }
         });
     }
@@ -44,11 +43,11 @@ exports.getComboBebidaBebida = {
     handler: function (request, reply) {
         combobebida.find({ 'idBebida': request.params.idBebida }, function (err, CombosBebidas) {
             if (!err && CombosBebidas) {
-                return (CombosBebidas);
+                return reply(CombosBebidas);
             } else if (!err) {
-                return (boom.notFound());
+                return reply(boom.notFound());
             } else if (err) {
-                return (boom.wrap(err, 'CombosBebidas not found'));
+                return reply(boom.wrap(err, 'CombosBebidas not found'));
             }
         });
     }
@@ -68,9 +67,9 @@ exports.modifyComboBebida = {
                 }
             }, function (err) {
                 if (err) {
-                    return (boom.wrap(err, 'ComboBebida not found'));
+                    return reply(boom.wrap(err, 'ComboBebida not found'));
                 } else {
-                    return ('updated succesfully');
+                    return reply('updated succesfully');
                 }
             }
         );
@@ -81,12 +80,12 @@ exports.deleteComboBebida = {
     handler: function (request, reply) {
         combobebida.deleteMany({ 'idCombo': request.params._id }, function (err, ComboBebida) {
             if (err) {
-                return (boom.badRequest("Could not delete ComboBebida"));
+                return reply(boom.badRequest("Could not delete ComboBebida"));
             } else if (!err && ComboBebida) {
                 //ComboBebida.remove();
-                return ('ComboBebida deleted succesfully');
+                return reply('ComboBebida deleted succesfully');
             } else if (!err) {
-                return (boom.notFound());
+                return reply(boom.notFound());
             }
         });
     }
@@ -101,11 +100,11 @@ exports.createComboBebida = {
         });
         newComboBebida.save(function (err) {
             if (!err) {
-                return ({
+                return reply({
                     success: true
                 });
             } else {
-                return ({
+                return reply({
                     success: false
                 })
             }

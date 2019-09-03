@@ -13,25 +13,24 @@ exports.getComboProductoId = {
     handler: function (request, reply) {
         comboproducto.findOne({ '_id': request.params._id }, function (err, ComboProducto) {
             if (!err && ComboProducto) {
-                return (ComboProducto);
+                return reply(ComboProducto);
             } else if (!err) {
-                return (boom.notFound());
+                return reply(boom.notFound());
             } else if (err) {
-                return (boom.wrap(err, 'Combo Producto id not found'));
+                return reply(boom.wrap(err, 'Combo Producto id not found'));
             }
         });
-        
     }
 }
 exports.getComboProductoProducto = {
     handler: function (request, reply) {
         comboproducto.find({ 'idProducto': request.params.idProducto }, function (err, CombosProductos) {
             if (!err && CombosProductos) {
-                return (CombosProductos);
+                return reply(CombosProductos);
             } else if (!err) {
-                return (boom.notFound());
+                return reply(boom.notFound());
             } else if (err) {
-                return (boom.wrap(err, 'Productos not found'));
+                return reply(boom.wrap(err, 'Productos not found'));
             }
         });
     }
@@ -41,11 +40,11 @@ exports.getComboProductoCombo = {
     handler: function (request, reply) {
         comboproducto.find({ 'idCombo': request.params.idCombo }, function (err, CombosProductos) {
             if (!err && CombosProductos) {
-                return (CombosProductos);
+                return reply(CombosProductos);
             } else if (!err) {
-                return (boom.notFound());
+                return reply(boom.notFound());
             } else if (err) {
-                return (boom.wrap(err, 'Combos not found'));
+                return reply(boom.wrap(err, 'Combos not found'));
             }
         });
     }
@@ -65,9 +64,9 @@ exports.modifyComboProducto = {
                 }
             }, function (err) {
                 if (err) {
-                    return (boom.wrap(err, 'Combo Producto not found'));
+                    return reply(boom.wrap(err, 'Combo Producto not found'));
                 } else {
-                    return ('updated succesfully');
+                    return reply('updated succesfully');
                 }
             }
         );
@@ -78,12 +77,12 @@ exports.deleteComboProducto = {
     handler: function (request, reply) {
         comboproducto.deleteMany({ 'idCombo': request.params._id }, function (err, ComboProducto) {
             if (err) {
-                return (boom.badRequest("Could not delete combo producto"));
+                return reply(boom.badRequest("Could not delete combo producto"));
             } else if (!err && ComboProducto) {
                 //ComboProducto.remove();
-                return ('combo producto deleted succesfully');
+                return reply('combo producto deleted succesfully');
             } else if (!err) {
-                return (boom.notFound());
+                return reply(boom.notFound());
             }
         });
     }
@@ -98,11 +97,11 @@ exports.createComboProducto = {
         });
         newComboProducto.save(function (err) {
             if (!err) {
-                return ({
+                return reply({
                     success: true
                 });
             } else {
-                return ({
+                return reply({
                     success: false
                 })
             }

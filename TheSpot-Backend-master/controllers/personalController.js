@@ -21,11 +21,11 @@ exports.getPersonalId = {
   handler : function(request, reply){
     personal.findOne({'_id' : request.params._id}, function(err, Personal){
       if(!err && Personal){
-        return (Personal);
+        return reply(Personal);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Personal not found'));
+        return reply(boom.wrap(err, 'Personal not found'));
       }
     });
   }
@@ -39,11 +39,11 @@ exports.getPersonalUsuario = {
   handler : function(request, reply){
     personal.find({'idUsuario' : request.params.idUsuario}, function(err, Personal){
       if(!err && Personal){
-        return (Personal);
+        return reply(Personal);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Personal not found'));
+        return reply(boom.wrap(err, 'Personal not found'));
       }
     });
   }
@@ -57,11 +57,11 @@ exports.getPersonalOrdenes = {
   handler : function(request, reply){
     personal.find({'idOrdenes' : request.params.idOrdenes}, function(err, Personal){
       if(!err && Personal){
-        return (Personal);
+        return reply(Personal);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Personal not found'));
+        return reply(boom.wrap(err, 'Personal not found'));
       }
     });
   }
@@ -75,11 +75,11 @@ exports.getPersonalIdentidad = {
   handler : function(request, reply){
     personal.find({'identidad' : request.params.identidad}, function(err, Personal){
       if(!err && Personal){
-        return (Personal);
+        return reply(Personal);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Personal not found'));
+        return reply(boom.wrap(err, 'Personal not found'));
       }
     });
   }
@@ -93,11 +93,11 @@ exports.getPersonalTipo = {
   handler : function(request, reply){
     personal.find({'tipo' : request.params.tipo}, function(err, Personal){
       if(!err && Personal){
-        return (Personal);
+        return reply(Personal);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Personal not found'));
+        return reply(boom.wrap(err, 'Personal not found'));
       }
     });
   }
@@ -122,9 +122,9 @@ exports.modifyPersonal = {
         }
       }, function(err){
         if(err){
-          return (boom.wrap(err, 'Personal not found'));
+          return reply(boom.wrap(err, 'Personal not found'));
         }else{
-          return ('updated succesfully');
+          return reply('updated succesfully');
         }
       }
     );
@@ -139,12 +139,12 @@ exports.deletePersonal = {
   handler: function(request, reply){
     personal.findOne({'_id' : request.params._id}, function(err, Personal){
       if(err){
-        return (boom.badRequest("Could not delete Personal"));
+        return reply(boom.badRequest("Could not delete Personal"));
       }else if(!err && Personal){
         Personal.remove();
-        return ('Personal deleted succesfully');
+        return reply('Personal deleted succesfully');
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }
     });
   }
@@ -166,11 +166,11 @@ exports.createPersonal = {
     });
     newPersonal.save(function(err){
       if(!err){
-        return ({
+        return reply({
           success: true
         });
       }else{
-        return ({
+        return reply({
           success: false
         })
       }

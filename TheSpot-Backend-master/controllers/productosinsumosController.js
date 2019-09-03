@@ -13,11 +13,11 @@ exports.getProductoInsumoId = {
     handler: function (request, reply) {
         productoinsumo.findOne({ '_id': request.params._id }, function (err, ProductoInsumo) {
             if (!err && ProductoInsumo) {
-                return (ProductoInsumo);
+                return reply(ProductoInsumo);
             } else if (!err) {
-                return (boom.notFound());
+                return reply(boom.notFound());
             } else if (err) {
-                return (boom.wrap(err, 'ProductoInsumo not found'));
+                return reply(boom.wrap(err, 'ProductoInsumo not found'));
             }
         });
     }
@@ -26,11 +26,11 @@ exports.getPoductoInsumoInsumo = {
     handler: function (request, reply) {
         productoinsumo.find({ 'idInsumo': request.params.idInsumo }, function (err, ProductosInsumos) {
             if (!err && ProductosInsumos) {
-                return (ProductosInsumos);
+                return reply(ProductosInsumos);
             } else if (!err) {
-                return (boom.notFound());
+                return reply(boom.notFound());
             } else if (err) {
-                return (boom.wrap(err, 'ProductosInsumos not found'));
+                return reply(boom.wrap(err, 'ProductosInsumos not found'));
             }
         });
     }
@@ -40,11 +40,11 @@ exports.getPoductoInsumoProducto = {
     handler: function (request, reply) {
         productoinsumo.find({ 'idProducto': request.params.idProducto }, function (err, ProductosInsumos) {
             if (!err && ProductosInsumos) {
-                return (ProductosInsumos);
+                return reply(ProductosInsumos);
             } else if (!err) {
-                return (boom.notFound());
+                return reply(boom.notFound());
             } else if (err) {
-                return (boom.wrap(err, 'ProductosInsumos not found'));
+                return reply(boom.wrap(err, 'ProductosInsumos not found'));
             }
         });
     }
@@ -64,9 +64,9 @@ exports.modifyProductoInsumo = {
                 }
             }, function (err) {
                 if (err) {
-                    return (boom.wrap(err, 'ProductoInsumo not found'));
+                    return reply(boom.wrap(err, 'ProductoInsumo not found'));
                 } else {
-                    return ('updated succesfully');
+                    return reply('updated succesfully');
                 }
             }
         );
@@ -77,12 +77,12 @@ exports.deleteProductoInsumo = {
     handler: function (request, reply) {
         productoinsumo.deleteMany({ 'idProducto': request.params._id }, function (err, ProductoInsumo) {
             if (err) {
-                return (boom.badRequest("Could not delete productoinsumo"));
+                return reply(boom.badRequest("Could not delete productoinsumo"));
             } else if (!err && ProductoInsumo) {
                 //ProductoInsumo.remove();
-                return ('productoinsumo deleted succesfully');
+                return reply('productoinsumo deleted succesfully');
             } else if (!err) {
-                return (boom.notFound());
+                return reply(boom.notFound());
             }
         });
     }
@@ -97,11 +97,11 @@ exports.createProductoInsumo = {
         });
         newProductoInsumo.save(function (err) {
             if (!err) {
-                return ({
+                return reply({
                     success: true
                 });
             } else {
-                return ({
+                return reply({
                     success: false
                 })
             }

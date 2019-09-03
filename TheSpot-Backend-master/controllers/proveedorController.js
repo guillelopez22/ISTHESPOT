@@ -21,11 +21,11 @@ exports.getProveedorId = {
   handler : function(request, reply){
     proveedor.findOne({'_id' : request.params._id}, function(err, Proveedor){
       if(!err && Proveedor){
-        return (Proveedor);
+        return reply(Proveedor);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Proveedor not found'));
+        return reply(boom.wrap(err, 'Proveedor not found'));
       }
     });
   }
@@ -39,11 +39,11 @@ exports.getProveedorInsumos = {
   handler : function(request, reply){
     proveedor.find({'idInsumo' : request.params.idInsumo}, function(err, Proveedor){
       if(!err && Proveedor){
-        return (Proveedor);
+        return reply(Proveedor);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Proveedor not found'));
+        return reply(boom.wrap(err, 'Proveedor not found'));
       }
     });
   }
@@ -57,11 +57,11 @@ exports.getProveedorBebidas = {
   handler : function(request, reply){
     proveedor.find({'idBebidas' : request.params.idBebidas}, function(err, Proveedor){
       if(!err && Proveedor){
-        return (Proveedor);
+        return reply(Proveedor);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Proveedor not found'));
+        return reply(boom.wrap(err, 'Proveedor not found'));
       }
     });
   }
@@ -75,11 +75,11 @@ exports.getProveedorName = {
   handler : function(request, reply){
     proveedor.find({'nombre' : request.params.idInsumo}, function(err, Proveedor){
       if(!err && Proveedor){
-        return (Proveedor);
+        return reply(Proveedor);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Proveedor not found'));
+        return reply(boom.wrap(err, 'Proveedor not found'));
       }
     });
   }
@@ -93,11 +93,11 @@ exports.getProveedorContacto = {
   handler : function(request, reply){
     proveedor.find({'contacto' : request.params.contacto}, function(err, Proveedor){
       if(!err && Proveedor){
-        return (Proveedor);
+        return reply(Proveedor);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Proveedor not found'));
+        return reply(boom.wrap(err, 'Proveedor not found'));
       }
     });
   }
@@ -124,9 +124,9 @@ exports.modifyProveedor = {
         }
       }, function(err){
         if(err){
-          return (boom.wrap(err, 'Proveedor not found'));
+          return reply(boom.wrap(err, 'Proveedor not found'));
         }else{
-          return ('updated succesfully');
+          return reply('updated succesfully');
         }
       }
     );
@@ -141,12 +141,12 @@ exports.deleteProveedor = {
   handler: function(request, reply){
     proveedor.findOne({'_id' : request.params._id}, function(err, Proveedor){
       if(err){
-        return (boom.badRequest("Could not delete Proveedor"));
+        return reply(boom.badRequest("Could not delete Proveedor"));
       }else if(!err && Proveedor){
         Proveedor.remove();
-        return ('Proveedor deleted succesfully');
+        return reply('Proveedor deleted succesfully');
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }
     });
   }
@@ -170,11 +170,11 @@ exports.createProveedor = {
     });
     newProveedor.save(function(err){
       if(!err){
-        return ({
+        return reply({
           success: true
         });
       }else{
-        return ({
+        return reply({
           success: false
         })
       }

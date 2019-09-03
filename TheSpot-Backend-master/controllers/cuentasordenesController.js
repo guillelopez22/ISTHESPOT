@@ -13,25 +13,24 @@ exports.getCuentaOrdenId = {
   handler : function(request, reply){
     cuentaorden.findOne({'_id' : request.params._id}, function(err, CuentaOrden){
       if(!err && CuentaOrden){
-        return (CuentaOrden);
+        return reply(CuentaOrden);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'cuenta orden not found'));
+        return reply(boom.wrap(err, 'cuenta orden not found'));
       }
     });
-    
   }
 }
 exports.getCuentaOrdenCuenta = {
   handler : function(request, reply){
     cuentaorden.find({'idCuenta' : request.params.idCuenta}, function(err, CuentaOrden){
       if(!err && CuentaOrden){
-        return (CuentaOrden);
+        return reply(CuentaOrden);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'cuenta not found'));
+        return reply(boom.wrap(err, 'cuenta not found'));
       }
     });
   }
@@ -41,11 +40,11 @@ exports.getCuentaOrdenOrden = {
   handler : function(request, reply){
     cuentaorden.find({'idOrden' : request.params.idOrden}, function(err, CuentaOrden){
       if(!err && CuentaOrden){
-        return (CuentaOrden);
+        return reply(CuentaOrden);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'orden not found'));
+        return reply(boom.wrap(err, 'orden not found'));
       }
     });
   }
@@ -54,11 +53,11 @@ exports.getCuentaOrdenDescripcion = {
   handler : function(request, reply){
     cuentaorden.find({'descripcion' : request.params.descripcion}, function(err, CuentaOrden){
       if(!err && CuentaOrden){
-        return (CuentaOrden);
+        return reply(CuentaOrden);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'descripcion not found'));
+        return reply(boom.wrap(err, 'descripcion not found'));
       }
     });
   }
@@ -76,9 +75,9 @@ exports.modifyCuentaOrden = {
         }
       }, function(err){
         if(err){
-          return (boom.wrap(err, 'CuentaOrden not found'));
+          return reply(boom.wrap(err, 'CuentaOrden not found'));
         }else{
-          return ('updated succesfully');
+          return reply('updated succesfully');
         }
       }
     );
@@ -89,12 +88,12 @@ exports.deleteCuentaOrden = {
   handler: function(request, reply){
     cuentaorden.deleteMany({'idCuenta' : request.params._id}, function(err, CuentaOrden){
       if(err){
-        return (boom.badRequest("Could not delete CuentaOrden"));
+        return reply(boom.badRequest("Could not delete CuentaOrden"));
       }else if(!err && CuentaOrden){
         //CuentaOrden.remove();
-        return ('CuentaOrden deleted succesfully');
+        return reply('CuentaOrden deleted succesfully');
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }
     });
   }
@@ -109,11 +108,11 @@ exports.createCuentaOrden = {
     });
     newCuentaOrden.save(function(err){
       if(!err){
-        return ({
+        return reply({
           success: true
         });
       }else{
-        return ({
+        return reply({
           success: false
         })
       }

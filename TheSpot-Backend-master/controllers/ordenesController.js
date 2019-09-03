@@ -21,11 +21,11 @@ exports.getOrdenesId = {
   handler : function(request, reply){
     orden.findOne({'_id' : request.params._id}, function(err, Orden){
       if(!err && Orden){
-        return (Orden);
+        return reply(Orden);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Orden not found'));
+        return reply(boom.wrap(err, 'Orden not found'));
       }
     });
   }
@@ -39,11 +39,11 @@ exports.getOrdenesName = {
   handler : function(request, reply){
     orden.find({'nombre' : request.params.nombre}, function(err, Ordenes){
       if(!err && Ordenes){
-        return (Ordenes);
+        return reply(Ordenes);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Ordenes not found'));
+        return reply(boom.wrap(err, 'Ordenes not found'));
       }
     });
   }
@@ -57,11 +57,11 @@ exports.getOrdenesIdCombos = {
   handler : function(request, reply){
     orden.find({'idProveedor' : request.params.idCombos}, function(err, Ordenes){
       if(!err && Ordenes){
-        return (Ordenes);
+        return reply(Ordenes);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Ordenes not found'));
+        return reply(boom.wrap(err, 'Ordenes not found'));
       }
     });
   }
@@ -75,11 +75,11 @@ exports.getOrdenesProductos = {
   handler : function(request, reply){
     orden.find({'idProductos' : request.params.idProductos}, function(err, Ordenes){
       if(!err && Ordenes){
-        return (Ordenes);
+        return reply(Ordenes);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Ordenes not found'));
+        return reply(boom.wrap(err, 'Ordenes not found'));
       }
     });
   }
@@ -93,11 +93,11 @@ exports.getOrdenesPromociones = {
   handler : function(request, reply){
     orden.find({'idPromociones' : request.params.idPromociones}, function(err, Ordenes){
       if(!err && Ordenes){
-        return (Ordenes);
+        return reply(Ordenes);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Ordenes not found'));
+        return reply(boom.wrap(err, 'Ordenes not found'));
       }
     });
   }
@@ -111,11 +111,11 @@ exports.getOrdenesMesa = {
   handler : function(request, reply){
     orden.find({'idMesa' : request.params.idMesa}, function(err, Ordenes){
       if(!err && Ordenes){
-        return (Ordenes);
+        return reply(Ordenes);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Ordenes not found'));
+        return reply(boom.wrap(err, 'Ordenes not found'));
       }
     });
   }
@@ -129,11 +129,11 @@ exports.getOrdenesFecha = {
   handler : function(request, reply){
     orden.find({'fecha' : request.params.fecha}, function(err, Ordenes){
       if(!err && Ordenes){
-        return (Ordenes);
+        return reply(Ordenes);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Ordenes not found'));
+        return reply(boom.wrap(err, 'Ordenes not found'));
       }
     });
   }
@@ -147,11 +147,11 @@ exports.getOrdenPersonal = {
   handler : function(request, reply){
     orden.find({'idPersonal' : request.params.idPersonal}, function(err, Ordenes){
       if(!err && Ordenes){
-        return (Ordenes);
+        return reply(Ordenes);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Ordenes not found'));
+        return reply(boom.wrap(err, 'Ordenes not found'));
       }
     });
   }
@@ -176,9 +176,9 @@ exports.modifyOrden = {
         }
       }, function(err){
         if(err){
-          return (boom.wrap(err, 'Orden not found'));
+          return reply(boom.wrap(err, 'Orden not found'));
         }else{
-          return ('updated succesfully');
+          return reply('updated succesfully');
         }
       }
     );
@@ -193,12 +193,12 @@ exports.deleteOrden = {
   handler: function(request, reply){
     orden.findOne({'_id' : request.params._id}, function(err, Orden){
       if(err){
-        return (boom.badRequest("Could not delete Orden"));
+        return reply(boom.badRequest("Could not delete Orden"));
       }else if(!err && Orden){
         Orden.remove();
-        return ('Orden deleted succesfully');
+        return reply('Orden deleted succesfully');
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }
     });
   }
@@ -219,11 +219,11 @@ exports.createOrden = {
     });
     newOrden.save(function(err){
       if(!err){
-        return ({
+        return reply({
           success: true
         });
       }else{
-        return ({
+        return reply({
           success: false
         })
       }

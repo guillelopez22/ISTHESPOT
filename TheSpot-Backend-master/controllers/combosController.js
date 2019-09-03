@@ -11,14 +11,13 @@ exports.getComboId = {
   handler : function(request, reply){
     combo.findOne({'_id' : request.params._id}, function(err, Combo){
       if(!err && Combo){
-        return (Combo);
+        return reply(Combo);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Combo not found'));
+        return reply(boom.wrap(err, 'Combo not found'));
       }
     });
-    
   }
 }
 exports.getComboName = {
@@ -30,11 +29,11 @@ exports.getComboName = {
   handler : function(request, reply){
     combo.find({'nombre' : request.params.nombre}, function(err, Combos){
       if(!err && Combos){
-        return (Combos);
+        return reply(Combos);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Combo not found'));
+        return reply(boom.wrap(err, 'Combo not found'));
       }
     });
   }
@@ -48,11 +47,11 @@ exports.getComboPrecio = {
   handler : function(request, reply){
     combo.find({'precio' : request.params.precio}, function(err, Combos){
       if(!err && Combos){
-        return (Combos);
+        return reply(Combos);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Combo not found'));
+        return reply(boom.wrap(err, 'Combo not found'));
       }
     });
   }
@@ -74,9 +73,9 @@ exports.modifyCombo = {
         }
       }, function(err){
         if(err){
-          return (boom.wrap(err, 'Combo not found'));
+          return reply(boom.wrap(err, 'Combo not found'));
         }else{
-          return ('updated succesfully');
+          return reply('updated succesfully');
         }
       }
     );
@@ -91,12 +90,12 @@ exports.deleteCombo = {
   handler: function(request, reply){
     combo.findOne({'_id' : request.params._id}, function(err, Combo){
       if(err){
-        return (boom.badRequest("Could not delete Combo"));
+        return reply(boom.badRequest("Could not delete Combo"));
       }else if(!err && Combo){
         Combo.remove();
-        return ('Combo deleted succesfully');
+        return reply('Combo deleted succesfully');
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }
     });
   }
@@ -115,11 +114,11 @@ exports.createCombo = {
     });
     newCombo.save(function(err){
       if(!err){
-        return ({
+        return reply({
           success: true
         });
       }else{
-        return ({
+        return reply({
           success: false
         })
       }

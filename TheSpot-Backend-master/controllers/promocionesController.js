@@ -21,11 +21,11 @@ exports.getPromocionId = {
   handler : function(request, reply){
     promocion.findOne({'_id' : request.params._id}, function(err, Promocion){
       if(!err && Promocion){
-        return (Promocion);
+        return reply(Promocion);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Promocion not found'));
+        return reply(boom.wrap(err, 'Promocion not found'));
       }
     });
   }
@@ -39,11 +39,11 @@ exports.getPromocionProductos = {
   handler : function(request, reply){
     promocion.find({'idProducto' : request.params.idProducto}, function(err, Promocion){
       if(!err && Promocion){
-        return (Promocion);
+        return reply(Promocion);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Promocion not found'));
+        return reply(boom.wrap(err, 'Promocion not found'));
       }
     });
   }
@@ -57,11 +57,11 @@ exports.getPromocionDescuento = {
   handler : function(request, reply){
     promocion.find({'idProveedor' : request.params.descuento}, function(err, Promocion){
       if(!err && Promocion){
-        return (Promocion);
+        return reply(Promocion);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Promocion not found'));
+        return reply(boom.wrap(err, 'Promocion not found'));
       }
     });
   }
@@ -75,11 +75,11 @@ exports.getPromocionName = {
   handler : function(request, reply){
     promocion.find({'nombre' : request.params.nombre}, function(err, Promocion){
       if(!err && Promocion){
-        return (Promocion);
+        return reply(Promocion);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Promocion not found'));
+        return reply(boom.wrap(err, 'Promocion not found'));
       }
     });
   }
@@ -93,11 +93,11 @@ exports.getPromocionHora_Inicio = {
   handler : function(request, reply){
     promocion.find({'hora_inicio' : request.params.hora_inicio}, function(err, Promocion){
       if(!err && Promocion){
-        return (Promocion);
+        return reply(Promocion);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Promocion not found'));
+        return reply(boom.wrap(err, 'Promocion not found'));
       }
     });
   }
@@ -111,11 +111,11 @@ exports.getPromocionHora_Final = {
   handler : function(request, reply){
     promocion.find({'hora_final' : request.params.hora_final}, function(err, Promocion){
       if(!err && Promocion){
-        return (Promocion);
+        return reply(Promocion);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'Promocion not found'));
+        return reply(boom.wrap(err, 'Promocion not found'));
       }
     });
   }
@@ -141,9 +141,9 @@ exports.modifyPromocion = {
         }
       }, function(err){
         if(err){
-          return (boom.wrap(err, 'Promocion not found'));
+          return reply(boom.wrap(err, 'Promocion not found'));
         }else{
-          return ('updated succesfully');
+          return reply('updated succesfully');
         }
       }
     );
@@ -158,12 +158,12 @@ exports.deletePromocion = {
   handler: function(request, reply){
     promocion.findOne({'_id' : request.params._id}, function(err, Promocion){
       if(err){
-        return (boom.badRequest("Could not delete promocion"));
+        return reply(boom.badRequest("Could not delete promocion"));
       }else if(!err && Promocion){
         Promocion.remove();
-        return ('Promocion deleted succesfully');
+        return reply('Promocion deleted succesfully');
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }
     });
   }
@@ -186,11 +186,11 @@ exports.createPromocion = {
     });
     newPromocion.save(function(err){
       if(!err){
-        return ({
+        return reply({
           success: true
         });
       }else{
-        return ({
+        return reply({
           success: false
         })
       }

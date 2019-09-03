@@ -13,11 +13,11 @@ exports.getOrdenComboId = {
   handler : function(request, reply){
     ordencombo.findOne({'_id' : request.params._id}, function(err, OrdenCombo){
       if(!err && OrdenCombo){
-        return (OrdenCombo);
+        return reply(OrdenCombo);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'OrdenCombo not found'));
+        return reply(boom.wrap(err, 'OrdenCombo not found'));
       }
     });
   }
@@ -28,11 +28,11 @@ exports.getOrdenComboOrden = {
   handler : function(request, reply){
     ordencombo.find({'idOrden' : request.params.idOrden}, function(err, OrdenesCombos){
       if(!err && OrdenesCombos){
-        return (OrdenesCombos);
+        return reply(OrdenesCombos);
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }else if(err){
-        return (boom.wrap(err, 'OrdenesCombos not found'));
+        return reply(boom.wrap(err, 'OrdenesCombos not found'));
       }
     });
   }
@@ -43,11 +43,11 @@ exports.getOrdenComboCombo = {
     handler : function(request, reply){
       ordencombo.find({'idCombo' : request.params.idCombo}, function(err, OrdenesCombos){
         if(!err && OrdenesCombos){
-          return (OrdenesCombos);
+          return reply(OrdenesCombos);
         }else if(!err){
-          return (boom.notFound());
+          return reply(boom.notFound());
         }else if(err){
-          return (boom.wrap(err, 'OrdenesCombos not found'));
+          return reply(boom.wrap(err, 'OrdenesCombos not found'));
         }
       });
     }
@@ -66,9 +66,9 @@ exports.modifyOrdenCombo = {
         }
       }, function(err){
         if(err){
-          return (boom.wrap(err, 'OrdenCombo not found'));
+          return reply(boom.wrap(err, 'OrdenCombo not found'));
         }else{
-          return ('updated succesfully');
+          return reply('updated succesfully');
         }
       }
     );
@@ -79,12 +79,12 @@ exports.deleteOrdenCombo = {
   handler: function(request, reply){
     ordencombo.deleteMany({'idOrden' : request.params._id}, function(err, OrdenCombo){
       if(err){
-        return (boom.badRequest("Could not delete OrdenCombo"));
+        return reply(boom.badRequest("Could not delete OrdenCombo"));
       }else if(!err && OrdenCombo){
         //OrdenBebida.remove();
-        return ('OrdenCombo deleted succesfully');
+        return reply('OrdenCombo deleted succesfully');
       }else if(!err){
-        return (boom.notFound());
+        return reply(boom.notFound());
       }
     });
   }
@@ -99,11 +99,11 @@ exports.createOrdenCombo = {
     });
     newOrdenCombo.save(function(err){
       if(!err){
-        return ({
+        return reply({
           success: true
         });
       }else{
-        return ({
+        return reply({
           success: false
         })
       }
