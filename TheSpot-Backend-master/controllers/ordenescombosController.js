@@ -11,51 +11,57 @@ exports.getOrdenesCombos = {
 exports.getOrdenComboId = {
   
   handler : function(request, reply){
+    this.envio = "w"
     ordencombo.findOne({'_id' : request.params._id}, function(err, OrdenCombo){
       if(!err && OrdenCombo){
-        return reply(OrdenCombo);
+        this.envio =(OrdenCombo);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'OrdenCombo not found'));
+        this.envio =(boom.wrap(err, 'OrdenCombo not found'));
       }
-    });
+    });return envio;
   }
 }
 
 exports.getOrdenComboOrden = {
   
   handler : function(request, reply){
+    this.envio = "w"
     ordencombo.find({'idOrden' : request.params.idOrden}, function(err, OrdenesCombos){
       if(!err && OrdenesCombos){
-        return reply(OrdenesCombos);
+        this.envio =(OrdenesCombos);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'OrdenesCombos not found'));
+        this.envio =(boom.wrap(err, 'OrdenesCombos not found'));
       }
     });
+    return envio;
   }
 }
 
 exports.getOrdenComboCombo = {
   
     handler : function(request, reply){
+      this.envio = "w"
       ordencombo.find({'idCombo' : request.params.idCombo}, function(err, OrdenesCombos){
         if(!err && OrdenesCombos){
-          return reply(OrdenesCombos);
+          this.envio =(OrdenesCombos);
         }else if(!err){
-          return reply(boom.notFound());
+          this.envio =(boom.notFound());
         }else if(err){
-          return reply(boom.wrap(err, 'OrdenesCombos not found'));
+          this.envio =(boom.wrap(err, 'OrdenesCombos not found'));
         }
       });
+      return envio;
     }
   }
 
 exports.modifyOrdenCombo = {
   
   handler: function(request, reply){
+    this.envio = "w"
     ordencombo.update(
       {'_id': request.params._id},
       {$set:
@@ -71,27 +77,29 @@ exports.modifyOrdenCombo = {
           return reply('updated succesfully');
         }
       }
-    );
+    );return envio;
   }
 }
 exports.deleteOrdenCombo = {
   
   handler: function(request, reply){
+    this.envio = "w"
     ordencombo.deleteMany({'idOrden' : request.params._id}, function(err, OrdenCombo){
       if(err){
-        return reply(boom.badRequest("Could not delete OrdenCombo"));
+        this.envio =(boom.badRequest("Could not delete OrdenCombo"));
       }else if(!err && OrdenCombo){
-        //OrdenBebida.remove();
-        return reply('OrdenCombo deleted succesfully');
+        this.envio =('OrdenCombo deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }
     });
+    return envio;
   }
 }
 exports.createOrdenCombo = {
   
   handler: function(request, reply){
+    this.envio ="w "
     var newOrdenCombo = new ordencombo({
         idOrden : request.payload.idOrden,
         idCombo : request.payload.idCombo,
@@ -99,13 +107,13 @@ exports.createOrdenCombo = {
     });
     newOrdenCombo.save(function(err){
       if(!err){
-        return reply({
+        rthis.envio ={
           success: true
-        });
+        }
       }else{
-        return reply({
+        this.envio ={
           success: false
-        })
+        }
       }
     });
   }

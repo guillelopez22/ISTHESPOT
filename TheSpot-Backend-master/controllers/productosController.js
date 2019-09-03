@@ -2,155 +2,122 @@ var producto = require('../schemas/producto.js');
 var mongoose = require('mongoose');
 
 exports.getProductos = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
   handler: function(request, reply){
     var productos = producto.find({});
     return(productos);
   }
 }
 exports.getProductoId = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     producto.findOne({'_id' : request.params._id}, function(err, Producto){
       if(!err && Producto){
-        return reply(Producto);
+        this.envio =(Producto);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Producto not found'));
+        this.envio =(boom.wrap(err, 'Producto not found'));
       }
     });
+    return envio;
   }
 }
 exports.getProductoIdBebida = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     producto.find({'idBebida' : request.params.idBebida}, function(err, Productos){
       if(!err && Productos){
-        return reply(Productos);
+        this.envio =(Productos);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Productos not found'));
+        this.envio =(boom.wrap(err, 'Productos not found'));
       }
     });
+    return envio;
   }
 }
 
 exports.getProductoIdInsumo = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     producto.find({'idInsumo' : request.params.idInsumo}, function(err, Productos){
       if(!err && Productos){
-        return reply(Productos);
+        this.envio =(Productos);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Productos not found'));
+        this.envio =(boom.wrap(err, 'Productos not found'));
       }
-    });
+    });return envio;
   }
 }
 
 exports.getProductoTipo = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     producto.find({'tipo' : request.params.tipo}, function(err, Productos){
       if(!err && Productos){
-        return reply(Productos);
+        this.envio =(Productos);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Productos not found'));
+        this.envio =(boom.wrap(err, 'Productos not found'));
       }
     });
+    return envio;
   }
 }
 
 exports.getProductoNombre = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     producto.find({'nombre' : request.params.nombre}, function(err, Productos){
       if(!err && Productos){
-        return reply(Productos);
+        this.envio =(Productos);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Productos not found'));
+        this.envio =(boom.wrap(err, 'Productos not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getProductoPrecio = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     producto.find({'precio' : request.params.precio}, function(err, Productos){
       if(!err && Productos){
-        return reply(Productos);
+        this.envio =(Productos);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Productos not found'));
+        this.envio =(boom.wrap(err, 'Productos not found'));
       }
     });
+    return envio;
   }
 }
 
 exports.getProductoCantidad = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     producto.find({'cantidad' : request.params.cantidad}, function(err, Productos){
       if(!err && Productos){
-        return reply(Productos);
+        this.envio =(Productos);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Productos not found'));
+        this.envio =(boom.wrap(err, 'Productos not found'));
       }
-    });
+    });return envio;
   }
 }
 
 
 exports.modifyProducto = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
   handler: function(request, reply){
+    this.envio = "w"
     producto.update(
       {'_id': request.params._id},
       {$set:
@@ -166,39 +133,31 @@ exports.modifyProducto = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'Producto not found'));
+          
+          this.envio =(boom.wrap(err, 'Producto not found'));
         }else{
-          return reply('updated succesfully');
+          this.envio =('updated succesfully');
         }
       }
-    );
+    );return envio;
   }
 }
 exports.deleteProducto = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
   handler: function(request, reply){
+    this.envio = "w"
     producto.findOne({'_id' : request.params._id}, function(err, Producto){
       if(err){
-        return reply(boom.badRequest("Could not delete producto"));
+        this.envio =(boom.badRequest("Could not delete producto"));
       }else if(!err && Producto){
         Producto.remove();
-        return reply('Producto deleted succesfully');
+        this.envio =('Producto deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }
-    });
+    });return envio;
   }
 }
 exports.createProducto = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
   handler: function(request, reply){
     var newProducto = new producto({
           nombre : request.payload.nombre,
@@ -211,14 +170,14 @@ exports.createProducto = {
     });
     newProducto.save(function(err){
       if(!err){
-        return reply({
+        this.envio ={
           success: true
-        });
+        }
       }else{
-        return reply({
+        this.envio ={
           success: false
-        })
+        }
       }
-    });
+    });return envio;
   }
 }

@@ -5,57 +5,62 @@ exports.getInsumosProveedores = {
 
     handler: function (request, reply) {
         var insumosproveedores = insumoproveedor.find({});
-        return(insumosproveedores);
+        return (insumosproveedores);
     }
 }
 exports.getInsumoProveedorId = {
 
     handler: function (request, reply) {
+        this.envio = "w"
         insumoproveedor.findOne({ '_id': request.params._id }, function (err, InsumoProveedor) {
             if (!err && InsumoProveedor) {
-                return reply(InsumoProveedor);
+                this.envio = (InsumoProveedor);
             } else if (!err) {
-                return reply(boom.notFound());
+                this.envio = (boom.notFound());
             } else if (err) {
-                return reply(boom.wrap(err, 'InsumoProveedor not found'));
+                this.envio = (boom.wrap(err, 'InsumoProveedor not found'));
             }
         });
+        return envio;
     }
 }
 
 exports.getInsumoProveedorInsumo = {
 
     handler: function (request, reply) {
+        this.envio = "w"
         insumoproveedor.find({ 'idInsumo': request.params.idInsumo }, function (err, InsumosProveedores) {
             if (!err && InsumosProveedores) {
-                return reply(InsumosProveedores);
+                this.envio = (InsumosProveedores);
             } else if (!err) {
-                return reply(boom.notFound());
+                this.envio = (boom.notFound());
             } else if (err) {
-                return reply(boom.wrap(err, 'InsumosProveedores not found'));
+                this.envio = (boom.wrap(err, 'InsumosProveedores not found'));
             }
-        });
+        }); return envio;
     }
 }
 
 exports.getInsumoProveedorProveedor = {
 
     handler: function (request, reply) {
+        this.envio = "h"
         insumoproveedor.find({ 'idProveedor': request.params.idProveedor }, function (err, InsumosProveedores) {
             if (!err && InsumosProveedores) {
-                return reply(InsumosProveedores);
+                this.envio = (InsumosProveedores);
             } else if (!err) {
-                return reply(boom.notFound());
+                this.envio = (boom.notFound());
             } else if (err) {
-                return reply(boom.wrap(err, 'InsumosProveedores not found'));
+                this.envio = (boom.wrap(err, 'InsumosProveedores not found'));
             }
-        });
+        }); return envio
     }
 }
 
 exports.modifyInsumoProveedor = {
 
     handler: function (request, reply) {
+        this.envio = "w"
         insumoproveedor.update(
             { '_id': request.params._id },
             {
@@ -66,46 +71,48 @@ exports.modifyInsumoProveedor = {
                 }
             }, function (err) {
                 if (err) {
-                    return reply(boom.wrap(err, 'InsumoProveedor not found'));
+                    this.envio = (boom.wrap(err, 'InsumoProveedor not found'));
                 } else {
-                    return reply('updated succesfully');
+                    this.envio = ('updated succesfully');
                 }
             }
-        );
+        ); return envio;
     }
 }
 exports.deleteInsumoProveedor = {
 
     handler: function (request, reply) {
+        this.envio = "w"
         insumoproveedor.deleteMany({ 'idInsumo': request.params._id }, function (err, InsumoProveedor) {
             if (err) {
-                return reply(boom.badRequest("Could not delete InsumoProveedor"));
+                this.envio = (boom.badRequest("Could not delete InsumoProveedor"));
             } else if (!err && InsumoProveedor) {
                 //InsumoProveedor.remove();
-                return reply('InsumoProveedor deleted succesfully');
+                this.envio = ('InsumoProveedor deleted succesfully');
             } else if (!err) {
-                return reply(boom.notFound());
+                this.envio = (boom.notFound());
             }
-        });
+        }); return envio;
     }
 }
 exports.createInsumoProveedor = {
 
     handler: function (request, reply) {
+        this.envio = "w"
         var newInsumoProveedor = new insumoproveedor({
             idInsumo: request.payload.idInsumo,
             idProveedor: request.payload.idProveedor,
         });
         newInsumoProveedor.save(function (err) {
             if (!err) {
-                return reply({
+                this.envio = {
                     success: true
-                });
+                };
             } else {
-                return reply({
+                this.envio = {
                     success: false
-                })
+                }
             }
-        });
+        }); return envio;
     }
 }

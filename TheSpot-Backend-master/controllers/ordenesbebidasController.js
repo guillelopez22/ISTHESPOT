@@ -11,51 +11,55 @@ exports.getOrdenesBebidas = {
 exports.getOrdenBebidaId = {
   
   handler : function(request, reply){
+    this.envio ="w"
     ordenbebida.findOne({'_id' : request.params._id}, function(err, OrdenBebida){
       if(!err && OrdenBebida){
-        return reply(OrdenBebida);
+        this.envio =(OrdenBebida);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'OrdenBebida not found'));
+        this.envio =(boom.wrap(err, 'OrdenBebida not found'));
       }
-    });
+    });return envio;
   }
 }
 
 exports.getOrdenBebidaOrden = {
   
   handler : function(request, reply){
+    this.envio ="w"
     ordenbebida.find({'idOrden' : request.params.idOrden}, function(err, OrdenesBebidas){
       if(!err && OrdenesBebidas){
-        return reply(OrdenesBebidas);
+        this.envio =(OrdenesBebidas);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'OrdenesBebidas not found'));
+        this.envio =(boom.wrap(err, 'OrdenesBebidas not found'));
       }
-    });
+    });return envio;
   }
 }
 
 exports.getOrdenBebidaBebida = {
   
     handler : function(request, reply){
+      this.envio ="w"
       ordenbebida.find({'idBebida' : request.params.idBebida}, function(err, OrdenesBebidas){
         if(!err && OrdenesBebidas){
-          return reply(OrdenesBebidas);
+          this.envio =(OrdenesBebidas);
         }else if(!err){
-          return reply(boom.notFound());
+          this.envio =(boom.notFound());
         }else if(err){
-          return reply(boom.wrap(err, 'OrdenesBebidas not found'));
+          this.envio =(boom.wrap(err, 'OrdenesBebidas not found'));
         }
-      });
+      });return envio;
     }
   }
 
 exports.modifyOrdenBebida = {
   
   handler: function(request, reply){
+    this.envio ="w"
     ordenbebida.update(
       {'_id': request.params._id},
       {$set:
@@ -66,32 +70,34 @@ exports.modifyOrdenBebida = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'OrdenBebida not found'));
+          this.envio =(boom.wrap(err, 'OrdenBebida not found'));
         }else{
-          return reply('updated succesfully');
+          this.envio =('updated succesfully');
         }
       }
-    );
+    );return envio;
   }
 }
 exports.deleteOrdenBebida = {
   
   handler: function(request, reply){
+    this.envio ="w"
     ordenbebida.deleteMany({'idOrden' : request.params._id}, function(err, OrdenBebida){
       if(err){
-        return reply(boom.badRequest("Could not delete OrdenBebida"));
+        this.envio =(boom.badRequest("Could not delete OrdenBebida"));
       }else if(!err && OrdenBebida){
         //OrdenBebida.remove();
-        return reply('OrdenBebida deleted succesfully');
+        this.envio =('OrdenBebida deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }
-    });
+    });return envio;
   }
 }
 exports.createOrdenBebida = {
   
   handler: function(request, reply){
+    this.envio = "w"
     var newOrdenBebida = new ordenbebida({
         idOrden : request.payload.idOrden,
         idBebida : request.payload.idBebida,
@@ -99,14 +105,14 @@ exports.createOrdenBebida = {
     });
     newOrdenBebida.save(function(err){
       if(!err){
-        return reply({
+        this.envio ={
           success: true
-        });
+        }
       }else{
-        return reply({
+        this.envio ={
           success: false
-        })
+        }
       }
-    });
+    });return envio;
   }
 }

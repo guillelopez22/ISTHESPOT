@@ -2,95 +2,76 @@ var insumo = require('../schemas/insumo.js');
 var mongoose = require('mongoose');
 
 exports.getInsumos = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+ 
   handler: function(request, reply){
     var insumos = insumo.find({});
     return(insumos);
   }
 }
 exports.getInsumoId = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+  
   handler : function(request, reply){
+    this.envio = "w"
     insumo.findOne({'_id' : request.params._id}, function(err, Insumo){
       if(!err && Insumo){
-        return reply(Insumo);
+        this.envio =(Insumo);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Insumo not found'));
+        this.envio =(boom.wrap(err, 'Insumo not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getInsumoName = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+  
   handler : function(request, reply){
+    this.envio = "w"
     insumo.find({'nombre' : request.params.nombre}, function(err, Insumos){
       if(!err && Insumos){
-        return reply(Insumos);
+        this.envio =(Insumos);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Insumos not found'));
+        this.envio =(boom.wrap(err, 'Insumos not found'));
       }
-    });
+    }); return envio;
   }
 }
 exports.getInsumoProveedor = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+ 
   handler : function(request, reply){
+    this.envio = "w"
     insumo.find({'idProveedor' : request.params.idProveedor}, function(err, Insumos){
       if(!err && Insumos){
-        return reply(Insumos);
+        this.envio =(Insumos);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Insumos not found'));
+        this.envio =(boom.wrap(err, 'Insumos not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getInsumoInventario = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+  
   handler : function(request, reply){
+    this.envio = "w"
     insumo.find({'inventario' : request.params.inventario}, function(err, Insumos){
       if(!err && Insumos){
-        return reply(Insumos);
+        this.envio =(Insumos);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Insumos not found'));
+        this.envio =(boom.wrap(err, 'Insumos not found'));
       }
-    });
+    });return envio
   }
 }
 exports.modifyInsumo = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+
   handler: function(request, reply){
+    this.envio = "w"
     insumo.update(
       {'_id': request.params._id},
       {$set:
@@ -101,40 +82,33 @@ exports.modifyInsumo = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'Insumo not found'));
+          this.envio =(boom.wrap(err, 'Insumo not found'));
         }else{
-          return reply('updated succesfully');
+          this.envio =('updated succesfully');
         }
       }
-    );
+    );return envio;
   }
 }
 exports.deleteInsumo = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
   handler: function(request, reply){
+    this.envio = "w";
     insumo.findOne({'_id' : request.params._id}, function(err, Insumo){
       if(err){
-        return reply(boom.badRequest("Could not delete insumo"));
+        this.envio =(boom.badRequest("Could not delete insumo"));
       }else if(!err && Insumo){
         Insumo.remove();
-        return reply('Insumo deleted succesfully');
+        this.envio =('Insumo deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }
-    });
+    });return envio;
   }
 }
 exports.createInsumo = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+
   handler: function(request, reply){
+    this.envio = "w"
     var newInsumo = new insumo({
       nombre : request.payload.nombre,
       inventario : request.payload.inventario,
@@ -142,14 +116,14 @@ exports.createInsumo = {
     });
     newInsumo.save(function(err){
       if(!err){
-        return reply({
+        this.envio ={
           success: true
-        });
+        };
       }else{
-        return reply({
+        this.envio ={
           success: false
-        })
+        }
       }
-    });
+    });return envio;
   }
 }

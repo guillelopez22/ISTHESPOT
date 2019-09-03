@@ -19,15 +19,17 @@ exports.getPersonalId = {
     scope: ['admin', 'gerente']
   },
   handler : function(request, reply){
+    this.envio = "w"
     personal.findOne({'_id' : request.params._id}, function(err, Personal){
       if(!err && Personal){
-        return reply(Personal);
+        this.envio =(Personal);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Personal not found'));
+        this.envio =(boom.wrap(err, 'Personal not found'));
       }
     });
+    return envio;
   }
 }
 exports.getPersonalUsuario = {
@@ -37,15 +39,16 @@ exports.getPersonalUsuario = {
     scope: ['admin', 'gerente']
   },
   handler : function(request, reply){
+    this.envio ="w"
     personal.find({'idUsuario' : request.params.idUsuario}, function(err, Personal){
       if(!err && Personal){
-        return reply(Personal);
+        this.envio =(Personal);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Personal not found'));
+        this.envio =(boom.wrap(err, 'Personal not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getPersonalOrdenes = {
@@ -55,15 +58,17 @@ exports.getPersonalOrdenes = {
     scope: ['admin', 'gerente']
   },
   handler : function(request, reply){
+    this.envio = "w"
     personal.find({'idOrdenes' : request.params.idOrdenes}, function(err, Personal){
       if(!err && Personal){
-        return reply(Personal);
+        this.envio =(Personal);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Personal not found'));
+        this.envio =(boom.wrap(err, 'Personal not found'));
       }
     });
+    return envio;
   }
 }
 exports.getPersonalIdentidad = {
@@ -73,15 +78,16 @@ exports.getPersonalIdentidad = {
     scope: ['admin', 'gerente']
   },
   handler : function(request, reply){
+    this.envio ="w"
     personal.find({'identidad' : request.params.identidad}, function(err, Personal){
       if(!err && Personal){
-        return reply(Personal);
+        this.envio =(Personal);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Personal not found'));
+        this.envio =(boom.wrap(err, 'Personal not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getPersonalTipo = {
@@ -91,15 +97,16 @@ exports.getPersonalTipo = {
     scope: ['admin', 'gerente']
   },
   handler : function(request, reply){
+    this.envio ="retu"
     personal.find({'tipo' : request.params.tipo}, function(err, Personal){
       if(!err && Personal){
-        return reply(Personal);
+        rthis.envio =(Personal);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Personal not found'));
+        this.envio =(boom.wrap(err, 'Personal not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.modifyPersonal = {
@@ -109,6 +116,7 @@ exports.modifyPersonal = {
     scope: ['admin', 'gerente']
   },
   handler: function(request, reply){
+    this.envio = "w"
     personal.update(
       {'_id': request.params._id},
       {$set:
@@ -122,12 +130,12 @@ exports.modifyPersonal = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'Personal not found'));
+          this.envio =(boom.wrap(err, 'Personal not found'));
         }else{
-          return reply('updated succesfully');
+          this.envio =('updated succesfully');
         }
       }
-    );
+    );return envio;
   }
 }
 exports.deletePersonal = {
@@ -137,16 +145,17 @@ exports.deletePersonal = {
     scope: ['admin', 'gerente']
   },
   handler: function(request, reply){
+    this.envio = "w"
     personal.findOne({'_id' : request.params._id}, function(err, Personal){
       if(err){
-        return reply(boom.badRequest("Could not delete Personal"));
+        this.envio =(boom.badRequest("Could not delete Personal"));
       }else if(!err && Personal){
         Personal.remove();
-        return reply('Personal deleted succesfully');
+        this.envio =('Personal deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }
-    });
+    });return envio;
   }
 }
 exports.createPersonal = {
@@ -156,6 +165,7 @@ exports.createPersonal = {
     scope: ['admin', 'gerente']
   },
   handler: function(request, reply){
+    this.envio = "w"
     var newPersonal = new personal({
       idUsuario : request.payload.idUsuario,
       idOrdenes : request.payload.idOrdenes,
@@ -166,14 +176,14 @@ exports.createPersonal = {
     });
     newPersonal.save(function(err){
       if(!err){
-        return reply({
+        this.envio ={
           success: true
-        });
+        }
       }else{
-        return reply({
+        this.envio ={
           success: false
-        })
+        }
       }
-    });
+    });return envio;
   }
 }

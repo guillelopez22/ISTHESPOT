@@ -19,15 +19,17 @@ exports.getFacturaId = {
     scope: ['admin', 'gerente', 'personal', 'cliente']
   },
   handler : function(request, reply){
+    this.envio ="w";
     factura.findOne({'_id' : request.params._id}, function(err, Factura){
       if(!err && Factura){
-        return reply(Factura);
+        this.envio =(Factura);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Factura not found'));
+        this.envio =(boom.wrap(err, 'Factura not found'));
       }
     });
+    return envio;
   }
 }
 exports.getFacturaName = {
@@ -37,15 +39,16 @@ exports.getFacturaName = {
     scope: ['admin', 'gerente', 'personal', 'cliente']
   },
   handler : function(request, reply){
+    this.envio = "w";
     factura.find({'nombre' : request.params.nombre}, function(err, Facturas){
       if(!err && Facturas){
-        return reply(Facturas);
+        this.envio =(Facturas);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Facturas not found'));
+        this.envio =(boom.wrap(err, 'Facturas not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getFacturaIdOrden = {
@@ -55,15 +58,16 @@ exports.getFacturaIdOrden = {
     scope: ['admin', 'gerente', 'personal']
   },
   handler : function(request, reply){
+    this.envio = "w"
     factura.find({'idOrden' : request.params.idOrden}, function(err, Facturas){
       if(!err && Facturas){
-        return reply(Facturas);
+        this.envio =(Facturas);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Factura not found'));
+        this.envio =(boom.wrap(err, 'Factura not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.modifyFactura = {
@@ -73,6 +77,7 @@ exports.modifyFactura = {
     scope: ['admin', 'gerente', 'personal']
   },
   handler: function(request, reply){
+    this.envio = "w"
     factura.update(
       {'_id': request.params._id},
       {$set:
@@ -87,12 +92,12 @@ exports.modifyFactura = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'Factura not found'));
+          this.envio =(boom.wrap(err, 'Factura not found'));
         }else{
-          return reply('updated succesfully');
+          this.envio =('updated succesfully');
         }
       }
-    );
+    );return envio;
   }
 }
 exports.deleteFactura = {
@@ -102,16 +107,17 @@ exports.deleteFactura = {
     scope: ['admin', 'gerente']
   },
   handler: function(request, reply){
+    this.envio = "w"
     factura.findOne({'_id' : request.params._id}, function(err, Facturas){
       if(err){
-        return reply(boom.badRequest("Could not delete factura"));
+        this.envio =(boom.badRequest("Could not delete factura"));
       }else if(!err && Facturas){
         Facturas.remove();
-        return reply('Factura deleted succesfully');
+        this.envio =('Factura deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }
-    });
+    });return envio;
   }
 }
 exports.createFactura = {
@@ -121,6 +127,7 @@ exports.createFactura = {
     scope: ['admin', 'gerente', 'personal']
   },
   handler: function(request, reply){
+    this.envio = "w"
     var newFactura = new factura({
       idOrden : request.payload.idOrden,
       nombre : request.payload.nombre,
@@ -132,14 +139,15 @@ exports.createFactura = {
     });
     newFactura.save(function(err){
       if(!err){
-        return reply({
+        this.envio ={
           success: true
-        });
+        }
       }else{
-        return reply({
+        this.envio ={
           success: false
-        })
+        }
       }
     });
+    return envio;
   }
 }

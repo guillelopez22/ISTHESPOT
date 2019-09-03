@@ -11,48 +11,52 @@ exports.getCombosProductos = {
 exports.getComboProductoId = {
 
     handler: function (request, reply) {
+        this.envio = "w";
         comboproducto.findOne({ '_id': request.params._id }, function (err, ComboProducto) {
             if (!err && ComboProducto) {
-                return reply(ComboProducto);
+                this.envio =(ComboProducto);
             } else if (!err) {
-                return reply(boom.notFound());
+                this.envio =(boom.notFound());
             } else if (err) {
-                return reply(boom.wrap(err, 'Combo Producto id not found'));
+                this.envio =(boom.wrap(err, 'Combo Producto id not found'));
             }
-        });
+        });return envio;
     }
 }
 exports.getComboProductoProducto = {
     handler: function (request, reply) {
+        this.envio = "w";
         comboproducto.find({ 'idProducto': request.params.idProducto }, function (err, CombosProductos) {
             if (!err && CombosProductos) {
-                return reply(CombosProductos);
+                this.envio = (CombosProductos);
             } else if (!err) {
-                return reply(boom.notFound());
+                this.envio = (boom.notFound());
             } else if (err) {
-                return reply(boom.wrap(err, 'Productos not found'));
+                this.envio = (boom.wrap(err, 'Productos not found'));
             }
-        });
+        });return envio;
     }
 }
 exports.getComboProductoCombo = {
 
     handler: function (request, reply) {
+        this.envio = "w";
         comboproducto.find({ 'idCombo': request.params.idCombo }, function (err, CombosProductos) {
             if (!err && CombosProductos) {
-                return reply(CombosProductos);
+                this.envio = (CombosProductos);
             } else if (!err) {
-                return reply(boom.notFound());
+                this.envio = (boom.notFound());
             } else if (err) {
-                return reply(boom.wrap(err, 'Combos not found'));
+                this.envio = (boom.wrap(err, 'Combos not found'));
             }
-        });
+        });return envio;
     }
 }
 
 exports.modifyComboProducto = {
 
     handler: function (request, reply) {
+        this.envio = "w";
         comboproducto.update(
             { '_id': request.params._id },
             {
@@ -64,32 +68,34 @@ exports.modifyComboProducto = {
                 }
             }, function (err) {
                 if (err) {
-                    return reply(boom.wrap(err, 'Combo Producto not found'));
+                    this.envio =(boom.wrap(err, 'Combo Producto not found'));
                 } else {
-                    return reply('updated succesfully');
+                    this.envio =('updated succesfully');
                 }
             }
-        );
+        );return envio;
     }
 }
 exports.deleteComboProducto = {
 
     handler: function (request, reply) {
+        this.envio = "w";
         comboproducto.deleteMany({ 'idCombo': request.params._id }, function (err, ComboProducto) {
             if (err) {
-                return reply(boom.badRequest("Could not delete combo producto"));
+                this.envio =(boom.badRequest("Could not delete combo producto"));
             } else if (!err && ComboProducto) {
                 //ComboProducto.remove();
-                return reply('combo producto deleted succesfully');
+                this.envio =('combo producto deleted succesfully');
             } else if (!err) {
-                return reply(boom.notFound());
+                this.envio =(boom.notFound());
             }
-        });
+        });return envio;
     }
 }
 exports.createComboProducto = {
 
     handler: function (request, reply) {
+        this.envio = "w";
         var newComboProducto = new comboproducto({
             idCombo: request.payload.idCombo,
             idProducto: request.payload.idProducto,
@@ -97,13 +103,13 @@ exports.createComboProducto = {
         });
         newComboProducto.save(function (err) {
             if (!err) {
-                return reply({
+                this.envio = {
                     success: true
-                });
+                };
             } else {
-                return reply({
+                this.envio = {
                     success: false
-                })
+                };
             }
         });
     }

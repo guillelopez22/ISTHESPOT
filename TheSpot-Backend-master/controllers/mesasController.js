@@ -2,171 +2,124 @@ var mesa = require('../schemas/mesa.js');
 var mongoose = require('mongoose');
 
 exports.getMesas = {
-  /*
-  auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },
-  */
-  handler: function(request, reply){
+  handler: function (request, reply) {
     var Mesas = mesa.find({});
-    return(Mesas);
+    return (Mesas);
   }
 }
 exports.getMesaId = {
-  /*
-  auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },
-  */
-  handler : function(request, reply){
-    mesa.findOne({'_id' : request.params._id}, function(err, Mesa){
-      if(!err && Mesa){
-        return reply(Mesa);
-      }else if(!err){
-        return reply(boom.notFound());
-      }else if(err){
-        return reply(boom.wrap(err, 'Mesa not found'));
+
+  handler: function (request, reply) {
+    this.envio = "w"
+    mesa.findOne({ '_id': request.params._id }, function (err, Mesa) {
+      if (!err && Mesa) {
+        this.envio = (Mesa);
+      } else if (!err) {
+        this.envio = (boom.notFound());
+      } else if (err) {
+        this.envio = (boom.wrap(err, 'Mesa not found'));
       }
-    });
+    }); return envio;
   }
 }
 exports.getMesaName = {
-  /*
-  auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'cliente']
-  },
-  */
-  handler : function(request, reply){
-    mesa.find({'nombre' : request.params.nombre}, function(err, Mesas){
-      if(!err && Mesas){
-        return reply(Mesas);
-      }else if(!err){
-        return reply(boom.notFound());
-      }else if(err){
-        return reply(boom.wrap(err, 'Mesas not found'));
+  handler: function (request, reply) {
+    this.envio = "w"
+    mesa.find({ 'nombre': request.params.nombre }, function (err, Mesas) {
+      if (!err && Mesas) {
+        this.envio = (Mesas);
+      } else if (!err) {
+        this.envio = (boom.notFound());
+      } else if (err) {
+        this.envio = (boom.wrap(err, 'Mesas not found'));
       }
-    });
+    }); return envio;
   }
 }
 exports.getMesaNumero = {
-  /*
-  auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },
-  */
-  handler : function(request, reply){
-    mesa.find({'numero' : request.params.numero}, function(err, Mesas){
-      if(!err && Mesas){
-        return reply(Mesas);
-      }else if(!err){
-        return reply(boom.notFound());
-      }else if(err){
-        return reply(boom.wrap(err, 'Mesas not found'));
+  handler: function (request, reply) {
+    this.envio = "w"
+    mesa.find({ 'numero': request.params.numero }, function (err, Mesas) {
+      if (!err && Mesas) {
+        this.envio = (Mesas);
+      } else if (!err) {
+        this.envio = (boom.notFound());
+      } else if (err) {
+        this.envio = (boom.wrap(err, 'Mesas not found'));
       }
-    });
+    }); return envio;
   }
 }
 exports.getMesaIdOrdenes = {
-  /*
-  auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },
-  */
-  handler : function(request, reply){
-    mesa.find({'IdOrden' : request.params.IdOrden}, function(err, Mesas){
-      if(!err && Mesas){
-        return reply(Mesas);
-      }else if(!err){
-        return reply(boom.notFound());
-      }else if(err){
-        return reply(boom.wrap(err, 'Mesas not found'));
+  handler: function (request, reply) {
+    this.envio = "w"
+    mesa.find({ 'IdOrden': request.params.IdOrden }, function (err, Mesas) {
+      if (!err && Mesas) {
+        this.envio = (Mesas);
+      } else if (!err) {
+        this.envio = (boom.notFound());
+      } else if (err) {
+        this.envio = (boom.wrap(err, 'Mesas not found'));
       }
-    });
+    }); return envio;
   }
 }
 exports.modifyMesa = {
-  /*
-  auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },
-  */
-  handler: function(request, reply){
+  handler: function (request, reply) {
+    this.envio = "w"
     mesa.update(
-      {'_id': request.params._id},
-      {$set:
+      { '_id': request.params._id },
+      {
+        $set:
         {
-          idOrden : request.payload.idProveedor,
-          nombre : request.payload.nombre,
+          idOrden: request.payload.idProveedor,
+          nombre: request.payload.nombre,
           numero: request.payload.numero
         }
-      }, function(err){
-        if(err){
-          return reply(boom.wrap(err, 'mesa not found'));
-        }else{
-          return reply('updated succesfully');
+      }, function (err) {
+        if (err) {
+          this.envio = (boom.wrap(err, 'mesa not found'));
+        } else {
+          this.envio = ('updated succesfully');
         }
       }
-    );
+    ); return envio;
   }
 }
 
 exports.deleteMesa = {
-  /*
-  auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },
-  */
-  handler: function(request, reply){
-    mesa.findOne({'_id' : request.params._id}, function(err, mesa){
-      if(err){
-        return reply(boom.badRequest("Could not delete mesa"));
-      }else if(!err && mesa){
+  handler: function (request, reply) {
+    this.envio = "w"
+    mesa.findOne({ '_id': request.params._id }, function (err, mesa) {
+      if (err) {
+        this.envio = (boom.badRequest("Could not delete mesa"));
+      } else if (!err && mesa) {
         mesa.remove();
-        return reply('Mesa deleted succesfully');
-      }else if(!err){
-        return reply(boom.notFound());
+        this.envio = ('Mesa deleted succesfully');
+      } else if (!err) {
+        this.envio = (boom.notFound());
       }
-    });
+    }); return envio;
   }
 }
 exports.createMesa = {
-  /*
-  auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },
-  */
-  handler: function(request, reply){
+  handler: function (request, reply) {
+    this.envio = "w"
     var newMesa = new mesa({
-      idOrden : null,
-      nombre : request.payload.nombre,
+      idOrden: null,
+      nombre: request.payload.nombre,
       numero: request.payload.numero
     });
-    newMesa.save(function(err){
-      if(!err){
-        return reply({
+    newMesa.save(function (err) {
+      if (!err) {
+        this.envio = {
           success: true
-        });
-      }else{
-        return reply({
+        };
+      } else {
+        this.envio = {
           success: false
-        })
+        }
       }
-    });
+    }); return envio;
   }
 }

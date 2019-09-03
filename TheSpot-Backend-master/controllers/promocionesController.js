@@ -2,131 +2,105 @@ var promocion = require('../schemas/promocion.js');
 var mongoose = require('mongoose');
 
 exports.getPromociones = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal']
-  },*/
   handler: function(request, reply){
     var promociones = promocion.find({});
     return(promociones);
   }
 }
 exports.getPromocionId = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal']
-  },*/
+
   handler : function(request, reply){
+    this.envio = "w"
     promocion.findOne({'_id' : request.params._id}, function(err, Promocion){
       if(!err && Promocion){
-        return reply(Promocion);
+        this.envio =(Promocion);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Promocion not found'));
+        this.envio =(boom.wrap(err, 'Promocion not found'));
       }
     });
+    return envio;
   }
 }
 exports.getPromocionProductos = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
+
   handler : function(request, reply){
+    this.envio = "w"
     promocion.find({'idProducto' : request.params.idProducto}, function(err, Promocion){
       if(!err && Promocion){
-        return reply(Promocion);
+        this.envio =(Promocion);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Promocion not found'));
+        this.envio =(boom.wrap(err, 'Promocion not found'));
       }
     });
+    return envio;
   }
 }
 exports.getPromocionDescuento = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
+ 
   handler : function(request, reply){
+    this.envio = "w"
     promocion.find({'idProveedor' : request.params.descuento}, function(err, Promocion){
       if(!err && Promocion){
-        return reply(Promocion);
+        this.envio =(Promocion);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Promocion not found'));
+        this.envio =(boom.wrap(err, 'Promocion not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getPromocionName = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
+
   handler : function(request, reply){
+    this.envio = "w"
     promocion.find({'nombre' : request.params.nombre}, function(err, Promocion){
       if(!err && Promocion){
-        return reply(Promocion);
+        this.envio =(Promocion);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Promocion not found'));
+        this.envio =(boom.wrap(err, 'Promocion not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getPromocionHora_Inicio = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
+  
   handler : function(request, reply){
+    this.envio = "w"
     promocion.find({'hora_inicio' : request.params.hora_inicio}, function(err, Promocion){
       if(!err && Promocion){
-        return reply(Promocion);
+        this.envio =(Promocion);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Promocion not found'));
+        this.envio =(boom.wrap(err, 'Promocion not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getPromocionHora_Final = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     promocion.find({'hora_final' : request.params.hora_final}, function(err, Promocion){
       if(!err && Promocion){
-        return reply(Promocion);
+        this.envio =(Promocion);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Promocion not found'));
+        this.envio =(boom.wrap(err, 'Promocion not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.modifyPromocion = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
   handler: function(request, reply){
+    this.envio = "w"
     promocion.update(
       {'_id': request.params._id},
       {$set:
@@ -141,40 +115,33 @@ exports.modifyPromocion = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'Promocion not found'));
+          this.envio =(boom.wrap(err, 'Promocion not found'));
         }else{
-          return reply('updated succesfully');
+          this.envio =('updated succesfully');
         }
       }
-    );
+    );return envio;
   }
 }
 exports.deletePromocion = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+
   handler: function(request, reply){
+    this.envio = "w"
     promocion.findOne({'_id' : request.params._id}, function(err, Promocion){
       if(err){
-        return reply(boom.badRequest("Could not delete promocion"));
+        this.envio =(boom.badRequest("Could not delete promocion"));
       }else if(!err && Promocion){
         Promocion.remove();
-        return reply('Promocion deleted succesfully');
+        this.envio =('Promocion deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }
-    });
+    });return envio;
   }
 }
 exports.createPromocion = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
   handler: function(request, reply){
+    this.envio = "w"
     var newPromocion = new promocion({
       idProducto : request.payload.idProducto,
       nombre : request.payload.nombre,
@@ -186,14 +153,14 @@ exports.createPromocion = {
     });
     newPromocion.save(function(err){
       if(!err){
-        return reply({
+        this.envio ={
           success: true
-        });
+        }
       }else{
-        return reply({
+        this.envio ={
           success: false
-        })
+        }
       }
-    });
+    });return envio;
   }
 }

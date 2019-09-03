@@ -2,167 +2,137 @@ var orden = require('../schemas/orden.js');
 var mongoose = require('mongoose');
 
 exports.getOrdenes = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+
   handler: function(request, reply){
     var ordenes = orden.find({});
     return(ordenes);
   }
 }
 exports.getOrdenesId = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
+  
   handler : function(request, reply){
+    this.envio = "w"
     orden.findOne({'_id' : request.params._id}, function(err, Orden){
       if(!err && Orden){
-        return reply(Orden);
+        this.envio =(Orden);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Orden not found'));
+        this.envio =(boom.wrap(err, 'Orden not found'));
       }
     });
+    return envio;
   }
 }
 exports.getOrdenesName = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     orden.find({'nombre' : request.params.nombre}, function(err, Ordenes){
       if(!err && Ordenes){
-        return reply(Ordenes);
+        this.envio =(Ordenes);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Ordenes not found'));
+        this.envio =(boom.wrap(err, 'Ordenes not found'));
       }
     });
+    return envio;
   }
 }
 exports.getOrdenesIdCombos = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     orden.find({'idProveedor' : request.params.idCombos}, function(err, Ordenes){
       if(!err && Ordenes){
-        return reply(Ordenes);
+        this.envio =(Ordenes);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Ordenes not found'));
+        this.envio =(boom.wrap(err, 'Ordenes not found'));
       }
     });
+    return envio;;
   }
 }
 exports.getOrdenesProductos = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
+  
   handler : function(request, reply){
+    this.envio = "w"
     orden.find({'idProductos' : request.params.idProductos}, function(err, Ordenes){
       if(!err && Ordenes){
-        return reply(Ordenes);
+        this.envio =(Ordenes);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Ordenes not found'));
+        this.envio =(boom.wrap(err, 'Ordenes not found'));
       }
     });
+    return envio;
   }
 }
 exports.getOrdenesPromociones = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     orden.find({'idPromociones' : request.params.idPromociones}, function(err, Ordenes){
       if(!err && Ordenes){
-        return reply(Ordenes);
+        this.envio =(Ordenes);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Ordenes not found'));
+        this.envio =(boom.wrap(err, 'Ordenes not found'));
       }
     });
+    return envio;
   }
 }
 exports.getOrdenesMesa = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     orden.find({'idMesa' : request.params.idMesa}, function(err, Ordenes){
       if(!err && Ordenes){
-        return reply(Ordenes);
+        this.envio =(Ordenes);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Ordenes not found'));
+        this.envio =y(boom.wrap(err, 'Ordenes not found'));
       }
     });
+    return envio;
   }
 }
 exports.getOrdenesFecha = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     orden.find({'fecha' : request.params.fecha}, function(err, Ordenes){
       if(!err && Ordenes){
-        return reply(Ordenes);
+        this.envio =(Ordenes);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Ordenes not found'));
+        this.envio =y(boom.wrap(err, 'Ordenes not found'));
       }
     });
+    return envio;
   }
 }
 exports.getOrdenPersonal = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
   handler : function(request, reply){
+    this.envio = "w"
     orden.find({'idPersonal' : request.params.idPersonal}, function(err, Ordenes){
       if(!err && Ordenes){
-        return reply(Ordenes);
+        this.envio =(Ordenes);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Ordenes not found'));
+        this.envio =(boom.wrap(err, 'Ordenes not found'));
       }
     });
+    return envio;
   }
 }
 exports.modifyOrden = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal']
-  },*/
   handler: function(request, reply){
+    this.envio = "w"
     orden.update(
       {'_id': request.params._id},
       {$set:
@@ -176,40 +146,32 @@ exports.modifyOrden = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'Orden not found'));
+          this.envio =(boom.wrap(err, 'Orden not found'));
         }else{
-          return reply('updated succesfully');
+          this.envio =('updated succesfully');
         }
       }
-    );
+    );return envio;
   }
 }
 exports.deleteOrden = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal']
-  },*/
   handler: function(request, reply){
+    this.envio ="w"
     orden.findOne({'_id' : request.params._id}, function(err, Orden){
       if(err){
-        return reply(boom.badRequest("Could not delete Orden"));
+        this.envio =(boom.badRequest("Could not delete Orden"));
       }else if(!err && Orden){
         Orden.remove();
-        return reply('Orden deleted succesfully');
+        this.envio =('Orden deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }
-    });
+    });return envio;
   }
 }
 exports.createOrden = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente', 'personal', 'cliente']
-  },*/
   handler: function(request, reply){
+    this.envio ="w"
     var newOrden = new orden({
       idMesa: request.payload.idMesa,
           idEmpleado: request.payload.idEmpleado,
@@ -219,14 +181,14 @@ exports.createOrden = {
     });
     newOrden.save(function(err){
       if(!err){
-        return reply({
+        this.envio ={
           success: true
-        });
+        }
       }else{
-        return reply({
+        this.envio ={
           success: false
-        })
+        }
       }
-    });
+    });return envio;
   }
 }

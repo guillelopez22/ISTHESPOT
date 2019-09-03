@@ -9,60 +9,52 @@ exports.getCombos = {
 }
 exports.getComboId = {
   handler : function(request, reply){
+    this.envio = "w";
     combo.findOne({'_id' : request.params._id}, function(err, Combo){
       if(!err && Combo){
-        return reply(Combo);
+        this.envio =(Combo);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Combo not found'));
+        this.envio =(boom.wrap(err, 'Combo not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getComboName = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+  
   handler : function(request, reply){
+    this.envio = "w";
     combo.find({'nombre' : request.params.nombre}, function(err, Combos){
       if(!err && Combos){
-        return reply(Combos);
+        this.envio = (Combos);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio = (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Combo not found'));
+        this.envio = (boom.wrap(err, 'Combo not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getComboPrecio = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+  
   handler : function(request, reply){
+    this.envio = "w";
     combo.find({'precio' : request.params.precio}, function(err, Combos){
       if(!err && Combos){
-        return reply(Combos);
+        this.envio = (Combos);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio = (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Combo not found'));
+        this.envio = (boom.wrap(err, 'Combo not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.modifyCombo = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+  
   handler: function(request, reply){
+    this.envio = "w";
     combo.update(
       {'_id': request.params._id},
       {$set:
@@ -73,40 +65,34 @@ exports.modifyCombo = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'Combo not found'));
+          this.envio = (boom.wrap(err, 'Combo not found'));
         }else{
-          return reply('updated succesfully');
+          this.envio = ('updated succesfully');
         }
       }
-    );
+    );return envio;
   }
 }
 exports.deleteCombo = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+ 
   handler: function(request, reply){
+    this.envio = "w";
     combo.findOne({'_id' : request.params._id}, function(err, Combo){
       if(err){
-        return reply(boom.badRequest("Could not delete Combo"));
+        this.envio =(boom.badRequest("Could not delete Combo"));
       }else if(!err && Combo){
         Combo.remove();
-        return reply('Combo deleted succesfully');
+        this.envio =('Combo deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }
-    });
+    });return envio;
   }
 }
 exports.createCombo = {
-  /*auth: {
-    mode:'required',
-    strategy:'session',
-    scope: ['admin', 'gerente']
-  },*/
+  
   handler: function(request, reply){
+    this.envio = "w";
     var newCombo = new combo({
       nombre : request.payload.nombre,
       descripcion : request.payload.descripcion,
@@ -114,13 +100,13 @@ exports.createCombo = {
     });
     newCombo.save(function(err){
       if(!err){
-        return reply({
+        this.envio = {
           success: true
-        });
+        };
       }else{
-        return reply({
+        this.envio = {
           success: false
-        })
+        }
       }
     });
   }

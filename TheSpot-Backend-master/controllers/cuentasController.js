@@ -11,60 +11,65 @@ exports.getCuentas = {
 exports.getCuentaId = {
   
   handler : function(request, reply){
+    this.envio = "w";
     cuenta.findOne({'_id' : request.params._id}, function(err, Cuenta){
       if(!err && Cuenta){
-        return reply(Cuenta);
+        this.envio = (Cuenta);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Cuenta not found'));
+        this.envio =(boom.wrap(err, 'Cuenta not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getCuentaUsuario = {
   handler : function(request, reply){
+    this.envio = "w";
     cuenta.find({'idUsuario' : request.params.idUsuario}, function(err, Usuarios){
       if(!err && Usuarios){
-        return reply(Usuarios);
+        this.envio = (Usuarios);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio = (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'Usuario not found'));
+        this.envio = (boom.wrap(err, 'Usuario not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getCuentaTotal = {
   
   handler : function(request, reply){
+    this.envio = "w";
     cuenta.find({'total' : request.params.total}, function(err, Cuentas){
       if(!err && Cuentas){
-        return reply(Cuentas);
+        this.envio =(Cuentas);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'total not found'));
+        this.envio =(boom.wrap(err, 'total not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.getCuentaEstado = {
   handler : function(request, reply){
+    this.envio ="w";
     cuenta.find({'estado' : request.params.estado}, function(err, Cuentas){
       if(!err && Cuentas){
-        return reply(Cuentas);
+        this.envio =(Cuentas);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'estado not found'));
+        this.envio =(boom.wrap(err, 'estado not found'));
       }
-    });
+    });return envio;
   }
 }
 exports.modifyCuenta = {
   
   handler: function(request, reply){
+    this.envio ="w";
     cuenta.update(
       {'_id': request.params._id},
       {$set:
@@ -75,32 +80,34 @@ exports.modifyCuenta = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'cuenta not found'));
+          this.envio =(boom.wrap(err, 'cuenta not found'));
         }else{
-          return reply('updated succesfully');
+          this.envio =('updated succesfully');
         }
       }
-    );
+    );return envio;
   }
 }
 exports.deleteCuenta = {
   
   handler: function(request, reply){
+    this.envio ="w";
     cuenta.findOne({'_id' : request.params._id}, function(err, Cuenta){
       if(err){
-        return reply(boom.badRequest("Could not delete cuenta"));
+        this.envio =(boom.badRequest("Could not delete cuenta"));
       }else if(!err && Cuenta){
         Cuenta.remove();
-        return reply('cuenta deleted succesfully');
+        this.envio =('cuenta deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }
-    });
+    });return envio;
   }
 }
 exports.createCuenta = {
   
   handler: function(request, reply){
+    this.envio ="w";
     var newCuenta = new cuenta({
         idUsuario : request.payload.idUsuario,
         total : request.payload.total,
@@ -108,14 +115,14 @@ exports.createCuenta = {
     });
     newCuenta.save(function(err){
       if(!err){
-        return reply({
+        this.envio ={
           success: true
-        });
+        };
       }else{
-        return reply({
+        this.envio ={
           success: false
-        })
+        }
       }
-    });
+    });return envio;
   }
 }

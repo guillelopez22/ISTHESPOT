@@ -11,47 +11,54 @@ exports.getMesasEmpleados = {
 exports.getMesaEmpleadoId = {
   
   handler : function(request, reply){
+    this.envio = "w"
     mesaempleado.findOne({'_id' : request.params._id}, function(err, MesaEmpleado){
       if(!err && MesaEmpleado){
-        return reply(MesaEmpleado);
+        this.envio = (MesaEmpleado);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio = (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'mesa empleado not found'));
+        this.envio = (boom.wrap(err, 'mesa empleado not found'));
       }
     });
+    return envio;
   }
 }
 exports.getMesaEmpleadoMesa = {
   handler : function(request, reply){
+    this.envio = "w"
     mesaempleado.find({'idMesa' : request.params.idMesa}, function(err, MesaEmpleado){
       if(!err && MesaEmpleado){
-        return reply(MesaEmpleado);
+        this.envio = (MesaEmpleado);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio = (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'mesa not found'));
+        this.envio = (boom.wrap(err, 'mesa not found'));
       }
     });
+    return envio;
   }
 }
 exports.getMesaEmpleadoEmpleado = {
   
   handler : function(request, reply){
+    this.envio = "w"
     mesaempleado.find({'idEmpleado' : request.params.idEmpleado}, function(err, MesaEmpleado){
       if(!err && MesaEmpleado){
-        return reply(MesaEmpleado);
+        this.envio = (MesaEmpleado);
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio = (boom.notFound());
       }else if(err){
-        return reply(boom.wrap(err, 'empleado not found'));
+        this.envio = (boom.wrap(err, 'empleado not found'));
       }
     });
+    return envio;
   }
 }
 exports.modifyMesaEmpleado = {
   
   handler: function(request, reply){
+    this.envio = "w"
     mesaempleado.update(
       {'_id': request.params._id},
       {$set:
@@ -61,45 +68,46 @@ exports.modifyMesaEmpleado = {
         }
       }, function(err){
         if(err){
-          return reply(boom.wrap(err, 'mesa empleado not found'));
+          this.envio =(boom.wrap(err, 'mesa empleado not found'));
         }else{
-          return reply('updated succesfully');
+          this.envio =('updated succesfully');
         }
       }
-    );
+    );return envio;
   }
 }
 exports.deleteMesaEmpleado = {
   
   handler: function(request, reply){
+    this.envio = "w"
     mesaempleado.deleteMany({'idMesa' : request.params._id}, function(err, MesaEmpleado){
       if(err){
-        return reply(boom.badRequest("Could not delete MesaEmpleado"));
+        this.envio =(boom.badRequest("Could not delete MesaEmpleado"));
       }else if(!err && MesaEmpleado){
-        //MesaEmpleado.remove();
-        return reply('MesaEmpleado deleted succesfully');
+        this.envio =('MesaEmpleado deleted succesfully');
       }else if(!err){
-        return reply(boom.notFound());
+        this.envio =(boom.notFound());
       }
-    });
+    });return envio;
   }
 }
 exports.createMesaEmpleado = {
   
   handler: function(request, reply){
+    this.envio ="w"
     var newMesaEmpleado = new mesaempleado({
         idMesa : request.payload.idMesa,
         idEmpleado : request.payload.idEmpleado,
     });
     newMesaEmpleado.save(function(err){
       if(!err){
-        return reply({
+        this.envio ={
           success: true
-        });
+        }
       }else{
-        return reply({
+        this.envio ={
           success: false
-        })
+        }
       }
     });
   }
