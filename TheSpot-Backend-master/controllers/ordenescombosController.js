@@ -107,7 +107,7 @@ exports.createOrdenCombo = {
     });
     newOrdenCombo.save(function(err){
       if(!err){
-        rthis.envio ={
+        this.envio ={
           success: true
         }
       }else{
@@ -115,6 +115,6 @@ exports.createOrdenCombo = {
           success: false
         }
       }
-    });
+    });return envio;
   }
 }
