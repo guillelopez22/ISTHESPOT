@@ -126,6 +126,24 @@
           <label for="Tipo">Tipo</label>
         </div>
       </div>
+      <div class="row">
+        <div class="input-field col s7">
+          <input
+            v-on:input="imagen = $event.target.value"
+            type="text"
+            v-model="imagen"
+            :disabled="loading"
+            id="imagen"
+          />
+          <label for="imagen">Imagen</label>
+        </div>
+        <div class="input-field col s5">
+          <button
+            v-on:click="cargarImagen()"
+            class="waves-effect waves-teal btn-large"
+          >Mostrar Imagen</button>
+        </div>
+      </div>
     </div>
 
     <button v-on:click="agregarInsumos()" class="waves-effect waves-teal btn-large">Agregar</button>
@@ -254,7 +272,8 @@ export default {
       productosordenes: [],
       ingredientes_n: [],
       cantidad_insumo: 1,
-      cantidad_insumos: []
+      cantidad_insumos: [],
+      imagen: ""
     };
   },
   idIns: function(val) {
@@ -269,6 +288,16 @@ export default {
     }
   },
   methods: {
+    cargarImagen() {
+      if (this.imagen != "") {
+        swal({
+        title: "Imagen cargada!",
+        imageUrl: this.imagen
+      });
+      } else {
+        sweetAlert("Imagen Vacia", "Debe ingresar un URL valido", "warning");
+      }
+    },
     getIngredientes(producto) {
       var acum = "";
       this.$http
@@ -452,7 +481,8 @@ export default {
         this.producto.tipo == undefined ||
         this.producto.cantidad == undefined ||
         this.producto.precio == undefined ||
-        this.ingredientes.length == 0
+        this.ingredientes.length == 0 ||
+        this.imagen == ""
         //this.idIns == "N/A"
       ) {
         this.loading = false;
@@ -485,11 +515,12 @@ export default {
         this.loading = false;
         sweetAlert("Oops...", "No pueden haber precios negativas", "error");
       } else {
+        this.producto.imagen = this.imagen;
         this.$http
           .post("http://localhost:8000/productos/create", this.producto)
           .then(response => {
             this.loading = false;
-            if (response.body.success) {
+            if (!response.body.success) {
               this.producto = {};
               //poner aca bebida
               //this.insumo = {};
@@ -512,8 +543,9 @@ export default {
             _this.productoxinsumo.idInsumo = _this.ingredientes[i];
             _this.productoxinsumo.idProducto =
               _this.productos[_this.productos.length - 1]._id;
-            _this.productoxinsumo.cantidad_insumo =
-               parseInt(_this.ingredientes_n[i].cantidad);
+            _this.productoxinsumo.cantidad_insumo = parseInt(
+              _this.ingredientes_n[i].cantidad
+            );
             console.log(_this.productoxinsumo);
             _this.$http
               .post(
@@ -616,12 +648,13 @@ export default {
                   });
 
                 var i;
-                console.log("Cantidad: "+ _this.ingredientes.length)
+                console.log("Cantidad: " + _this.ingredientes.length);
                 for (i = 0; i < _this.ingredientes.length; i++) {
                   _this.productoxinsumo = {};
                   _this.productoxinsumo.idInsumo = _this.ingredientes[i];
-                  _this.productoxinsumo.idProducto =_this.productos[_this.productos.length - 1]._id;
-                  _this.productoxinsumo.cantidad_insumo = _this.ingredientes_n[i].cantidad;
+                  _this.productoxinsumo.idProducto = _this.idModificar;
+                  _this.productoxinsumo.cantidad_insumo =
+                    _this.ingredientes_n[i].cantidad;
                   console.log(_this.productoxinsumo);
                   _this.$http
                     .post(

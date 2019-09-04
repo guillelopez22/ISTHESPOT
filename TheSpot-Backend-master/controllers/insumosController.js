@@ -78,7 +78,8 @@ exports.modifyInsumo = {
         {
           nombre : request.payload.nombre,
           inventario : request.payload.inventario,
-          idProveedor : request.payload.idProveedor
+          idProveedor : request.payload.idProveedor,
+          imagen: request.payload.imagen
         }
       }, function(err){
         if(err){
@@ -112,7 +113,8 @@ exports.createInsumo = {
     var newInsumo = new insumo({
       nombre : request.payload.nombre,
       inventario : request.payload.inventario,
-      idProveedor : request.payload.idProveedor
+      idProveedor : request.payload.idProveedor,
+      imagen: request.payload.imagen
     });
     newInsumo.save(function(err){
       if(!err){

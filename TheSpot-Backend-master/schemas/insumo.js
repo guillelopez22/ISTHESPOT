@@ -4,7 +4,7 @@ var InsumoSchema = new mongoose.Schema({
   nombre : String,
   inventario : Number,
   idProveedor: String,
-  Imagen: String
+  imagen: String
 });
 
 module.exports = mongoose.model('insumo', InsumoSchema);

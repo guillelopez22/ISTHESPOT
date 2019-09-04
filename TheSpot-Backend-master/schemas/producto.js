@@ -5,11 +5,9 @@ var ProductoSchema = new mongoose.Schema({
   nombre : String,
   tipo : String,
   descripcion : String,
-  //idBebida: String,
-  idInsumo: String,
   cantidad: Number,
   precio : Number,
-  Imagen: String
+  imagen: String
 });
 
 module.exports = mongoose.model('producto', ProductoSchema);

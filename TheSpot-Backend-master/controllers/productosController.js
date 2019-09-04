@@ -126,10 +126,9 @@ exports.modifyProducto = {
           nombre : request.payload.nombre,
           tipo : request.payload.tipo,
           descripcion : request.payload.descripcion,
-          idBebida : request.payload.idBebida,
-          idInsumo : request.payload.idInsumo,
           cantidad : request.payload.cantidad,
-          precio : request.payload.precio
+          precio : request.payload.precio,
+          imagen: request.payload.imagen
         }
       }, function(err){
         if(err){
@@ -163,10 +162,9 @@ exports.createProducto = {
           nombre : request.payload.nombre,
           tipo : request.payload.tipo,
           descripcion : request.payload.descripcion,
-          idBebida : request.payload.idBebida,
-          idInsumo : request.payload.idInsumo,
           cantidad : request.payload.cantidad,
-          precio : request.payload.precio
+          precio : request.payload.precio,
+          imagen: request.payload.imagen
     });
     newProducto.save(function(err){
       if(!err){
