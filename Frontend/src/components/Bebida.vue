@@ -301,7 +301,7 @@ export default {
           .post("http://localhost:8000/bebidas/create", this.bebida)
           .then(response => {
             this.loading = false;
-            if (!response.body.success) {
+            if (response.body.success) {
               this.bebida = {};
               sweetAlert(
                 "Creado con exito!",
@@ -394,7 +394,7 @@ export default {
                   .delete("http://localhost:8000/bebidas/delete/" + idBebida)
                   .then(response => {
                     this.loading = false;
-                    if (response.body.success) {
+                    if (!response.body.success) {
                       sweetAlert("Oops...", "Error al eliminar", "error");
                       _this.getBebida();
                     } else {

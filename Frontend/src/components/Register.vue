@@ -140,12 +140,14 @@ export default {
       contrasena: "",
       contrasena2: "",
       loading: false,
-      nombre: ''
+      nombre: '',
+      scope: 'cliente'
     };
   },
   methods: {
     newUsuario() {
       this.loading = true;
+      this.usuario.scope = this.scope;
       if (this.contrasena === this.contrasena2) {
         this.loading = false;
         console.log(this.usuario);
