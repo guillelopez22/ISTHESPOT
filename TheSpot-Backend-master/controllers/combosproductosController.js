@@ -104,7 +104,7 @@ exports.deleteComboProducto = {
 
     handler: async function (request, reply) {
         try {
-            var result = await comboproducto.deleteMany(request.params._id);
+            var result = await comboproducto.deleteMany({ 'idCombo': request.params._id });
             return reply.response({success: true});
         } catch (error) {
           throw boom.badRequest();
