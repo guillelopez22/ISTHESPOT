@@ -68,6 +68,7 @@
     <div class="row">
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="bebida.nombre = $event.target.value"
           type="text"
           v-model="bebida.nombre"
@@ -78,6 +79,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="bebida.precio = $event.target.value"
           type="number"
           v-model="bebida.precio"
@@ -88,6 +90,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="bebida.tipo = $event.target.value"
           v-model="bebida.tipo"
           :disabled="loading"
@@ -99,6 +102,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="bebida.inventario = $event.target.value"
           type="number"
           v-model="bebida.inventario"
@@ -110,6 +114,7 @@
 
       <div class="input-field col s12">
         <textarea
+          placeholder=""
           v-on:input="bebida.descripcion = $event.target.value"
           v-model="bebida.descripcion"
           :disabled="loading"

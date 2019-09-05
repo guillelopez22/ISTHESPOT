@@ -71,6 +71,7 @@
     <div class="row">
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="mesa.nombre = $event.target.value"
           type="text"
           v-model="mesa.nombre"
@@ -82,6 +83,7 @@
 
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="mesa.numero = $event.target.value"
           type="number"
           v-model="mesa.numero"

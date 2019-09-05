@@ -45,27 +45,27 @@
     </ul>
     <div class="row">
         <div class="input-field col s6">
-          <input v-model="promocion.nombre" :disabled="loading"  id="Nombre" type="text" class="validate">
+          <input placeholder="" v-model="promocion.nombre" :disabled="loading"  id="Nombre" type="text" class="validate">
           <label for="Nombre">Nombre</label>
         </div>
         <div class="input-field col s6">
-          <input v-model="promocion.descripcion" :disabled="loading"  id="Descripcion" type="text" class="validate">
+          <input placeholder="" v-model="promocion.descripcion" :disabled="loading"  id="Descripcion" type="text" class="validate">
           <label for="Descripcion">Descripción</label>
         </div>
         <div class="input-field col s6">
-          <input type="number" v-model="promocion.cantidad" :disabled="loading"  id="Cantidad">
+          <input placeholder="" type="number" v-model="promocion.cantidad" :disabled="loading"  id="Cantidad">
           <label for="Cantidad">Cantidad</label>
         </div>
         <div class="input-field col s6">
-          <input v-model="promocion.descuento" :disabled="loading" id="Descuento" type="text"  class="validate">
+          <input placeholder="" v-model="promocion.descuento" :disabled="loading" id="Descuento" type="text"  class="validate">
           <label for="Descuento">Descuento</label>
         </div>
         <div class="input-field col s6">
-          <input v-model="promocion.hora_inicio" :disabled="loading" id="hora_inicio" type="text"  class="validate">
+          <input placeholder="" v-model="promocion.hora_inicio" :disabled="loading" id="hora_inicio" type="text"  class="validate">
           <label for="hora_inicio">Hora Inicio</label>
         </div>
         <div class="input-field col s6">
-          <input v-model="promocion.hora_final" :disabled="loading" id="hora_final" type="text"  class="validate">
+          <input placeholder="" v-model="promocion.hora_final" :disabled="loading" id="hora_final" type="text"  class="validate">
           <label for="hora_final">Hora Final</label>
         </div>
       </div>

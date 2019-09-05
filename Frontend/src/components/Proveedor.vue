@@ -58,6 +58,7 @@
     <div class="row">
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="proveedor.nombre = $event.target.value"
           v-model="proveedor.nombre"
           :disabled="loading"
@@ -69,6 +70,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="proveedor.pais = $event.target.value"
           v-model="proveedor.pais"
           :disabled="loading"
@@ -80,6 +82,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="proveedor.telefono = $event.target.value"
           type="number"
           v-model="proveedor.telefono"
@@ -90,6 +93,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="proveedor.contacto = $event.target.value"
           v-model="proveedor.contacto"
           :disabled="loading"
@@ -101,6 +105,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="proveedor.email = $event.target.value"
           v-model="proveedor.email"
           :disabled="loading"
@@ -112,6 +117,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="proveedor.direccion = $event.target.value"
           v-model="proveedor.direccion"
           :disabled="loading"

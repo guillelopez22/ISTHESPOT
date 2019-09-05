@@ -70,6 +70,7 @@
     <div class="row">
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="combo.nombre = $event.target.value"
           type="text"
           v-model="combo.nombre"
@@ -80,6 +81,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="combo.precio = $event.target.value"
           type="number"
           v-model="combo.precio"
@@ -90,6 +92,7 @@
       </div>
       <div class="input-field col s12">
         <input
+          placeholder=""
           v-on:input="combo.descripcion = $event.target.value"
           type="text"
           v-model="combo.descripcion"
@@ -121,6 +124,7 @@
       <div class="col s6">
         <div class="input-field col s6">
           <input
+            placeholder=""
             v-on:input="cantidad_producto = $event.target.value"
             type="number"
             v-model="cantidad_producto"
@@ -140,7 +144,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="i in productosTemp" v-bind:key="i">
+            <tr v-for="i in productosTemp" v-bind:key="i" placeholder="">
               <td>{{i.nombre}}</td>
               <td>{{i.cantidad_producto}}</td>
 
@@ -180,6 +184,7 @@
     <div class="row">
       <div class="input-field col s6">
         <select
+          placeholder=""
           style="color: black"
           class="browser-default"
           :disabled="loading"
@@ -195,6 +200,7 @@
       <div class="col s6">
         <div class="input-field col s6">
           <input
+            placeholder=""
             v-on:input="cantidad_bebida = $event.target.value"
             type="number"
             v-model="cantidad_bebida"
@@ -578,11 +584,6 @@ export default {
             this.loading = false;
             if (response.body.success) {
               this.combo = {};
-              sweetAlert("Oops...", "Error al crear", "error");
-              this.getCombos();
-              
-            } else {
-              this.combo = {};
               sweetAlert(
                 "Creado con exito!",
                 "Los cambios estan en la tabla",
@@ -590,10 +591,11 @@ export default {
               );
 
               this.getCombos();
-
+            } else {
+              sweetAlert("Oops...", "Error al crear", "error");
+              this.getCombos();
             }
           });
-          
 
         setTimeout(function() {
           var i;
@@ -611,7 +613,6 @@ export default {
                   prod = {};
                   console.log("agregó");
                 } else {
-                  prod = {};
                   console.log("tronó");
                 }
               });
@@ -629,14 +630,12 @@ export default {
               .then(response => {
                 _this.loading = false;
                 if (response.body.success) {
+                  prod = {};
                   console.log("agregó");
                 } else {
                   console.log("tronó");
                 }
-                console.log("bebida tupla: ",beb)
-                beb = {};
               });
-              
           }
           _this.combosxproductos = [];
           _this.combosxbebidas = [];
