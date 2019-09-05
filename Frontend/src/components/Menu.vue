@@ -1,6 +1,6 @@
-
 <template>
   <div class="row">
+    <br />
     <div class="col s12">
       <ul id="tabs-swipe-demo" class="tabs">
         <li class="tab col s3">
