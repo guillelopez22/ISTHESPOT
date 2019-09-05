@@ -1,6 +1,6 @@
 var combo = require('../schemas/combo.js');
 var mongoose = require('mongoose');
-
+const boom = require('boom');
 exports.getCombos = {
   handler: function(request, reply){
     var combos = combo.find({});

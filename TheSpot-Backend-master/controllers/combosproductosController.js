@@ -1,6 +1,6 @@
 var comboproducto = require('../schemas/comboproducto.js');
 var mongoose = require('mongoose');
-
+const boom = require('boom');
 exports.getCombosProductos = {
 
     handler: function (request, reply) {

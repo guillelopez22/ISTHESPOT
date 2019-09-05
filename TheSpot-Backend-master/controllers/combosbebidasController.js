@@ -1,6 +1,6 @@
 var combobebida = require('../schemas/combobebida.js');
 var mongoose = require('mongoose');
-
+const boom = require('boom');
 exports.getCombosBebidas = {
 
     handler: function (request, reply) {
