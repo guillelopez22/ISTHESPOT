@@ -926,6 +926,7 @@ export default {
                       }
                     });
                 }
+                _this.combo_a = "";
                 _this.combos_a = [];
                 _this.combos_n = [];
               }, 1000);
@@ -955,6 +956,7 @@ export default {
                       }
                     });
                 }
+                _this.bebida_a = "";
                 _this.bebidas_a = [];
                 _this.bebidas_n = [];
               }, 1000);
@@ -983,6 +985,7 @@ export default {
                       }
                     });
                 }
+                _this.producto_a = "";
                 _this.productos_a = [];
                 _this.productos_n = [];
               }, 1000);
@@ -1162,6 +1165,7 @@ export default {
                       }
                     });
                 }
+                _this.combo_a = "";
                 _this.combos_a = [];
                 _this.combos_n = [];
                 //bebidas
@@ -1189,6 +1193,7 @@ export default {
                       }
                     });
                 }
+                _this.bebida_a = "";
                 _this.bebidas_a = [];
                 _this.bebidas_n = [];
                 //productos
@@ -1216,6 +1221,7 @@ export default {
                       }
                     });
                 }
+                _this.producto_a = "";
                 _this.productos_a = [];
                 _this.productos_n = [];
               }, 2000);
