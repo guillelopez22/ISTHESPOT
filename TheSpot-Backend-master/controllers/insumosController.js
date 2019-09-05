@@ -12,7 +12,7 @@ exports.getInsumoId = {
   
   handler : async function(request, reply){
     try {
-      var Insumo = await imsumo.findById(request.params._id).exec();
+      var Insumo = await insumo.findById(request.params._id).exec();
       return reply.response(Insumo);
     } catch (error){
       throw boom.notFound();
@@ -142,7 +142,7 @@ exports.deleteInsumo = {
 }
 exports.createInsumo = {
 
-  handler: function(request, reply){
+  handler: async function(request, reply){
     try {
       var newInsumo = new insumo({
         nombre : request.payload.nombre,
