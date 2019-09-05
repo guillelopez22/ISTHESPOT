@@ -123,7 +123,7 @@ exports.deleteComboBebida = {
 }
 exports.createComboBebida = {
 
-    handler: function (request, reply) {
+    handler: async function (request, reply) {
         try {
             var newComboBebida = new combobebida({
                 idCombo: request.payload.idCombo,

@@ -124,7 +124,7 @@ exports.deleteComboProducto = {
 }
 exports.createComboProducto = {
 
-    handler: function (request, reply) {
+    handler:async function (request, reply) {
         try {
             var newComboProducto = new comboproducto({
                 idCombo: request.payload.idCombo,
