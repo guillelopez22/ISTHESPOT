@@ -13,7 +13,7 @@
           <th>Telefono</th>
           <th>Contacto</th>
           <th>Email</th>
-          <th>Direccion</th>
+          <th>Dirección</th>
           <th>Modificar</th>
           <th>Borrar</th>
         </tr>
@@ -119,7 +119,7 @@
           type="text"
           class="validate"
         />
-        <label for="Direccion">Direccion</label>
+        <label for="Direccion">Dirección</label>
       </div>
     </div>
 
@@ -269,7 +269,7 @@ export default {
           .post("http://localhost:8000/proveedor/create", this.proveedor)
           .then(response => {
             this.loading = false;
-            if (response.body.success) {
+            if (!response.body.success) {
               sweetAlert(
                 "Creado con exito!",
                 "Los cambios estan en la tabla",

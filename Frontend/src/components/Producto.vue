@@ -291,9 +291,9 @@ export default {
     cargarImagen() {
       if (this.imagen != "") {
         swal({
-        title: "Imagen Cargada Exitosamente!",
-        imageUrl: this.imagen
-      });
+          title: "Imagen Cargada Exitosamente!",
+          imageUrl: this.imagen
+        });
       } else {
         sweetAlert("Imagen Vacia", "Debe ingresar un URL valido", "warning");
       }
@@ -520,8 +520,9 @@ export default {
           .post("http://localhost:8000/productos/create", this.producto)
           .then(response => {
             this.loading = false;
-            if (!response.body.success) {
+            if (response.body.success) {
               this.producto = {};
+              this.imagen = "";
               //poner aca bebida
               //this.insumo = {};
               sweetAlert(
@@ -558,6 +559,7 @@ export default {
                   _this.productoxinsumo = {};
                   console.log("agregó");
                 } else {
+                  _this.productoxinsumo = {};
                   console.log("tronó");
                 }
               });
@@ -630,20 +632,19 @@ export default {
               sweetAlert("Oops...", "Error al modificar", "error");
             } else {
               //agregar nuevos
+              _this.$http
+                .delete(
+                  "http://localhost:8000/productosinsumos/delete/" +
+                    _this.idModificar
+                )
+                .then(response => {
+                  if (response.body.success) {
+                    console.log("nel");
+                  } else {
+                    console.log("simon");
+                  }
+                });
               setTimeout(function() {
-                _this.$http
-                  .delete(
-                    "http://localhost:8000/productosinsumos/delete/" +
-                      _this.idModificar
-                  )
-                  .then(response => {
-                    if (response.body.success) {
-                      console.log("nel");
-                    } else {
-                      console.log("simon");
-                    }
-                  });
-
                 var i;
                 console.log("Cantidad: " + _this.ingredientes.length);
                 for (i = 0; i < _this.ingredientes.length; i++) {
@@ -660,7 +661,7 @@ export default {
                     )
                     .then(response => {
                       _this.loading = false;
-                      if (response.body.success) {
+                      if (!response.body.success) {
                         _this.productoxinsumo = {};
                         console.log("agregó");
                       } else {
@@ -677,12 +678,13 @@ export default {
                 "Los cambios estan en la tabla",
                 "success"
               );
-              this.producto = {};
-              this.imagen = "";
-              this.loading = false;
+              _this.producto = {};
+              _this.imagen = "";
+              _this.loading = false;
             }
           });
       }
+      $("ul.tabs").tabs("select_tab", "test-swipe-1");
     },
     deleteproducto(idProducto) {
       let _this = this;

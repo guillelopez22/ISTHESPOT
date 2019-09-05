@@ -249,15 +249,10 @@ export default {
         this.usuario.nombre == undefined ||
         this.usuario.telefono == undefined ||
         this.usuario.usuario == undefined ||
-        this.usuario.contrasena == undefined ||
-        this.usuario.IdPersonal == undefined ||
-        this.usuario.idOrdenes == undefined
+        this.usuario.contrasena == undefined
       ) {
         this.loading = false;
         sweetAlert("Oops...", "Hay un campo vacio", "error");
-      } else if (this.usuario.IdPersonal.length != 13) {
-        this.loading = false;
-        sweetAlert("Oops...", "El Id personal debe tener 13 numeros", "error");
       } else if (this.usuario.usuario.length < 3) {
         this.loading = false;
         sweetAlert(
@@ -289,17 +284,12 @@ export default {
           "El nombre debe tener por lo menos 3 caracteres ",
           "error"
         );
-      } else if (
-        !(this.usuario.IdPersonal.toLowerCase().match(patt2) == null)
-      ) {
-        this.loading = false;
-        sweetAlert("Oops...", "El Id Personal contiene letras", "error");
       } else {
         this.$http
           .post("http://localhost:8000/usuarios/create", this.usuario)
           .then(response => {
             this.loading = false;
-            if (response.body.success) {
+            if (!response.body.success) {
               this.usuario = {};
               sweetAlert(
                 "Creado con exito!",

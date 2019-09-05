@@ -97,11 +97,11 @@
           class="browser-default"
           :disabled="loading"
           id="idEmpleado"
-          v-on:input="bebida.idEmpleado = $event.target.value"
+          v-on:input="orden.idEmpleado = $event.target.value"
           type="text"
           v-model="orden.idEmpleado"
         >
-          <option v-for="e in empleados" v-bind:key="e" :value="e._id">{{e.nombre}}</option>
+          <option v-for="e in s_empleados" v-bind:key="e" :value="e._id">{{e.nombre}}</option>
         </select>
       </div>
     </div>
@@ -379,6 +379,7 @@ export default {
       empleado: {},
       empleados: [],
       empleados2: [],
+      s_empleados: [],
       producto: {},
       productos: [],
       productos2: [],
@@ -870,12 +871,23 @@ export default {
       this.currentPage = 1;
       this.loading = true;
 
-      if (
-        this.orden.idMesa == undefined ||
-        this.orden.idEmpleado == undefined
+      if (this.orden.idMesa == undefined) {
+        this.loading = false;
+        sweetAlert("Oops...", "Error al crear, Mesa vacía", "error");
+      } else if (this.orden.idEmpleado == undefined) {
+        this.loading = false;
+        sweetAlert("Oops...", "Error al crear, Empleado vacío", "error");
+      } else if (
+        this.combos_a.length == 0 &&
+        this.bebidas_a.length == 0 &&
+        this.productos_a.length == 0
       ) {
         this.loading = false;
-        sweetAlert("Oops...", "Error al crear, datos invalidos", "error");
+        sweetAlert(
+          "Oops...",
+          "Error al crear, Debe contener al menos 1 item",
+          "error"
+        );
       } else {
         this.$http
           .post("http://localhost:8000/ordenes/create", this.orden)
@@ -1089,43 +1101,43 @@ export default {
               sweetAlert("Oops...", "Error al modificar", "error");
             } else {
               //agregar
+              _this.$http
+                .delete(
+                  "http://localhost:8000/ordenescombos/delete/" +
+                    _this.idModificar
+                )
+                .then(response => {
+                  if (response.body.success) {
+                    console.log("nel");
+                  } else {
+                    console.log("simon");
+                  }
+                });
+              _this.$http
+                .delete(
+                  "http://localhost:8000/ordenesbebidas/delete/" +
+                    _this.idModificar
+                )
+                .then(response => {
+                  if (response.body.success) {
+                    console.log("nel");
+                  } else {
+                    console.log("simon");
+                  }
+                });
+              _this.$http
+                .delete(
+                  "http://localhost:8000/productosordenes/delete/" +
+                    _this.idModificar
+                )
+                .then(response => {
+                  if (response.body.success) {
+                    console.log("nel");
+                  } else {
+                    console.log("simon");
+                  }
+                });
               setTimeout(function() {
-                _this.$http
-                  .delete(
-                    "http://localhost:8000/ordenescombos/delete/" +
-                      _this.idModificar
-                  )
-                  .then(response => {
-                    if (response.body.success) {
-                      console.log("nel");
-                    } else {
-                      console.log("simon");
-                    }
-                  });
-                _this.$http
-                  .delete(
-                    "http://localhost:8000/ordenesbebidas/delete/" +
-                      _this.idModificar
-                  )
-                  .then(response => {
-                    if (response.body.success) {
-                      console.log("nel");
-                    } else {
-                      console.log("simon");
-                    }
-                  });
-                _this.$http
-                  .delete(
-                    "http://localhost:8000/productosordenes/delete/" +
-                      _this.idModificar
-                  )
-                  .then(response => {
-                    if (response.body.success) {
-                      console.log("nel");
-                    } else {
-                      console.log("simon");
-                    }
-                  });
                 //combos
                 var i;
                 //console.log("Cantidad: " + _this.ingredientes.length);
@@ -1207,7 +1219,7 @@ export default {
                 _this.productos_a = [];
                 _this.productos_n = [];
               }, 2000);
-  
+
               sweetAlert(
                 "Modificado con exito!",
                 "Los cambios estan en la tabla",
@@ -1317,6 +1329,14 @@ export default {
       this.$http.get("http://localhost:8000/usuarios").then(response => {
         console.log(response);
         this.empleados = response.body;
+        var i;
+        for (i = 0; i < this.empleados.length; i++) {
+          console.log("Entró a la cosa 1");
+          if (this.empleados[i].scope == "Mesero") {
+            console.log("Entró a la segunda");
+            this.s_empleados.push(this.empleados[i]);
+          }
+        }
       });
     },
     getProductos() {
