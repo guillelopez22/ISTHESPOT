@@ -724,11 +724,10 @@ export default {
               this.loading = false;
               sweetAlert("Oops...", "Error al modificar", "error");
             } else {
-              setTimeout(function() {
-                _this.$http
+              this.$http
                   .delete(
                     "http://localhost:8000/combosproductos/delete/" +
-                      _this.idModificar
+                      this.idModificar
                   )
                   .then(response => {
                     if (response.body.success) {
@@ -738,23 +737,24 @@ export default {
                     }
                   });
 
-                  _this.$http
+                  this.$http
                   .delete(
                     "http://localhost:8000/combosbebidas/delete/" +
-                      _this.idModificar
+                      this.idModificar
                   )
-                  .then(response => {
+                  .then(response => {//this
                     if (response.body.success) {
                       console.log("nel");
                     } else {
                       console.log("simon");
                     }
-
+                    });
+              setTimeout(function() {
                 var i;
                 for (i = 0; i < _this.combosxproductos.length; i++) {
                   _this.comboxproducto = {};
                   _this.comboxproducto.idProducto = _this.combosxproductos[i];
-                  _this.comboxproducto.idCombo =_this.combos[_this.combos.length - 1]._id;
+                  _this.comboxproducto.idCombo =_this.idModificar;
                   _this.comboxproducto.cantidad_producto = _this.productosTemp[i].cantidad_producto;
                   _this.$http
                     .post(
@@ -767,21 +767,19 @@ export default {
                         _this.comboxproducto = {};
                         console.log("agregó");
                       } else {
+                        _this.comboxproducto = {};
                         console.log("tronó");
                       }
                     });
                 }
+                _this.comboxproducto = {};
                 _this.combosxproductos = [];
                 _this.productosTemp = [];
-              }, 2000);
-              console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 
-              var i;
-              console.log("cxb: "+_this.combosxbebidas);
                 for (i = 0; i < _this.combosxbebidas.length; i++) {
                   _this.comboxbebida = {};
                   _this.comboxbebida.idBebida = _this.combosxbebidas[i];
-                  _this.comboxbebida.idCombo =_this.combos[_this.combos.length - 1]._id;
+                  _this.comboxbebida.idCombo =_this.idModificar;
                   _this.comboxbebida.cantidad_bebida = _this.bebidasTemp[i].cantidad_bebida;
                   _this.$http
                     .post(
@@ -799,8 +797,12 @@ export default {
                     });
                 }
                 _this.combosxbebidas = [];
+                _this.comboxbebida = {};
                 _this.bebidasTemp = [];
               }, 2000);
+
+              
+              
 
               sweetAlert(
                 "Modificado con exito!",
@@ -809,7 +811,7 @@ export default {
               );
               this.combo = {};
               this.loading = false;
-            }
+            }//fin
           });
       }
     },

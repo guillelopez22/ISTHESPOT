@@ -393,19 +393,18 @@ export default {
           .post("http://localhost:8000/insumos/create", this.insumo)
           .then(response => {
             this.loading = false;
-            if (response.body.success) {
-              this.insumo = {};
+            if (response.body.success) {        
+              sweetAlert("Oops...", "Error al crear", "error");
+              this.getInsumo();
+            } else {
               sweetAlert(
                 "Creado con exito!",
                 "Los cambios estan en la tabla",
                 "success"
               );
-
-              this.getInsumo();
-            } else {
-              sweetAlert("Oops...", "Error al crear", "error");
               this.getInsumo();
             }
+            this.insumo = {};
           });
 
         setTimeout(function() {
@@ -433,6 +432,7 @@ export default {
           _this.proveedores_n = [];
         }, 1000);
       }
+      this.imagen = "";
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {
@@ -449,16 +449,43 @@ export default {
       }
     },
     startToModifyInsumo(insumo) {
-      this.selectedTab = "test-swipe-2";
+      /*this.selectedTab = "test-swipe-2";
       this.idModificar = insumo._id;
       this.insumo = insumo;
       this.insumo.idProveedor = insumo.idProveedor;
       this.imagen = this.insumo.imagen;
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
+      Materialize.updateTextFields();*/
+      this.selectedTab = "test-swipe-2";
+      this.idModificar = insumo._id;
+      this.insumo = insumo;
+      this.imagen = this.insumo.imagen;
+      this.$http
+        .get("http://localhost:8000/insumosproveedores")
+        .then(response => {
+          this.prvs = response.body;
+          var i = 0;
+          var j;
+          for (j = 0; j < this.prvs.length; j++) {
+            if (this.prvs[j].idInsumo == this.idModificar) {
+              for (i = 0; i < this.proveedores.length; i++) {
+                if (this.prvs[j].idProveedor == this.proveedores[i]._id) {
+                  var t = {};
+                  t.nombre = this.proveedores[i].nombre;
+                  t.index = this.proveedores_n.length;
+                  this.proveedores_n.push(t);
+                  this.proveedores_a.push(this.prvs[j].idProveedor);
+                }
+              }
+            }
+          }
+        });
+      this.prvs = [];
+      $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
     modifyInsumo() {
-      this.loading = true;
+      /*this.loading = true;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
         //this.insumo.idProveedor = this.idProv;
@@ -478,6 +505,78 @@ export default {
                 "Los cambios estan en la tabla",
                 "success"
               );
+              this.insumo = {};
+              this.imagen = "";
+              this.loading = false;
+            }
+          });
+      }*/
+      this.loading = true;
+      let _this = this;
+      if (this.idModificar != "") {
+        Materialize.updateTextFields();
+        this.insumo.imagen = this.imagen;
+        this.$http
+          .put(
+            "http://localhost:8000/insumos/update/" + this.idModificar,
+            this.insumo,
+            this.proveedor
+          )
+          .then(response => {
+            if (response.body.success) {
+              this.getInsumo();
+              this.loading = false;
+              sweetAlert("Oops...", "Error al modificar", "error");
+            } else {
+              //agregar nuevos
+
+              this.$http
+                  .delete(
+                    "http://localhost:8000/insumosproveedores/delete/" +
+                      this.idModificar
+                  )
+                  .then(response => {
+                    if (response.body.success) {
+                      console.log("nel");
+                    } else {
+                      console.log("simon");
+                    }
+                  });
+              
+              setTimeout(function() {
+                var i;
+                console.log("Cantidad: " + _this.proveedores_a.length);
+                for (i = 0; i < _this.proveedores_a.length; i++) {
+                  _this.prv = {};
+                  _this.prv.idProveedor = _this.proveedores_a[i];
+                  _this.prv.idInsumo = _this.idModificar;
+                  console.log(_this.prv);
+                  _this.$http
+                    .post(
+                      "http://localhost:8000/insumosproveedores/create",
+                      _this.prv
+                    )
+                    .then(response => {
+                      _this.loading = false;
+                      if (response.body.success) {
+                        _this.prv = {};
+                        console.log("agregó el proveedor");
+                      } else {
+                        console.log("tronó");
+                      }
+                    });
+                }
+                _this.proveedores_a = [];
+                _this.proveedores_n = [];
+              }, 2000);
+
+              sweetAlert(
+                "Modificado con exito!",
+                "Los cambios estan en la tabla",
+                "success"
+              );
+              this.proveedor = {};
+              this.prv = {};
               this.insumo = {};
               this.imagen = "";
               this.loading = false;
