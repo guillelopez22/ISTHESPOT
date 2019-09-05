@@ -6,6 +6,7 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
           <li><router-link to="/admin"><a style="color: white">MENU</a></router-link></li>
+          <li><router-link to="/menu"><a style="color: white">carta</a></router-link></li>
           <li>
             <nav>
               <div class="nav-wrapper -red" id="busqueda">
