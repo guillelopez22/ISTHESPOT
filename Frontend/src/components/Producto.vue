@@ -73,6 +73,7 @@
     <div class="row">
       <div class="input-field col s12">
         <input
+          placeholder=""
           v-on:input="producto.nombre = $event.target.value"
           type="text"
           v-model="producto.nombre"
@@ -83,6 +84,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="producto.precio = $event.target.value"
           type="number"
           v-model="producto.precio"
@@ -93,6 +95,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="producto.cantidad = $event.target.value"
           type="number"
           v-model="producto.cantidad"
@@ -104,6 +107,7 @@
       <div class="row">
         <div class="input-field col s12">
           <textarea
+            placeholder=""
             v-on:input="producto.descripcion = $event.target.value"
             v-model="producto.descripcion"
             :disabled="loading"
@@ -117,6 +121,7 @@
       <div class="row">
         <div class="input-field col s12">
           <input
+            placeholder=""
             v-on:input="producto.tipo = $event.target.value"
             type="text"
             v-model="producto.tipo"
@@ -129,6 +134,7 @@
       <div class="row">
         <div class="input-field col s7">
           <input
+            placeholder=""
             v-on:input="imagen = $event.target.value"
             type="text"
             v-model="imagen"

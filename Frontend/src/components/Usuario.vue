@@ -64,6 +64,7 @@
     <div class="row">
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="usuario.usuario = $event.target.value"
           type="text"
           v-model="usuario.usuario"
@@ -74,6 +75,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="usuario.contrasena = $event.target.value"
           type="text"
           v-model="usuario.contrasena"
@@ -84,6 +86,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="usuario.nombre = $event.target.value"
           type="text"
           v-model="usuario.nombre"
@@ -94,6 +97,7 @@
       </div>
       <div class="input-field col s6">
         <input
+          placeholder=""
           v-on:input="usuario.telefono = $event.target.value"
           type="text"
           v-model="usuario.telefono"

@@ -64,6 +64,7 @@
     <div class="row">
       <div class="input-field col s6" id="contenedorTablaExterna">
         <input
+          placeholder=""
           v-on:input="insumo.nombre = $event.target.value"
           type="text"
           v-model="insumo.nombre"
@@ -74,6 +75,7 @@
       </div>
       <div class="input-field col s6" id="contenedorTablaExterna">
         <input
+          placeholder=""
           v-on:input="insumo.inventario = $event.target.value"
           type="number"
           v-model="insumo.inventario"
@@ -86,6 +88,7 @@
     <div class="row">
         <div class="input-field col s7">
           <input
+            placeholder=""
             v-on:input="imagen = $event.target.value"
             type="text"
             v-model="imagen"
@@ -460,6 +463,7 @@ export default {
       this.idModificar = insumo._id;
       this.insumo = insumo;
       this.imagen = this.insumo.imagen;
+      this.insumo = insumo;
       this.$http
         .get("http://localhost:8000/insumosproveedores")
         .then(response => {
