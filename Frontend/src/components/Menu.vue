@@ -15,14 +15,14 @@
     <div id="test-swipe-1" class="col s12">
       <div class="row">
         <div class="card width hr">
-          <div class="container">
+          <div class="container" id="contain1">
             <h3>Comidas</h3>
             <div v-for="producto in productos" class="col-4">
               <div class="card-header left" style="width:200px">
                 
                 <img v-bind:src="producto.imagen"
                   alt="Avatar"
-                  style="width:200px"
+                  style="width:200px;height:150px"
                 />
                 <div class="container">
                   <h6>
@@ -41,14 +41,15 @@
     <div id="test-swipe-2" class="col s12">
       <div class="row">
         <div class="card width hr">
-          <div class="container">
+          <div class="container" id="contain1">
             <h3>Bebidas</h3>
+            
             <div v-for="bebida in bebidas" class="col-4">
               <div class="card-header left" style="width:200px">
                 
                 <img v-bind:src="bebida.imagen"
                   alt="Avatar"
-                  style="width:200px"
+                  style="width:200px;height:150px"
                 />
                 <div class="container">
                   <h6>
@@ -116,21 +117,20 @@ export default {
 .responsive-img {
   width: 400px;
 }
+.img{
+    position: relative;
+    float: left;
+    width:  200px;
+    height: 150px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+}
 td {
   font-family: "Source Sans Pro", sans-serif;
 }
-th {
-  color: white;
-  background: #5994aa;
-  border-bottom: 4px solid #9ea7af;
-  border-right: 1px solid #343a45;
-  font-size: 25px;
-  font-weight: 100;
-  padding: 24px;
-  text-align: left;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  vertical-align: middle;
-}
+
+
 .table thead {
   font-family: "Roboto", sans-serif;
   font-weight: bold;
@@ -149,7 +149,7 @@ th {
   padding-top: 20px;
   padding-bottom: 30px;
   text-align: center;
-  background-color: #343a45;
+  background-color: black;
 }
 #test-swipe-2 {
   /*background-color: #F6E497;*/
@@ -159,7 +159,7 @@ th {
   padding-top: 20px;
   padding-bottom: 30px;
   text-align: center;
-  background-color: lightslategrey;
+  background-color: black;
 }
 .tabs .indicator {
   background-color: #a7a37e !important;
@@ -181,14 +181,7 @@ th {
 .tabs .tab a {
   color: white;
 }
-.card {
-  padding: 5px;
-  font-family: "Roboto", sans-serif;
-  font-weight: lighter;
-  background-color: black;
-  font-size: 15px;
-  color: white;
-}
+
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
@@ -196,8 +189,9 @@ th {
 }
 
 /* Add some padding inside the card container */
-.container {
+#contain1 {
   padding: 2px 16px;
+  background: #5994aa;
 }
 img {
   border-radius: 50%;
