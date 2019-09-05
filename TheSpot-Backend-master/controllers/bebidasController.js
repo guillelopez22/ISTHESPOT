@@ -148,7 +148,6 @@ exports.createBebida = {
 
   handler: async function (request, reply) {
     try {
-      console.log(request.payload)
       var newBebida = new bebida({
         nombre: request.payload.nombre,
         idProveedor: request.payload.idProveedor,
