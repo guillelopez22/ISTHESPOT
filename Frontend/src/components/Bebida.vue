@@ -125,6 +125,25 @@
 
         <label for="Descripcion">Descripción</label>
       </div>
+      <div class="row">
+        <div class="input-field col s7">
+          <input
+            placeholder=""
+            v-on:input="imagen = $event.target.value"
+            type="text"
+            v-model="imagen"
+            :disabled="loading"
+            id="imagen"
+          />
+          <label for="imagen">Imagen</label>
+        </div>
+        <div class="input-field col s5">
+          <button
+            v-on:click="cargarImagen()"
+            class="waves-effect waves-teal btn-large"
+          >Mostrar Imagen</button>
+        </div>
+      </div>
 
       <label for="proveedor">Seleccione el proveedor</label>
       <div class="row">
@@ -189,7 +208,8 @@ export default {
       final: 5,
       currentPage: 1,
       size: 1,
-      ordenesbebidas: []
+      ordenesbebidas: [],
+      imagen: ""
     };
   },
   watch: {
@@ -206,6 +226,16 @@ export default {
     }
   },
   methods: {
+    cargarImagen() {
+      if (this.imagen != "") {
+        swal({
+        title: "Imagen Cargada Exitosamente!",
+        imageUrl: this.imagen
+      });
+      } else {
+        sweetAlert("Imagen Vacia", "Debe ingresar un URL valido", "warning");
+      }
+    },
     siguiente() {
       if (this.currentPage < this.size) {
         this.currentPage = this.currentPage + 1;
@@ -296,18 +326,21 @@ export default {
         this.bebida.inventario == undefined ||
         this.bebida.descripcion == undefined ||
         this.bebida.idProveedor == undefined ||
-        this.bebida.precio == undefined
+        this.bebida.precio == undefined ||
+        this.imagen == ""
       ) {
         this.loading = false;
         this.getBebida();
         sweetAlert("Oops...", "Faltó seleccionar algo", "error");
       } else {
+        this.bebida.imagen = this.imagen;
         this.$http
           .post("http://localhost:8000/bebidas/create", this.bebida)
           .then(response => {
             this.loading = false;
             if (!response.body.success) {
               this.bebida = {};
+              this.imagen = "";
               sweetAlert(
                 "Creado con exito!",
                 "Los cambios estan en la tabla",
@@ -339,6 +372,7 @@ export default {
       this.idModificar = bebida._id;
       this.bebida = bebida;
       this.bebida.idProveedor = bebida.idProveedor;
+      this.imagen = bebida.imagen;
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
@@ -346,6 +380,7 @@ export default {
       this.loading = true;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
+        this.bebida.imagen = this.imagen;
         this.$http
           .put(
             "http://localhost:8000/bebidas/update/" + this.idModificar,
@@ -363,6 +398,7 @@ export default {
                 "success"
               );
               this.bebida = {};
+              this.imagen = "";
               this.loading = false;
             }
           });

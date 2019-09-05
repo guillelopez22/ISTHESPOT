@@ -593,7 +593,7 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = producto._id;
       this.producto = producto;
-      this.imagen = this.producto.imagen;
+      this.imagen = producto.imagen;
       this.$http
         .get("http://localhost:8000/productosinsumos")
         .then(response => {

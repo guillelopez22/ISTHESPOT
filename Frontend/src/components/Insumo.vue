@@ -85,25 +85,7 @@
         <label for="Inventario">Inventario</label>
       </div>
     </div>
-    <div class="row">
-        <div class="input-field col s7">
-          <input
-            placeholder=""
-            v-on:input="imagen = $event.target.value"
-            type="text"
-            v-model="imagen"
-            :disabled="loading"
-            id="imagen"
-          />
-          <label for="imagen">Imagen</label>
-        </div>
-        <div class="input-field col s5">
-          <button
-            v-on:click="cargarImagen()"
-            class="waves-effect waves-teal btn-large"
-          >Mostrar Imagen</button>
-        </div>
-      </div>
+    
 
 
     <button v-on:click="agregarProveedores()" class="waves-effect waves-teal btn-large">Agregar</button>
@@ -391,7 +373,6 @@ export default {
         sweetAlert("Oops", "Hay un campo vacio", "error");
         this.loading = false;
       } else {
-        this.insumo.imagen = this.imagen;
         this.$http
           .post("http://localhost:8000/insumos/create", this.insumo)
           .then(response => {
@@ -435,7 +416,6 @@ export default {
           _this.proveedores_n = [];
         }, 1000);
       }
-      this.imagen = "";
     },
     tabControl(idTab) {
       if (idTab === "test-swipe-1") {

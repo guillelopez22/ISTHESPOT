@@ -61,6 +61,7 @@
         </tr>
       </tbody>
     </table>
+    <br />
     <ul id="tabs-swipe-demo" class="tabs">
       <li class="tab col s3">
         <a class="active" v-on:click="tabControl('test-swipe-1')" href="#test-swipe-1">Crear</a>
@@ -69,7 +70,6 @@
         <a v-on:click="tabControl('test-swipe-2')" href="#test-swipe-2">Modificar</a>
       </li>
     </ul>
-    <br />
     <div class="row">
       <div class="input-field col s6">
         <label for>Seleccione la mesa</label>

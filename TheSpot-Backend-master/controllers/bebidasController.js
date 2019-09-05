@@ -85,7 +85,8 @@ exports.modifyBebida = {
           tipo: request.payload.tipo,
           inventario: request.payload.inventario,
           descripcion: request.payload.descripcion,
-          precio: request.payload.precio
+          precio: request.payload.precio,
+          imagen: request.payload.imagen
         }
       }, function (err) {
         if (err) {
@@ -126,7 +127,8 @@ exports.createBebida = {
       tipo: request.payload.tipo,
       inventario: request.payload.inventario,
       descripcion: request.payload.descripcion,
-      precio: request.payload.precio
+      precio: request.payload.precio,
+      imagen: request.payload.imagen
     });
     newBebida.save(function (err) {
       if (!err) {
