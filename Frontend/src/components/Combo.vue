@@ -578,6 +578,11 @@ export default {
             this.loading = false;
             if (response.body.success) {
               this.combo = {};
+              sweetAlert("Oops...", "Error al crear", "error");
+              this.getCombos();
+              
+            } else {
+              this.combo = {};
               sweetAlert(
                 "Creado con exito!",
                 "Los cambios estan en la tabla",
@@ -585,11 +590,10 @@ export default {
               );
 
               this.getCombos();
-            } else {
-              sweetAlert("Oops...", "Error al crear", "error");
-              this.getCombos();
+
             }
           });
+          
 
         setTimeout(function() {
           var i;
@@ -607,6 +611,7 @@ export default {
                   prod = {};
                   console.log("agregó");
                 } else {
+                  prod = {};
                   console.log("tronó");
                 }
               });
@@ -624,12 +629,14 @@ export default {
               .then(response => {
                 _this.loading = false;
                 if (response.body.success) {
-                  prod = {};
                   console.log("agregó");
                 } else {
                   console.log("tronó");
                 }
+                console.log("bebida tupla: ",beb)
+                beb = {};
               });
+              
           }
           _this.combosxproductos = [];
           _this.combosxbebidas = [];
