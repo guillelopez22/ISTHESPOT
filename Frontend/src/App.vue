@@ -5,8 +5,10 @@
         <a class="brand-logo z-depth-5"  ><img src="../imgs/the_spot.png" class="materialboxed" width="210" height="65" alt="Logo"></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
-          <li><router-link to="/admin"><a style="color: white">MENU</a></router-link></li>
-          <li><router-link to="/menu"><a style="color: white">carta</a></router-link></li>
+          <li><router-link to="/admin"><a style="color: white">Admin</a></router-link></li>
+          <li><router-link to="/menu"><a style="color: white">Cliente</a></router-link></li>
+          <li><router-link to="/gerente"><a style="color: white">Gerente</a></router-link></li>
+          <li><router-link to="/mesero"><a style="color: white">Mesero</a></router-link></li>
           <li>
             <nav>
               <div class="nav-wrapper -red" id="busqueda">
