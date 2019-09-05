@@ -112,27 +112,23 @@ exports.deleteUsuario = {
   }
 }
 exports.createUsuario = {
-  handler: function(request, reply){
-    this.envio = "r"
-    var newUsuario = new usuario({
-      IdPersonal : request.payload.IdPersonal,
-      idOrdenes : request.payload.idOrdenes,
-      usuario : request.payload.usuario,
-      contrasena : request.payload.contraseña,
-      nombre : request.payload.nombre,
-      telefono : request.payload.telefono,
-      scope: request.payload.scope
-    });
-    newUsuario.save(function(err){
-      if(!err){
-        this.envio ={
-          success: true
-        }
-      }else{
-        this.envio ={
-          success: false
-        }
-      }
-    });return envio;
+  handler: async function(request, reply){
+    console.log(request.payload);
+    try {
+      var newUsuario = new usuario({
+        IdPersonal : request.payload.IdPersonal,
+        idOrdenes : request.payload.idOrdenes,
+        usuario : request.payload.usuario,
+        contrasena : request.payload.contrasena,
+        nombre : request.payload.nombre,
+        telefono : request.payload.telefono,
+        scope: request.payload.scope
+      });
+      result = await newUsuario.save();
+      console.log({'result': result})
+      return reply.response({success : true}).code(201);
+    } catch (error) {
+      throw boom.badRequest();
+    }
   }
 }
