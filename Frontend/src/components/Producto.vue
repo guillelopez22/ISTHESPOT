@@ -291,7 +291,7 @@ export default {
     cargarImagen() {
       if (this.imagen != "") {
         swal({
-        title: "Imagen cargada!",
+        title: "Imagen Cargada Exitosamente!",
         imageUrl: this.imagen
       });
       } else {
@@ -585,9 +585,7 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = producto._id;
       this.producto = producto;
-      //this.idProv = producto.idproducto_elaborado;
-      //this.idIns = insumo.idInsumo;
-
+      this.imagen = this.producto.imagen;
       this.$http
         .get("http://localhost:8000/productosinsumos")
         .then(response => {
@@ -618,8 +616,7 @@ export default {
       let _this = this;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
-        //this.insumo.idInsumo = this.idIns;
-        //this.producto.idproducto_elaborado = this.idProv;
+        this.producto.imagen = this.imagen;
         this.$http
           .put(
             "http://localhost:8000/productos/update/" + this.idModificar,
@@ -681,6 +678,7 @@ export default {
                 "success"
               );
               this.producto = {};
+              this.imagen = "";
               this.loading = false;
             }
           });

@@ -83,6 +83,25 @@
         <label for="Inventario">Inventario</label>
       </div>
     </div>
+    <div class="row">
+        <div class="input-field col s7">
+          <input
+            v-on:input="imagen = $event.target.value"
+            type="text"
+            v-model="imagen"
+            :disabled="loading"
+            id="imagen"
+          />
+          <label for="imagen">Imagen</label>
+        </div>
+        <div class="input-field col s5">
+          <button
+            v-on:click="cargarImagen()"
+            class="waves-effect waves-teal btn-large"
+          >Mostrar Imagen</button>
+        </div>
+      </div>
+
 
     <button v-on:click="agregarProveedores()" class="waves-effect waves-teal btn-large">Agregar</button>
 
@@ -180,7 +199,8 @@ export default {
       prvs: [],
       prvstemp: [],
       acum: "",
-      productosinsumos: []
+      productosinsumos: [],
+      imagen: ""
     };
   },
   watch: {
@@ -197,6 +217,16 @@ export default {
     }
   },
   methods: {
+    cargarImagen() {
+      if (this.imagen != "") {
+        swal({
+        title: "Imagen Cargada Exitosamente!",
+        imageUrl: this.imagen
+      });
+      } else {
+        sweetAlert("Imagen Vacia", "Debe ingresar un URL valido", "warning");
+      }
+    },
     siguiente() {
       if (this.currentPage < this.size) {
         this.currentPage = this.currentPage + 1;
@@ -358,6 +388,7 @@ export default {
         sweetAlert("Oops", "Hay un campo vacio", "error");
         this.loading = false;
       } else {
+        this.insumo.imagen = this.imagen;
         this.$http
           .post("http://localhost:8000/insumos/create", this.insumo)
           .then(response => {
@@ -422,6 +453,7 @@ export default {
       this.idModificar = insumo._id;
       this.insumo = insumo;
       this.insumo.idProveedor = insumo.idProveedor;
+      this.imagen = this.insumo.imagen;
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
@@ -447,6 +479,7 @@ export default {
                 "success"
               );
               this.insumo = {};
+              this.imagen = "";
               this.loading = false;
             }
           });
