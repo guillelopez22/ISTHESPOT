@@ -279,7 +279,8 @@ export default {
       ingredientes_n: [],
       cantidad_insumo: 1,
       cantidad_insumos: [],
-      imagen: ""
+      imagen: "",
+      combosproductos: []
     };
   },
   idIns: function(val) {
@@ -701,6 +702,12 @@ export default {
           entrar = false;
         }
       }
+      for (let i = 0; i < _this.combosproductos.length; i++) {
+        const element = _this.combosproductos[i];
+        if (element.idProducto == idProducto) {
+          entrar = false;
+        }
+      }
       if (entrar) {
         sweetAlert(
           {
@@ -761,7 +768,7 @@ export default {
           }
         );
       } else {
-        sweetAlert(
+       sweetAlert(
           "Eliminación Bloqueada",
           "El registro se encuentra relacionado con otra tabla",
           "warning"
@@ -781,6 +788,14 @@ export default {
           console.log(response);
           this.productosordenes = response.body;
         });
+    },
+    getCombosProductos() {
+      this.$http
+        .get("http://localhost:8000/combosproductos")
+        .then(response => {
+          console.log(response);
+          this.combosproductos = response.body;
+        });
     }
   },
 
@@ -788,6 +803,7 @@ export default {
     this.getproducto();
     this.getInsumos();
     this.getProductosOrdenes();
+    this.getCombosProductos();
   },
   mounted() {
     $("ul.tabs").tabs();

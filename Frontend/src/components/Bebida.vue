@@ -209,7 +209,8 @@ export default {
       currentPage: 1,
       size: 1,
       ordenesbebidas: [],
-      imagen: ""
+      imagen: "",
+      combosbebidas: []
     };
   },
   watch: {
@@ -414,6 +415,12 @@ export default {
           entrar = false;
         }
       }
+      for (let i = 0; i < _this.combosbebidas.length; i++) {
+        const element = _this.combosbebidas[i];
+        if (element.idBebida == idBebida) {
+          entrar = false;
+        }
+      }
       if (entrar) {
         sweetAlert(
           {
@@ -477,12 +484,21 @@ export default {
         console.log(response);
         this.ordenesbebidas = response.body;
       });
+    },
+    getCombosBebidas() {
+      this.$http
+        .get("http://localhost:8000/combosbebidas")
+        .then(response => {
+          console.log(response);
+          this.combosbebidas = response.body;
+        });
     }
   },
   beforeMount() {
     this.getProveedores();
     this.getBebida();
     this.getOrdenesBebidas();
+    this.getCombosBebidas();
   },
   mounted() {
     $("ul.tabs").tabs();
