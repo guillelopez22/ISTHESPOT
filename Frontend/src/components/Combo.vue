@@ -304,7 +304,7 @@ export default {
       comboxbebida: "",
       combosxbebidas: [],
       bebidasTemp: [],
-      combosordenes: [],
+      ordenes: [],
       //
       cantidad_producto: 1,
       cantidad_bebida: 1
@@ -419,6 +419,7 @@ export default {
       for (i = index; i < this.productosTemp.length; i++) {
         this.productosTemp[i].index = this.productosTemp[i].index - 1;
       }
+      console.log("cmdxprod: ",this.combosxproductos);
     },
     aumentarProducto(index) {
       this.productosTemp[index].cantidad_producto++;
@@ -466,6 +467,7 @@ export default {
       } else {
         sweetAlert("Oops", "Cantidad del producto invalida", "warning");
       }
+      this.comboxbebida={};
     },
     eliminarBebida(index) {
       var i;
@@ -474,6 +476,7 @@ export default {
       for (i = index; i < this.bebidasTemp.length; i++) {
         this.bebidasTemp[i].index = this.bebidasTemp[i].index - 1;
       }
+      console.log("combxbebida: ",this.combosxbebidas);
     },
     aumentarBebida(index) {
       this.bebidasTemp[index].cantidad_bebida++;
@@ -487,7 +490,7 @@ export default {
       var acum = "";
       let _this = this;
       var prod;
-      var prodtemp;
+      var prodtemp = [];
       this.$http.get("http://localhost:8000/combosproductos").then(response => {
         prod = response.body;
         var i = 0;
@@ -582,8 +585,11 @@ export default {
           .post("http://localhost:8000/combos/create", this.combo)
           .then(response => {
             this.loading = false;
-            if (response.body.success) {
-              this.combo = {};
+            if (!response.body.success) {
+              sweetAlert("Oops...", "Error al crear", "error");
+              this.getCombos();
+              ///
+            } else {
               sweetAlert(
                 "Creado con exito!",
                 "Los cambios estan en la tabla",
@@ -591,24 +597,26 @@ export default {
               );
 
               this.getCombos();
-            } else {
-              sweetAlert("Oops...", "Error al crear", "error");
-              this.getCombos();
+              
             }
+            this.combo = {};
           });
 
         setTimeout(function() {
           var i;
-          var prod;
+          var prod = {};
+          console.log("this: ",_this.combosxproductos);
           for (i = 0; i < _this.combosxproductos.length; i++) {
-            prod = {};
             prod.idProducto = _this.combosxproductos[i];
             prod.cantidad_producto = _this.productosTemp[i].cantidad_producto;
             prod.idCombo = _this.combos[_this.combos.length - 1]._id;
+            console.log("prod: ",prod)
+            console.log("prodTemp: ",this.productosTemp);
             _this.$http
               .post("http://localhost:8000/combosproductos/create", prod)
               .then(response => {
                 _this.loading = false;
+                
                 if (response.body.success) {
                   prod = {};
                   console.log("agregó");
@@ -618,10 +626,9 @@ export default {
               });
           }
 
-          var beb;
+          var beb = {};
           //console.log("bebidas en create: ", _this.combosxbebidas);
           for (i = 0; i < _this.combosxbebidas.length; i++) {
-            beb = {};
             beb.idBebida = _this.combosxbebidas[i];
             beb.cantidad_bebida = _this.bebidasTemp[i].cantidad_bebida;
             beb.idCombo = _this.combos[_this.combos.length - 1]._id;
@@ -630,7 +637,7 @@ export default {
               .then(response => {
                 _this.loading = false;
                 if (response.body.success) {
-                  prod = {};
+                  beb = {};
                   console.log("agregó");
                 } else {
                   console.log("tronó");
@@ -665,7 +672,7 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = combo._id;
       this.combo = combo;
-      var prod;
+      var prod = [];
       this.$http
         .get("http://localhost:8000/combosproductos")
         .then(response => {
@@ -726,36 +733,38 @@ export default {
           )
           .then(response => {
             if (response.body.success) {
-              this.getCombo();
+              this.getCombos();
               this.loading = false;
               sweetAlert("Oops...", "Error al modificar", "error");
             } else {
-              this.$http
+              console.log("id: ",_this.idModificar);
+              _this.$http
                   .delete(
                     "http://localhost:8000/combosproductos/delete/" +
-                      this.idModificar
+                      _this.idModificar
                   )
                   .then(response => {
                     if (response.body.success) {
-                      console.log("nel");
-                    } else {
                       console.log("simon");
+                    } else {
+                      console.log("nel");
                     }
                   });
 
-                  this.$http
+                  _this.$http
                   .delete(
                     "http://localhost:8000/combosbebidas/delete/" +
-                      this.idModificar
+                      _this.idModificar
                   )
                   .then(response => {//this
                     if (response.body.success) {
-                      console.log("nel");
-                    } else {
                       console.log("simon");
+                    } else {
+                      console.log("nel");
                     }
                     });
               setTimeout(function() {
+                _this.comboxproducto = {};
                 var i;
                 for (i = 0; i < _this.combosxproductos.length; i++) {
                   _this.comboxproducto = {};
@@ -769,6 +778,7 @@ export default {
                     )
                     .then(response => {
                       _this.loading = false;
+                      console.log("cmboxproducto: ",_this.comboxproducto);
                       if (response.body.success) {
                         _this.comboxproducto = {};
                         console.log("agregó");
@@ -821,15 +831,23 @@ export default {
           });
       }
     },
+    getOrden(){
+      this.$http.get("http://localhost:8000/ordenescombos").then(response => {
+        console.log(response);
+        this.ordenes = response.body;
+      });
+    },
     deleteCombo(idCombo) {
       let _this = this;
       var entrar = true;
-      /*for (let i = 0; i < _this.combosordenes.length; i++) {
-        const element = _this.combosordenes[i];
+      for (let i = 0; i < this.ordenes.length; i++) {
+        const element = this.ordenes[i];
         if (element.idCombo == idCombo) {
           entrar = false;
+          console.log("entro");
         }
-      }*/
+      }
+      console.log("ordenes: ",this.ordenes);
       if (entrar) {
         sweetAlert(
           {
@@ -852,9 +870,8 @@ export default {
                   .then(response => {
                     _this.loading = false;
                     if (response.body.success) {
-                      sweetAlert("Oops...", "Error al eliminar", "error");
-                      _this.getCombos();
-                    } else {
+                      
+                      //
                       sweetAlert(
                         "Deleted!",
                         "Los cambios estan en la tabla",
@@ -863,6 +880,9 @@ export default {
                       _this.inicio = 0;
                       _this.final = 5;
                       _this.currentPage = 1;
+                      _this.getCombos();
+                    } else {
+                      sweetAlert("Oops...", "Error al eliminar", "error");
                       _this.getCombos();
                     }
                   });
@@ -921,6 +941,7 @@ export default {
     this.getCombos();
     this.getBebidas();
     this.getProductos();
+    this.getOrden();
   },
   mounted() {
     $("ul.tabs").tabs();
