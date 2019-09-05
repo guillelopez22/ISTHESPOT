@@ -69,14 +69,14 @@ export default {
           .then(response => {
             this.loading = false;
             console.log("aqui esta el response" + JSON.stringify(response.body));
-            if (response.body.success) {
-              this.usuario = {};
+            if (response.body.loggedIn) {
+              this.usuario = response.body.usuario;
+              localStorage.setItem('usuario', JSON.stringify(response.body.usuario));
               sweetAlert(
-                "Ha Entrado Con Exito!",
-                "Autenticación exitosa",
+                "¡Autenticación exitosa!",
+                "¡Bienvido(a) " + JSON.parse(localStorage.getItem('usuario')).nombre + "!",
                 "success"
               );
-              this.getUsuario();
             } else {
               sweetAlert("Oops...", "Error en la autenticación", "error");
             }

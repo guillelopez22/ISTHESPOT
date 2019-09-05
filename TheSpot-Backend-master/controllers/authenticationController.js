@@ -3,57 +3,43 @@ var boom = require('boom');
 var usuario = require('../schemas/usuario.js');
 var bcrypt = require('bcrypt');
 
-exports.login = {
-  auth: false,
-  validate: {
-    payload: {
-      usuario: joi.string().required(),
-      contrasena: joi.string().min(2).max(200).required()
-    }
-  },
-  handler: function (request, reply) {
-    console.log(request.payload.contrasena);
-    console.log("entro a login")
-    usuario.find({ usuario: request.payload.usuario }, function (err, usuario) {
 
-      console.log('usuario: ', request.payload.usuario, 'usuario', usuario)
-      if (err) {
-        console.log(err);
-        return reply.response(boom.notAcceptable('Error Executing Query'));
+exports.login = {
+    handler: async function(request, reply) {
+      console.log(request.payload.usuario);
+      try {
+        Usuario = await usuario.find({ 'usuario': request.payload.usuario }).exec();
+
+        // console.log(Usuario[0].contrasena, request.payload.contrasena);
+        return (Usuario[0].contrasena === request.payload.contrasena) ? reply.response({loggedIn: true, usuario: Usuario[0]}) : false;
+      } catch( error) {
+        throw boom.notFound();
       }
-      console.log("este es el usuario :", usuario);
-      if (usuario.length > 0) {
-        bcrypt.compare(request.payload.contrasena, usuario[0].contrasena, function (err, res) {
-          console.log("esto es el ReSSS:" + res);
-          if (err) {
-            console.log(err);
-            return reply.response(('ERROR')).code(401);
-          }
-          if (res) {
-            console.log('before setting cookie');
-            request.cookieAuth.set({ usuario: usuario });
-            request.cookieAuth.set(usuario[0]);
-            console.log('after setting cookie')
-            return reply.response({ usuario: usuario[0].usuario, scope: usuario[0].scope, status: "ok" });
-          } else {
-            return reply.response(('ERROR')).code(401);
-          }
-        });
-      }
-      else {
-        return reply.response(('Usuario no existe')).code(401);
-      }
-    });
-    return null;
-  }
+      // usuario.find({ usuario: request.payload.usuario }, function(err, usuario){
+      //   if(err) {
+      //     console.log(err)
+      //     return reply.response(boom.notAcceptable('Error Executing Query'));
+      //   }
+      //   console.log("usuario" + usuario);
+      //   if(usuario !== undefined) {
+      //     if(request.payload.contrasena === usuario.contrasena)
+      //       return reply.response({ loggedin: true, usuario: usuario, s}).code(200);
+      //   } else {
+      //     return reply.response(('Usuario no existe')).code(401);
+      //   }
+      // });
+      // // if(usuario !== undefined)
+      // // return reply.response({usuario: usuario[0].usuario, id: usuario[0]._id, nombre: usuario[0].nombre, scope: usuario[0].scope}).code(201);
+      // return null;
+    }
 };
 exports.logout = {
-  // auth: {
-  //   mode:'required',
-  //   strategy:'session'
-  // },
-  handler: function (request, reply) {
-    request.cookieAuth.clear();
-    return reply('Logout Successful!');
-  }
-};
+    // auth: {
+    //   mode:'required',
+    //   strategy:'session'
+    // },
+    handler: function(request, reply) {
+      request.cookieAuth.clear();
+      return reply('Logout Successful!');
+    }
+  };
