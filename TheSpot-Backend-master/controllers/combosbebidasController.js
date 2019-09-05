@@ -102,7 +102,7 @@ exports.deleteComboBebida = {
 
     handler: async function (request, reply) {
         try {
-            var result = await combobebida.findByIdAndDelete(request.params._id);
+            var result = await combobebida.deleteMany(request.params._id);
             return reply.response({success: true});
         } catch (error) {
           throw boom.badRequest();
