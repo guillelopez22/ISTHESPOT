@@ -4,7 +4,8 @@ var BebidaSchema = new mongoose.Schema({
   idProveedor: String,
   tipo : String,
   inventario : Number,
-  descripcion : String
+  descripcion : String,
+  precio: Number
 });
 
 module.exports = mongoose.model('bebida', BebidaSchema);

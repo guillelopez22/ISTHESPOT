@@ -24,6 +24,7 @@
           <th>Tipo</th>
           <th>Inventario</th>
           <th>Descripcion</th>
+          <th>Precio</th>
           <th>Modificar</th>
           <th>Borrar</th>
         </tr>
@@ -35,6 +36,7 @@
           <td>{{bebida.tipo}}</td>
           <td>{{bebida.inventario}}</td>
           <td>{{bebida.descripcion}}</td>
+          <td>{{bebida.precio}}</td>
           <td>
             <a
               v-on:click="startToModifyBebida(bebida)"
@@ -64,7 +66,7 @@
       </li>
     </ul>
     <div class="row">
-      <div class="input-field col s12">
+      <div class="input-field col s6">
         <input
           v-on:input="bebida.nombre = $event.target.value"
           type="text"
@@ -73,6 +75,16 @@
           id="Nombre"
         />
         <label for="Nombre">Nombre</label>
+      </div>
+      <div class="input-field col s6">
+        <input
+          v-on:input="bebida.precio = $event.target.value"
+          type="number"
+          v-model="bebida.precio"
+          :disabled="loading"
+          id="Precio"
+        />
+        <label for="Precio">Precio</label>
       </div>
       <div class="input-field col s6">
         <input
@@ -96,23 +108,17 @@
         <label for="Inventario">Inventario</label>
       </div>
 
-      <div class="row">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s12">
-              <textarea
-                v-on:input="bebida.descripcion = $event.target.value"
-                v-model="bebida.descripcion"
-                :disabled="loading"
-                id="Descripcion"
-                type="text"
-                class="materialize-textarea"
-              ></textarea>
+      <div class="input-field col s12">
+        <textarea
+          v-on:input="bebida.descripcion = $event.target.value"
+          v-model="bebida.descripcion"
+          :disabled="loading"
+          id="Descripcion"
+          type="text"
+          class="materialize-textarea"
+        ></textarea>
 
-              <label for="Descripcion">Descripción</label>
-            </div>
-          </div>
-        </form>
+        <label for="Descripcion">Descripción</label>
       </div>
 
       <label for="proveedor">Seleccione el proveedor</label>
@@ -131,7 +137,6 @@
           </select>
         </div>
       </div>
-
     </div>
     <div id="test-swipe-1" class="col s12">
       <a
@@ -285,7 +290,8 @@ export default {
         this.bebida.tipo == undefined ||
         this.bebida.inventario == undefined ||
         this.bebida.descripcion == undefined ||
-        this.bebida.idProveedor == undefined
+        this.bebida.idProveedor == undefined ||
+        this.bebida.precio == undefined
       ) {
         this.loading = false;
         this.getBebida();
@@ -305,7 +311,6 @@ export default {
               this.getBebida();
             } else {
               sweetAlert("Oops...", "Error al crear", "error");
-              
             }
           });
       }

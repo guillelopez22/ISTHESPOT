@@ -84,7 +84,8 @@ exports.modifyBebida = {
           idProveedor: request.payload.idProveedor,
           tipo: request.payload.tipo,
           inventario: request.payload.inventario,
-          descripcion: request.payload.descripcion
+          descripcion: request.payload.descripcion,
+          precio: request.payload.precio
         }
       }, function (err) {
         if (err) {
@@ -124,7 +125,8 @@ exports.createBebida = {
       idProveedor: request.payload.idProveedor,
       tipo: request.payload.tipo,
       inventario: request.payload.inventario,
-      descripcion: request.payload.descripcion
+      descripcion: request.payload.descripcion,
+      precio: request.payload.precio
     });
     newBebida.save(function (err) {
       if (!err) {
