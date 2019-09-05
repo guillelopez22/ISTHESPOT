@@ -30,7 +30,7 @@ exports.endpoints = [
 		config: {
 			handler: function (request, reply) {
 				console.log(request.query);
-				return reply('Hola');
+				return reply.response('Hola');
 			}
 		}
 	},

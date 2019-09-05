@@ -1337,9 +1337,9 @@ export default {
         this.empleados = response.body;
         var i;
         for (i = 0; i < this.empleados.length; i++) {
-          console.log("Entró a la cosa 1");
+          //console.log("Entró a la cosa 1");
           if (this.empleados[i].scope == "Mesero") {
-            console.log("Entró a la segunda");
+            //console.log("Entró a la segunda");
             this.s_empleados.push(this.empleados[i]);
           }
         }

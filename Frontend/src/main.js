@@ -23,7 +23,8 @@ import Proveedor from './components/Proveedor.vue'
 //import ProductoElaborado from './components/ProductoElaborado.vue'
 import Usuario from './components/Usuario.vue'
 import MesaMesero from './components/MesaMesero.vue'
-
+import Gerente from './components/Gerente.vue'
+import Mesero from './components/Mesero.vue'
 
 import VueResource from 'vue-resource'
 //import VueSweetalert2 from 'vue-sweetalert2';
@@ -126,7 +127,52 @@ const router = new VueRouter({
           component: Combo
         }
       ]
+    },
+    {
+      name: 'Gerente',
+      path: '/gerente',
+      component: Gerente,
+      children: [
+        {
+          name: 'Bebida',
+          path: "/bebida2",
+          component: Bebida
+        },
+        {
+          name: 'Insumo',
+          path: "/insumo2",
+          component: Insumo
+        },
+        {
+          name: 'Producto',
+          path: "/producto2",
+          component: Producto
+        },
+        {
+          name: 'Ordenes',
+          path: "/ordenes2",
+          component: Ordenes
+        },
+        {
+          name:'combo',
+          path: '/combo2',
+          component: Combo
+        }
+      ]
+    },
+    {
+      name: 'Mesero',
+      path: '/mesero',
+      component: Mesero,
+      children: [
+        {
+          name: 'Ordenes',
+          path: "/ordenes3",
+          component: Ordenes
+        }
+      ]
     }
+
   ],
   mode: 'history'
 })
