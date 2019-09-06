@@ -918,7 +918,7 @@ export default {
                     )
                     .then(response => {
                       _this.loading = false;
-                      if (!response.body.success) {
+                      if (response.body.success) {
                         _this.cmb = {};
                         console.log("agregó");
                       } else {
@@ -948,7 +948,7 @@ export default {
                     )
                     .then(response => {
                       _this.loading = false;
-                      if (!response.body.success) {
+                      if (response.body.success) {
                         _this.beb = {};
                         console.log("agregó");
                       } else {
@@ -977,7 +977,7 @@ export default {
                     )
                     .then(response => {
                       _this.loading = false;
-                      if (!response.body.success) {
+                      if (response.body.success) {
                         _this.pro = {};
                         console.log("agregó");
                       } else {
@@ -1157,7 +1157,7 @@ export default {
                     )
                     .then(response => {
                       _this.loading = false;
-                      if (!response.body.success) {
+                      if (response.body.success) {
                         _this.cmb = {};
                         console.log("agregó combos");
                       } else {
@@ -1185,7 +1185,7 @@ export default {
                     )
                     .then(response => {
                       _this.loading = false;
-                      if (!response.body.success) {
+                      if (response.body.success) {
                         _this.beb = {};
                         console.log("agregó bebidas");
                       } else {
@@ -1213,7 +1213,7 @@ export default {
                     )
                     .then(response => {
                       _this.loading = false;
-                      if (!response.body.success) {
+                      if (response.body.success) {
                         _this.pro = {};
                         console.log("agregó producto");
                       } else {
