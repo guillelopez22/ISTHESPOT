@@ -158,6 +158,7 @@ exports.deleteProducto = {
 }
 exports.createProducto = {
   handler: function(request, reply){
+    this.envio=true;
     var newProducto = new producto({
           nombre : request.payload.nombre,
           tipo : request.payload.tipo,

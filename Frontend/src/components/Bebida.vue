@@ -68,7 +68,7 @@
     <div class="row">
       <div class="input-field col s6">
         <input
-          placeholder=""
+          placeholder
           v-on:input="bebida.nombre = $event.target.value"
           type="text"
           v-model="bebida.nombre"
@@ -79,7 +79,7 @@
       </div>
       <div class="input-field col s6">
         <input
-          placeholder=""
+          placeholder
           v-on:input="bebida.precio = $event.target.value"
           type="number"
           v-model="bebida.precio"
@@ -88,21 +88,29 @@
         />
         <label for="Precio">Precio</label>
       </div>
+
       <div class="input-field col s6">
-        <input
-          placeholder=""
+        <h6>Seleccione el Tipo de Bebida</h6>
+        <select
+          style="color: black"
+          class="browser-default"
           v-on:input="bebida.tipo = $event.target.value"
+          type="text"
           v-model="bebida.tipo"
           :disabled="loading"
           id="Tipo"
-          type="text"
-          class="validate"
-        />
-        <label for="Tipo">Tipo</label>
+          placeholder
+        >
+          <option value="Gaseosa">Gaseosa</option>
+          <option value="Alcohol">Alcohol</option>
+          <option value="Refresco Natural">Refresco Natural</option>
+          <option value="Agua">Agua</option>
+          <option value="BebidasABaseDeCafe">Bebidas A Base De Cafe</option>
+        </select>
       </div>
       <div class="input-field col s6">
         <input
-          placeholder=""
+          placeholder
           v-on:input="bebida.inventario = $event.target.value"
           type="number"
           v-model="bebida.inventario"
@@ -114,7 +122,7 @@
 
       <div class="input-field col s12">
         <textarea
-          placeholder=""
+          placeholder
           v-on:input="bebida.descripcion = $event.target.value"
           v-model="bebida.descripcion"
           :disabled="loading"
@@ -128,7 +136,7 @@
       <div class="row">
         <div class="input-field col s7">
           <input
-            placeholder=""
+            placeholder
             v-on:input="imagen = $event.target.value"
             type="text"
             v-model="imagen"
@@ -230,9 +238,9 @@ export default {
     cargarImagen() {
       if (this.imagen != "") {
         swal({
-        title: "Imagen Cargada Exitosamente!",
-        imageUrl: this.imagen
-      });
+          title: "Imagen Cargada Exitosamente!",
+          imageUrl: this.imagen
+        });
       } else {
         sweetAlert("Imagen Vacia", "Debe ingresar un URL valido", "warning");
       }
@@ -486,12 +494,10 @@ export default {
       });
     },
     getCombosBebidas() {
-      this.$http
-        .get("http://localhost:8000/combosbebidas")
-        .then(response => {
-          console.log(response);
-          this.combosbebidas = response.body;
-        });
+      this.$http.get("http://localhost:8000/combosbebidas").then(response => {
+        console.log(response);
+        this.combosbebidas = response.body;
+      });
     }
   },
   beforeMount() {
@@ -674,6 +680,12 @@ label {
   font-size: 17px;
   font-family: "Roboto", sans-serif;
   font-weight: normal;
+}
+h6 {
+  font-size: 17px;
+  font-family: "Roboto", sans-serif;
+  font-weight: normal;
+  color:rgb(158, 158, 158)
 }
 .input-field input:focus + label {
   color: #5994aa !important;

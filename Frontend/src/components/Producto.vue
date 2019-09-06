@@ -73,7 +73,7 @@
     <div class="row">
       <div class="input-field col s12">
         <input
-          placeholder=""
+          placeholder
           v-on:input="producto.nombre = $event.target.value"
           type="text"
           v-model="producto.nombre"
@@ -84,7 +84,7 @@
       </div>
       <div class="input-field col s6">
         <input
-          placeholder=""
+          placeholder
           v-on:input="producto.precio = $event.target.value"
           type="number"
           v-model="producto.precio"
@@ -95,7 +95,7 @@
       </div>
       <div class="input-field col s6">
         <input
-          placeholder=""
+          placeholder
           v-on:input="producto.cantidad = $event.target.value"
           type="number"
           v-model="producto.cantidad"
@@ -107,7 +107,7 @@
       <div class="row">
         <div class="input-field col s12">
           <textarea
-            placeholder=""
+            placeholder
             v-on:input="producto.descripcion = $event.target.value"
             v-model="producto.descripcion"
             :disabled="loading"
@@ -119,22 +119,33 @@
         </div>
       </div>
       <div class="row">
-        <div class="input-field col s12">
-          <input
-            placeholder=""
+        <div class="input-field col s6">
+          <h6>Seleccione el Tipo de Comida</h6>
+          <select
+            style="color: black"
+            class="browser-default"
+            placeholder
             v-on:input="producto.tipo = $event.target.value"
             type="text"
             v-model="producto.tipo"
             :disabled="loading"
             id="Tipo"
-          />
-          <label for="Tipo">Tipo</label>
+          >
+            <option value="Entrada">Entrada</option>
+            <option value="Aperitivo">Apaeritivo</option>
+            <option value="Plato Fuerte">Plato Fuerte</option>
+            <option value="Postre">Postre</option>
+            <option value="Ensalada">Ensalada</option>
+          </select>
+          
         </div>
       </div>
       <div class="row">
         <div class="input-field col s7">
           <input
-            placeholder=""
+            style="color: black"
+            class="browser-default"
+            placeholder
             v-on:input="imagen = $event.target.value"
             type="text"
             v-model="imagen"
@@ -768,7 +779,7 @@ export default {
           }
         );
       } else {
-       sweetAlert(
+        sweetAlert(
           "Eliminación Bloqueada",
           "El registro se encuentra relacionado con otra tabla",
           "warning"
@@ -790,12 +801,10 @@ export default {
         });
     },
     getCombosProductos() {
-      this.$http
-        .get("http://localhost:8000/combosproductos")
-        .then(response => {
-          console.log(response);
-          this.combosproductos = response.body;
-        });
+      this.$http.get("http://localhost:8000/combosproductos").then(response => {
+        console.log(response);
+        this.combosproductos = response.body;
+      });
     }
   },
 
@@ -879,6 +888,12 @@ th {
   width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite;
+}
+h6 {
+  font-size: 17px;
+  font-family: "Roboto", sans-serif;
+  font-weight: normal;
+  color:rgb(158, 158, 158)
 }
 .table2 th {
   color: white;
