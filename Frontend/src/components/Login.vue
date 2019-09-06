@@ -77,6 +77,7 @@ export default {
                 "¡Bienvido(a) " + JSON.parse(localStorage.getItem('usuario')).nombre + "!",
                 "success"
               );
+              window.location.replace("/");
             } else {
               sweetAlert("Oops...", "Error en la autenticación", "error");
             }
