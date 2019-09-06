@@ -2,7 +2,7 @@
 <template>
   <div id="root">
     <h2>
-      Orden
+      Ordenes
       <a
         class="btn-floating btn-small btn tooltipped -red"
         data-position="top"

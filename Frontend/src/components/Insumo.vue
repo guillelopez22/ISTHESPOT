@@ -1,7 +1,7 @@
 <template>
   <div id="root">
     <h2>
-      Insumo
+      Ingredientes
       <a
         class="btn-floating btn-small btn tooltipped -red"
         data-position="top"
@@ -282,8 +282,6 @@ export default {
               this.proveedores_n.push(t);
             }
           }
-          //console.log("Están los proveedores: ", this.proveedores_a);
-          //console.log("Los nombres son: ", this.proveedores_n)
           sweetAlert("¡Listo!", "Proveedor agregado", "success");
         } else {
           sweetAlert(
@@ -368,7 +366,6 @@ export default {
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
-      //this.insumo.idProveedor = this.idProv;
       if (this.insumo.nombre == undefined || this.proveedores_a.length == 0) {
         sweetAlert("Oops", "Hay un campo vacio", "error");
         this.loading = false;
@@ -432,13 +429,6 @@ export default {
       }
     },
     startToModifyInsumo(insumo) {
-      /*this.selectedTab = "test-swipe-2";
-      this.idModificar = insumo._id;
-      this.insumo = insumo;
-      this.insumo.idProveedor = insumo.idProveedor;
-      this.imagen = this.insumo.imagen;
-      $("ul.tabs").tabs("select_tab", "test-swipe-2");
-      Materialize.updateTextFields();*/
       this.selectedTab = "test-swipe-2";
       this.idModificar = insumo._id;
       this.insumo = insumo;
@@ -469,32 +459,6 @@ export default {
       Materialize.updateTextFields();
     },
     modifyInsumo() {
-      /*this.loading = true;
-      if (this.idModificar != "") {
-        Materialize.updateTextFields();
-        //this.insumo.idProveedor = this.idProv;
-        this.$http
-          .put(
-            "http://localhost:8000/insumos/update/" + this.idModificar,
-            this.insumo
-          )
-          .then(response => {
-            if (response.body.success) {
-              this.getInsumo();
-              this.loading = false;
-              sweetAlert("Oops...", "Error al modificar", "error");
-            } else {
-              sweetAlert(
-                "Modificado con exito!",
-                "Los cambios estan en la tabla",
-                "success"
-              );
-              this.insumo = {};
-              this.imagen = "";
-              this.loading = false;
-            }
-          });
-      }*/
       this.loading = true;
       let _this = this;
       if (this.idModificar != "") {
@@ -575,6 +539,11 @@ export default {
         const element = _this.productosinsumos[i];
         if (element.idInsumo == idInsumo) {
           entrar = false;
+          sweetAlert(
+          "Eliminación Bloqueada",
+          "El ingrediente se encuentra relacionado con Productos",
+          "warning"
+        );
         }
       }
       if (entrar) {
@@ -632,13 +601,7 @@ export default {
             }, 500);
           }
         );
-      } else {
-        sweetAlert(
-          "Eliminación Bloqueada",
-          "El registro se encuentra relacionado con otra tabla",
-          "warning"
-        );
-      }
+      } 
     },
     getProveedores() {
       this.$http.get("http://localhost:8000/proveedores").then(response => {

@@ -349,7 +349,6 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = mesa._id;
       this.mesa = mesa;
-      /*this.idMesa = mesa.idOrden;*/
       $("ul.tabs").tabs("select_tab", "test-swipe-2");
       Materialize.updateTextFields();
     },
@@ -379,7 +378,6 @@ export default {
           });
       } else {
         sweetAlert(
-          //ya existe mesa con ese numero
           "Oops...",
           "Error al crear,ya existe una mesa con el mismo numero",
           "error"
@@ -395,6 +393,11 @@ export default {
         const element = _this.ordenes[i];
         if (element.idMesa == idMesa) {
           entrar = false;
+          sweetAlert(
+          "Eliminación Bloqueada",
+          "La mesa se encuentra relacionada con Ordenes",
+          "warning"
+        );
         }
       }
       if (entrar) {
@@ -412,7 +415,6 @@ export default {
         function(inputValue) {
           setTimeout(function() {
             if (inputValue) {
-              //****************************************************** */
               _this.loading = true;
               _this.$http
                 .delete("http://localhost:8000/mesas/delete/" + idMesa)
@@ -440,13 +442,7 @@ export default {
           }, 500);
         }
       );
-       } else {
-        sweetAlert(
-          "Eliminación Bloqueada",
-          "El registro se encuentra relacionado con otra tabla",
-          "warning"
-        );
-      }
+       } 
     },
     getOrdenes() {
       this.$http.get("http://localhost:8000/ordenes").then(response => {

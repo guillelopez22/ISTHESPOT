@@ -1,7 +1,7 @@
 <template>
   <div id="root">
     <h2>
-      Producto
+      Productos
       <a
         class="btn-floating btn-small btn tooltipped -red"
         data-position="top"
@@ -700,12 +700,22 @@ export default {
         const element = _this.productosordenes[i];
         if (element.idProducto == idProducto) {
           entrar = false;
+          sweetAlert(
+          "Eliminación Bloqueada",
+          "El producto se encuentra relacionado con Ordenes",
+          "warning"
+        );
         }
       }
       for (let i = 0; i < _this.combosproductos.length; i++) {
         const element = _this.combosproductos[i];
         if (element.idProducto == idProducto) {
           entrar = false;
+          sweetAlert(
+          "Eliminación Bloqueada",
+          "El producto se encuentra relacionado con Combos",
+          "warning"
+        );
         }
       }
       if (entrar) {
@@ -767,13 +777,7 @@ export default {
             }, 500);
           }
         );
-      } else {
-       sweetAlert(
-          "Eliminación Bloqueada",
-          "El registro se encuentra relacionado con otra tabla",
-          "warning"
-        );
-      }
+      } 
     },
     getInsumos() {
       this.$http.get("http://localhost:8000/insumos").then(response => {

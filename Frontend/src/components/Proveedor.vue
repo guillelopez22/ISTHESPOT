@@ -1,6 +1,6 @@
 <template>
   <div id="root">
-    <h2>Proveedor</h2>
+    <h2>Proveedores</h2>
     <p>Pagina Actual: {{currentPage}}</p>
     <button v-on:click="anterior()" class="waves-effect waves-teal btn-large">Anterior</button>
     <button v-on:click="siguiente()" class="waves-effect waves-teal btn-large">Siguiente</button>
@@ -342,12 +342,22 @@ export default {
         const element = _this.bebidas[i];
         if (element.idProveedor == idProveedor) {
           entrar = false;
+          sweetAlert(
+          "Eliminación Bloqueada",
+          "El proveedor se encuentra relacionado con Bebidas",
+          "warning"
+        );
         }
       }
       for (let i = 0; i < _this.insumosproveedores.length; i++) {
         const element = _this.insumosproveedores[i];
         if (element.idProveedor == idProveedor) {
           entrar = false;
+          sweetAlert(
+          "Eliminación Bloqueada",
+          "El proveedor se encuentra relacionado con Ingredientes",
+          "warning"
+        );
         }
       }
       if (entrar) {
@@ -395,13 +405,7 @@ export default {
             }, 500);
           }
         );
-      } else {
-        sweetAlert(
-          "Eliminación Bloqueada",
-          "El registro se encuentra relacionado con otra tabla",
-          "warning"
-        );
-      }
+      } 
     },
     getBebidas() {
       this.$http.get("http://localhost:8000/bebidas").then(response => {

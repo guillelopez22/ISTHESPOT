@@ -5,28 +5,28 @@
       <router-link to="/bebida2">
       <!--col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red-->
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Bebida
+           Bebidas
         </div>
       </router-link>
       <router-link to="/insumo2"><!-- aqui-->
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Insumo
+           Ingredientes
         </div>
       </router-link>
       <router-link to="/producto2"><!-- aqui-->
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Producto
+           Productos
         </div>
       </router-link>
       
       <router-link to="/ordenes2"> <!-- aqui-->
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Orden
+           Ordenes
         </div>
       </router-link>
       <router-link to="/combo2"><!-- aqui-->
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Combo
+           Combos
         </div>
       </router-link>
     </div>

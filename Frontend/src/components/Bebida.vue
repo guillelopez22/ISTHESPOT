@@ -1,7 +1,7 @@
 <template>
   <div id="root">
     <h2>
-      Bebida
+      Bebidas
       <a
         class="btn-floating btn-small btn tooltipped -red"
         data-position="top"
@@ -413,12 +413,22 @@ export default {
         const element = _this.ordenesbebidas[i];
         if (element.idBebida == idBebida) {
           entrar = false;
+          sweetAlert(
+          "Eliminación Bloqueada",
+          "La bebida se encuentra relacionada con Ordenes",
+          "warning"
+        );
         }
       }
       for (let i = 0; i < _this.combosbebidas.length; i++) {
         const element = _this.combosbebidas[i];
         if (element.idBebida == idBebida) {
           entrar = false;
+          sweetAlert(
+          "Eliminación Bloqueada",
+          "La bebida se encuentra relacionada con Combos",
+          "warning"
+        );
         }
       }
       if (entrar) {
@@ -465,13 +475,7 @@ export default {
             }, 500);
           }
         );
-      } else {
-        sweetAlert(
-          "Eliminación Bloqueada",
-          "El registro se encuentra relacionado con otra tabla",
-          "warning"
-        );
-      }
+      } 
     },
     getProveedores() {
       this.$http.get("http://localhost:8000/proveedores").then(response => {
