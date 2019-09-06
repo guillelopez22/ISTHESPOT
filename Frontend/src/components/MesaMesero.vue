@@ -5,7 +5,7 @@
     <div class="row"  >
       <div class="card width hr"  >
         <div class="container" >
-          <h3>MESAS Camarero</h3>
+          <h3>Mesas Mesero</h3>
           <div class="col-4" v-for="mesa in mesas">
             <div class="card-header left" style="width:290px">
               

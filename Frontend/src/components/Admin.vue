@@ -5,62 +5,52 @@
       <router-link to="/bebida">
       <!--col s3 m3 l1 contain waves-effect waves-light z-depth-5 -red-->
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Bebida
+           Bebidas
         </div>
       </router-link>
       <router-link to="/insumo">
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Insumo
+           Ingredientes
         </div>
       </router-link>
       <router-link to="/producto">
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Producto
+           Productos
         </div>
       </router-link>
       <router-link to="/promocion">
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Promocion
+           Promociones
         </div>
       </router-link>
       <router-link to="/proveedor">
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Proveedor
+           Proveedores
         </div>
       </router-link>
-      <!--<router-link to="/productoelaborado">
-        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Producto Elaborado
-        </div>
-      </router-link>-->
-      <!--<router-link to="/productoelaboradodetallado">
-        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Producto Elaborado Detallado
-        </div>
-      </router-link>-->
       <router-link to="/mesa">
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Mesa
+           Mesas
         </div>
       </router-link>
        <router-link to="/usuario">
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Usuario
+           Usuarios
         </div>
       </router-link>
       <router-link to="/mesamesero">
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           MesaMesero
+           Mesas Mesero
         </div>
       </router-link>
       <router-link to="/ordenes">
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Orden
+           Ordenes
         </div>
       </router-link>
       <router-link to="/combo">
         <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
-           Combo
+           Combos
         </div>
       </router-link>
     </div>
