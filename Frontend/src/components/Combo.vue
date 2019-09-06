@@ -1,7 +1,7 @@
 <template>
   <div id="root">
     <h2>
-      Combo
+      Combos
       <a
         class="btn-floating btn-small btn tooltipped -red"
         data-position="top"
@@ -304,7 +304,7 @@ export default {
       comboxbebida: "",
       combosxbebidas: [],
       bebidasTemp: [],
-      ordenes: [],
+      ordenescombos: [],
       //
       cantidad_producto: 1,
       cantidad_bebida: 1
@@ -816,10 +816,6 @@ export default {
                 _this.comboxbebida = {};
                 _this.bebidasTemp = [];
               }, 2000);
-
-              
-              
-
               sweetAlert(
                 "Modificado con exito!",
                 "Los cambios estan en la tabla",
@@ -831,23 +827,20 @@ export default {
           });
       }
     },
-    getOrden(){
-      this.$http.get("http://localhost:8000/ordenescombos").then(response => {
-        console.log(response);
-        this.ordenes = response.body;
-      });
-    },
     deleteCombo(idCombo) {
       let _this = this;
       var entrar = true;
-      for (let i = 0; i < this.ordenes.length; i++) {
-        const element = this.ordenes[i];
+      for (let i = 0; i < this.ordenescombos.length; i++) {
+        const element = this.ordenescombos[i];
         if (element.idCombo == idCombo) {
           entrar = false;
-          console.log("entro");
+          sweetAlert(
+          "Eliminación Bloqueada",
+          "El combo se encuentra relacionado con Ordenes",
+          "warning"
+        );
         }
       }
-      console.log("ordenes: ",this.ordenes);
       if (entrar) {
         sweetAlert(
           {
@@ -916,12 +909,6 @@ export default {
             }, 500);
           }
         );
-      } else {
-        sweetAlert(
-          "Eliminación Bloqueada",
-          "El registro se encuentra relacionado con otra tabla",
-          "warning"
-        );
       }
     },
     getProductos() {
@@ -935,13 +922,19 @@ export default {
         console.log(response);
         this.bebidas = response.body;
       });
+    },
+    getOrdenesCombos(){
+      this.$http.get("http://localhost:8000/ordenescombos").then(response => {
+        console.log(response);
+        this.ordenescombos = response.body;
+      });
     }
   },
   beforeMount() {
     this.getCombos();
     this.getBebidas();
     this.getProductos();
-    this.getOrden();
+    this.getOrdenesCombos();
   },
   mounted() {
     $("ul.tabs").tabs();

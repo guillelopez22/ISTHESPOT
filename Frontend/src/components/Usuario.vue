@@ -1,7 +1,7 @@
 <template>
   <div id="root">
     <h2>
-      Usuario
+      Usuarios
       <a
         class="btn-floating btn-small btn tooltipped -red"
         data-position="top"
@@ -106,10 +106,6 @@
         />
         <label for="telefono">Telefono</label>
       </div>
-      <!--<div class="input-field col s6">
-          <input v-on:input="usuario.scope = $event.target.value" type="text" v-model="usuario.scope" :disabled="loading"  id="scope">
-          <label for="scope">Scope</label>
-      </div>-->
     </div>
     <label for="scope">Seleccione el tipo de usuario:</label>
     <div class="row">
@@ -367,6 +363,11 @@ export default {
         const element = _this.ordenes[i];
         if (element.idUsuario == idUsuario) {
           entrar = false;
+          sweetAlert(
+          "Eliminación Bloqueada",
+          "El usuario se encuentra relacionado con Ordenes",
+          "warning"
+        );
         }
       }
       if (entrar) {
@@ -412,13 +413,7 @@ export default {
             }, 500);
           }
         );
-      } else {
-        sweetAlert(
-          "Eliminación Bloqueada",
-          "El registro se encuentra relacionado con otra tabla",
-          "warning"
-        );
-      }
+      } 
     },
     getOrdenes() {
       this.$http.get("http://localhost:8000/ordenes").then(response => {
