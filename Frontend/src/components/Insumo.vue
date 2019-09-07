@@ -374,7 +374,7 @@ export default {
           .post("http://localhost:8000/insumos/create", this.insumo)
           .then(response => {
             this.loading = false;
-            if (response.body.success) {        
+            if (!response.body.success) {        
               sweetAlert("Oops...", "Error al crear", "error");
               this.getInsumo();
             } else {
@@ -567,7 +567,7 @@ export default {
                   .delete("http://localhost:8000/insumos/delete/" + idInsumo)
                   .then(response => {
                     _this.loading = false;
-                    if (response.body.success) {
+                    if (!response.body.success) {
                       sweetAlert("Oops...", "Error al eliminar", "error");
                       _this.getInsumo();
                     } else {

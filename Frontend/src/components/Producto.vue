@@ -132,7 +132,7 @@
             id="Tipo"
           >
             <option value="Entrada">Entrada</option>
-            <option value="Aperitivo">Apaeritivo</option>
+            <option value="Aperitivo">Aperitivo</option>
             <option value="Plato Fuerte">Plato Fuerte</option>
             <option value="Postre">Postre</option>
             <option value="Ensalada">Ensalada</option>
@@ -538,7 +538,7 @@ export default {
           .post("http://localhost:8000/productos/create", this.producto)
           .then(response => {
             this.loading = false;
-            if (response.body.success) {
+            if (!response.body.success) {
               this.producto = {};
               this.imagen = "";
               //poner aca bebida
