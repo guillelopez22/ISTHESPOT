@@ -141,7 +141,7 @@ export default {
       contrasena2: "",
       loading: false,
       nombre: '',
-      scope: 'cliente'
+      scope: 'Cliente'
     };
   },
   methods: {
