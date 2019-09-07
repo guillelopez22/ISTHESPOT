@@ -202,6 +202,9 @@
     background-color: #262626;
     color: #F4F0EA;
   }
+  .input-field {
+    background-color: #C51E07;
+  }
   #elementos{
     font-family: 'Roboto', sans-serif;
   }
@@ -224,7 +227,7 @@
   #busqueda{
     box-shadow: inset 0 -10px 20px -5px rgba(0,0,0,0.67);
     box-shadow: inset 0 10px 20px -5px rgba(0,0,0,0.67);
-    color: #F4F0EA;
+    color: #C51E07;
   }
   #search:focus {
     -webkit-box-shadow: inset 0px 0px 45px 3px rgba(0,0,0,0.67);

@@ -282,7 +282,7 @@ export default {
     color: #F4F0EA;
   }
   .-red{
-    background-color: #FF0B00;
+    background-color: #C51E07;
     color: #F4F0EA;
   }
   .-black{

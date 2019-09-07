@@ -133,7 +133,7 @@ export default {
     color: #fff;
   }
   .-red{
-    background-color: #FF0B00;
+    background-color: #C51E07;
     color: #fff;
   }
   .-black{

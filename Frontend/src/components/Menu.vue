@@ -166,7 +166,7 @@ td {
   color: #4c1b1b !important;
 }
 .tabs {
-  background-color: #ff0b00 !important;
+  background-color: #A93226 !important;
   color: #4c1b1b !important;
   font-family: "Spectral", serif;
   font-weight: bold;
@@ -188,6 +188,9 @@ td {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
+.card {
+  background-color: black;
+}
 /* Add some padding inside the card container */
 #contain1 {
   padding: 2px 16px;

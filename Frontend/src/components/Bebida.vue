@@ -643,7 +643,7 @@ h4 {
 }
 
 .tabs {
-  background-color: #ff0b00 !important;
+  background-color: #A93226 !important;
   color: #4c1b1b !important;
   font-family: "Spectral", serif;
   font-weight: bold;
