@@ -143,7 +143,7 @@
       <div class="row">
         <div class="input-field col s7">
           <input
-            style="color: black"
+            style="color: white"
             class="browser-default"
             placeholder
             v-on:input="imagen = $event.target.value"

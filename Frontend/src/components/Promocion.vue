@@ -1,6 +1,6 @@
 <template>
   <div id="root"> 
-    <h2>Promoción</h2>
+    <h2>Promociones</h2>
     <p>Pagina Actual: {{currentPage}}</p>
   <button v-on:click="anterior()" class="waves-effect waves-teal btn-large">Anterior</button>
     <button v-on:click="siguiente()" class="waves-effect waves-teal btn-large">Siguiente</button>
@@ -45,7 +45,7 @@
     </ul>
     <div class="row">
         <div class="input-field col s6">
-          <input placeholder="" v-model="promocion.nombre" :disabled="loading"  id="Nombre" type="text" class="validate">
+          <input v-on:input="prmocion.nombre = $event.target.value" placeholder="" v-model="promocion.nombre" :disabled="loading"  id="Nombre" type="text" class="validate">
           <label for="Nombre">Nombre</label>
         </div>
         <div class="input-field col s6">
@@ -188,13 +188,14 @@ export default {
 				this.$http.post('http://localhost:8000/promociones/create',this.promocion)
 				.then((response)=>{
 					this.loading=false;
-					if(response.body.success){
+					if(!response.body.success){
 						sweetAlert("Creado con exito!", "Los cambios estan en la tabla", "success");
 						this.getPromocion();
 					}else{
 						sweetAlert("Oops...", "Error al crear", "error");
 					}
-				});
+        });
+        this.promocion = {};
       },
       tabControl(idTab){
         if(idTab === 'test-swipe-1'){
@@ -231,7 +232,8 @@ export default {
               this.getPromocion();
               
             }
-  				});
+          });
+          this.promocion = {};
         }
       },
       deletePromocion(idPromocion) {
