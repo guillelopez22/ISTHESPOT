@@ -53,6 +53,11 @@
            Combos
         </div>
       </router-link>
+      <router-link to="/cuenta">
+        <div class="col s3 m3 l1 contain mask waves-effect waves-red z-depth-1 -red">
+           Cuentas
+        </div>
+      </router-link>
     </div>
     
 

@@ -25,6 +25,7 @@ import Usuario from './components/Usuario.vue'
 import MesaMesero from './components/MesaMesero.vue'
 import Gerente from './components/Gerente.vue'
 import Mesero from './components/Mesero.vue'
+import Cuenta from './components/Cuenta.vue'
 
 import VueResource from 'vue-resource'
 //import VueSweetalert2 from 'vue-sweetalert2';
@@ -96,16 +97,6 @@ const router = new VueRouter({
           path: "/proveedor",
           component: Proveedor
         },
-        /*{
-          name: 'ProductoElaboradoDetallado',
-          path: "/productoelaboradodetallado",
-          component: ProductoElaboradoDetallado
-        },
-        {
-          name: 'ProductoElaborado',
-          path: "/productoelaborado",
-          component: ProductoElaborado
-        },*/
         {
           name: 'Usuario',
           path: "/usuario",
@@ -125,6 +116,11 @@ const router = new VueRouter({
           name:'combo',
           path: '/combo',
           component: Combo
+        },
+        {
+          name:'cuenta',
+          path: '/cuenta',
+          component: Cuenta
         }
       ]
     },
@@ -169,6 +165,11 @@ const router = new VueRouter({
           name: 'Ordenes',
           path: "/ordenes3",
           component: Ordenes
+        },
+        {
+          name:'cuenta',
+          path: '/cuenta3',
+          component: Cuenta
         }
       ]
     }
