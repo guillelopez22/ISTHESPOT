@@ -327,104 +327,16 @@ exports.endpoints = [
 		path: '/personal/create',
 		config: personalController.createPersonal
 	},
-	/*{
-			method: 'GET',
-		 	path: '/prod_elaborado_detail',
-		 	config: prod_elaborado_detailController.getProd_elaborado_details
- 	},
-	{
-			method: 'GET',
-			path: '/prod_elaborado_detail/searchbyid/{_id}',
-			config: prod_elaborado_detailController.getProd_elaborado_detailId
- 	},
-	{
-			method: 'GET',
-			path: '/prod_elaborado_detail/searchbyidElaborado/{idProducto_Elaborado}',
-			config: prod_elaborado_detailController.getProd_elaborado_detailIdElaborado
- 	},
-	{
-			method: 'GET',
-			path: '/prod_elaborado_detail/searchbyidBebida/{idBebida}',
-			config: prod_elaborado_detailController.getProd_elaborado_detailIdBebida
- 	},
-	{
-			method: 'GET',
-			path: '/prod_elaborado_detail/searchbyidInsumo/{idInsumo}',
-			config: prod_elaborado_detailController.getProd_elaborado_detailIdInsumo
- 	},
- 	{
- 			method: 'PUT',
- 			path: '/prod_elaborado_detail/update/{_id}',
- 			config: prod_elaborado_detailController.modifyProd_elaborado_detail
-
- 	},
-	{
-			method: 'DELETE',
-			path: '/prod_elaborado_detail/delete/{_id}',
-			config: prod_elaborado_detailController.deleteProd_elaborado_detail
- 	},
-	{
-			method: 'POST',
-			path: '/prod_elaborado_detail/create',
-			config: prod_elaborado_detailController.createProd_elaborado_detail
- 	},
-	{
-			method: 'GET',
-		 	path: '/productos_elaborados',
-		 	config: productos_elaboradosController.getProductos_elaborados
- 	},
-	{
-			method: 'GET',
-			path: '/productos_elaborados/searchbyid/{_id}',
-			config: productos_elaboradosController.getProductos_elaboradoId
- 	},
-	{
-			method: 'GET',
-			path: '/productos_elaborados/searchbyProducto_Elaborado_Detail/{tipo}',
-			config: productos_elaboradosController.getIdProducto_Elaborado_Tipo
- 	},
-	{
-			method: 'GET',
-			path: '/productos_elaborados/searchbyPod_Details/{idProducto_Elaborado_Detail}',
-			config: productos_elaboradosController.getIdProducto_Elaborado_Detail
- 	},
- 	{
- 			method: 'PUT',
- 			path: '/productos_elaborados/update/{_id}',
- 			config: productos_elaboradosController.modifyProductos_elaborado
-
- 	},
-	{
-			method: 'DELETE',
-			path: '/productos_elaborados/delete/{_id}',
-			config: productos_elaboradosController.deleteProducto_elaborado
- 	},
-	{
-			method: 'POST',
-			path: '/productos_elaborados/create',
-			config: productos_elaboradosController.createProducto_elaborado
- 	},*/
 	{
 		method: 'GET',
 		path: '/productos',
 		config: productosController.getProductos
 	},
-
 	{
 		method: 'GET',
 		path: '/productos/searchbyid/{_id}',
 		config: productosController.getProductoId
 	},
-	//{
-	//		method: 'GET',
-	//		path: '/productos/searchbyBebida/{idBebida}',
-	//		config: productosController.getProductoIdBebida
-	//},
-	//{
-	//		method: 'GET',
-	//		path: '/productos/searchbyProd_Elaborado/{idProducto_Elaborado}',
-	//		config: productosController.getProductoidProducto_Elaborado
-	//},
 	{
 		method: 'GET',
 		path: '/productos/searchbynombre/{nombre}',

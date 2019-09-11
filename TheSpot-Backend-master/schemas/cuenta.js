@@ -4,6 +4,7 @@ var CuentaSchema = new mongoose.Schema({
   idUsuario: String,
   total : String,
   estado : String,
+  fecha: String
 });
 
 module.exports = mongoose.model('cuenta', CuentaSchema);
