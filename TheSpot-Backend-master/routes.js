@@ -251,16 +251,6 @@ exports.endpoints = [
 	},
 	{
 		method: 'GET',
-		path: '/ordenes/searchbyidCombos/{idCombos}',
-		config: ordenesController.getOrdenesIdCombos
-	},
-	{
-		method: 'GET',
-		path: '/ordenes/searchbyidProductos/{idProductos}',
-		config: ordenesController.getOrdenesProductos
-	},
-	{
-		method: 'GET',
 		path: '/ordenes/searchbyidPromociones/{_id}',
 		config: ordenesController.getOrdenesPromociones
 	},
@@ -273,11 +263,6 @@ exports.endpoints = [
 		method: 'GET',
 		path: '/ordenes/searchbyidFecha/{fecha}',
 		config: ordenesController.getOrdenesFecha
-	},
-	{
-		method: 'GET',
-		path: '/ordenes/searchPersonal/{idPersonal}',
-		config: ordenesController.getOrdenPersonal
 	},
 	{
 		method: 'PUT',

@@ -39,37 +39,6 @@ exports.getOrdenesName = {
     return envio;
   }
 }
-exports.getOrdenesIdCombos = {
-  handler : function(request, reply){
-    this.envio = "w"
-    orden.find({'idProveedor' : request.params.idCombos}, function(err, Ordenes){
-      if(!err && Ordenes){
-        this.envio =(Ordenes);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'Ordenes not found'));
-      }
-    });
-    return envio;;
-  }
-}
-exports.getOrdenesProductos = {
-  
-  handler : function(request, reply){
-    this.envio = "w"
-    orden.find({'idProductos' : request.params.idProductos}, function(err, Ordenes){
-      if(!err && Ordenes){
-        this.envio =(Ordenes);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'Ordenes not found'));
-      }
-    });
-    return envio;
-  }
-}
 exports.getOrdenesPromociones = {
   handler : function(request, reply){
     this.envio = "w"
@@ -110,21 +79,6 @@ exports.getOrdenesFecha = {
         this.envio =(boom.notFound());
       }else if(err){
         this.envio =y(boom.wrap(err, 'Ordenes not found'));
-      }
-    });
-    return envio;
-  }
-}
-exports.getOrdenPersonal = {
-  handler : function(request, reply){
-    this.envio = "w"
-    orden.find({'idPersonal' : request.params.idPersonal}, function(err, Ordenes){
-      if(!err && Ordenes){
-        this.envio =(Ordenes);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'Ordenes not found'));
       }
     });
     return envio;
