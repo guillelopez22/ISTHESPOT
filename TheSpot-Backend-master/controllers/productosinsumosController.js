@@ -1,5 +1,7 @@
 var productoinsumo = require('../schemas/productoinsumo.js');
 var mongoose = require('mongoose');
+const boom = require('boom');
+
 
 exports.getProductosInsumos = {
 
@@ -17,8 +19,6 @@ exports.getProductoInsumoId = {
         } catch (error) {
             throw boom.notFound();
         }
-
-        // return reply.response(envio);
     }
 }
 exports.getPoductoInsumoInsumo = {
@@ -30,19 +30,6 @@ exports.getPoductoInsumoInsumo = {
             throw boom.notFound();
         }
     }
-    /*handler: function (request, reply) {
-        this.envio = "w"
-        productoinsumo.find({ 'idInsumo': request.params.idInsumo }, function (err, ProductosInsumos) {
-            if (!err && ProductosInsumos) {
-                this.envio =(ProductosInsumos);
-            } else if (!err) {
-                this.envio =(boom.notFound());
-            } else if (err) {
-                this.envio =(boom.wrap(err, 'ProductosInsumos not found'));
-            }
-        });
-        return envio;
-    }*/
 }
 exports.getPoductoInsumoProducto = {
     handler: async function (request, reply) {
@@ -53,18 +40,6 @@ exports.getPoductoInsumoProducto = {
             throw boom.notFound();
         }
     }
-    /*handler: function (request, reply) {
-        this.envio = "w"
-        productoinsumo.find({ 'idProducto': request.params.idProducto }, function (err, ProductosInsumos) {
-            if (!err && ProductosInsumos) {
-                this.envio =(ProductosInsumos);
-            } else if (!err) {
-                this.envio =(boom.notFound());
-            } else if (err) {
-                this.envio =(boom.wrap(err, 'ProductosInsumos not found'));
-            }
-        });return envio;
-    }*/
 }
 
 exports.modifyProductoInsumo = {
@@ -76,27 +51,6 @@ exports.modifyProductoInsumo = {
             throw boom.badRequest();
         }
     }
-    /*handler: function (request, reply) {
-        this.envio = "w"
-        productoinsumo.update(
-            { '_id': request.params._id },
-            {
-                $set:
-                {
-                    idProducto: request.payload.idProducto,
-                    idInsumo: request.payload.idInsumo,
-                    cantidad_insumo: request.payload.cantidad_insumo
-                }
-            }, function (err) {
-                if (err) {
-                    this.envio =(boom.wrap(err, 'ProductoInsumo not found'));
-                } else {
-                    this.envio =('updated succesfully');
-                }
-            }
-        );
-        return envio;
-    }*/
 }
 exports.deleteProductoInsumo = {
     handler: async function (request, reply) {
@@ -107,19 +61,6 @@ exports.deleteProductoInsumo = {
             throw boom.badRequest();
         }
     }
-    /*handler: function (request, reply) {
-        this.envio ="w"
-        productoinsumo.deleteMany({ 'idProducto': request.params._id }, function (err, ProductoInsumo) {
-            if (err) {
-                this.envio =(boom.badRequest("Could not delete productoinsumo"));
-            } else if (!err && ProductoInsumo) {
-                this.envio =('productoinsumo deleted succesfully');
-            } else if (!err) {
-                this.envio =(boom.notFound());
-            }
-        });
-        return envio;
-    }*/
 }
 exports.createProductoInsumo = {
 

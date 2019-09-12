@@ -1,130 +1,92 @@
 var cuenta = require('../schemas/cuenta.js');
 var mongoose = require('mongoose');
+const boom = require('boom');
 
 exports.getCuentas = {
-  
-  handler: function(request, reply){
+
+  handler: function (request, reply) {
     var cuentas = cuenta.find({});
-    return(cuentas);
+    return (cuentas);
   }
 }
 exports.getCuentaId = {
-  
-  handler : function(request, reply){
-    this.envio = "w";
-    cuenta.findOne({'_id' : request.params._id}, function(err, Cuenta){
-      if(!err && Cuenta){
-        this.envio = (Cuenta);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'Cuenta not found'));
-      }
-    });return envio;
+
+  handler: async function (request, reply) {
+    try {
+      var Cuenta = await cuenta.findById(request.params._id).exec();
+      return reply.response(Cuenta);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.getCuentaUsuario = {
-  handler : function(request, reply){
-    this.envio = "w";
-    cuenta.find({'idUsuario' : request.params.idUsuario}, function(err, Usuarios){
-      if(!err && Usuarios){
-        this.envio = (Usuarios);
-      }else if(!err){
-        this.envio = (boom.notFound());
-      }else if(err){
-        this.envio = (boom.wrap(err, 'Usuario not found'));
-      }
-    });return envio;
+  handler: async function (request, reply) {
+    try {
+      var Cuenta = await cuenta.find({ 'idUsuario': request.params.idUsuario }).exec();
+      return reply.response(Cuenta);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.getCuentaTotal = {
-  
-  handler : function(request, reply){
-    this.envio = "w";
-    cuenta.find({'total' : request.params.total}, function(err, Cuentas){
-      if(!err && Cuentas){
-        this.envio =(Cuentas);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'total not found'));
-      }
-    });return envio;
+
+  handler: async function (request, reply) {
+    try {
+      var Cuenta = await cuenta.find({ 'total': request.params.total }).exec();
+      return reply.response(Cuenta);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.getCuentaEstado = {
-  handler : function(request, reply){
-    this.envio ="w";
-    cuenta.find({'estado' : request.params.estado}, function(err, Cuentas){
-      if(!err && Cuentas){
-        this.envio =(Cuentas);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'estado not found'));
-      }
-    });return envio;
+  handler: async function (request, reply) {
+    try {
+      var Cuenta = await cuenta.find({ 'estado': request.params.estado }).exec();
+      return reply.response(Cuenta);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.modifyCuenta = {
-  
-  handler: function(request, reply){
-    this.envio ="w";
-    cuenta.update(
-      {'_id': request.params._id},
-      {$set:
-        {
-          idUsuario : request.payload.idUsuario,
-          total : request.payload.total,
-          estado : request.payload.estado,
-          idMesa : request.payload.idMesa
-        }
-      }, function(err){
-        if(err){
-          this.envio =(boom.wrap(err, 'cuenta not found'));
-        }else{
-          this.envio =('updated succesfully');
-        }
-      }
-    );return envio;
+
+  handler: async function (request, reply) {
+    try {
+      var result = await cuenta.findByIdAndUpdate(request.params._id, request.payload, { new: true });
+      return reply.response(result);
+    } catch (error) {
+      throw boom.badRequest();
+    }
   }
 }
 exports.deleteCuenta = {
-  
-  handler: function(request, reply){
-    this.envio ="w";
-    cuenta.findOne({'_id' : request.params._id}, function(err, Cuenta){
-      if(err){
-        this.envio =(boom.badRequest("Could not delete cuenta"));
-      }else if(!err && Cuenta){
-        Cuenta.remove();
-        this.envio =('cuenta deleted succesfully');
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }
-    });return envio;
+
+  handler: async function (request, reply) {
+    try {
+      var result = await cuenta.findByIdAndDelete(request.params._id);
+      return reply.response({ success: true });
+    } catch (error) {
+      throw boom.badRequest();
+    }
   }
 }
 exports.createCuenta = {
-  
-  handler: function(request, reply){
-    this.envio ="w";
-    var newCuenta = new cuenta({
-        idUsuario : request.payload.idUsuario,
-        total : request.payload.total,
-        estado : request.payload.estado,
-        idMesa : request.payload.idMesa
-    });
-    newCuenta.save(function(err){
-      if(!err){
-        this.envio ={
-          success: true
-        };
-      }else{
-        this.envio ={
-          success: false
-        }
-      }
-    });return envio;
+
+  handler: async function (request, reply) {
+    try {
+      var newCuenta = new cuenta({
+        idUsuario: request.payload.idUsuario,
+        total: request.payload.total,
+        estado: request.payload.estado,
+        idMesa: request.payload.idMesa
+      });
+      var result = await newCuenta.save();
+      return reply.response({ success: true, cuenta: result });
+    } catch (error) {
+      throw boom.badRequest();
+    }
   }
 }

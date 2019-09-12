@@ -142,7 +142,7 @@
     <div id="test-swipe-2" class="col s12">
       <a
         class="waves-effect waves-teal btn-large"
-        v-on:click="createProveedor"
+        v-on:click="modifyProveedor"
         :disabled="loading"
         id="boton"
       >
@@ -275,7 +275,7 @@ export default {
           .post("http://localhost:8000/proveedor/create", this.proveedor)
           .then(response => {
             this.loading = false;
-            if (!response.body.success) {
+            if (response.body.success) {
               sweetAlert(
                 "Creado con exito!",
                 "Los cambios estan en la tabla",
@@ -315,9 +315,10 @@ export default {
       if (this.idModificar != "") {
         Materialize.updateTextFields();
         this.proveedor.idProveedor = this.idProv;
+        this.loading = false;
         this.$http
           .put(
-            "http://localhost:8080/proveedor/update/" + this.idModificar,
+            "http://localhost:8000/proveedor/update/" + this.idModificar,
             this.proveedor
           )
           .then(response => {
@@ -383,7 +384,7 @@ export default {
                   )
                   .then(response => {
                     _this.loading = false;
-                    if (response.body.success) {
+                    if (!response.body.success) {
                       sweetAlert("Oops...", "Error al eliminar", "error");
                       _this.getProveedor();
                     } else {

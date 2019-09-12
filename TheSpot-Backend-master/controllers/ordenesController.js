@@ -1,148 +1,89 @@
 var orden = require('../schemas/orden.js');
 var mongoose = require('mongoose');
+const boom = require('boom');
 
 exports.getOrdenes = {
 
-  handler: function(request, reply){
+  handler: function (request, reply) {
     var ordenes = orden.find({});
-    return(ordenes);
+    return (ordenes);
   }
 }
 exports.getOrdenesId = {
-  
-  handler : function(request, reply){
-    this.envio = "w"
-    orden.findOne({'_id' : request.params._id}, function(err, Orden){
-      if(!err && Orden){
-        this.envio =(Orden);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'Orden not found'));
-      }
-    });
-    return envio;
+
+  handler: async function (request, reply) {
+    try {
+      var Orden = await orden.findById(request.params._id).exec();
+      return reply.response(Orden);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.getOrdenesName = {
-  handler : function(request, reply){
-    this.envio = "w"
-    orden.find({'nombre' : request.params.nombre}, function(err, Ordenes){
-      if(!err && Ordenes){
-        this.envio =(Ordenes);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'Ordenes not found'));
-      }
-    });
-    return envio;
-  }
-}
-exports.getOrdenesPromociones = {
-  handler : function(request, reply){
-    this.envio = "w"
-    orden.find({'idPromociones' : request.params.idPromociones}, function(err, Ordenes){
-      if(!err && Ordenes){
-        this.envio =(Ordenes);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'Ordenes not found'));
-      }
-    });
-    return envio;
+  handler: async function (request, reply) {
+    try {
+      var Orden = await orden.find({ 'nombre': request.params.nombre }).exec();
+      return reply.response(Orden);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.getOrdenesMesa = {
-  handler : function(request, reply){
-    this.envio = "w"
-    orden.find({'idMesa' : request.params.idMesa}, function(err, Ordenes){
-      if(!err && Ordenes){
-        this.envio =(Ordenes);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =y(boom.wrap(err, 'Ordenes not found'));
-      }
-    });
-    return envio;
+  handler: async function (request, reply) {
+    try {
+      var Orden = await orden.find({ 'idMesa': request.params.idMesa }).exec();
+      return reply.response(Orden);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
-exports.getOrdenesFecha = {
-  handler : function(request, reply){
-    this.envio = "w"
-    orden.find({'fecha' : request.params.fecha}, function(err, Ordenes){
-      if(!err && Ordenes){
-        this.envio =(Ordenes);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =y(boom.wrap(err, 'Ordenes not found'));
-      }
-    });
-    return envio;
+exports.getOrdenesEmpleado = {
+  handler: async function (request, reply) {
+    try {
+      var Orden = await orden.find({ 'idEmpleado': request.params.idEmpleado }).exec();
+      return reply.response(Orden);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.modifyOrden = {
-  handler: function(request, reply){
-    this.envio = "w"
-    orden.update(
-      {'_id': request.params._id},
-      {$set:
-        {
-          idMesa: request.payload.idMesa,
-          idEmpleado: request.payload.idEmpleado,
-          idBebidas: request.payload.idBebidas,
-          idProductos: request.payload.idProductos,
-          idCombos: request.payload.idCombos
-          
-        }
-      }, function(err){
-        if(err){
-          this.envio =(boom.wrap(err, 'Orden not found'));
-        }else{
-          this.envio =('updated succesfully');
-        }
-      }
-    );return envio;
+  handler: async function (request, reply) {
+    try {
+      var result = await orden.findByIdAndUpdate(request.params._id, request.payload, { new: true });
+      return reply.response(result);
+    } catch (error) {
+      throw boom.badRequest();
+    }
   }
 }
 exports.deleteOrden = {
-  handler: function(request, reply){
-    this.envio ="w"
-    orden.findOne({'_id' : request.params._id}, function(err, Orden){
-      if(err){
-        this.envio =(boom.badRequest("Could not delete Orden"));
-      }else if(!err && Orden){
-        Orden.remove();
-        this.envio =('Orden deleted succesfully');
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }
-    });return envio;
+  handler: async function (request, reply) {
+    try {
+      var result = await orden.findByIdAndDelete(request.params._id);
+      return reply.response({ success: true });
+    } catch (error) {
+      throw boom.badRequest();
+    }
   }
 }
 exports.createOrden = {
-  handler: function(request, reply){
-    this.envio ="w"
-    var newOrden = new orden({
-      idMesa: request.payload.idMesa,
-          idEmpleado: request.payload.idEmpleado,
-          idBebidas: request.payload.idBebidas,
-          idProductos: request.payload.idProductos,
-          idCombos: request.payload.idCombos
-    });
-    newOrden.save(function(err){
-      if(!err){
-        this.envio ={
-          success: true
-        }
-      }else{
-        this.envio ={
-          success: false
-        }
-      }
-    });return envio;
+  handler: async function (request, reply) {
+    try {
+      var newOrden = new orden({
+        idMesa: request.payload.idMesa,
+        idEmpleado: request.payload.idEmpleado,
+        idBebidas: request.payload.idBebidas,
+        idProductos: request.payload.idProductos,
+        idCombos: request.payload.idCombos
+      });
+      var result = await newOrden.save();
+      return reply.response({ success: true, orden: result });
+    } catch (error) {
+      throw boom.badRequest();
+    }
   }
 }

@@ -538,7 +538,7 @@ export default {
           .post("http://localhost:8000/productos/create", this.producto)
           .then(response => {
             this.loading = false;
-            if (!response.body.success) {
+            if (response.body.success) {
               this.producto = {};
               this.imagen = "";
               //poner aca bebida
@@ -751,7 +751,7 @@ export default {
                     "http://localhost:8000/productos/delete/" + idProducto
                   )
                   .then(response => {
-                    if (response.body.success) {
+                    if (!response.body.success) {
                       sweetAlert("Oops...", "Error al eliminar", "error");
                       _this.getproducto();
                     } else {
