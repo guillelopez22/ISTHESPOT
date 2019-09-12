@@ -198,7 +198,7 @@ td {
 }
 img {
   border-radius: 50%;
-  border: 1px solid #ddd;
+  border: 1px solid rgb(224, 19, 19);
   border-radius: 4px;
   padding: 5px;
   width: 50px;
