@@ -31,8 +31,8 @@
       </thead>
       <tbody>
         <tr v-for="(orden, index) in data">
-          <td>{{empleados2[index]}}</td>
-          <td>{{mesas2[index]}}</td>
+          <td>{{"" + empleados2[index]}}</td>
+          <td>{{"Mesa #" + mesas2[index]}}</td>
           <td>
             <button v-on:click="getBeb(orden)" class="waves-effect waves-teal btn">Mostrar</button>
           </td>
@@ -372,7 +372,6 @@ export default {
       selectedTab: "test-swipe-1",
       bebida: {},
       bebidas: [],
-      bebidas2: [],
       mesa: {},
       mesas: [],
       mesas2: [],
@@ -382,7 +381,6 @@ export default {
       s_empleados: [],
       producto: {},
       productos: [],
-      productos2: [],
       combo: {},
       combos: [],
       data: [],
@@ -800,35 +798,18 @@ export default {
       this.$http.get("http://localhost:8000/ordenes").then(response => {
         this.ordenes = response.body;
         response.body.map(function(value, key) {
-          var i;
-          var p = _this.bebidas;
-          for (i = 0; i < p.length; i++) {
-            if (value.idBebidas == p[i]._id) {
-              _this.bebidas2.push(p[i].nombre);
-            }
-          }
-
           var j;
           var p1 = _this.mesas;
           for (j = 0; j < p1.length; j++) {
             if (value.idMesa == p1[j]._id) {
-              _this.mesas2.push(p1[j].nombre);
+              _this.mesas2.push(p1[j].numero);
             }
           }
-
           var k;
-          var p2 = _this.empleados;
+          var p2 = _this.s_empleados;
           for (k = 0; k < p2.length; k++) {
             if (value.idEmpleado == p2[k]._id) {
               _this.empleados2.push(p2[k].nombre);
-            }
-          }
-
-          var l;
-          var p3 = _this.productos;
-          for (l = 0; l < p3.length; l++) {
-            if (value.idProductos == p3[l]._id) {
-              _this.productos2.push(p3[l].nombre);
             }
           }
         });
