@@ -101,7 +101,27 @@
         />
         <label for="descripcion">Descripcion</label>
       </div>
-    </div>
+      <div class="input-field col s7">
+          <input
+            style="color: white"
+            class="browser-default"
+            placeholder
+            v-on:input="imagen = $event.target.value"
+            type="text"
+            v-model="imagen"
+            :disabled="loading"
+            id="imagen"
+          />
+          <label for="imagen">Imagen</label>
+        </div>
+        <div class="input-field col s5">
+          <button
+            v-on:click="cargarImagen()"
+            class="waves-effect waves-teal btn-large"
+          >Mostrar Imagen</button>
+        </div>
+      </div>
+      
 
     <button v-on:click="agregarProducto()" class="waves-effect waves-teal btn-large">Agregar</button>
 
@@ -277,6 +297,7 @@
       </a>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -307,7 +328,8 @@ export default {
       ordenescombos: [],
       //
       cantidad_producto: 1,
-      cantidad_bebida: 1
+      cantidad_bebida: 1,
+      imagen: "",
     };
   },
   watch: {
@@ -324,6 +346,16 @@ export default {
     }*/
   },
   methods: {
+    cargarImagen() {
+      if (this.imagen != "") {
+        swal({
+          title: "Imagen Cargada Exitosamente!",
+          imageUrl: this.imagen
+        });
+      } else {
+        sweetAlert("Imagen Vacia", "Debe ingresar un URL valido", "warning");
+      }
+    },
     siguiente() {
       if (this.currentPage < this.size) {
         this.currentPage = this.currentPage + 1;
@@ -576,7 +608,8 @@ export default {
         this.combo.precio == undefined ||
         this.combo.descripcion == undefined ||
         this.combosxproductos.length == 0 ||
-        this.combosxbebidas.length == 0
+        this.combosxbebidas.length == 0 ||
+        this.imagen == ""
       ) {
         sweetAlert("Oops", "Hay un campo vacio", "error");
         this.loading = false;
@@ -600,6 +633,7 @@ export default {
               
             }
             this.combo = {};
+            this.imagen = "";
           });
 
         setTimeout(function() {
@@ -672,6 +706,7 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = combo._id;
       this.combo = combo;
+      this.imagen = producto.imagen;
       var prod = [];
       this.$http
         .get("http://localhost:8000/combosproductos")
@@ -725,7 +760,7 @@ export default {
       this.loading = true;
       if (this.idModificar != "") {
         Materialize.updateTextFields();
-        //this.insumo.idProveedor = this.idProv;
+        this.combo.imagen = this.imagen;
         this.$http
           .put(
             "http://localhost:8000/combos/update/" + this.idModificar,
@@ -822,6 +857,7 @@ export default {
                 "success"
               );
               this.combo = {};
+              this.imagen = "";
               this.loading = false;
             }//fin
           });

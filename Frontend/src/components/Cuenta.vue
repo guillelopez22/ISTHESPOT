@@ -19,9 +19,8 @@
     <table class="table centered">
       <thead>
         <tr>
-          <th>Nombre</th>
           <th>Mesero</th>
-          <th>Fecha</th>
+          <th>Mesa</th>
           <th>Estado</th>
           <th>Total</th>
           <th>Modificar</th>
@@ -31,7 +30,7 @@
       <tbody>
         <tr v-for="cuenta in data" v-bind:key="cuenta">
           <td>{{cuenta.idUsuario}}</td>
-          <td>{{cuenta.fecha}}</td>
+          <td>{{cuenta.idMesa}}</td>
           <td>{{cuenta.estado}}</td>
           <td>{{cuenta.total}}</td>
           <td>
@@ -78,13 +77,13 @@
       <div class="input-field col s6">
         <input
           placeholder=""
-          v-on:input="cuenta.fecha = $event.target.value"
+          v-on:input="cuenta.idMesa = $event.target.value"
           type="number"
-          v-model="cuenta.fecha"
+          v-model="cuenta.idMesa"
           :disabled="loading"
           id="Numero"
         />
-        <label for="Numero">Fecha</label>
+        <label for="Numero">idMesa</label>
       </div>
 
         <div class="input-field col s6">
