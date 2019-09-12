@@ -614,6 +614,7 @@ export default {
         sweetAlert("Oops", "Hay un campo vacio", "error");
         this.loading = false;
       } else {
+        this.combo.imagen = this.imagen;
         this.$http
           .post("http://localhost:8000/combos/create", this.combo)
           .then(response => {
@@ -628,9 +629,7 @@ export default {
                 "Los cambios estan en la tabla",
                 "success"
               );
-
               this.getCombos();
-              
             }
             this.combo = {};
             this.imagen = "";
@@ -706,7 +705,7 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = combo._id;
       this.combo = combo;
-      this.imagen = producto.imagen;
+      this.imagen = combo.imagen;
       var prod = [];
       this.$http
         .get("http://localhost:8000/combosproductos")
