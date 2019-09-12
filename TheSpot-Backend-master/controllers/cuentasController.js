@@ -77,7 +77,7 @@ exports.modifyCuenta = {
           idUsuario : request.payload.idUsuario,
           total : request.payload.total,
           estado : request.payload.estado,
-          fecha : request.payload.fecha
+          idMesa : request.payload.idMesa
         }
       }, function(err){
         if(err){
@@ -113,7 +113,7 @@ exports.createCuenta = {
         idUsuario : request.payload.idUsuario,
         total : request.payload.total,
         estado : request.payload.estado,
-        fecha : request.payload.fecha
+        idMesa : request.payload.idMesa
     });
     newCuenta.save(function(err){
       if(!err){

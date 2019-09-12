@@ -4,7 +4,7 @@ var CuentaSchema = new mongoose.Schema({
   idUsuario: String,
   total : String,
   estado : String,
-  fecha: String
+  idMesa: String
 });
 
 module.exports = mongoose.model('cuenta', CuentaSchema);
