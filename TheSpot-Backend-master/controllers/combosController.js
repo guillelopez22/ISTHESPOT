@@ -15,16 +15,6 @@ exports.getComboId = {
     } catch (error) {
       throw boom.notFound();
     }
-    // this.envio = "w";
-    // combo.findOne({'_id' : request.params._id}, function(err, Combo){
-    //   if(!err && Combo){
-    //     this.envio =(Combo);
-    //   }else if(!err){
-    //     this.envio =(boom.notFound());
-    //   }else if(err){
-    //     this.envio =(boom.wrap(err, 'Combo not found'));
-    //   }
-    // });return envio;
   }
 }
 exports.getComboName = {
@@ -36,16 +26,6 @@ exports.getComboName = {
     } catch (error) {
       throw boom.notFound();
     }
-    // this.envio = "w";
-    // combo.find({'nombre' : request.params.nombre}, function(err, Combos){
-    //   if(!err && Combos){
-    //     this.envio = (Combos);
-    //   }else if(!err){
-    //     this.envio = (boom.notFound());
-    //   }else if(err){
-    //     this.envio = (boom.wrap(err, 'Combo not found'));
-    //   }
-    // });return envio;
   }
 }
 exports.getComboPrecio = {
@@ -57,16 +37,6 @@ exports.getComboPrecio = {
     } catch (error) {
       throw boom.notFound();
     }
-    // this.envio = "w";
-    // combo.find({'precio' : request.params.precio}, function(err, Combos){
-    //   if(!err && Combos){
-    //     this.envio = (Combos);
-    //   }else if(!err){
-    //     this.envio = (boom.notFound());
-    //   }else if(err){
-    //     this.envio = (boom.wrap(err, 'Combo not found'));
-    //   }
-    // });return envio;
   }
 }
 exports.modifyCombo = {
@@ -104,22 +74,5 @@ exports.createCombo = {
     } catch (error) {
       throw boom.badRequest();
     }
-    // this.envio = "w";
-    // var newCombo = new combo({
-    //   nombre : request.payload.nombre,
-    //   descripcion : request.payload.descripcion,
-    //   precio : request.payload.precio
-    // });
-    // newCombo.save(function(err){
-    //   if(!err){
-    //     this.envio = {
-    //       success: true
-    //     };
-    //   }else{
-    //     this.envio = {
-    //       success: false
-    //     }
-    //   }
-    // });return envio;
   }
 }

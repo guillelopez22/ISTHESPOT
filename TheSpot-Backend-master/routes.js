@@ -251,18 +251,13 @@ exports.endpoints = [
 	},
 	{
 		method: 'GET',
-		path: '/ordenes/searchbyidPromociones/{_id}',
-		config: ordenesController.getOrdenesPromociones
-	},
-	{
-		method: 'GET',
 		path: '/ordenes/searchbyidMesa/{idMesa}',
 		config: ordenesController.getOrdenesMesa
 	},
 	{
 		method: 'GET',
-		path: '/ordenes/searchbyidFecha/{fecha}',
-		config: ordenesController.getOrdenesFecha
+		path: '/ordenes/searchbyidEmpleado/{idEmpleado}',
+		config: ordenesController.getOrdenesEmpleado
 	},
 	{
 		method: 'PUT',
@@ -423,16 +418,6 @@ exports.endpoints = [
 		method: 'GET',
 		path: '/proveedor/searchbyid/{_id}',
 		config: proveedorController.getProveedorId
-	},
-	{
-		method: 'GET',
-		path: '/proveedor/searchbyidInsumo/{idInsumo}',
-		config: proveedorController.getProveedorInsumos
-	},
-	{
-		method: 'GET',
-		path: '/proveedor/searchbyidBebidas/{idBebidas}',
-		config: proveedorController.getProveedorBebidas
 	},
 	{
 		method: 'GET',

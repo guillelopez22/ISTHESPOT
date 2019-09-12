@@ -1,134 +1,98 @@
 var usuario = require('../schemas/usuario.js');
 var mongoose = require('mongoose');
+const boom = require('boom');
 
 exports.getUsuarios = {
 
-  handler: function(request, reply){
+  handler: function (request, reply) {
     var usuarios = usuario.find({});
-    return(usuarios);
+    return (usuarios);
   }
 }
 exports.getUsuarioId = {
- 
-  handler : function(request, reply){
-    this.envio = "r"
-    usuario.findOne({'_id' : request.params._id}, function(err, Usuario){
-      if(!err && Usuario){
-        this.envio =(Usuario);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'Usuario not found'));
-      }
-    });
-    return envio;
+
+  handler: async function (request, reply) {
+    try {
+      var Usuario = await usuario.findById(request.params._id).exec();
+      return reply.response(Usuario);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.getUsuarioIdPersonal = {
 
-  handler : function(request, reply){
-    this.envio = "r"
-    usuario.findOne({'IdPersonal' : request.params.IdPersonal}, function(err, Usuario){
-      if(!err && Usuario){
-        this.envio =(Usuario);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'Usuario not found'));
-      }
-    });return envio;
+  handler: async function (request, reply) {
+    try {
+      var Usuario = await usuario.find({ 'idPersonal': request.params.idPersonal }).exec();
+      return reply.response(Usuario);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.getUsuarioIdOrdenes = {
 
-  handler : function(request, reply){
-    this.envio = "r"
-    usuario.findOne({'idOrdenes' : request.params.idOrdenes}, function(err, Usuario){
-      if(!err && Usuario){
-        this.envio =(Usuario);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'Usuario not found'));
-      }
-    });return envio;
+  handler: async function (request, reply) {
+    try {
+      var Usuario = await usuario.find({ 'idOrdenes': request.params.idOrdenes }).exec();
+      return reply.response(Usuario);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.getUsuarioName = {
 
-  handler : function(request, reply){
-    this.envio = "r"
-    usuario.findOne({'nombre' : request.params.nombre}, function(err, Usuario){
-      if(!err && Usuario){
-        this.envio =(Usuario);
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }else if(err){
-        this.envio =(boom.wrap(err, 'Usuario not found'));
-      }
-    });return envio;
+  handler: async function (request, reply) {
+    try {
+      var Usuario = await usuario.find({ 'nombre': request.params.nombre }).exec();
+      return reply.response(Usuario);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.modifyUsuario = {
 
-  handler: function(request, reply){
-    this.envio = "r"
-    usuario.update(
-      {'_id': request.params._id},
-      {$set:
-        {
-          IdPersonal : request.payload.IdPersonal,
-          idOrdenes : request.payload.idOrdenes,
-          usuario : request.payload.usuario,
-          contrasena : request.payload.contraseña,
-          nombre : request.payload.nombre,
-          telefono : request.payload.telefono,
-          scope: request.payload.scope
-        }
-      }, function(err){
-        if(err){
-          this.envio =(boom.wrap(err, 'Usuario not found'));
-        }else{
-          this.envio =('updated succesfully');
-        }
-      }
-    );return envio;
-  }
-}
-exports.deleteUsuario = {
-
-  handler: function(request, reply){
-    this.envio = "r"
-    usuario.findOne({'_id' : request.params._id}, function(err, Usuario){
-      if(err){
-        this.envio =(boom.badRequest("Could not delete Usuario"));
-      }else if(!err && Usuario){
-        Usuario.remove();
-        this.envio =('Usuario deleted succesfully');
-      }else if(!err){
-        this.envio =(boom.notFound());
-      }
-    });return envio;
-  }
-}
-exports.createUsuario = {
-  handler: async function(request, reply){
-    console.log(request.payload);
+  handler: async function (request, reply) {
     try {
-      var newUsuario = new usuario({
-        IdPersonal : request.payload.IdPersonal,
-        idOrdenes : request.payload.idOrdenes,
-        usuario : request.payload.usuario,
-        contrasena : request.payload.contrasena,
-        nombre : request.payload.nombre,
-        telefono : request.payload.telefono,
-        scope: request.payload.scope
-      });
-      result = await newUsuario.save();
-      console.log({'result': result})
-      return reply.response({success : true}).code(201);
+      var result = await usuario.findByIdAndUpdate(request.params._id, request.payload, { new: true });
+      return reply.response(result);
     } catch (error) {
       throw boom.badRequest();
     }
   }
+}
+exports.deleteUsuario = {
+
+  handler: async function (request, reply) {
+    try {
+      var result = await usuario.findByIdAndDelete(request.params._id);
+      return reply.response({ success: true });
+    } catch (error) {
+      throw boom.badRequest();
+    }
+  }
+}
+exports.createUsuario = {
+
+  handler: async function (request, reply) {
+    try {
+      var newUsuario = new usuario({
+        IdPersonal: request.payload.IdPersonal,
+        idOrdenes: request.payload.idOrdenes,
+        usuario: request.payload.usuario,
+        contrasena: request.payload.contrasena,
+        nombre: request.payload.nombre,
+        telefono: request.payload.telefono,
+        scope: request.payload.scope
+      });
+      var result = await newUsuario.save();
+      return reply.response({ success: true, usuario: result });
+    } catch (error) {
+      throw boom.badRequest();
+    }
+  }
+
 }

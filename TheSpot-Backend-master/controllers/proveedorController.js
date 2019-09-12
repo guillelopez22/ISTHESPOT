@@ -1,5 +1,6 @@
 var proveedor = require('../schemas/proveedor.js');
 var mongoose = require('mongoose');
+const boom = require('boom');
 
 exports.getProveedores = {
 
@@ -10,148 +11,76 @@ exports.getProveedores = {
 }
 exports.getProveedorId = {
 
-  handler: function (request, reply) {
-    this.envio = "w"
-    proveedor.findOne({ '_id': request.params._id }, function (err, Proveedor) {
-      if (!err && Proveedor) {
-        this.envio = (Proveedor);
-      } else if (!err) {
-        this.envio = (boom.notFound());
-      } else if (err) {
-        this.envio = (boom.wrap(err, 'Proveedor not found'));
-      }
-    }); return envio;
+  handler: async function (request, reply) {
+    try {
+      var Proveedor = await proveedor.findById(request.params._id).exec();
+      return reply.response(Proveedor);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
-exports.getProveedorInsumos = {
 
-  handler: function (request, reply) {
-    this.envio = "w"
-    proveedor.find({ 'idInsumo': request.params.idInsumo }, function (err, Proveedor) {
-      if (!err && Proveedor) {
-        this.envio = (Proveedor);
-      } else if (!err) {
-        this.envio = (boom.notFound());
-      } else if (err) {
-        this.envio = (boom.wrap(err, 'Proveedor not found'));
-      }
-    }); return envio;
-  }
-}
-exports.getProveedorBebidas = {
-
-  handler: function (request, reply) {
-    this.envio = "w"
-    proveedor.find({ 'idBebidas': request.params.idBebidas }, function (err, Proveedor) {
-      if (!err && Proveedor) {
-        this.envio = (Proveedor);
-      } else if (!err) {
-        this.envio = (boom.notFound());
-      } else if (err) {
-        this.envio = (boom.wrap(err, 'Proveedor not found'));
-      }
-    }); return envio;
-  }
-}
 exports.getProveedorName = {
-  handler: function (request, reply) {
-    this.envio = "w"
-    proveedor.find({ 'nombre': request.params.idInsumo }, function (err, Proveedor) {
-      if (!err && Proveedor) {
-        this.envio = (Proveedor);
-      } else if (!err) {
-        this.envio = (boom.notFound());
-      } else if (err) {
-        this.envio = (boom.wrap(err, 'Proveedor not found'));
-      }
-    });
-    return envio;
+  handler: async function (request, reply) {
+    try {
+      var Proveedor = await proveedor.find({ 'nombre': request.params.nombre }).exec();
+      return reply.response(Proveedor);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.getProveedorContacto = {
 
-  handler: function (request, reply) {
-    this.envio = "r"
-    proveedor.find({ 'contacto': request.params.contacto }, function (err, Proveedor) {
-      if (!err && Proveedor) {
-        this.envio = (Proveedor);
-      } else if (!err) {
-        this.envio = (boom.notFound());
-      } else if (err) {
-        this.envio = (boom.wrap(err, 'Proveedor not found'));
-      }
-    });
-    return envio;
+  handler: async function (request, reply) {
+    try {
+      var Proveedor = await proveedor.find({ 'contacto': request.params.contacto }).exec();
+      return reply.response(Proveedor);
+    } catch (error) {
+      throw boom.notFound();
+    }
   }
 }
 exports.modifyProveedor = {
-  handler: function (request, reply) {
-    this.envio = "r"
-    proveedor.update(
-      { '_id': request.params._id },
-      {
-        $set:
-        {
-          idInsumo: request.payload.idInsumo,
-          idBebidas: request.payload.idBebidas,
-          nombre: request.payload.nombre,
-          pais: request.payload.pais,
-          telefono: request.payload.telefono,
-          contacto: request.payload.contacto,
-          email: request.payload.email,
-          direccion: request.payload.direccion
-        }
-      }, function (err) {
-        if (err) {
-          this.envio = (boom.wrap(err, 'Proveedor not found'));
-        } else {
-          this.envio = ('updated succesfully');
-        }
-      }
-    ); return envio;
+  handler: async function (request, reply) {
+    try {
+      var result = await proveedor.findByIdAndUpdate(request.params._id, request.payload, { new: true });
+      return reply.response(result);
+    } catch (error) {
+      throw boom.badRequest();
+    }
   }
 }
 exports.deleteProveedor = {
 
-  handler: function (request, reply) {
-    this.envio = "r"
-    proveedor.findOne({ '_id': request.params._id }, function (err, Proveedor) {
-      if (err) {
-        this.envio = (boom.badRequest("Could not delete Proveedor"));
-      } else if (!err && Proveedor) {
-        Proveedor.remove();
-        this.envio = ('Proveedor deleted succesfully');
-      } else if (!err) {
-        this.envio = (boom.notFound());
-      }
-    });
-    return envio;
+  handler: async function (request, reply) {
+    try {
+      var result = await proveedor.findByIdAndDelete(request.params._id);
+      return reply.response({ success: true });
+    } catch (error) {
+      throw boom.badRequest();
+    }
   }
 }
 exports.createProveedor = {
 
-  handler: function (request, reply) {
-    this.envio = "r"
-    var newProveedor = new proveedor({
-      idInsumo: request.payload.idInsumo,
-      idBebidas: request.payload.idBebidas,
-      nombre: request.payload.nombre,
-      pais: request.payload.pais,
-      telefono: request.payload.telefono,
-      contacto: request.payload.contacto,
-      email: request.payload.email,
-      direccion: request.payload.direccion
-    });
-    newProveedor.save(function (err) {
-      if (!err) {
-        this.envio = {
-          success: true
-        }
-      } else {
-        this.envio = {
-          success: false
-        }
-      }
-    }); return envio;
+  handler: async function (request, reply) {
+    try {
+      var newProveedor = new proveedor({
+        idInsumo: request.payload.idInsumo,
+        idBebidas: request.payload.idBebidas,
+        nombre: request.payload.nombre,
+        pais: request.payload.pais,
+        telefono: request.payload.telefono,
+        contacto: request.payload.contacto,
+        email: request.payload.email,
+        direccion: request.payload.direccion
+      });
+      var result = await newProveedor.save();
+      return reply.response({ success: true, proveedor: result });
+    } catch (error) {
+      throw boom.badRequest();
+    }
   }
 }

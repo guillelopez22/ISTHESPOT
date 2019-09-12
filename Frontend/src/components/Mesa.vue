@@ -255,7 +255,7 @@ export default {
         this.$http
           .get("http://localhost:8000/mesas/searchbyname/" + this.mesa.nombre)
           .then(response => {
-            if (!response.body.length == 0) {
+            if (response.body.length == 0) {
               /*mirar si es el mismo nombre*/
               this.$http
                 .get(
@@ -263,14 +263,14 @@ export default {
                     this.mesa.numero
                 )
                 .then(response => {
-                  if (!response.body.length == 0) {
+                  if (response.body.length == 0) {
                     /*mirar si es el mismo numero*/
 
                     this.$http
                       .post("http://localhost:8000/mesas/create", this.mesa)
                       .then(response => {
                         this.loading = false;
-                        if (!response.body.success) {
+                        if (response.body.success) {
                           this.mesa = {};
                           sweetAlert(
                             "Creado con exito!",
@@ -420,7 +420,7 @@ export default {
                 .delete("http://localhost:8000/mesas/delete/" + idMesa)
                 .then(response => {
                   this.loading = false;
-                  if (response.body.success) {
+                  if (!response.body.success) {
                     sweetAlert("Oops...", "Error al eliminar", "error");
                     _this.getMesa();
                   } else {

@@ -1,8 +1,6 @@
 var mongoose = require('mongoose');
 
 var ProveedorSchema = new mongoose.Schema({
-  idInsumo: [String],
-  idBebidas: [String],
   nombre : String,
   pais : String,
   telefono : String,

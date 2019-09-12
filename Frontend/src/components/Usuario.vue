@@ -289,7 +289,7 @@ export default {
           .post("http://localhost:8000/usuarios/create", this.usuario)
           .then(response => {
             this.loading = false;
-            if (!response.body.success) {
+            if (response.body.success) {
               this.usuario = {};
               sweetAlert(
                 "Creado con exito!",
@@ -343,6 +343,8 @@ export default {
               sweetAlert("Oops...", "Error al modificar", "error");
               this.usuario = {};
             } else {
+              this.usuario = {};
+              this.loading = false;
               this.getUsuario();
 
               sweetAlert(
@@ -390,8 +392,8 @@ export default {
                 _this.$http
                   .delete("http://localhost:8000/usuarios/delete/" + idUsuario)
                   .then(response => {
-                    this.loading = false;
-                    if (response.body.success) {
+                    _this.loading = false;
+                    if (!response.body.success) {
                       sweetAlert("Oops...", "Error al eliminar", "error");
                       _this.getUsuario();
                     } else {

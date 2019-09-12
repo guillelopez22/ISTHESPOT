@@ -893,7 +893,7 @@ export default {
           .post("http://localhost:8000/ordenes/create", this.orden)
           .then(response => {
             this.loading = false;
-            if (!response.body.success) {
+            if (response.body.success) {
               this.orden = {};
               sweetAlert(
                 "Creado con exito!",
@@ -1261,7 +1261,7 @@ export default {
                 .delete("http://localhost:8000/ordenes/delete/" + idOrden)
                 .then(response => {
                   _this.loading = false;
-                  if (response.body.success) {
+                  if (!response.body.success) {
                     sweetAlert("Oops...", "Error al eliminar", "error");
                     _this.getorden();
                   } else {
@@ -1270,10 +1270,12 @@ export default {
                       "Los cambios estan en la tabla",
                       "success"
                     );
+
+                    _this.loading = false;
                     _this.inicio = 0;
                     _this.final = 5;
                     _this.currentPage = 1;
-                    //_this.getorden();
+                    _this.getorden();
                   }
                 });
               _this.$http
@@ -1317,7 +1319,6 @@ export default {
           }, 500);
         }
       );
-      this.loading = false;
     },
     getBebidas() {
       this.$http.get("http://localhost:8000/bebidas").then(response => {
