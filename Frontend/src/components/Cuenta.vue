@@ -2,137 +2,7 @@
   <div id="root">
     <h2>
       Cuentas
-      <a
-        class="btn-floating btn-small btn tooltipped -red"
-        data-position="top"
-        data-delay="50"
-        id="boton"
-        data-tooltip="Para modificar primero tienes que hacer click en  el boton de modificar en la tabla"
-      >
-        <i class="material-icons left">help</i>Update
-      </a>
     </h2>
-    <p>Pagina Actual: {{currentPage}}</p>
-    <button v-on:click="anterior()" class="waves-effect waves-teal btn-large">Anterior</button>
-    <button v-on:click="siguiente()" class="waves-effect waves-teal btn-large">Siguiente</button>
-    <br />
-    <table class="table centered">
-      <thead>
-        <tr>
-          <th>Mesero</th>
-          <th>Mesa</th>
-          <th>Estado</th>
-          <th>Total</th>
-          <th>Modificar</th>
-          <th>Borrar</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="cuenta in data" v-bind:key="cuenta">
-          <td>{{cuenta.idUsuario}}</td>
-          <td>{{cuenta.idMesa}}</td>
-          <td>{{cuenta.estado}}</td>
-          <td>{{cuenta.total}}</td>
-          <td>
-            <a
-              v-on:click="startToModifycuenta(cuenta)"
-              class="btn-floating btn-small waves-effect waves-green green"
-            >
-              <i class="material-icons">update</i>
-            </a>
-          </td>
-          <td>
-            <a
-              v-on:click="deletecuenta(cuenta._id)"
-              class="btn-floating btn-small waves-effect waves-red red"
-            >
-              <i class="material-icons">delete</i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br />
-    <ul id="tabs-swipe-demo" class="tabs">
-      <li class="tab col s3">
-        <a class="active" v-on:click="tabControl('test-swipe-1')" href="#test-swipe-1">Crear</a>
-      </li>
-      <li class="tab col s3">
-        <a v-on:click="tabControl('test-swipe-2')" href="#test-swipe-2">Modificar</a>
-      </li>
-    </ul>
-    <div class="row">
-      <div class="input-field col s6">
-        <input
-          placeholder=""
-          v-on:input="cuenta.idUsuario = $event.target.value"
-          type="text"
-          v-model="cuenta.idUsuario"
-          :disabled="loading"
-          id="Nombre"
-        />
-        <label for="Nombre">Mesero</label>
-      </div>
-
-      <div class="input-field col s6">
-        <input
-          placeholder=""
-          v-on:input="cuenta.idMesa = $event.target.value"
-          type="number"
-          v-model="cuenta.idMesa"
-          :disabled="loading"
-          id="Numero"
-        />
-        <label for="Numero">idMesa</label>
-      </div>
-
-        <div class="input-field col s6">
-        <input
-          placeholder=""
-          v-on:input="cuenta.estado = $event.target.value"
-          type="number"
-          v-model="cuenta.estado"
-          :disabled="loading"
-          id="Numero"
-        />
-        <label for="Numero">Estado</label>
-      </div>
-
-      <div class="input-field col s6">
-        <input
-          placeholder=""
-          v-on:input="cuenta.total = $event.target.value"
-          type="number"
-          v-model="cuenta.total"
-          :disabled="loading"
-          id="Numero"
-        />
-        <label for="Numero">Total</label>
-      </div>
-    </div>
-    <div id="test-swipe-1" class="col s12">
-      <a
-        class="waves-effect waves-teal btn-large"
-        v-on:click="createcuenta"
-        :disabled="loading"
-        id="boton"
-      >
-        <i class="material-icons left">create</i>Crear
-      </a>
-    </div>
-    <div id="test-swipe-2" class="col s12">
-      <div
-        class="card"
-      >Atención: Los cambios realizados no se guardan hasta que haga click en el botón de update.</div>
-      <a
-        class="waves-effect waves-teal btn-large"
-        v-on:click="modifycuenta"
-        :disabled="loading"
-        id="boton"
-      >
-        <i class="material-icons left">update</i>Update
-      </a>
-    </div>
   </div>
 </template>
 
@@ -158,18 +28,7 @@ export default {
     };
   },
   watch: {
-      /*
-    idcuenta: function(val) {
-      if (val != "N/A") {
-        this.nombreProv = "";
-      } else {
-        this.$http
-          .get("http://localhost:8000/orden/searchbyid/{_id}")
-          .then(response => {
-            this.nombreProv = response.body.orden.nombre;
-          });
-      }
-    }*/
+      
   },
   methods: {
     siguiente() {
