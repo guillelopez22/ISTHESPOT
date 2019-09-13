@@ -84,7 +84,7 @@
           type="text"
           v-model="orden.idMesa"
         >
-          <option v-for="m in mesas" v-bind:key="m" :value="m._id">{{m.nombre}}</option>
+          <option v-for="m in mesas" v-bind:key="m" :value="m._id">{{m.nombre + " [Mesa #" + m.numero + "]"}}</option>
         </select>
       </div>
 

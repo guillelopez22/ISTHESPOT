@@ -1,8 +1,28 @@
 <template>
   <div id="root">
-    <h2>
-      Cuentas
-    </h2>
+    <h2>Cuentas</h2>
+    <div class="row">
+      <div class="input-field col s6">
+        <label for>Seleccione la mesa</label>
+        <br />
+        <br />
+        <select
+          style="color: black"
+          class="browser-default"
+          :disabled="loading"
+          id="idMesa"
+          v-on:input="orden.idMesa = $event.target.value"
+          type="text"
+          v-model="orden.idMesa"
+        >
+          <option
+            v-for="m in mesas"
+            v-bind:key="m"
+            :value="m._id"
+          >{{m.nombre + " [Mesa #" + m.numero + "]"}}</option>
+        </select>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -16,7 +36,6 @@ export default {
       loading: false,
       idModificar: "",
       idcuenta: "N/A",
-      nombreProv: "",
       selectedTab: "test-swipe-1",
       orden: {},
       ordenes: [],
@@ -25,11 +44,12 @@ export default {
       final: 5,
       currentPage: 1,
       size: 1,
+      mesa: {},
+      mesas: [],
+      mesas2: [],
     };
   },
-  watch: {
-      
-  },
+  watch: {},
   methods: {
     siguiente() {
       if (this.currentPage < this.size) {
@@ -45,7 +65,10 @@ export default {
           this.inicio = this.inicio + 5;
           this.final = this.final + (this.cuentas.length % 5);
           this.data = this.cuentas.slice(this.inicio, this.final);
-        } else if (this.cuentas.length % 5 != 0 && this.currentPage < this.size) {
+        } else if (
+          this.cuentas.length % 5 != 0 &&
+          this.currentPage < this.size
+        ) {
           this.inicio = this.inicio + 5;
           this.final = this.final + 5;
           this.data = this.cuentas.slice(this.inicio, this.final);
@@ -116,7 +139,9 @@ export default {
         sweetAlert("Oops...", "Error al crear,esta vacio :(", "error");
       } else {
         this.$http
-          .get("http://localhost:8000/cuentas/searchbyname/" + this.cuenta.nombre)
+          .get(
+            "http://localhost:8000/cuentas/searchbyname/" + this.cuenta.nombre
+          )
           .then(response => {
             if (!response.body.length == 0) {
               /*mirar si es el mismo nombre*/
@@ -171,27 +196,31 @@ export default {
           });
 
         setTimeout(function() {
-        var i;
-        for (i = 0; i < _this.empleados.length; i++) {
-          _this.cuentaxempleado = {};
-          _this.cuentaxempleado.idcuenta = _this.cuentas[_this.cuentas.length - 1]._id;
-          _this.cuentaxempleado.idEmpleado = _this.empleados[i];
-          
-          console.log(_this.productoxinsumo);
-          _this.$http
-            .post("http://localhost:8000/cuentasempleados/create", _this.cuentaxempleado)
-            .then(response => {
-              _this.loading = false;
-              if (response.body.success) {
-                _this.cuentaxempleado = {};
-                console.log("agregó");
-              } else {
-                console.log("tronó");
-              }
-            });
-        }
-        _this.empleados = [];
-      }, 1000);
+          var i;
+          for (i = 0; i < _this.empleados.length; i++) {
+            _this.cuentaxempleado = {};
+            _this.cuentaxempleado.idcuenta =
+              _this.cuentas[_this.cuentas.length - 1]._id;
+            _this.cuentaxempleado.idEmpleado = _this.empleados[i];
+
+            console.log(_this.productoxinsumo);
+            _this.$http
+              .post(
+                "http://localhost:8000/cuentasempleados/create",
+                _this.cuentaxempleado
+              )
+              .then(response => {
+                _this.loading = false;
+                if (response.body.success) {
+                  _this.cuentaxempleado = {};
+                  console.log("agregó");
+                } else {
+                  console.log("tronó");
+                }
+              });
+          }
+          _this.empleados = [];
+        }, 1000);
       }
     },
     tabControl(idTab) {
@@ -257,64 +286,71 @@ export default {
         if (element.idcuenta == idcuenta) {
           entrar = false;
           sweetAlert(
-          "Eliminación Bloqueada",
-          "La cuenta se encuentra relacionada con Ordenes",
-          "warning"
-        );
+            "Eliminación Bloqueada",
+            "La cuenta se encuentra relacionada con Ordenes",
+            "warning"
+          );
         }
       }
       if (entrar) {
-      sweetAlert(
-        {
-          title: "¿Estás seguro?",
-          text: "No podrás revertir los cambios",
-          type: "warning",
-          showCancelButton: true,
-          confirmButtonText: "Eliminar",
-          cancelButtonText: "Cancelar",
-          showCloseButton: true,
-          showLoaderOnConfirm: true
-        },
-        function(inputValue) {
-          setTimeout(function() {
-            if (inputValue) {
-              _this.loading = true;
-              _this.$http
-                .delete("http://localhost:8000/cuentas/delete/" + idcuenta)
-                .then(response => {
-                  this.loading = false;
-                  if (response.body.success) {
-                    sweetAlert("Oops...", "Error al eliminar", "error");
-                    _this.getcuenta();
-                  } else {
-                    sweetAlert(
-                      "Deleted!",
-                      "Los cambios estan en la tabla",
-                      "success"
-                    );
-                    _this.inicio = 0;
-                    _this.final = 5;
-                    _this.currentPage = 1;
-                    _this.getcuenta();
-                  }
-                });
-              //****************************************************** */
-            } else {
-              sweetAlert("Cancelado", "Tus datos están a salvo", "info");
-            }
-          }, 500);
-        }
-      );
-       } 
+        sweetAlert(
+          {
+            title: "¿Estás seguro?",
+            text: "No podrás revertir los cambios",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+            showCloseButton: true,
+            showLoaderOnConfirm: true
+          },
+          function(inputValue) {
+            setTimeout(function() {
+              if (inputValue) {
+                _this.loading = true;
+                _this.$http
+                  .delete("http://localhost:8000/cuentas/delete/" + idcuenta)
+                  .then(response => {
+                    this.loading = false;
+                    if (response.body.success) {
+                      sweetAlert("Oops...", "Error al eliminar", "error");
+                      _this.getcuenta();
+                    } else {
+                      sweetAlert(
+                        "Deleted!",
+                        "Los cambios estan en la tabla",
+                        "success"
+                      );
+                      _this.inicio = 0;
+                      _this.final = 5;
+                      _this.currentPage = 1;
+                      _this.getcuenta();
+                    }
+                  });
+                //****************************************************** */
+              } else {
+                sweetAlert("Cancelado", "Tus datos están a salvo", "info");
+              }
+            }, 500);
+          }
+        );
+      }
     },
     getOrdenes() {
       this.$http.get("http://localhost:8000/ordenes").then(response => {
         console.log(response);
         this.ordenes = response.body;
       });
+    },
+    getMesas() {
+      this.$http.get("http://localhost:8000/mesas").then(response => {
+        console.log(response);
+        this.mesas = response.body;
+      });
     }
   },
   beforeMount() {
+    this.getMesas();
     this.getcuenta();
     this.getOrdenes();
   },
