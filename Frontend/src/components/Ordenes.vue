@@ -20,6 +20,7 @@
     <table class="table centered">
       <thead>
         <tr>
+          <th>Numero</th>
           <th>Empleado</th>
           <th>Mesa</th>
           <th>Bebidas</th>
@@ -31,7 +32,8 @@
       </thead>
       <tbody>
         <tr v-for="(orden, index) in data">
-          <td>{{"" + empleados2[index]}}</td>
+          <td>{{orden.numero}}</td>
+          <td>{{empleados2[index]}}</td>
           <td>{{"Mesa #" + mesas2[index]}}</td>
           <td>
             <button v-on:click="getBeb(orden)" class="waves-effect waves-teal btn">Mostrar</button>
@@ -84,7 +86,11 @@
           type="text"
           v-model="orden.idMesa"
         >
-          <option v-for="m in mesas" v-bind:key="m" :value="m._id">{{m.nombre + " [Mesa #" + m.numero + "]"}}</option>
+          <option
+            v-for="m in mesas"
+            v-bind:key="m"
+            :value="m._id"
+          >{{m.nombre + " [Mesa #" + m.numero + "]"}}</option>
         </select>
       </div>
 
@@ -414,7 +420,8 @@ export default {
       pro: {},
       productos_n: [],
       cantidad_producto: 1,
-      cantidad_productos: []
+      cantidad_productos: [],
+      contador: 1
     };
   },
   watch: {
@@ -797,28 +804,41 @@ export default {
       let _this = this;
       this.$http.get("http://localhost:8000/ordenes").then(response => {
         this.ordenes = response.body;
-        response.body.map(function(value, key) {
+        var i;
+        for (i = 0; i < this.ordenes.length; i++) {
           var j;
           var p1 = _this.mesas;
           for (j = 0; j < p1.length; j++) {
-            if (value.idMesa == p1[j]._id) {
+            if (this.ordenes[i].idMesa == p1[j]._id) {
               _this.mesas2.push(p1[j].numero);
             }
           }
           var k;
           var p2 = _this.s_empleados;
           for (k = 0; k < p2.length; k++) {
-            if (value.idEmpleado == p2[k]._id) {
+            if (this.ordenes[i].idEmpleado == p2[k]._id) {
               _this.empleados2.push(p2[k].nombre);
             }
           }
-        });
+        }        
         this.data = this.ordenes.slice(this.inicio, this.final);
         if (this.ordenes.length % 5 == 0) {
           this.size = this.ordenes.length / 5;
         } else {
           this.size = parseInt(this.ordenes.length / 5) + 1;
         }
+        var cont = 1;
+        var i;
+        for (i = 0; i < this.ordenes.length; i++) {
+          cont++;
+        }
+        if (this.ordenes.length > 0) {
+          if (this.ordenes[this.ordenes.length - 1].numero >= cont) {
+            cont = this.ordenes[this.ordenes.length - 1].numero + 1;
+          }
+        }
+        this.contador = cont;
+        console.log("CONTADOR " + cont);
       });
     },
     newBebida(bebida_id) {
@@ -870,12 +890,14 @@ export default {
           "error"
         );
       } else {
+        this.orden.numero = this.contador;
         this.$http
           .post("http://localhost:8000/ordenes/create", this.orden)
           .then(response => {
             this.loading = false;
             if (response.body.success) {
               this.orden = {};
+              this.contador = 1;
               sweetAlert(
                 "Creado con exito!",
                 "Los cambios estan en la tabla",
@@ -996,9 +1018,6 @@ export default {
       this.selectedTab = "test-swipe-2";
       this.idModificar = orden._id;
       this.orden = orden;
-      //this.orden.idBebidas = orden.idBebidas;
-      //this.orden.idProductos = orden.idProductos;
-      //this.orden.idCombos = orden.idCombos;
       this.orden.idMesa = orden.idMesa;
       this.idEmpleado = orden.idEmpleado;
 
