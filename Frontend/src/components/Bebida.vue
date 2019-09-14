@@ -299,16 +299,16 @@ export default {
       let _this = this;
       this.$http.get("http://localhost:8000/bebidas").then(response => {
         this.bebidas = response.body;
-        //await(1);
-        response.body.map(function(value, key) {
+        var j;
+        for (j = 0; j < this.bebidas.length; j++) {
           var i;
           var p = _this.proveedores;
           for (i = 0; i < p.length; i++) {
-            if (value.idProveedor == p[i]._id) {
+            if (this.bebidas[j].idProveedor == p[i]._id) {
               _this.proveedores2.push(p[i].nombre);
             }
           }
-        });
+        }
         this.data = this.bebidas.slice(this.inicio, this.final);
         if (this.bebidas.length % 5 == 0) {
           this.size = this.bebidas.length / 5;
