@@ -141,7 +141,7 @@
     name: 'app',
     data() {
       return {
-        scope: ""
+        scope: " "
       }
     },
     methods:{
