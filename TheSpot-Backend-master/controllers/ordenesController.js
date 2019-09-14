@@ -76,9 +76,7 @@ exports.createOrden = {
       var newOrden = new orden({
         idMesa: request.payload.idMesa,
         idEmpleado: request.payload.idEmpleado,
-        idBebidas: request.payload.idBebidas,
-        idProductos: request.payload.idProductos,
-        idCombos: request.payload.idCombos
+        numero: request.payload.numero
       });
       var result = await newOrden.save();
       return reply.response({ success: true, orden: result });
