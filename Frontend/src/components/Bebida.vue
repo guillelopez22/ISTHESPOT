@@ -146,10 +146,18 @@
           <label for="imagen">Imagen</label>
         </div>
         <div class="input-field col s5">
-          <button
-            v-on:click="cargarImagen()"
-            class="waves-effect waves-teal btn-large"
-          >Mostrar Imagen</button>
+          <div>
+            <img
+              v-bind:src="this.imagen"
+              style="width:422px;height:300px"
+              v-if="this.imagen != null && this.imagen != ''"
+            />
+            <img
+              src="https://scontent-dfw5-1.xx.fbcdn.net/v/t31.0-8/17359156_523659881137961_4154898065966557036_o.jpg?_nc_cat=105&_nc_oc=AQkx3wfFw7b3SSTqzE5L73seMDFyxTFP28Q_3zeahDD0hIsE1FhpeAVX-Nr7PlBiSw8&_nc_ht=scontent-dfw5-1.xx&oh=d80e0d3a3c81fe1ded92e449039a8a29&oe=5E0B2333"
+              style="width:300px;height:300px"
+              v-if="this.imagen == ''"
+            />
+          </div>
         </div>
       </div>
 
@@ -422,10 +430,10 @@ export default {
         if (element.idBebida == idBebida) {
           entrar = false;
           sweetAlert(
-          "Eliminación Bloqueada",
-          "La bebida se encuentra relacionada con Ordenes",
-          "warning"
-        );
+            "Eliminación Bloqueada",
+            "La bebida se encuentra relacionada con Ordenes",
+            "warning"
+          );
         }
       }
       for (let i = 0; i < _this.combosbebidas.length; i++) {
@@ -433,10 +441,10 @@ export default {
         if (element.idBebida == idBebida) {
           entrar = false;
           sweetAlert(
-          "Eliminación Bloqueada",
-          "La bebida se encuentra relacionada con Combos",
-          "warning"
-        );
+            "Eliminación Bloqueada",
+            "La bebida se encuentra relacionada con Combos",
+            "warning"
+          );
         }
       }
       if (entrar) {
@@ -483,7 +491,7 @@ export default {
             }, 500);
           }
         );
-      } 
+      }
     },
     getProveedores() {
       this.$http.get("http://localhost:8000/proveedores").then(response => {
@@ -643,7 +651,7 @@ h4 {
 }
 
 .tabs {
-  background-color: #A93226 !important;
+  background-color: #a93226 !important;
   color: #4c1b1b !important;
   font-family: "Spectral", serif;
   font-weight: bold;
@@ -689,7 +697,7 @@ h6 {
   font-size: 17px;
   font-family: "Roboto", sans-serif;
   font-weight: normal;
-  color:rgb(158, 158, 158)
+  color: rgb(158, 158, 158);
 }
 .input-field input:focus + label {
   color: #5994aa !important;
