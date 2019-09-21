@@ -62,6 +62,12 @@
         <i class="material-icons left">help</i>Update
       </a>
     </h3>
+    <div class="row">
+      <div class="col sm4">
+        <button v-on:click="SelectAll()" class="waves-effect waves-teal btn-large pulse">Adios</button>
+      </div>
+    </div>
+
     <!-- productos -->
     <div class="row">
       <div class="col s4">
@@ -233,76 +239,88 @@ export default {
   methods: {
     pagar() {
       let _this = this;
-      var i,j;
+      var i, j;
       for (i = 0; i < this.articulos.length; i++) {
         if (this.articulos[i].tipo === "Bebida") {
           var b = {};
           var cant;
           b.idOrden = this.articulos[i].idOrden;
           b.idBebida = this.articulos[i].idBebida;
-          for(j = 0; j < this.bebidas_n.length; j++){
-            if(this.bebidas_n[j]._id == this.articulos[i]._id){
+          for (j = 0; j < this.bebidas_n.length; j++) {
+            if (this.bebidas_n[j]._id == this.articulos[i]._id) {
               cant = this.bebidas_n[j].cantidad;
             }
           }
           b.cantidad_bebida = cant;
 
-          this.$http.put("http://localhost:8000/ordenesbebidas/update/"+this.articulos[i]._id, b)
-          .then(response => {
-            if(response.body.success){
-              console.log("modificó en bebidas");
-            }else{
-              console.log("tronó en bebidas");
-            }
-          });
-
+          this.$http
+            .put(
+              "http://localhost:8000/ordenesbebidas/update/" +
+                this.articulos[i]._id,
+              b
+            )
+            .then(response => {
+              if (response.body.success) {
+                console.log("modificó en bebidas");
+              } else {
+                console.log("tronó en bebidas");
+              }
+            });
         } else if (this.articulos[i].tipo === "Producto") {
           var p = {};
           p.idOrden = this.articulos[i].idOrden;
           p.idProducto = this.articulos[i].idProducto;
           var cant;
-          for(j = 0; j < this.productos_n.length; j++){
-            if(this.productos_n[j]._id == this.articulos[i]._id){
+          for (j = 0; j < this.productos_n.length; j++) {
+            if (this.productos_n[j]._id == this.articulos[i]._id) {
               cant = this.productos_n[j].cantidad;
             }
           }
           p.cantidad_producto = cant;
 
-          this.$http.put("http://localhost:8000/productosordenes/update/"+this.articulos[i]._id, p)
-          .then(response => {
-            if(response.body.success){
-              console.log("modificó en productos");
-            }else{
-              console.log("tronó en productos");
-            }
-          });
-
+          this.$http
+            .put(
+              "http://localhost:8000/productosordenes/update/" +
+                this.articulos[i]._id,
+              p
+            )
+            .then(response => {
+              if (response.body.success) {
+                console.log("modificó en productos");
+              } else {
+                console.log("tronó en productos");
+              }
+            });
         } else if (this.articulos[i].tipo === "Combo") {
           var c = {};
           c.idOrden = this.articulos[i].idOrden;
           c.idCombo = this.articulos[i].idCombo;
           var cant;
-          for(j = 0; j < this.combos_n.length; j++){
-            if(this.combos_n[j]._id == this.articulos[i]._id){
+          for (j = 0; j < this.combos_n.length; j++) {
+            if (this.combos_n[j]._id == this.articulos[i]._id) {
               cant = this.combos_n[j].cantidad;
             }
           }
           c.cantidad_combo = cant;
 
-          this.$http.put("http://localhost:8000/ordenescombos/update/"+this.articulos[i]._id, c)
-          .then(response => {
-            if(response.body.success){
-              console.log("modificó en combos");
-            }else{
-              console.log("tronó en combos");
-            }
-          });
-        } 
-        setTimeout(function (){
+          this.$http
+            .put(
+              "http://localhost:8000/ordenescombos/update/" +
+                this.articulos[i]._id,
+              c
+            )
+            .then(response => {
+              if (response.body.success) {
+                console.log("modificó en combos");
+              } else {
+                console.log("tronó en combos");
+              }
+            });
+        }
+        setTimeout(function() {
           _this.articulos = [];
-        },1000);
+        }, 1000);
       }
-
     },
     cargarDatos() {
       console.log("A ver que pedo: " + this.mesa);
@@ -557,6 +575,100 @@ export default {
     },
     revisarcuenta(idcuenta) {
       if ((this.cuenta.idOrden = this.idcuenta && this.cuenta.i)) {
+      }
+    },
+    SelectAll() {
+      var i;
+      var j;
+      for (i = 0; i < this.productos_n.length; i++) {
+        var t = {};
+        t._id = this.productos_n[i]._id;
+        t.nombre = this.productos_n[i].nombre;
+        t.tipo = this.productos_n[i].tipo;
+        t.precio = this.productos_n[i].precio;
+        t.cantidad = this.productos_n[i].cantidad;
+        t.tipobeb = this.productos_n[i].tipobeb;
+        t.subtotal = this.productos_n[i].precio * this.productos_n[i].cantidad;
+        t.index = this.articulos.length;
+        var exist = false;
+        var index2 = -1;
+        for (j = 0; j < this.articulos.length; j++) {
+          if (this.productos_n[i]._id == this.articulos[j]._id) {
+            exist = true;
+            index2 = this.articulos[j].index;
+          }
+        }
+        if (exist) {
+          this.articulos[index2].cantidad =
+            parseInt(this.articulos[index2].cantidad) +
+            parseInt(this.productos_n[i].cantidad);
+          this.articulos[index2].subtotal =
+            parseInt(this.articulos[index2].precio) *
+            parseInt(this.articulos[index2].cantidad);
+        } else {
+          this.articulos.push(t);
+        }
+        this.productos_n[i].cantidad = 0;
+      }
+      for (i = 0; i < this.bebidas_n.length; i++) {
+        var t = {};
+        t._id = this.bebidas_n[i]._id;
+        t.nombre = this.bebidas_n[i].nombre;
+        t.tipo = this.bebidas_n[i].tipo;
+        t.precio = this.bebidas_n[i].precio;
+        t.cantidad = this.bebidas_n[i].cantidad;
+        t.tipobeb = this.bebidas_n[i].tipobeb;
+        t.subtotal = this.bebidas_n[i].precio * this.bebidas_n[i].cantidad;
+        t.index = this.articulos.length;
+        var exist = false;
+        var index2 = -1;
+        for (j = 0; j < this.articulos.length; j++) {
+          if (this.bebidas_n[i]._id == this.articulos[j]._id) {
+            exist = true;
+            index2 = this.articulos[j].index;
+          }
+        }
+        if (exist) {
+          this.articulos[index2].cantidad =
+            parseInt(this.articulos[index2].cantidad) +
+            parseInt(this.bebidas_n[i].cantidad);
+          this.articulos[index2].subtotal =
+            parseInt(this.articulos[index2].precio) *
+            parseInt(this.articulos[index2].cantidad);
+        } else {
+          this.articulos.push(t);
+        }
+        this.bebidas_n[i].cantidad = 0;
+      }
+      for (i = 0; i < this.combos_n.length; i++) {
+        var t = {};
+        t._id = this.combos_n[i]._id;
+        t.nombre = this.combos_n[i].nombre;
+        t.tipo = this.combos_n[i].tipo;
+        t.precio = this.combos_n[i].precio;
+        t.cantidad = this.combos_n[i].cantidad;
+        t.tipobeb = this.combos_n[i].tipobeb;
+        t.subtotal = this.combos_n[i].precio * this.combos_n[i].cantidad;
+        t.index = this.articulos.length;
+        var exist = false;
+        var index2 = -1;
+        for (j = 0; j < this.articulos.length; j++) {
+          if (this.combos_n[i]._id == this.articulos[j]._id) {
+            exist = true;
+            index2 = this.articulos[j].index;
+          }
+        }
+        if (exist) {
+          this.articulos[index2].cantidad =
+            parseInt(this.articulos[index2].cantidad) +
+            parseInt(this.combos_n[i].cantidad);
+          this.articulos[index2].subtotal =
+            parseInt(this.articulos[index2].precio) *
+            parseInt(this.articulos[index2].cantidad);
+        } else {
+          this.articulos.push(t);
+        }
+        this.combos_n[i].cantidad = 0;
       }
     },
     newProveedor(orden_id) {
