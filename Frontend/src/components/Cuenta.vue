@@ -1,6 +1,6 @@
 <template>
   <div id="root">
-    <h2>Cuentas</h2>
+    <h1>Cuentas</h1>
     <div class="row">
       <div class="input-field col s6">
         <label for>Seleccione la mesa</label>
@@ -24,16 +24,17 @@
         </select>
       </div>
       <div class="col s6">
+        <p class="mensaje">{{this.mensaje}}</p>
         <table class="table2">
           <thead>
             <tr>
-              <th>Número</th>
-              <th>Mostrar</th>
+              <th>Orden</th>
+              <th>Cargar Datos</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="o in ordenes" v-bind:key="o">
-              <td>{{o.numero}}</td>
+            <tr v-for="o in ordenes2" v-bind:key="o">
+              <td>{{"Orden #" + o.numero}}</td>
               <td>
                 <a
                   v-on:click="mostrarDatos(o._id)"
@@ -47,23 +48,40 @@
         </table>
       </div>
     </div>
+    <br />
+    <br />
+    <h3>
+      Datos de la Orden
+      <a
+        class="btn-floating btn-small btn tooltipped -red"
+        data-position="top"
+        data-delay="50"
+        id="boton"
+        data-tooltip="Para agregar a la cuenta un articulo debe apretar el boton de AGREGAR"
+      >
+        <i class="material-icons left">help</i>Update
+      </a>
+    </h3>
     <!-- productos -->
     <div class="row">
-      <div class="col s6">
+      <div class="col s4">
         <table class="table2">
           <thead>
             <tr>
-              <th>Productos</th>
+              <th>Producto</th>
               <th>Cantidad</th>
-              <th>Botón</th>
+              <th>Agregar</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="p in productos_n" v-bind:key="p">
               <td>{{p.nombre}}</td>
-              <td>{{p.cantidad_producto}}</td>
+              <td>{{p.cantidad}}</td>
               <td>
-                <a v-on:click="a()" class="btn-floating btn-small waves-effect waves-red red">
+                <a
+                  v-on:click="Agregar_Cuenta(p)"
+                  class="btn-floating btn-small waves-effect waves-red red"
+                >
                   <i class="material-icons">info_outline</i>
                 </a>
               </td>
@@ -71,24 +89,25 @@
           </tbody>
         </table>
       </div>
-    </div>
-    <!-- Bebidas -->
-    <div class="row">
-      <div class="col s6">
+      <!-- Bebidas -->
+      <div class="col s4">
         <table class="table2">
           <thead>
             <tr>
-              <th>Bebidas</th>
+              <th>Bebida</th>
               <th>Cantidad</th>
-              <th>Botón</th>
+              <th>Agregar</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="b in bebidas_n" v-bind:key="b">
               <td>{{b.nombre}}</td>
-              <td>{{b.cantidad_bebida}}</td>
+              <td>{{b.cantidad}}</td>
               <td>
-                <a v-on:click="a()" class="btn-floating btn-small waves-effect waves-red red">
+                <a
+                  v-on:click="Agregar_Cuenta(b)"
+                  class="btn-floating btn-small waves-effect waves-red red"
+                >
                   <i class="material-icons">info_outline</i>
                 </a>
               </td>
@@ -96,24 +115,25 @@
           </tbody>
         </table>
       </div>
-    </div>
-    <!-- productos -->
-    <div class="row">
-      <div class="col s6">
+      <!-- productos -->
+      <div class="col s4">
         <table class="table2">
           <thead>
             <tr>
-              <th>Combos</th>
+              <th>Combo</th>
               <th>Cantidad</th>
-              <th>Botón</th>
+              <th>Agregar</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="c in combos_n" v-bind:key="c">
               <td>{{c.nombre}}</td>
-              <td>{{c.cantidad_combo}}</td>
+              <td>{{c.cantidad}}</td>
               <td>
-                <a v-on:click="a()" class="btn-floating btn-small waves-effect waves-red red">
+                <a
+                  v-on:click="Agregar_Cuenta(c)"
+                  class="btn-floating btn-small waves-effect waves-red red"
+                >
                   <i class="material-icons">info_outline</i>
                 </a>
               </td>
@@ -122,6 +142,40 @@
         </table>
       </div>
     </div>
+    <br />
+    <br />
+    <h3>Contenido de la Cuenta</h3>
+    <div class="col s4">
+      <table class="table2">
+        <thead>
+          <tr>
+            <th>Nombre del Articulo</th>
+            <th>Tipo</th>
+            <th>Precio c/u</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th>Quitar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="a in articulos" v-bind:key="a">
+            <td>{{a.nombre}}</td>
+            <td>{{a.tipo}}</td>
+            <td>{{a.precio}}</td>
+            <td>{{a.cantidad}}</td>
+            <td>{{a.subtotal}}</td>
+            <td>
+              <a v-on:click="Quitar(a)" class="btn-floating btn-small waves-effect waves-red red">
+                <i class="material-icons">info_outline</i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br />
+    <br />
+    <button v-on:click="pagar()" class="waves-effect waves-teal btn-large pulse">Realizar Pago</button>
   </div>
 </template>
 
@@ -138,6 +192,7 @@ export default {
       selectedTab: "test-swipe-1",
       orden: {},
       ordenes: [],
+      ordenes2: [],
       data: [],
       inicio: 0,
       final: 5,
@@ -159,78 +214,213 @@ export default {
       combos_n: [],
       bebidas_n: [],
       //
+      prod_ids: [],
+      beb_ids: [],
+      comb_ids: [],
+      //
+      ords_bebs: [],
+      ords_combs: [],
+      ords_prods: [],
+      //
       cant_b: [],
       cant_p: [],
-      cant_c: []
+      cant_c: [],
+      mensaje: "¡Debe seleccionar una mesa!",
+      articulos: []
     };
   },
   watch: {},
   methods: {
-    siguiente() {
-      if (this.currentPage < this.size) {
-        this.currentPage = this.currentPage + 1;
-        if (this.cuentas.length % 5 == 0) {
-          this.inicio = this.inicio + 5;
-          this.final = this.final + 5;
-          this.data = this.cuentas.slice(this.inicio, this.final);
-        } else if (
-          this.cuentas.length % 5 != 0 &&
-          this.currentPage == this.size
-        ) {
-          this.inicio = this.inicio + 5;
-          this.final = this.final + (this.cuentas.length % 5);
-          this.data = this.cuentas.slice(this.inicio, this.final);
-        } else if (
-          this.cuentas.length % 5 != 0 &&
-          this.currentPage < this.size
-        ) {
-          this.inicio = this.inicio + 5;
-          this.final = this.final + 5;
-          this.data = this.cuentas.slice(this.inicio, this.final);
-        }
-      }
-    },
-    anterior() {
-      if (this.currentPage > 1) {
-        this.currentPage = this.currentPage - 1;
-        if (this.currentPage < this.size) {
-          if (this.cuentas.length % 5 == 0) {
-            this.inicio = this.inicio - 5;
-            this.final = this.final - 5;
-            this.data = this.cuentas.slice(this.inicio, this.final);
-          } else if (
-            this.cuentas.length % 5 != 0 &&
-            this.currentPage == this.size - 1
-          ) {
-            this.inicio = this.inicio - 5;
-            this.final = this.final - (this.cuentas.length % 5);
-            this.data = this.cuentas.slice(this.inicio, this.final);
-          } else if (
-            this.cuentas.length % 5 != 0 &&
-            this.currentPage < this.size
-          ) {
-            this.inicio = this.inicio - 5;
-            this.final = this.final - 5;
-            this.data = this.cuentas.slice(this.inicio, this.final);
+    pagar() {
+      let _this = this;
+      var i,j;
+      for (i = 0; i < this.articulos.length; i++) {
+        if (this.articulos[i].tipo === "Bebida") {
+          var b = {};
+          var cant;
+          b.idOrden = this.articulos[i].idOrden;
+          b.idBebida = this.articulos[i].idBebida;
+          for(j = 0; j < this.bebidas_n.length; j++){
+            if(this.bebidas_n[j]._id == this.articulos[i]._id){
+              cant = this.bebidas_n[j].cantidad;
+            }
           }
-        }
+          b.cantidad_bebida = cant;
+
+          this.$http.put("http://localhost:8000/ordenesbebidas/update/"+this.articulos[i]._id, b)
+          .then(response => {
+            if(response.body.success){
+              console.log("modificó en bebidas");
+            }else{
+              console.log("tronó en bebidas");
+            }
+          });
+
+        } else if (this.articulos[i].tipo === "Producto") {
+          var p = {};
+          p.idOrden = this.articulos[i].idOrden;
+          p.idProducto = this.articulos[i].idProducto;
+          var cant;
+          for(j = 0; j < this.productos_n.length; j++){
+            if(this.productos_n[j]._id == this.articulos[i]._id){
+              cant = this.productos_n[j].cantidad;
+            }
+          }
+          p.cantidad_producto = cant;
+
+          this.$http.put("http://localhost:8000/productosordenes/update/"+this.articulos[i]._id, p)
+          .then(response => {
+            if(response.body.success){
+              console.log("modificó en productos");
+            }else{
+              console.log("tronó en productos");
+            }
+          });
+
+        } else if (this.articulos[i].tipo === "Combo") {
+          var c = {};
+          c.idOrden = this.articulos[i].idOrden;
+          c.idCombo = this.articulos[i].idCombo;
+          var cant;
+          for(j = 0; j < this.combos_n.length; j++){
+            if(this.combos_n[j]._id == this.articulos[i]._id){
+              cant = this.combos_n[j].cantidad;
+            }
+          }
+          c.cantidad_combo = cant;
+
+          this.$http.put("http://localhost:8000/ordenescombos/update/"+this.articulos[i]._id, c)
+          .then(response => {
+            if(response.body.success){
+              console.log("modificó en combos");
+            }else{
+              console.log("tronó en combos");
+            }
+          });
+        } 
+        setTimeout(function (){
+          _this.articulos = [];
+        },1000);
       }
+
     },
     cargarDatos() {
-      var ords;
-      this.$http.get("http://localhost:8000/ordenes").then(response => {
-        ords = response.body;
-        var i = 0;
-        var j = 0;
-        this.ordenes = [];
-        for (i = 0; i < ords.length; i++) {
-          if (ords[i].idMesa == this.mesa) {
-            this.ordenes.push(ords[i]);
+      console.log("A ver que pedo: " + this.mesa);
+      if (this.mesa != "") {
+        var ords;
+        this.$http.get("http://localhost:8000/ordenes").then(response => {
+          ords = response.body;
+          var i = 0;
+          var j = 0;
+          this.ordenes2 = [];
+          this.bebidas_n = [];
+          this.combos_n = [];
+          this.productos_n = [];
+          for (i = 0; i < ords.length; i++) {
+            if (ords[i].idMesa == this.mesa) {
+              this.ordenes2.push(ords[i]);
+            }
+          }
+        });
+        this.mensaje = "Ordenes";
+      } else {
+        this.ordenes2 = [];
+        this.bebidas_n = [];
+        this.combos_n = [];
+        this.productos_n = [];
+      }
+    },
+    Agregar_Cuenta(art) {
+      var texto =
+        "Nombre: " +
+        art.nombre +
+        "\nTipo: " +
+        art.tipo +
+        "\nCantidad Disponible: " +
+        art.cantidad;
+      let _this = this;
+      if (art.cantidad != 0) {
+        swal(
+          {
+            title: "Cantidad del Artículo",
+            text: texto,
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            animation: "slide-from-top",
+            inputPlaceholder: "Ingrese la cantidad a pagar..."
+          },
+          function(inputValue) {
+            if (inputValue === false) return false;
+            if (inputValue === "") {
+              swal.showInputError("Tienes que escrbir algo!");
+              return false;
+            }
+            if (!/^([0-9])*$/.test(inputValue)) {
+              swal.showInputError("No se aceptan letras!");
+              return false;
+            }
+            if (inputValue > art.cantidad) {
+              swal.showInputError("El numero ingresado supera la cantidad!");
+              return false;
+            }
+            if (inputValue > 0 && inputValue <= art.cantidad) {
+              var t = {};
+              t._id = art._id;
+              t.nombre = art.nombre;
+              t.tipo = art.tipo;
+              t.precio = art.precio;
+              t.cantidad = inputValue;
+              t.tipobeb = art.tipobeb;
+              t.subtotal = art.precio * inputValue;
+              t.index = _this.articulos.length;
+              _this.articulos.push(t);
+              art.cantidad -= inputValue;
+              swal(
+                "Articulo Agregado!",
+                "La cuenta ha sido actualizada",
+                "success"
+              );
+            }
+          }
+        );
+      } else {
+        swal(
+          "Articulo No Permitido",
+          "No quedan articulos disponibles",
+          "warning"
+        );
+      }
+    },
+    Quitar(art) {
+      let _this = this;
+      var i;
+      var id = art.tipo;
+      if (art.tipo == "Bebida") {
+        for (i = 0; i < this.bebidas_n.length; i++) {
+          if ((id = this.bebidas_n[i]._id)) {
+            this.bebidas_n[i].cantidad += parseInt(art.cantidad);
           }
         }
-      });
+      } else if (art.tipo == "Producto") {
+        for (i = 0; i < this.productos_n.length; i++) {
+          if ((id = this.productos_n[i]._id)) {
+            this.productos_n[i].cantidad += parseInt(art.cantidad);
+          }
+        }
+      } else {
+        for (i = 0; i < this.combos_n.length; i++) {
+          if ((id = this.combos_n[i]._id)) {
+            this.combos_n[i].cantidad += parseInt(art.cantidad);
+          }
+        }
+      }
+      var indice = art.index;
+      _this.articulos.splice(indice, 1);
+      for (i = indice; i < _this.articulos.length; i++) {
+        _this.articulos[i].index = _this.articulos[i].index - 1;
+      }
     },
-    a() {},
     mostrarDatos(idOrden) {
       console.log("idOrden: " + idOrden);
       let _this = this;
@@ -243,10 +433,14 @@ export default {
           this.productos_n = [];
           this.cant_p = [];
           this.productos_a = [];
+          this.prod_ids = [];
+          this.ords_prods = [];
           for (i = 0; i < prods.length; i++) {
             if (prods[i].idOrden == idOrden) {
               this.productos_a.push(prods[i].idProducto);
               this.cant_p.push(prods[i].cantidad_producto);
+              this.prod_ids.push(prods[i]._id);
+              this.ords_prods.push(prods[i].idOrden);
             }
           }
         });
@@ -257,10 +451,16 @@ export default {
         this.bebidas_n = [];
         this.cant_b = [];
         this.bebidas_a = [];
+        this.beb_ids = [];
+        this.beb_tipo = [];
+        this.ords_bebs = [];
         for (i = 0; i < bebs.length; i++) {
           if (bebs[i].idOrden == idOrden) {
             this.bebidas_a.push(bebs[i].idBebida);
             this.cant_b.push(bebs[i].cantidad_bebida);
+            this.beb_ids.push(bebs[i]._id);
+            this.beb_tipo.push(bebs[i].tipo);
+            this.ords_bebs.push(bebs[i].idOrden);
           }
         }
       });
@@ -271,19 +471,20 @@ export default {
         this.combos_n = [];
         this.cant_c = [];
         this.combos_a = [];
+        this.comb_ids = [];
+        this.ords_combs = [];
         var i;
         for (i = 0; i < combs.length; i++) {
           if (combs[i].idOrden == idOrden) {
             this.combos_a.push(combs[i].idCombo);
             this.cant_c.push(combs[i].cantidad_combo);
+            this.comb_ids.push(combs[i]._id);
+            this.ords_combs.push(combs[i].idOrden);
           }
         }
       });
 
       setTimeout(function() {
-        console.log("bebidas_a: " + _this.bebidas_a + " " + _this.cant_b);
-        console.log("productos_a: " + _this.productos_a + " "+ _this.cant_p);
-        console.log("combos_a: " + _this.combos_a + " " + _this.cant_c);
         var i;
         var j;
         console.log("tamaño 1: " + _this.bebidas_a.length);
@@ -291,13 +492,16 @@ export default {
 
         for (i = 0; i < _this.bebidas_a.length; i++) {
           for (j = 0; j < _this.bebidas.length; j++) {
-            console.log("PRIMER FOR: " + _this.bebidas_a[i] + " == " + _this.bebidas[j]._id);
             if (_this.bebidas_a[i] == _this.bebidas[j]._id) {
-              console.log("Entró 1");
               var t = {};
               t.idBebida = _this.bebidas_a[i];
+              t.idOrden = _this.ords_bebs[i];
               t.nombre = _this.bebidas[j].nombre;
-              t.cantidad_bebida = _this.cant_b[i];
+              t.cantidad = _this.cant_b[i];
+              t._id = _this.beb_ids[i];
+              t.tipo = "Bebida";
+              t.tipobeb = _this.bebidas[i].tipo;
+              t.precio = _this.bebidas[i].precio;
               _this.bebidas_n.push(t);
             }
           }
@@ -305,11 +509,14 @@ export default {
         for (i = 0; i < _this.productos_a.length; i++) {
           for (j = 0; j < _this.productos.length; j++) {
             if (_this.productos_a[i] == _this.productos[j]._id) {
-              console.log("Entró 2");
               var t = {};
               t.idProducto = _this.productos_a[i];
+              t.idOrden = _this.ords_prods[i];
               t.nombre = _this.productos[j].nombre;
-              t.cantidad_producto = _this.cant_p[i];
+              t.cantidad = _this.cant_p[i];
+              t._id = _this.prod_ids[i];
+              t.tipo = "Producto";
+              t.precio = _this.productos[i].precio;
               _this.productos_n.push(t);
             }
           }
@@ -317,16 +524,19 @@ export default {
         for (i = 0; i < _this.combos_a.length; i++) {
           for (j = 0; j < _this.combos.length; j++) {
             if (_this.combos_a[i] == _this.combos[j]._id) {
-              console.log("Entró 3");
               var t = {};
               t.idCombo = _this.combos_a[i];
+              t.idOrden = _this.ords_combs[i];
               t.nombre = _this.combos[j].nombre;
-              t.cantidad_combo = _this.cant_c[i];
+              t.cantidad = _this.cant_c[i];
+              t._id = _this.comb_ids[i];
+              t.tipo = "Combo";
+              t.precio = _this.combos[i].precio;
               _this.combos_n.push(t);
             }
           }
         }
-        
+        console.log("A ver los combos: " + _this.combos_n);
       }, 1000);
     },
     getcuenta() {
@@ -727,6 +937,11 @@ th {
 h4 {
   text-align: center;
   color: black !important;
+}
+.mensaje {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 107%;
 }
 #root {
   font-family: "Playfair Display";
