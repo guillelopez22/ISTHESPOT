@@ -336,7 +336,6 @@ export default {
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
-      //this.bebida.idProveedor = this.idProv;
       if (
         this.bebida.nombre == undefined ||
         this.bebida.tipo == undefined ||
@@ -462,7 +461,7 @@ export default {
           function(inputValue) {
             setTimeout(function() {
               if (inputValue) {
-                //****************************************************** */
+
                 _this.loading = false;
                 _this.$http
                   .delete("http://localhost:8000/bebidas/delete/" + idBebida)
@@ -484,7 +483,7 @@ export default {
                       _this.getBebida();
                     }
                   });
-                //****************************************************** */
+
               } else {
                 sweetAlert("Cancelado", "Tus datos están a salvo", "info");
               }

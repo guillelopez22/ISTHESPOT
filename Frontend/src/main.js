@@ -1,6 +1,4 @@
-// The following line loads the standalone build of Vue instead of the runtime-only build,
-// so you don't have to do: import Vue from 'vue/dist/vue'
-// This is done with the browser options. For the config, see package.json
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
@@ -19,8 +17,7 @@ import Personal from './components/Personal.vue'
 import Producto from './components/Producto.vue'
 import Promocion from './components/Promocion.vue'
 import Proveedor from './components/Proveedor.vue'
-//import ProductoElaboradoDetallado from './components/ProductoElaboradoDetallado.vue'
-//import ProductoElaborado from './components/ProductoElaborado.vue'
+
 import Usuario from './components/Usuario.vue'
 import MesaMesero from './components/MesaMesero.vue'
 import Gerente from './components/Gerente.vue'
@@ -28,12 +25,10 @@ import Mesero from './components/Mesero.vue'
 import Cuenta from './components/Cuenta.vue'
 
 import VueResource from 'vue-resource'
-//import VueSweetalert2 from 'vue-sweetalert2';
-//Vue.use(VueSweetalert2);
 
 Vue.use(VueResource);
 Vue.use(VueRouter);
-// Vue.http.options.credentials = true;
+
 
 const router = new VueRouter({
   routes: [
@@ -175,7 +170,7 @@ const router = new VueRouter({
     }
 
   ],
-  mode: 'history'
+ 
 })
 
 new Vue({ // eslint-disable-line no-new

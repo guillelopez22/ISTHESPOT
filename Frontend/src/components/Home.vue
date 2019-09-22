@@ -77,7 +77,7 @@
           Con el fin de lograr la preferencia de nuestros usuarios.
       </div>
     </div>
-    <!-- |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||-->
+   
     <div class="card-panel -blue" id="homeCard"> </div>
     <div class="bg">
       <div class="transbox">
@@ -231,7 +231,7 @@ export default {
   #descripcionCont {
     font-family: 'Roboto', sans-serif;
     font-size: 17px;
-  }
+  } 
 
   #contenedor-secundario {
     font-family: 'Oswald', sans-serif;

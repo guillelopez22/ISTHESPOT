@@ -3,59 +3,52 @@
     <nav id="elementos" style="background-color: black; position: fixed; top: 0; width: 100%; z-index: 99;">
       <div class="nav-wrapper">
         <a class="brand-logo z-depth-5"  ><img src="../imgs/the_spot.png" class="materialboxed" width="210" height="60" alt="Logo"></a>
+       
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <template v-if="scope === 'cliente'">
+           
+          <template v-if="scope === 'Cliente'">
+            <li id=bienvenido>Bienvenido !!! {{nombre}}</li>
             <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
             <li><router-link to="/menu"><a style="color: white">Menu</a></router-link></li>
+            <a class="waves-effect waves-light btn-small red" v-on:click="logout">Log Out</a>
           </template>
           <template v-if="scope === ''">
             <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
             <li><router-link to="/menu"><a style="color: white">Menu</a></router-link></li>
+            
           </template>
           <template v-if="scope === undefined">
             <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
             <li><router-link to="/menu"><a style="color: white">Menu</a></router-link></li>
-          </template>
+            
+          </template> 
           <template v-if="scope === 'Cajero'">
+            <li id=bienvenido>Bienvenido  !!! {{nombre}}</li>
             <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
             <li><router-link to="/gerente"><a style="color: white">Gerente</a></router-link></li>
             <li><router-link to="/menu"><a style="color: white">Menu</a></router-link></li>
+            <a class="waves-effect waves-light btn-small red" v-on:click="logout">Log Out</a>
           </template>
           <template v-if="scope === 'Administrador'">
+            <li id=bienvenido>Bienvenido  !!! {{nombre}}</li>
              <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
              <li><router-link to="/admin"><a style="color: white">Admin</a></router-link></li>
              <li><router-link to="/menu"><a style="color: white">Menu</a></router-link></li>
+             <a class="waves-effect waves-light btn-small red" v-on:click="logout">Log Out</a>
           </template>
           <template v-if="scope === 'Mesero'">
+            <li id=bienvenido>Bienvenido !!! {{nombre}}</li>
               <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
               <li><router-link to="/mesero"><a style="color: white">Mesero</a></router-link></li>
               <li><router-link to="/menu"><a style="color: white">Menu</a></router-link></li>
-          </template>
-          
-          <!--<li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
-          <li><router-link to="/admin"><a style="color: white">Admin</a></router-link></li>
-          <li><router-link to="/menu"><a style="color: white">Cliente</a></router-link></li>
-          <li><router-link to="/gerente"><a style="color: white">Gerente</a></router-link></li>
-          <li><router-link to="/mesero"><a style="color: white">Mesero</a></router-link></li>-->
-          <li>
-            <nav>
-              <div class="nav-wrapper -red" id="busqueda">
-                <form>
-                  <div class="input-field">
-                    <input id="search" type="search" required>
-                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                    <i class="material-icons text-darken-4">close</i>
-                  </div>
-                </form>
-              </div>
-            </nav>
-          </li>
+              <a class="waves-effect waves-light btn-small red" v-on:click="logout">Log Out</a>
+          </template> 
         </ul>
       </div>
     </nav>
     <router-view></router-view>
     <div class="fixed-action-btn horizontal">
-      <router-link to="/login">
+      <router-link v-if="scope === '' || scope === undefined" to="/login">
         <a id="menu" class="waves-effect waves-light btn btn-floating btn-large pulse -red" ><i class="material-icons">perm_identity</i></a>
       </router-link>
       <ul>
@@ -141,14 +134,19 @@
     name: 'app',
     data() {
       return {
-        scope: ""
+        scope: "",
+        nombre:""
       }
     },
     methods:{
-      // $('.tap-target').tapTarget('open'),
-      // $('.tap-target').tapTarget('close')
+      logout(){
+        window.localStorage.clear();
+        window.location.replace("/");
+        console.log("se ha borrado el cache del usuario");
+      },
       getScope(){
         this.scope = JSON.parse(localStorage.getItem('usuario')).scope;
+        this.nombre = JSON.parse(localStorage.getItem('usuario')).nombre;
         console.log("EL SCOPE ES: "+ this.scope);
       },
     },
@@ -202,11 +200,22 @@
     background-color: #262626;
     color: #F4F0EA;
   }
+  #bienvenido{
+    color:white;
+  }
   .input-field {
     background-color: #C51E07;
   }
   #elementos{
     font-family: 'Roboto', sans-serif;
+  }
+  #routerbtn {
+    color: #06152F;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    
   }
   a {
     color: #06152F;
