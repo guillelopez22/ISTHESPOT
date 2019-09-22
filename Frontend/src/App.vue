@@ -7,7 +7,7 @@
         <ul id="nav-mobile" class="right hide-on-med-and-down">
            
           <template v-if="scope === 'Cliente'">
-            <li id=bienvenido>Bienvenido !!! {{nombre}}</li>
+            <li id=bienvenido>Bienvenido{{nombre}}!</li>
             <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
             <li><router-link to="/menu"><a style="color: white">Menu</a></router-link></li>
             <a class="waves-effect waves-light btn-small red" v-on:click="logout">Log Out</a>
@@ -23,21 +23,21 @@
             
           </template> 
           <template v-if="scope === 'Cajero'">
-            <li id=bienvenido>Bienvenido  !!! {{nombre}}</li>
+            <li id=bienvenido>Bienvenido {{nombre}}!</li>
             <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
             <li><router-link to="/gerente"><a style="color: white">Gerente</a></router-link></li>
             <li><router-link to="/menu"><a style="color: white">Menu</a></router-link></li>
             <a class="waves-effect waves-light btn-small red" v-on:click="logout">Log Out</a>
           </template>
           <template v-if="scope === 'Administrador'">
-            <li id=bienvenido>Bienvenido  !!! {{nombre}}</li>
+            <li id=bienvenido>Bienvenido {{nombre}}!</li>
              <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
              <li><router-link to="/admin"><a style="color: white">Admin</a></router-link></li>
              <li><router-link to="/menu"><a style="color: white">Menu</a></router-link></li>
              <a class="waves-effect waves-light btn-small red" v-on:click="logout">Log Out</a>
           </template>
           <template v-if="scope === 'Mesero'">
-            <li id=bienvenido>Bienvenido !!! {{nombre}}</li>
+            <li id=bienvenido>Bienvenido {{nombre}}!</li>
               <li><router-link to="/"><a style="color: white">HOME</a></router-link></li>
               <li><router-link to="/mesero"><a style="color: white">Mesero</a></router-link></li>
               <li><router-link to="/menu"><a style="color: white">Menu</a></router-link></li>
