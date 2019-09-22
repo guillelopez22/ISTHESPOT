@@ -9,6 +9,9 @@
         <li class="tab col s3">
           <a v-on:click="tabControl('test-swipe-2')" href="#test-swipe-2">Bebidas</a>
         </li>
+        <li class="tab col s3">
+          <a v-on:click="tabControl('test-swipe-3')" href="#test-swipe-3">Combos</a>
+        </li>
       </ul>
     </div>
 
@@ -64,6 +67,34 @@
         </div>
       </div>
     </div>
+
+  <div id="test-swipe-3" class="col s12">
+      <div class="row">
+        <div class="card width hr">
+          <div class="container" id="contain1">
+            <h3>Combos</h3>
+            
+            <div v-for="combo in combos" class="col-4">
+              <div class="card-header left" style="width:200px">
+                
+                <img v-bind:src="combo.imagen"
+                  alt="Avatar"
+                  style="width:200px;height:150px"
+                />
+                <div class="container">
+                  <h6>
+                    <b>{{combo.nombre}}</b>
+                  </h6>
+                  <p>{{combo.precio}} Lps.</p>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -76,6 +107,8 @@ export default {
       bebida: {},
       productos: [],
       producto: {},
+      combos: [],
+      combo: {},
       loading: false
     };
   },
@@ -89,11 +122,17 @@ export default {
       this.$http.get("http://localhost:8000/bebidas").then(response => {
         this.bebidas = response.body;
       });
+    },
+    getCombos() {
+      this.$http.get("http://localhost:8000/combos").then(response => {
+        this.combos = response.body;
+      });
     }
   },
   beforeMount() {
     this.getProductos();
     this.getBebidas();
+    this.getCombos();
   },
 
   tabControl(idTab) {
@@ -161,6 +200,16 @@ td {
   text-align: center;
   background-color: black;
 }
+#test-swipe-3 {
+  /*background-color: #F6E497;*/
+  color: white;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 20px;
+  padding-bottom: 30px;
+  text-align: center;
+  background-color: black;
+}
 .tabs .indicator {
   background-color: #a7a37e !important;
   color: #4c1b1b !important;
@@ -198,7 +247,7 @@ td {
 }
 img {
   border-radius: 50%;
-  border: 1px solid rgb(224, 19, 19);
+  border: 1px solid #ddd;
   border-radius: 4px;
   padding: 5px;
   width: 50px;
