@@ -13,7 +13,7 @@
               <a class="btn-floating halfway-fab waves-effect waves-light red">
                   <i class="material-icons">add</i>
                 </a>
-                <a class="btn-floating halfway-fab waves-effect waves-light red">
+                <a v-on:click="deleteMesa(mesa._id)" class="btn-floating halfway-fab waves-effect waves-light red">
                   <i class="material-icons">delete</i>
                 </a>
             </div>
@@ -187,6 +187,7 @@ export default {
       }
     },
     deleteMesa(idMesa) {
+      console.log(idMesa)
       this.loading = true;
       console.log(this.mesa.orden_id);
       this.$http
@@ -202,10 +203,11 @@ export default {
         .then(response => {
           this.loading = false;
           if (response.body.success) {
-            sweetAlert("Oops...", "Error al eliminar", "error");
+            sweetAlert("Deleted!", "Los cambios estan en la tabla", "success");
+            
             this.getMesa();
           } else {
-            sweetAlert("Deleted!", "Los cambios estan en la tabla", "success");
+            sweetAlert("Oops...", "Error al eliminar", "error");
             this.getMesa();
           }
         });
