@@ -1,148 +1,25 @@
 
 <template>
   <div id="root">
-    
-    <div class="row"  >
-      <div class="card width hr"  >
-        <div class="container" >
-          <h3>Mesas Mesero</h3>
-          <div class="col-4" v-for="mesa in mesas">
-            <div class="card-header left" style="width:290px">
-              
-              <h3>Mesa:{{mesa.numero}}</h3>
-              
-              <img src="../imgs/MesaDisponible.jpg" alt="snow" v-if="mesa.idOrden == null">
-              
-            <img src="../imgs/MesaOcupada.png" alt="snow" v-if="mesa.idOrden != null">
-            <a
-              v-on:click="deleteMesa(mesa._id)"
-              class="btn-floating btn-small waves-effect waves-light blue"
-            >
-              <i class="large material-icons">add_box</i>
-            </a>
-            <a
-              v-on:click="deleteMesa(mesa._id)"
-              class="btn-floating btn-small waves-effect waves-light red"
-            >
-              <i class="large material-icons">delete</i>
-            </a>
+    <div class="row">
+      <div class="card width hr">
+        <div class="row">
+          <div v-for="(mesa, index) in mesas">
+            <div class="col s3 card">
+              <div class="card-image">
+                <img src="../imgs/MesaDisponible.jpg" />
+                <a class="btn-floating halfway-fab waves-effect waves-light red">
+                  <i class="material-icons">add</i>
+                </a>
+                <a class="btn-floating halfway-fab waves-effect waves-light red">
+                  <i class="material-icons">delete</i>
+                </a>
+              </div>
             </div>
-            
           </div>
         </div>
       </div>
     </div>
-<!--
-    <h2>
-      Mesas
-      <a
-        class="btn-floating btn-small btn tooltipped -red"
-        data-position="top"
-        data-delay="50"
-        id="boton"
-        data-tooltip="Para modificar primero tienes que hacer click en  el boton de modificar en la tabla"
-      >
-        <i class="material-icons left">help</i>Update
-      </a>
-    </h2>
-    <table class="table centered">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>IdOrden</th>
-          <th>Numero</th>
-          <th>Modificar</th>
-          <th>Borrar</th>
-          <th>AgregarOrden</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="mesa in mesas">
-          <td>{{mesa.nombre}}</td>
-          <td>{{mesa.idOrden}}</td>
-          <td>{{mesa.numero}}</td>
-          <td>
-            <a
-              v-on:click="startToModifyMesa(mesa)"
-              class="btn-floating btn-small waves-effect waves-light green"
-            >
-              <i class="material-icons">update</i>
-            </a>
-          </td>
-          <td>
-            <a
-              v-on:click="deleteMesa(mesa._id)"
-              class="btn-floating btn-small waves-effect waves-light red"
-            >
-              <i class="material-icons">delete</i>
-            </a>
-          </td>
-          <td>
-            <a
-              v-on:click="deleteMesa(mesa._id)"
-              class="btn-floating btn-small waves-effect waves-light blue"
-            >
-              <i class="material-icons">add</i>
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <br>
-    <ul id="tabs-swipe-demo" class="tabs">
-      <li class="tab col s3">
-        <a class="active" v-on:click="tabControl('test-swipe-1')" href="#test-swipe-1">Crear</a>
-      </li>
-      <li class="tab col s3">
-        <a v-on:click="tabControl('test-swipe-2')" href="#test-swipe-2">Modificar</a>
-      </li>
-    </ul>
-    <div class="row">
-      <div class="input-field col s6">
-        <input
-          v-on:input="mesa.nombre = $event.target.value"
-          type="text"
-          v-model="mesa.nombre"
-          :disabled="loading"
-          id="Nombre"
-        >
-        <label for="Nombre">Nombre</label>
-      </div>
-
-      <div class="input-field col s6">
-        <input
-          v-on:input="mesa.numero = $event.target.value"
-          type="number"
-          v-model="mesa.numero"
-          :disabled="loading"
-          id="Numero"
-        >
-        <label for="Numero">Numero</label>
-      </div>
-    </div>
-    <div id="test-swipe-1" class="col s12">
-      <a
-        class="waves-effect waves-light btn-large"
-        v-on:click="createMesa"
-        :disabled="loading"
-        id="boton"
-      >
-        <i class="material-icons left">create</i>Crear
-      </a>
-    </div>
-    <div id="test-swipe-2" class="col s12">
-      <div
-        class="card"
-      >Atención: Los cambios realizados no se guardan hasta que haga click en el botón de update.</div>
-      <a
-        class="waves-effect waves-light btn-large"
-        v-on:click="modifyMesa"
-        :disabled="loading"
-        id="boton"
-   
-        <i class="material-icons left">update</i>Update
-      </a>
-    </div> --->
   </div>
 </template>
 
@@ -178,6 +55,7 @@ export default {
   methods: {
     getMesa() {
       this.$http.get("http://localhost:8000/mesas").then(response => {
+        console.log(response.body);
         this.mesas = response.body;
       });
     },
@@ -351,7 +229,7 @@ export default {
 </script>
 
 <style scoped>
-.row{
+.row {
   background-color: black;
 }
 #importance {
