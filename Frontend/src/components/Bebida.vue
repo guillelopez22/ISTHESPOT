@@ -15,7 +15,7 @@
     <p>Pagina Actual: {{currentPage}}</p>
     <button v-on:click="anterior()" class="waves-effect waves-teal btn-large pulse">Anterior</button>
     <button v-on:click="siguiente()" class="waves-effect waves-teal btn-large">Siguiente</button>
-    <br />
+    <br /><br />
     <table class="table centered">
       <thead>
         <tr>
