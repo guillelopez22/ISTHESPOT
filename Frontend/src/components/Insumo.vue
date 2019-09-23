@@ -366,7 +366,7 @@ export default {
       this.final = 5;
       this.currentPage = 1;
       this.loading = true;
-      if (this.insumo.nombre == undefined || this.proveedores_a.length == 0) {
+      if (this.insumo.nombre == undefined || this.proveedores_a.length == 0 || this.insumo.inventario <=0 || this.insumo.nombre.length <3) {
         sweetAlert("Oops", "Hay un campo vacio", "error");
         this.loading = false;
       } else {
