@@ -275,7 +275,7 @@ export default {
           .post("http://localhost:8000/proveedor/create", this.proveedor)
           .then(response => {
             this.loading = false;
-            if (response.body.success) {
+            if (!response.body.success) {
               sweetAlert(
                 "Creado con exito!",
                 "Los cambios estan en la tabla",
@@ -384,7 +384,7 @@ export default {
                   )
                   .then(response => {
                     _this.loading = false;
-                    if (!response.body.success) {
+                    if (response.body.success) {
                       sweetAlert("Oops...", "Error al eliminar", "error");
                       _this.getProveedor();
                     } else {
