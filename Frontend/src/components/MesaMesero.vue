@@ -8,13 +8,14 @@
             <div class="col s3 card">
               <div class="card-image">
                 <img src="../imgs/MesaDisponible.jpg" />
-                <a class="btn-floating halfway-fab waves-effect waves-light red">
+                <span class="card-title">{{mesa.nombre}}</span>
+              </div>
+              <a class="btn-floating halfway-fab waves-effect waves-light red">
                   <i class="material-icons">add</i>
                 </a>
                 <a class="btn-floating halfway-fab waves-effect waves-light red">
                   <i class="material-icons">delete</i>
                 </a>
-              </div>
             </div>
           </div>
         </div>
