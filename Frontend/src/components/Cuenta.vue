@@ -165,10 +165,6 @@
           v-on:click="pagar()"
           class="waves-effect waves-red red btn-large pulse"
         >Realizar Pago</button>
-        <button
-          v-on:click="facturar()"
-          class="waves-effect waves-red red btn-large pulse"
-        >Realizar Pago2</button>
       </div>
       <div class="col s12">
         <br />
@@ -310,7 +306,7 @@ export default {
         var save = document.createElement("a");
         save.href = event.target.result;
         save.target = "_blank";
-        save.download = "archivo.txt" || "archivo.dat";
+        save.download = "FacturaTheSpot.txt" || "archivo.dat";
         var clicEvent = new MouseEvent("click", {
           view: window,
           bubbles: true,

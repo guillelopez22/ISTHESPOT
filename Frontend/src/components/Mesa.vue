@@ -248,15 +248,11 @@ export default {
       this.loading = true;
       let _this = this;
 
-      if (this.mesa.nombre == undefined || this.mesa.numero == undefined) {
+      if (this.mesa.nombre == undefined && this.mesa.numero == undefined) {
         this.loading = false;
         sweetAlert("Oops...", "Error al crear,esta vacio :(", "error");
       } else {
-        this.$http
-          .get("http://localhost:8000/mesas/searchbyname/" + this.mesa.nombre)
-          .then(response => {
-            if (response.body.length == 0) {
-              /*mirar si es el mismo nombre*/
+       
               this.$http
                 .get(
                   "http://localhost:8000/mesas/searchbynumero/" +
@@ -293,19 +289,7 @@ export default {
                     this.loading = false;
                   }
                 });
-            } else {
-              //ya existe mesa con ese nombre
-              sweetAlert(
-                "Oops...",
-                "Error al crear,ya existe una mesa con el mismo nombre",
-                "error"
-              );
-              this.getMesa();
-              this.loading = false;
-              console.log("Ya existe la mesa y el numero");
-              console.log(response.body.length);
-            }
-          });
+            
 
         setTimeout(function() {
         var i;

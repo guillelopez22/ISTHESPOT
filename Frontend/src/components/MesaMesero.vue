@@ -1,17 +1,18 @@
 
 <template>
   <div id="root">
+    <h2>
+      Mesas Mesero
+    </h2>
     <div class="row">
       <div class="card width hr">
         <div class="row">
           <div v-for="(mesa, index) in mesas">
             <div class="col s3 card">
               <div class="card-image">
+                <h5>{{mesa.nombre + " #" + mesa.numero}}</h5>
                 <img src="../imgs/MesaDisponible.jpg" />
-                <a class="btn-floating halfway-fab waves-effect waves-light red">
-                  <i class="material-icons">add</i>
-                </a>
-                <a class="btn-floating halfway-fab waves-effect waves-light red">
+                <a v-on:click="deleteMesa(mesa._id)" class="btn-floating halfway-fab waves-effect waves-light red" >
                   <i class="material-icons">delete</i>
                 </a>
               </div>
@@ -186,28 +187,62 @@ export default {
       }
     },
     deleteMesa(idMesa) {
-      this.loading = true;
-      console.log(this.mesa.orden_id);
-      this.$http
-        .get(
-          "http://localhost:8000/mesas/searchbyIdOrden/" + this.mesa.orden_id,
-          this.mesa._id
-        )
-        .then(response => {
-          console.log(response.body);
-        });
-      this.$http
-        .delete("http://localhost:8000/mesas/delete/" + idMesa)
-        .then(response => {
-          this.loading = false;
-          if (response.body.success) {
-            sweetAlert("Oops...", "Error al eliminar", "error");
-            this.getMesa();
-          } else {
-            sweetAlert("Deleted!", "Los cambios estan en la tabla", "success");
-            this.getMesa();
-          }
-        });
+      let _this = this;
+      var entrar = true;
+      for (let i = 0; i < _this.ordenes.length; i++) {
+        const element = _this.ordenes[i];
+        if (element.idMesa == idMesa) {
+          entrar = false;
+          sweetAlert(
+          "Eliminación Bloqueada",
+          "La mesa se encuentra relacionada con Ordenes",
+          "warning"
+        );
+        }
+      }
+      if (entrar) {
+      sweetAlert(
+        {
+          title: "¿Estás seguro?",
+          text: "No podrás revertir los cambios",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Eliminar",
+          cancelButtonText: "Cancelar",
+          showCloseButton: true,
+          showLoaderOnConfirm: true
+        },
+        function(inputValue) {
+          setTimeout(function() {
+            if (inputValue) {
+              _this.loading = true;
+              _this.$http
+                .delete("http://localhost:8000/mesas/delete/" + idMesa)
+                .then(response => {
+                  this.loading = false;
+                  if (!response.body.success) {
+                    sweetAlert("Oops...", "Error al eliminar", "error");
+                    _this.getMesa();
+                  } else {
+                    sweetAlert(
+                      "Deleted!",
+                      "Los cambios estan en la tabla",
+                      "success"
+                    );
+                    _this.inicio = 0;
+                    _this.final = 5;
+                    _this.currentPage = 1;
+                    _this.getMesa();
+                  }
+                });
+              //****************************************************** */
+            } else {
+              sweetAlert("Cancelado", "Tus datos están a salvo", "info");
+            }
+          }, 500);
+        }
+      );
+       } 
     },
     getOrdenes() {
       this.$http.get("http://localhost:8000/ordenes").then(response => {
