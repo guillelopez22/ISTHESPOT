@@ -590,6 +590,7 @@ export default {
             "success"
           );
         }
+        this.flag = true;
       }
     },
     cargarDatos() {
@@ -611,6 +612,7 @@ export default {
             function(inputValue) {
               setTimeout(function() {
                 if (inputValue) {
+                  _this.flag = true;
                   var ords;
                   _this.$http
                     .get("http://localhost:8000/ordenes")
@@ -790,6 +792,7 @@ export default {
           function(inputValue) {
             setTimeout(function() {
               if (inputValue) {
+                _this.flag = true;
                 _this.articulos = [];
                 var i = 0;
                 _this.productos_n = [];
