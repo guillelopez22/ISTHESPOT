@@ -57,6 +57,6 @@
     "vue-style-loader": "^3.0.1",
     "vueify": "^9.0.0",
     "watchify": "^3.4.0",
-    "webpack": "^2.6.1"
+    "webpack": "^5.75.0"
   }
 }
